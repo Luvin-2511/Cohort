@@ -1,0 +1,81 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,body {
+    height: 100%;
+    width: 100%;
+    background: black;
+    font-size: 2vw;
+    font-weight: 800;
+    color: white;
+    text-align: center;
+}
+
+h1 {
+    font-size: 5vw;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+
+/* Normal Background */
+#box1 {
+    height: 10vw;
+    width: 10vw;
+    background: red;
+     margin: 5vw 5vw; /*Applying Margin*/
+     padding-top: 4vw;/*Applying padding*/
+     border: 2px solid rgb(83, 57, 57);
+     border-radius: 1vw;
+}
+
+/* Linear Gradient */
+#box2 {
+    height: 10vw;
+    width: 10vw;
+    background: linear-gradient(to left , rgb(0, 96, 128) , rgb(6, 0, 128));
+    margin: 5vw 5vw; /*Applying Margin*/
+    padding-top: 4vw;/*Applying padding*/
+    border: 2px solid rgb(35, 35, 35);
+    border-radius: 1vw;
+}
+/* Radial Gradient */
+#box3 {
+    height: 20%;/*Height and width in %*/
+    width: 20%;
+    background: radial-gradient( yellow,red , black);
+    margin: 5vw 5vw; /*Applying Margin*/
+    padding-top: 4vw;/*Applying padding*/
+    border: 2px solid rgb(255, 255, 255);
+    border-radius: 1vw;
+}
+#box4 {
+    height: 10vw;
+    width: 10vw;
+    background: conic-gradient(red,blue ,red);
+    margin: 5vw 5vw; /*Applying Margin*/
+    padding-top: 4vw;/*Applying padding*/
+    border: 2px solid white;
+    border-radius: 1vw;
+}
+
+#page2 {
+    height: 100vh;
+    width: 100%;
+    background-image: url(https://images.pexels.com/photos/30063772/pexels-photo-30063772.jpeg);
+    background-position: center;
+    background-size: cover;
+}
+
+button {
+    margin: 2vw 0vw;
+    padding: 1vw 3vw;
+    font-size: 2vw;
+    font-weight: 400;
+    border:none;/*To remove default border of Button*/
+    background: green;
+    border-radius: 2vw;
+    color: white;
+    text-transform: uppercase;
+}

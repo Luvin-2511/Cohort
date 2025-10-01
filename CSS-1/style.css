@@ -1,0 +1,74 @@
+/* This is used to add custom Fonts */
+@font-face {
+    font-family: "Hahaha";
+    src: url(./Fonts/DIEDIEDI.TTF);
+}
+
+
+/* This is basic boilerplate code needed in every code */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    height: 100%;
+    width: 100%;
+    background-color: black;
+    /* Changes the background color */
+}
+
+/* Targets the h1 element */
+h1 {
+    /* Changes the color of text*/
+    color: white;
+    /* Change the font size */
+    font-size: 10vw;
+    /* Changes the font style */
+    font-family: "hahaha";
+    /*  Changes the font weight */
+    font-weight: 900;
+    /* Aligns text either left,right or center */
+    text-align: center;
+    /* Can add font style */
+    font-style: oblique;
+    /* Changes text to uppercase or lowercase */
+    text-transform: uppercase;
+    /* Can add styles like underline , dotted line */
+    text-decoration: none;
+}
+
+/* This is a class selector(.) */
+.select {
+    color: rgb(255, 0, 0);
+    font-size: 4vw;
+    font-weight: 100;
+    font-style: normal;
+    text-transform: capitalize;
+    text-decoration: none;
+}
+/* This is a id selector(#) */
+#select {
+    color:rgb(100, 33, 43);
+    font-size: 2vw;
+    font-weight: 300;
+    font-style: normal;
+    text-transform: capitalize;
+    text-decoration: none;
+}
+
+/* Targeting the div element */
+div {
+    height: 200px;
+    width: 500px;
+    background-color: aliceblue;
+    font-size: 2vw;
+    text-align: center;
+    font-weight: 300;
+    font-style: normal;
+    text-transform: capitalize;
+    text-decoration: none;
+    font-family: 'hahaha';
+}

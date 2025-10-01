@@ -1,0 +1,61 @@
+@font-face {
+    font-family: "marvel";
+    src: url(./font/heroesassembleexpand2.ttf);
+}
+@font-face {
+    font-family: "marvel1";
+    src: url(./font/CombackHomeRegular-jEMd9.ttf);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    width: 100%;
+}
+
+#main {
+    height: 100vh;
+    width: 100%;
+    background-image: url(./img/cap.jpg);
+    background-size: cover;
+    background-position: center;
+    text-align: center;
+
+    h1 {
+        font-size: 15vw;
+        padding-top: 15vw;
+        color: red;
+        font-family: "marvel";
+        text-transform: uppercase;
+        letter-spacing: normal;
+    }
+
+    h4 {
+        font-size: 3vw;
+        color: rgba(255, 255, 255, 1);
+        font-weight: 500;
+        margin-top: 1vw;
+        text-transform: uppercase;
+        word-spacing: 2vw;
+        font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    }
+
+    button {
+        border: none;
+        background-color: rgba(255, 0, 0, 0.577);
+        box-shadow: 0px 5px 5px black;
+        padding: 1vw 3vw;
+        color: rgb(255, 255, 255);
+        font-family: "marvel1";
+        font-size: 2vw;
+        margin-top: 2vw;
+        text-transform: uppercase;
+        font-weight: 600;
+        border-radius: 5vw;
+    }
+}

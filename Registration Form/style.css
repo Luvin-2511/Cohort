@@ -1,0 +1,331 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+@font-face {
+    font-family: 'Font1';
+    src: url("Font/Poppins-SemiBold.ttf");
+}
+
+@font-face {
+    font-family: 'Font2';
+    src: url("Font/Poppins-Light.ttf");
+}
+
+@font-face {
+    font-family: 'Font3';
+    src: url("Font/Poppins-Medium.ttf");
+}
+
+body,
+html {
+    height: 100vh;
+    width: 100%;
+}
+
+#main {
+    font-family: "Font1";
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(to right, #ff0cf768, #7a5bd6);
+    background-size: 200% 100%;
+    background-position: right;
+    transition: background-position 1s ease;
+    color: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#container {
+    height: 65%;
+    width: 55%;
+    background-color: white;
+    border-radius: 30px;
+    overflow: hidden;
+    display: flex;
+    position: relative;
+}
+
+#left {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+}
+
+.right {
+    height: 100%;
+    width: 50%;
+    position: absolute;
+    transform: translateX(-500px);
+    z-index: 11;
+    background: #7a5bd6;
+    border-radius: 140px;
+    color: white;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5vw;
+    transition: all 0.6s linear;
+
+    h2 {
+        font-size: 2.5rem;
+    }
+
+    h4 {
+        font-family: 'Font2';
+        font-size: 0.9vw;
+    }
+
+    button {
+        background: #7a5bd6;
+        outline: none;
+        color: white;
+        font-family: 'Font1';
+        font-size: 0.9vw;
+        border-radius: 0.5vw;
+        border: 2px solid white;
+        padding: 0.6vw 3.5vw;
+        cursor: pointer;
+        margin-top: 1vw;
+    }
+
+    button:hover {
+        background: white;
+        color: black;
+        transition: all 0.2s ease;
+        border: 2px solid black;
+    }
+}
+
+.left {
+    height: 100%;
+    width: 100%;
+    transform: translateX(-500px);
+    background: #7a5bd6;
+    border-radius: 140px;
+    display: flex;
+    align-items: center;
+    padding-top: 12vw;
+    color: white;
+    flex-direction: column;
+    gap: 0.5vw;
+    position: absolute;
+    padding-left: 55%;
+    z-index: 10;
+    transition: all 0.6s linear;
+
+    h2 {
+        font-size: 2.5rem;
+    }
+
+    h4 {
+        font-family: 'Font2';
+        font-size: 0.9vw;
+    }
+
+    button {
+        background: #7a5bd6;
+        outline: none;
+        color: white;
+        font-family: 'Font1';
+        font-size: 0.9vw;
+        border-radius: 0.5vw;
+        border: 2px solid white;
+        padding: 0.6vw 3.5vw;
+        cursor: pointer;
+        margin-top: 1vw;
+    }
+
+    button:hover {
+        background: white;
+        color: black;
+        transition: all 0.2s ease;
+        border: 2px solid black;
+    }
+}
+
+.form {
+    height: 100%;
+    width: 100%;
+    display: flex;
+}
+
+#reg {
+    height: 100%;
+    min-width: 55%;
+    color: black;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5vw;
+    transition: all 1s ease;
+    z-index: 1;
+    transform: translateX(-100px);
+
+    h2 {
+        font-size: 2.5rem;
+        color: #3C3330;
+    }
+
+    input {
+        background-color: #EEEEEE;
+        border: none;
+        outline: none;
+        font-size: 1vw;
+        padding: 0.7vw 1vw;
+        border-radius: 0.3vw;
+        width: 75%;
+        font-family: 'Font3';
+        font-weight: 300;
+    }
+
+    input::placeholder {
+        color: #5b58577d;
+    }
+
+    h4 {
+        font-size: 0.9rem;
+        font-family: "Font2";
+        color: #514f4fd4;
+    }
+
+    button {
+        background: #7a5bd6;
+        outline: none;
+        width: 75%;
+        color: white;
+        font-family: 'Font1';
+        font-size: 0.9vw;
+        border-radius: 0.5vw;
+        border: 2px solid white;
+        padding: 0.6vw 3.5vw;
+        cursor: pointer;
+    }
+}
+
+#right {
+    height: 100%;
+    min-width: 55%;
+    color: black;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5vw;
+    transform: translateX(420px);
+    position: absolute;
+    transition: all 1s ease;
+
+    h2 {
+        font-size: 2.5rem;
+        color: #3C3330;
+    }
+
+    input {
+        background-color: #EEEEEE;
+        border: none;
+        outline: none;
+        font-size: 1vw;
+        padding: 0.7vw 1vw;
+        border-radius: 0.3vw;
+        width: 75%;
+        font-family: 'Font3';
+        font-weight: 300;
+    }
+
+    input::placeholder {
+        color: #5b58577d;
+    }
+
+    h4 {
+        font-size: 0.9rem;
+        font-family: "Font2";
+        color: #514f4fd4;
+    }
+
+    button {
+        background: #7a5bd6;
+        outline: none;
+        width: 75%;
+        color: white;
+        font-family: 'Font1';
+        font-size: 0.9vw;
+        border-radius: 0.5vw;
+        border: 2px solid white;
+        padding: 0.6vw 3.5vw;
+        cursor: pointer;
+    }
+}
+
+.forgot:hover {
+    color: black;
+    text-decoration: underline;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+#socials {
+    height: 3vw;
+    width: 60%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.4vw;
+
+    .logo {
+        height: 3vw;
+        width: 3vw;
+        overflow: hidden;
+        border: 1px solid rgba(0, 0, 0, 0.335);
+        padding: 0.5vw;
+        border-radius: 0.3vw;
+        cursor: pointer;
+
+        img {
+            height: 100%;
+            object-fit: cover;
+        }
+    }
+
+    .logo:hover {
+        transition: all 0.3s ease;
+        box-shadow: 1px 5px 5px black;
+        transform: translateY(-5px);
+    }
+}
+
+#socials1 {
+    height: 3vw;
+    width: 60%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.4vw;
+    z-index: 14;
+
+    .logo {
+        height: 3vw;
+        width: 3vw;
+        overflow: hidden;
+        border: 1px solid rgba(0, 0, 0, 0.335);
+        padding: 0.5vw;
+        border-radius: 0.3vw;
+        cursor: pointer;
+
+        img {
+            height: 100%;
+            object-fit: cover;
+        }
+    }
+
+    .logo:hover {
+        transition: all 0.3s ease;
+        box-shadow: 1px 5px 5px black;
+        transform: translateY(-5px);
+    }
+}
