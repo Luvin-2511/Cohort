@@ -1,0 +1,297 @@
+@font-face {
+    font-family: "pop";
+    src: url(./Font/Poppins-Medium.ttf);
+}
+
+@font-face {
+    font-family: "pop2";
+    src: url(./Font/Poppins-Light.ttf);
+}
+
+@font-face {
+    font-family: "pop3";
+    src: url(./Font/Poppins-Regular.ttf);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "pop";
+}
+
+html,
+body {
+    height: 100%;
+    width: 100%;
+}
+
+#main {
+    height: 100vh;
+    width: 100%;
+    background: linear-gradient(to right, #9dbcc3, #e4cab7);
+}
+
+.navbar {
+    height: 6vw;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    gap: 5vw;
+    position: relative;
+    z-index: 15;
+
+    h3 {
+        font-size: 1.7vw;
+        font-family: "pop";
+        color: #102932;
+
+        span {
+            color: white;
+        }
+
+        img {
+            height: 1.5vw;
+            width: 1.5vw;
+        }
+    }
+
+
+    .center {
+        ul {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 2vw;
+
+            li {
+                list-style: none;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 0.5vw;
+                font-weight: 400;
+                font-size: 1.02vw;
+                font-family: "pop2";
+                color: rgb(0, 0, 0);
+                cursor: pointer;
+
+                img {
+                    height: 1vw;
+                    width: 1vw;
+                    cursor: pointer;
+                }
+            }
+
+        }
+    }
+
+    .playstore {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5vw;
+        border: 1px solid black;
+        font-size: 0.8vw;
+        font-weight: 100;
+        font-family: "pop2";
+        padding: 0.5vw 1.9vw;
+        border-radius: 0.9vw;
+
+        img {
+            height: 1.5vw;
+            width: 1.5vw;
+        }
+    }
+
+    .playstore:hover {
+        background: black;
+        cursor: pointer;
+        color: white;
+        transition: all 0.1s ease;
+    }
+}
+
+.hero {
+    .shirt {
+        position: absolute;
+        left: 15%;
+        top: 3%;
+        z-index: 10;
+    }
+
+    .textfloater1 {
+        display: flex;
+        position: absolute;
+        left: 27vw;
+        top: 13vw;
+        z-index: 11;
+
+        h4 {
+            width: 12vw;
+            text-align: center;
+            font-family: "pop3";
+        }
+
+        img {
+            height: 3vw;
+            width: 3vw;
+        }
+    }
+
+    .textfloater2 {
+        display: flex;
+        position: absolute;
+        left: 54vw;
+        top: 22vw;
+        z-index: 11;
+
+        h4 {
+            width: 12vw;
+            text-align: center;
+            font-family: "pop3";
+        }
+
+        img {
+            height: 3vw;
+            width: 3vw;
+        }
+    }
+
+    .stars {
+        display: flex;
+        position: absolute;
+        top: 35%;
+        left: 12%;
+
+        .star {
+            height: 3.5vw;
+            width: 3.5vw;
+        }
+    }
+
+    .text1,
+    .text2,
+    .text3,
+    .text2-5,
+    .text4 {
+        font-size: 5.4vw;
+        color: white;
+        line-height: 5vw;
+        position: absolute;
+    }
+
+    .text1 {
+        left: 12.5vw;
+        top: 22.5vw;
+        z-index: 11;
+    }
+    .text2 {
+        left: 12.5vw;
+        top: 28vw;
+    }
+    .text2-5 {
+        left: 38.2vw;
+        top: 28vw;
+        z-index: 11;
+    }
+    .text3 {
+        left: 12.5vw;
+        top: 33.5vw;
+    }
+    .text4 {
+        left: 12.5vw;
+        top: 39vw;
+        z-index: 11;
+    }
+
+    .rightfloater {
+        height: 21vw;
+        width: 14vw;
+        border-radius: 1vw;
+        background: #EAE8E3;
+        position: absolute;
+        right: 9vw;
+        bottom: 9vw;
+        box-shadow: 1px 1px 14px rgba(0, 0, 0, 0.281);
+
+        img {
+            position: relative;
+            left: -1vw;
+            height: 12vw;
+            width: 16vw;
+        }
+
+        h1 {
+            color: #333333;
+            font-size: 2.6vw;
+            text-align: center;
+            margin-bottom: 1vw;
+        }
+
+        h4 {
+            font-family: "pop3";
+            text-align: center;
+            color: #666676;
+        }
+    }
+}
+
+.footer {
+    height: 7vw;
+    width: 100%;
+    position: absolute;
+    padding-top: 2vw;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.147);
+    
+    .right {
+        display: flex;
+        position: absolute;
+        right: 8.5vw;
+        cursor: pointer;
+        z-index: 13;
+        background: rgba(255, 255, 255, 0.395);
+        padding: 0.8vw 1.6vw;
+        border-radius: 0.6vw;
+        backdrop-filter: blur(20px);
+        align-items: center;
+        justify-content: center;
+
+        img {
+            height: 1.2vw;
+            width: 1.2vw;
+        }
+    }
+
+    .profiles {
+        display: flex;
+        align-items: center;
+        font-size: 2vw;
+        margin-left: 12vw;
+
+        img {
+            height: 2vw;
+            width: 2vw;
+            border-radius: 50%;
+            position: relative;
+        }
+    }
+}
+
+.im2 {
+    left: -7.5px;
+}
+
+.im3 {
+    left: -15px;
+}
+
+.im4 {
+    left: -22.5px;
+}
+
+.im5 {
+    left: -25px;
+}
