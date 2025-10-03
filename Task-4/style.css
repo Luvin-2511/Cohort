@@ -1,0 +1,344 @@
+@font-face {
+    font-family: "Nothing";
+    src: url("./Assetss/ndot-47-inspired-by-nothing.otf");
+}
+
+@font-face {
+    font-family: "nh";
+    src: url(./Assetss/korataki-rg-3cf0d889.ttf);
+}
+@font-face {
+    font-family: "main";
+    src: url(./Assetss/Sansation_Regular-COtNG1MQ.ttf);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    height: 100%;
+    width: 100%;
+    overflow-x: hidden;
+    background: black;
+}
+
+::-webkit-scrollbar {
+  width: 10px;             
+}
+
+::-webkit-scrollbar-track {
+  background: #1a1a1a;      
+}
+
+::-webkit-scrollbar-thumb {
+  background: #000;         
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #333;         
+}
+
+#main {
+    min-height: 100vh;
+    width: 100%;
+    background: black;
+
+    .page1 {
+        height: 100vh;
+        width: 100%;
+        background-color: black;
+
+        .nav {
+            height: 7vw;
+            width: 100%;
+
+            .left {
+                svg {
+                    position: absolute;
+                    left: 1.5vw;
+                    top: 1vw;
+                }
+
+                h1 {
+                    position: absolute;
+                    left: 4.4vw;
+                    top: 1.9vw;
+                    color: white;
+                    font-family: "Nothing";
+                    text-transform: uppercase;
+                    font-size: 3.3vw;
+                    font-weight: 300;
+                }
+            }
+
+            .center {
+                position: absolute;
+                left: 34%;
+                top: 5.8%;
+
+                img {
+                    height: 3.6vw;
+                }
+
+                input {
+                    position: absolute;
+                    right: 2vw;
+                    top: 1vw;
+                    font-size: 1.15vw;
+                    width: 13vw;
+                    background-color: transparent;
+                    outline: none;
+                    color: white;
+                    font-weight: 100;
+                    border: none;
+                }
+
+                ::placeholder {
+                    color: rgba(255, 255, 255, 0.591);
+                }
+            }
+
+            .right {
+                height: 7vw;
+                width: 35%;
+                position: absolute;
+                right: 0;
+                font-family: "nh";
+                text-transform: capitalize;
+
+
+                .first {
+                    height: 4vw;
+                    position: absolute;
+
+                    svg {
+                        position: absolute;
+                        top: 3vw;
+                        left: 3vw;
+                    }
+
+                    h3 {
+                        color: white;
+                        position: absolute;
+                        top: 4vw;
+                        left: 5.7vw;
+                        font-size: 0.9vw;
+                    }
+                }
+
+                .second {
+                    height: 4vw;
+                    position: absolute;
+
+                    svg {
+                        position: absolute;
+                        top: 3vw;
+                        left: 14vw;
+                    }
+
+                    h3 {
+                        color: white;
+                        position: absolute;
+                        top: 4vw;
+                        left: 15.8vw;
+                        font-size: 0.9vw;
+                    }
+                }
+
+                .third {
+                    height: 4vw;
+                    position: absolute;
+
+                    svg {
+                        position: absolute;
+                        top: 3vw;
+                        left: 24.5vw;
+                    }
+
+                    h3 {
+                        color: white;
+                        position: absolute;
+                        top: 4vw;
+                        left: 25.3vw;
+                        font-size: 0.9vw;
+                    }
+                }
+            }
+        }
+
+        .midsection {
+            height: 80vh;
+            width: 100%;
+
+            .firstline {
+                height: 1px;
+                width: 12vw;
+                border: 1.5px solid white;
+                position: absolute;
+                left: 17.5vw;
+                top: 10.2vw;
+                transform: rotate(35deg);
+                box-shadow: 1px 1px 10px white;
+            }
+
+            .secondline {
+                height: 1px;
+                width: 17vw;
+                border: 1.5px solid white;
+                position: absolute;
+                left: 28.4vw;
+                top: 13.59vw;
+                box-shadow: 1px 1px 10px white;
+            }
+
+            .thirdline {
+                height: 1px;
+                width: 8vw;
+                border: 1.5px solid white;
+                position: absolute;
+                left: 44.7vw;
+                top: 15.9vw;
+                transform: rotate(35deg);
+                box-shadow: 1px 1px 10px white;
+            }
+
+            .fourthline {
+                height: 1px;
+                width: 48vw;
+                border: 1.5px solid white;
+                position: absolute;
+                left: 52vw;
+                top: 18.2vw;
+                box-shadow: 1px 1px 10px white;
+            }
+
+            .fifthline {
+                height: 1px;
+                width: 16vw;
+                border: 1.5px solid white;
+                position: absolute;
+                left: 37.7vw;
+                top: 18.2vw;
+                transform: rotate(35deg);
+                box-shadow: 1px 1px 10px white;
+            }
+
+            .sixthline {
+                height: 1px;
+                width: 20vw;
+                border: 1.5px solid white;
+                position: absolute;
+                left: 52.2vw;
+                top: 22.75vw;
+                box-shadow: 1px 1px 10px white;
+            }
+
+            .seventhline {
+                height: 1px;
+                width: 3vw;
+                border: 1.5px solid white;
+                position: absolute;
+                left: 71.6vw;
+                top: 21.6vw;
+                transform: rotate(125deg);
+                box-shadow: 1px 1px 10px white;
+            }
+
+            .eigthline {
+                height: 1px;
+                width: 26vw;
+                border: 1.5px solid white;
+                position: absolute;
+                left: 74vw;
+                top: 20.4vw;
+                box-shadow: 1px 1px 10px white;
+            }
+
+            .phone1 {
+                height: 34vw;
+                width: 17vw;
+                position: absolute;
+                left: 60%;
+                top: 28%;
+                transform: rotate(-30deg);
+
+                img {
+                    height: 100%;
+                    width: 100%;
+                }
+
+            }
+            .phone2 {
+                height: 34vw;
+                width: 17vw;
+                position: absolute;
+                left: 65%;
+                top:32%;
+                transform: rotate(-30deg);
+
+                img {
+                    height: 100%;
+                    width: 100%;
+                }
+
+            }
+
+            .ninthline {
+                height: 1px;
+                width: 44vw;
+                border: 1.5px solid white;
+                position: absolute;
+                left: 0;
+                top: 82%;
+                box-shadow: 1px 1px 10px white;
+            }
+
+            .tenthline {
+                height: 1px;
+                width: 6vw;
+                border: 1.5px solid white;
+                position: absolute;
+                left: 43.5vw;
+                top:78.8%;
+                transform: rotate(145deg);
+                box-shadow: 1px 1px 10px white;
+            }
+
+             .eleventhline {
+                height: 1px;
+                width: 50vw;
+                border: 1.5px solid white;
+                position: absolute;
+                left: 48.9vw;
+                top: 75.6%;
+                box-shadow: 1px 1px 10px white;
+            }
+
+            .maintext {
+                margin-top: 20vw;
+                margin-left: 4vw;
+                width: 50vw;
+                text-align: center;
+                line-height: 4.6vw;
+                color: #999D9C;
+                font-family: "nh";
+                text-transform: uppercase;
+                font-size: 3vw;
+            }
+            .sidetext {
+                color: rgba(255, 255, 255, 0.763);
+                font-family: "Nothing";
+                font-size: 1.4vw;
+                margin-top: 4vw;
+                margin-left: 7vw;
+            }
+        }
+
+
+    }
+}

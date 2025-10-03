@@ -1,0 +1,366 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+@font-face {
+    font-family: "Chori";
+    src: url(./korataki-rg-3cf0d889.ttf);
+}
+
+html,
+body {
+    height: 100%;
+    width: 100%;
+    background: black;
+}
+
+#main {
+    min-height: 100vh;
+    width: 100%;
+    background: black;
+
+    hr {
+        margin: 1vw 0vw;
+    }
+
+    h1 {
+        font-size: 3vw;
+        text-align: center;
+        color: white;
+        padding-top: 1vw;
+        font-family: "Chori";
+    }
+
+    h4 {
+        font-size: 1vw;
+        text-align: start;
+        color: white;
+        padding-top: 1vw;
+        font-family: "Chori";
+    }
+
+    .parent1 {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .parent2 {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+    }
+
+    .parent3 {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+    }
+
+    .parent4 {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .parent5 {
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+    }
+
+    .parent6 {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+    }
+
+    #box1 {
+        height: 10vw;
+        width: 10vw;
+        background: red;
+        border: 1px solid white;
+        border-radius: 1vw;
+    }
+
+    #box2 {
+        height: 10vw;
+        width: 10vw;
+        background: red;
+        border: 1px solid white;
+        border-radius: 1vw;
+    }
+
+    #box3 {
+        height: 10vw;
+        width: 10vw;
+        background: red;
+        border: 1px solid white;
+        border-radius: 1vw;
+    }
+
+    #box4 {
+        height: 10vw;
+        width: 10vw;
+        background: red;
+        border: 1px solid white;
+        border-radius: 1vw;
+    }
+
+    #box5 {
+        height: 10vw;
+        width: 10vw;
+        background: red;
+        border: 1px solid white;
+        border-radius: 1vw;
+    }
+
+    #box6 {
+        height: 10vw;
+        width: 10vw;
+        background: red;
+        border: 1px solid white;
+        border-radius: 1vw;
+    }
+
+    #box7 {
+        height: 10vw;
+        width: 10vw;
+        background: red;
+        border: 1px solid white;
+        border-radius: 1vw;
+    }
+
+    #box8 {
+        height: 10vw;
+        width: 10vw;
+        background: red;
+        border: 1px solid white;
+        border-radius: 1vw;
+    }
+
+    #box9 {
+        height: 10vw;
+        width: 10vw;
+        background: red;
+        border: 1px solid white;
+        border-radius: 1vw;
+    }
+
+    #box10 {
+        height: 10vw;
+        width: 10vw;
+        background: red;
+        border: 1px solid white;
+        border-radius: 1vw;
+    }
+
+    #box11 {
+        height: 10vw;
+        width: 10vw;
+        background: red;
+        border: 1px solid white;
+        border-radius: 1vw;
+    }
+
+    #box12 {
+        height: 10vw;
+        width: 10vw;
+        background: red;
+        border: 1px solid white;
+        border-radius: 1vw;
+    }
+
+    #box13 {
+        height: 10vw;
+        width: 10vw;
+        background: red;
+        border: 1px solid white;
+        border-radius: 1vw;
+    }
+
+    #box14 {
+        height: 10vw;
+        width: 10vw;
+        background: red;
+        border: 1px solid white;
+        border-radius: 1vw;
+    }
+
+    #box15 {
+        height: 10vw;
+        width: 10vw;
+        background: red;
+        border: 1px solid white;
+        border-radius: 1vw;
+    }
+
+    #box16 {
+        height: 10vw;
+        width: 10vw;
+        background: red;
+        border: 1px solid white;
+        border-radius: 1vw;
+    }
+
+    #box17 {
+        height: 10vw;
+        width: 10vw;
+        background: red;
+        border: 1px solid white;
+        border-radius: 1vw;
+    }
+
+    #box18 {
+        height: 10vw;
+        width: 10vw;
+        background: red;
+        border: 1px solid white;
+        border-radius: 1vw;
+    }
+}
+
+#page2 {
+    height: 50vw;
+    width: 100%;
+    background: black;
+
+    hr {
+        margin: 1vw 0vw;
+    }
+
+    h4 {
+        font-size: 1vw;
+        text-align: start;
+        color: white;
+        padding-top: 1vw;
+        font-family: "Chori";
+    }
+    
+    .parent7 {
+        height: 100%;
+        display: flex;
+        align-items: flex-start;
+    }
+
+    #boxa {
+        height: 10vw;
+        width: 10vw;
+        background: red;
+        border: 1px solid white;
+        border-radius: 1vw;
+    }
+
+    #boxb {
+        height: 10vw;
+        width: 10vw;
+        background: red;
+        border: 1px solid white;
+        border-radius: 1vw;
+    }
+
+    #boxc {
+        height: 10vw;
+        width: 10vw;
+        background: red;
+        border: 1px solid white;
+        border-radius: 1vw;
+    }
+}
+#page3 {
+    height: 50vw;
+    width: 100%;
+    background: black;
+
+    hr {
+        margin: 1vw 0vw;
+    }
+
+    h4 {
+        font-size: 1vw;
+        text-align: start;
+        color: white;
+        padding-top: 1vw;
+        font-family: "Chori";
+    }
+    
+    .parent8 {
+        height: 100%;
+        display: flex;
+        align-items: center;
+    }
+
+    #boxd {
+        height: 10vw;
+        width: 10vw;
+        background: red;
+        border: 1px solid white;
+        border-radius: 1vw;
+    }
+
+    #boxe {
+        height: 10vw;
+        width: 10vw;
+        background: red;
+        border: 1px solid white;
+        border-radius: 1vw;
+    }
+
+    #boxf {
+        height: 10vw;
+        width: 10vw;
+        background: red;
+        border: 1px solid white;
+        border-radius: 1vw;
+    }
+}
+
+#page4 {
+    height: 50vw;
+    width: 100%;
+    background: black;
+
+    hr {
+        margin: 1vw 0vw;
+    }
+
+    h4 {
+        font-size: 1vw;
+        text-align: start;
+        color: white;
+        padding-top: 1vw;
+        font-family: "Chori";
+    }
+    
+    .parent9 {
+        height: 100%;
+        display: flex;
+        align-items: flex-end;
+    }
+
+    #boxg {
+        height: 10vw;
+        width: 10vw;
+        background: red;
+        border: 1px solid white;
+        border-radius: 1vw;
+    }
+
+    #boxh {
+        height: 10vw;
+        width: 10vw;
+        background: red;
+        border: 1px solid white;
+        border-radius: 1vw;
+    }
+
+    #boxi {
+        height: 10vw;
+        width: 10vw;
+        background: red;
+        border: 1px solid white;
+        border-radius: 1vw;
+    }
+}
