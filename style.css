@@ -1,3 +1,8 @@
+@font-face {
+    font-family: "Condenso";
+    src: url(./Task-4/Assetss/korataki-rg-3cf0d889-B6eTgmP5.ttf);
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -10,4 +15,56 @@ body {
     width: 100%;
     background: black;
     color: white;
+}
+
+hr {
+    margin: 2vw 0;
+}
+
+#main {
+    height: 100%;
+    width: 100%;
+
+    h1 {
+        text-align: center;
+        font-family: "Condenso";
+        font-size: 4vw;
+        padding-top: 2vw;
+        color: rgb(143, 143, 143);
+    }
+
+    ul {
+        display: flex;
+        flex-direction: column;
+        margin-top: 2vw;
+
+        li {
+            list-style: none;
+            display: flex;
+            align-items: center;
+            
+            a {
+                color: White;
+                text-decoration: none;
+                font-family: "Condenso";
+                margin-left: 1vw;
+            }
+
+            a:hover {
+                color: gray;
+            }
+
+            img {
+                height: 10vw ;
+                width: 20vw;
+                border-radius: 1vw;   
+                transition: all 0.5s ease;
+                padding-left: 3vw;
+            }
+            img:hover {
+                scale: 1.2;
+                cursor: pointer;
+            }
+        }
+    }
 }
