@@ -1,0 +1,275 @@
+@font-face {
+    font-family: "pop";
+    src: url(./Font/Poppins-Regular.ttf);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    height: 100%;
+    width: 100%;
+}
+
+#main {
+    min-height: 100%;
+    width: 100%;
+    background: black;
+    color: white;
+
+    h1 {
+        padding-top: 1vw;
+        font-size: 3vw;
+        font-family: "pop";
+        text-align: center;
+    }
+
+    h3 {
+        padding-top: 1vw;
+        font-size: 2vw;
+        font-family: "pop";
+        text-align: center;
+        text-transform: capitalize;
+    }
+
+    hr {
+        margin: 1vw 0;
+    }
+
+    .parent {
+        height: 100vh;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+
+        .box {
+            height: 10vw;
+            width: 10vw;
+            background: red;
+            border-radius: 1vw;
+            border: 2px solid white;
+        }
+    }
+
+    .parent1 {
+        height: 100vh;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+
+        .box {
+            height: 10vw;
+            width: 10vw;
+            background: red;
+            border-radius: 1vw;
+            border: 2px solid white;
+        }
+    }
+
+    .parent2 {
+        height: 100vh;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        .box {
+            height: 10vw;
+            width: 10vw;
+            background: red;
+            border-radius: 1vw;
+            border: 2px solid white;
+        }
+    }
+
+    .parent3 {
+        height: 100vh;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+
+        .box {
+            height: 10vw;
+            width: 10vw;
+            background: red;
+            border-radius: 1vw;
+            border: 2px solid white;
+        }
+    }
+
+    .parent4 {
+        height: 100vh;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        .box {
+            height: 10vw;
+            width: 10vw;
+            background: red;
+            border-radius: 1vw;
+            border: 2px solid white;
+        }
+    }
+
+    .parent5 {
+        height: 100vh;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        .box {
+            height: 10vw;
+            width: 10vw;
+            background: red;
+            border-radius: 1vw;
+            border: 2px solid white;
+        }
+    }
+
+    .parent6 {
+        height: 100vh;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+
+        .box {
+            height: 10vw;
+            width: 10vw;
+            background: red;
+            border-radius: 1vw;
+            border: 2px solid white;
+        }
+    }
+
+    .parent7 {
+        height: 100vh;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+
+        .box {
+            height: 10vw;
+            width: 10vw;
+            background: red;
+            border-radius: 1vw;
+            border: 2px solid white;
+        }
+    }
+
+    .parent8 {
+        height: 100vh;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        .box {
+            height: 10vw;
+            width: 10vw;
+            background: red;
+            border-radius: 1vw;
+            border: 2px solid white;
+        }
+    }
+}
+
+#main1 {
+    min-height: 100%;
+    width: 100%;
+    background: black;
+    color: white;
+
+    h1 {
+        padding-top: 1vw;
+        font-size: 3vw;
+        font-family: "pop";
+        text-transform: capitalize;
+        text-align: center;
+    }
+
+    h3 {
+        padding-top: 1vw;
+        font-size: 2vw;
+        font-family: "pop";
+        text-align: center;
+        text-transform: capitalize;
+    }
+
+    hr {
+        margin: 1vw 0;
+    }
+
+    .parent9 {
+        height: 100vh;
+        width: 100%;
+        position: relative;
+        
+        #boxer {
+            height: 10vw;
+            width: 10vw;
+            background: red;
+            border-radius: 1vw;
+            border: 2px solid white;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%,-50%);
+        }
+
+    }
+
+    .hiver {
+        height: 30vw;
+        width: 100%;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10vw;
+
+        button {
+            padding: 2vw 5vw;
+            font-size: 2vw;
+            font-family: "pop";
+            color: white;
+            border: 3px solid transparent;
+            background: rgb(255, 0, 51);
+            border-radius: 1vw;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: rgb(10, 199, 10);
+            color: black;
+            border: 3px solid white;
+        }
+    }
+
+    .shad {
+        height: 40vw;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        .sampler {
+            height: 10vw;
+            width: 10vw;
+            background: red;
+            border-radius: 1vw;
+            box-shadow: 5px 5px 30px rgba(255, 255, 255, 0.405);
+        }
+    }
+}
