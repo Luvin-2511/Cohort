@@ -44,14 +44,18 @@ body {
 }
 
 #main {
-    min-height: 100vh;
+    height: 100vh;
     width: 100%;
     background: black;
+    overflow: hidden;
 
     .page1 {
         height: 100vh;
         width: 100%;
         background-color: black;
+        position: relative;
+        overflow: hidden;
+
 
         .nav {
             height: 7vw;
@@ -266,12 +270,12 @@ body {
                 left: 60%;
                 top: 28%;
                 transform: rotate(-30deg);
-
+                
                 img {
                     height: 100%;
                     width: 100%;
                 }
-
+                
             }
             .phone2 {
                 height: 34vw;
@@ -329,6 +333,9 @@ body {
                 font-family: "nh";
                 text-transform: uppercase;
                 font-size: 3vw;
+                span {
+                    overflow: hidden;
+                }
             }
             .sidetext {
                 color: rgba(255, 255, 255, 0.763);
@@ -340,5 +347,27 @@ body {
         }
 
 
+    }
+}
+
+#hoverer {
+    height: 100vh;
+    width: 100%;
+    background: black;
+    position: absolute;
+    z-index: 12;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    h1 {
+        text-align: center;
+        color: transparent;
+        font-size: 4vw;
+        background: linear-gradient(to right, white,#353535);
+        background-clip: text;
+        text-transform: uppercase;
+        font-family: "nh";
+        opacity: 0;
     }
 }
