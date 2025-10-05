@@ -1,0 +1,564 @@
+@font-face {
+    font-family: "gil";
+    src: url(./Fonts/Gilroy-Light.ttf);
+}
+
+@font-face {
+    font-family: "gil2";
+    src: url(./Fonts/Gilroy-Black.ttf);
+}
+
+@font-face {
+    font-family: "gil3";
+    src: url(./Fonts/Gilroy-Medium.ttf);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    height: 100%;
+    width: 100%;
+}
+
+#page1 {
+    height: 100vh;
+    width: 100%;
+    background: #111111;
+
+    .navbar {
+        height: 7vw;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+
+        h1 {
+            font-size: 1.5vw;
+            color: white;
+            font-family: 'gil';
+            text-transform: uppercase;
+        }
+
+        .centernav {
+            background: #191917;
+            padding: 1vw 3vw;
+            border-radius: 2vw;
+
+            ul {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 3vw;
+
+                li {
+                    font-size: 1.15vw;
+                    list-style: none;
+                    color: white;
+                    font-family: "gil2";
+                    position: relative;
+                    cursor: pointer;
+
+                    .line {
+                        position: absolute;
+                        height: 0.2vw;
+                        width: 2vw;
+                        background: #CAFE3F;
+                        bottom: -50%;
+                        left: 1.2vw;
+                    }
+                }
+            }
+        }
+
+        .right {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1vw;
+
+
+            i {
+                color: white;
+                font-size: 1.6vw;
+            }
+
+            .wallet {
+                cursor: pointer;
+                font-size: 1.2vw;
+                color: white;
+                font-family: "gil3";
+                padding: 0.7vw 1.2vw;
+                border: 1px solid white;
+                border-radius: 2vw;
+            }
+        }
+    }
+
+    .hero {
+        text-align: center;
+
+        .maintext1 {
+            margin-top: 1vw;
+            font-size: 4vw;
+            font-family: "gil";
+            color: white;
+        }
+
+        .maintext2 {
+            font-size: 4vw;
+            font-family: "gil2";
+            color: white;
+        }
+
+        .arrow {
+            height: 15vw;
+            position: absolute;
+            top: 20%;
+            left: 18%;
+            transform: rotate(-46deg);
+        }
+
+        .mainimg {
+            height: 33vw;
+            width: 33vw;
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+
+            img {
+                height: 100%;
+                width: 100%;
+                object-fit: cover;
+            }
+        }
+
+        .leftcircle {
+            height: 10vw;
+            width: 10vw;
+            background: #11120d;
+            border-radius: 50%;
+            padding: 1vw;
+            position: absolute;
+            left: 7vw;
+            box-shadow: -2px 0px 30px white;
+
+            .innercircle {
+                height: 8vw;
+                width: 8vw;
+                background: #171717;
+                border-radius: 50%;
+                position: relative;
+                overflow: hidden;
+
+                img {
+                    height: 100%;
+                    width: 100%;
+                    object-fit: cover;
+                }
+
+            }
+        }
+
+        h3 {
+            width: 12vw;
+            font-size: 0.8vw;
+            text-align: left;
+            color: white;
+            position: absolute;
+            left: 7vw;
+            top: 30vw;
+            font-family: "gil3";
+        }
+
+        .right {
+            position: absolute;
+            right: 5vw;
+
+            .user {
+                font-family: "gil";
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 0.3vw;
+
+                h2 {
+                    font-size: 3vw;
+                    color: white;
+
+                    span {
+                        color: #CAFE3F;
+                    }
+                }
+
+                h4 {
+                    font-size: 1vw;
+                    color: white;
+                }
+
+            }
+
+            hr {
+                width: 9vw;
+                margin-bottom: 2vw;
+                margin-top: 2vw;
+                background: #CAFE3F;
+            }
+
+            .rightbot {
+                height: 8vw;
+                margin-top: 3vw;
+                width: 8vw;
+
+            }
+        }
+    }
+}
+
+#page2 {
+    height: 100vh;
+    width: 100%;
+    background: black;
+    position: relative;
+
+    .nav2 {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding-top: 5vw;
+        gap: 18vw;
+
+        .left {
+            line-height: 3vw;
+
+            h2 {
+                font-size: 1.5vw;
+                font-family: "gil3";
+                color: #CAFE3F;
+            }
+
+            h1 {
+                font-size: 3vw;
+                font-family: "gil";
+                color: white;
+            }
+        }
+
+        .center {
+            h5 {
+                width: 18.6vw;
+                font-family: "gil";
+                color: white;
+                line-height: 1.5vw;
+            }
+        }
+
+        .right {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5vw;
+
+            .idhar {
+                padding: 1.7vw 1.7vw;
+                border-radius: 1vw;
+                cursor: pointer;
+                background: black;
+                box-shadow: 0px -2px 5px white;
+
+                i {
+                    font-size: 3vw;
+                }
+            }
+
+            .udhar {
+                padding: 2vw 2vw;
+                border-radius: 1vw;
+                cursor: pointer;
+                background: white;
+
+                i {
+                    font-size: 2vw;
+                }
+            }
+        }
+    }
+
+    .arrow1 {
+        height: 9vw;
+        width: 9vw;
+        position: absolute;
+        left: 22vw;
+        top: 8vw;
+        transform: rotate(-45deg);
+
+    }
+
+    .cards {
+        height: 40vw;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 5vw;
+
+        .card {
+            height: 25vw;
+            width: 20vw;
+            background: #1b1c1f;
+            border-radius: 1vw;
+            border: 1px solid white;
+            padding: 1.4vw;
+            position: relative;
+
+            .innercard {
+                height: 22vw;
+                width: 17vw;
+                background: black;
+                border-radius: 1vw;
+                clip-path: polygon(46% 0%, 63% 12%, 100% 12%, 100% 100%, 0% 100%, 0% 0%);
+                background-image: url('./Image/Moneky1.jpg');
+                background-size: cover;
+                background-position: center;
+                position: relative;
+
+                .leftbottom {
+                    height: 4vw;
+                    width: 9vw;
+                    background: #1b1c1f;
+                    position: absolute;
+                    bottom:0;
+                    top: 20vw;
+                    right: 9vw;
+                    border-radius: 0.5vw;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+
+                    h4 {
+                        color: white;
+                        font-family: "gil";
+                        padding-bottom: 1.5vw;
+                        img {
+                            height: 1vw;
+                        }
+                    }
+                }
+            }
+
+            .topright {
+                position: absolute;
+                height: 3vw;
+                width: 8vw;
+                color: white;
+                top: 1.5vw;
+                right: 0;
+
+                h3 {
+                    font-size: 0.8vw;
+                    font-family: "gil";
+                }
+                h2 {
+                    font-size: 1vw;
+                    font-family: "gil";
+                }
+            }
+
+            .limited {
+                color: black;
+                background: #daf713;
+                font-family: "gil3";
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 0.4vw 0.6vw;
+                width: 9vw;
+                position: absolute;
+                top: 5vw;
+                left: -1vw;
+            }
+        }
+        .card2 {
+            height: 25vw;
+            width: 20vw;
+            background: #1b1c1f;
+            border-radius: 1vw;
+            border: 1px solid white;
+            padding: 1.4vw;
+            position: relative;
+
+            .innercard {
+                height: 22vw;
+                width: 17vw;
+                background: black;
+                border-radius: 1vw;
+                clip-path: polygon(46% 0%, 63% 12%, 100% 12%, 100% 100%, 0% 100%, 0% 0%);
+                background-image: url('./Image/monkey2.jpg');
+                background-size: cover;
+                background-position: center;
+                position: relative;
+
+                .leftbottom {
+                    height: 4vw;
+                    width: 9vw;
+                    background: #1b1c1f;
+                    position: absolute;
+                    bottom:0;
+                    top: 20vw;
+                    right: 9vw;
+                    border-radius: 0.5vw;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+
+                    h4 {
+                        color: white;
+                        font-family: "gil";
+                        padding-bottom: 1.5vw;
+                        img {
+                            height: 1vw;
+                        }
+                    }
+                }
+            }
+
+            .topright {
+                position: absolute;
+                height: 3vw;
+                width: 8vw;
+                color: white;
+                top: 1.5vw;
+                right: 0;
+
+                h3 {
+                    font-size: 0.8vw;
+                    font-family: "gil";
+                }
+                h2 {
+                    font-size: 1vw;
+                    font-family: "gil";
+                }
+            }
+
+            .limited {
+                color: black;
+                background: #FFDFD3;
+                font-family: "gil3";
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 0.4vw 0.6vw;
+                width: 9vw;
+                position: absolute;
+                top: 5vw;
+                left: -1vw;
+            }
+        }
+        .card3 {
+            height: 25vw;
+            width: 20vw;
+            background: #1b1c1f;
+            border-radius: 1vw;
+            border: 1px solid white;
+            padding: 1.4vw;
+            position: relative;
+
+            .innercard {
+                height: 22vw;
+                width: 17vw;
+                background: black;
+                border-radius: 1vw;
+                clip-path: polygon(46% 0%, 63% 12%, 100% 12%, 100% 100%, 0% 100%, 0% 0%);
+                background-image: url('./Image/Monkey3.jpg');
+                background-size: cover;
+                background-position: center;
+                position: relative;
+
+                .leftbottom {
+                    height: 4vw;
+                    width: 9vw;
+                    background: #1b1c1f;
+                    position: absolute;
+                    bottom:0;
+                    top: 20vw;
+                    right: 9vw;
+                    border-radius: 0.5vw;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+
+                    h4 {
+                        color: white;
+                        font-family: "gil";
+                        padding-bottom: 1.5vw;
+                        img {
+                            height: 1vw;
+                        }
+                    }
+                }
+            }
+
+            .topright {
+                position: absolute;
+                height: 3vw;
+                width: 8vw;
+                color: white;
+                top: 1.5vw;
+                right: 0;
+
+                h3 {
+                    font-size: 0.8vw;
+                    font-family: "gil";
+                }
+                h2 {
+                    font-size: 1vw;
+                    font-family: "gil";
+                }
+            }
+
+            .limited {
+                color: black;
+                background: #FA4122;
+                font-family: "gil3";
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 0.4vw 0.6vw;
+                width: 9vw;
+                position: absolute;
+                top: 5vw;
+                left: -1vw;
+            }
+        }
+    }
+
+    .buttons {
+        height: 4vw;
+        width: 60vw;
+        position: relative;
+        top: -5vw;
+        margin: auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 18vw;
+
+
+        .button {
+            background: #1b1c1e;
+            color: white;
+            width: 8vw;
+            text-align: center;
+            border-radius: 0.5vw;
+            font-family: "gil2";
+            padding: 0.8vw 1vw;
+            
+        }
+    }
+}
