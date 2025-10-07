@@ -1,0 +1,202 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family:  Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif
+}
+
+html,
+body {
+    height: 100%;
+    width: 100%;
+    background: black;
+    
+}
+
+hr {
+    margin: 2vw 0;
+}
+
+#page1 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 2vw;
+
+    h1 {
+        color: white;
+        font-size:5vw;
+        text-align: center;
+    }
+
+    h2 {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        color: rgb(255, 255, 255);
+        font-size: 1.2vw;
+        
+    }
+}
+#page2 {
+    
+    height: 50vw;
+
+    h1 {
+        color: white;
+        font-size:5vw;
+        text-align: center;
+    }
+
+    h2 {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        color: rgb(255, 255, 255);
+        font-size: 1.4vw;
+        text-align: center;
+        
+    }
+
+    .flex {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 2vw;
+    }
+    .flex1 {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 2vw;
+    }
+
+    .poker {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1vw;
+    }
+    .poker1 {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1vw;
+        perspective: 200px;
+    }
+
+    .imager1 {
+        height: 15vw;
+        width: 25vw;
+        background-image: url('https://images.pexels.com/photos/20903558/pexels-photo-20903558.jpeg');
+        background-size: cover;
+        background-position: center;
+        border-radius: 1vw;
+        transition: all 0.5s ease;
+    }
+
+    .imager1:hover {
+        transform: rotateX(45deg);
+    }
+    
+    .imager2:hover {
+        transform: rotateY(45deg);
+    }
+    .imager3:hover {
+        transform: rotateZ(45deg);
+    }
+    .imager2 {
+        height: 15vw;
+        width: 25vw;
+        background-image: url('https://images.pexels.com/photos/20903558/pexels-photo-20903558.jpeg');
+        background-size: cover;
+        background-position: center;
+        border-radius: 1vw;
+        transition: all 0.5s ease;
+    }
+    .imager3 {
+        height: 15vw;
+        width: 25vw;
+        background-image: url('https://images.pexels.com/photos/20903558/pexels-photo-20903558.jpeg');
+        background-size: cover;
+        background-position: center;
+        border-radius: 1vw;
+        transition: all 0.5s ease;
+    }
+}
+
+#page3 {
+    height: 60vw;
+    width: 100%;
+    position: relative;
+     h1 {
+        margin-top: 20vw;
+        color: white;
+        font-size:5vw;
+        text-align: center;
+    }
+
+    h2 {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        color: rgb(255, 255, 255);
+        font-size: 1.2vw;    
+    }
+
+    .imagediv {
+        height: 30vw;
+        width: 25vw;
+        background: red;
+        border-radius: 1vw;
+        background-image: url('https://images.pexels.com/photos/30432744/pexels-photo-30432744.jpeg');
+        background-size: cover;
+        background-position: center;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%,-50%);
+        overflow: hidden;
+
+        .insider {
+            height: 100%;
+            width: 100%;
+            position: absolute;
+            bottom: -100%;
+            background: linear-gradient(transparent , black);
+            border-radius: 2vw;
+            transition: all 0.5s ease;
+            cursor: pointer;
+            
+
+            h2 {
+                margin-top: 90%;
+                margin-left: 1vw;
+                font-family: impact;
+            }
+            h4 {
+                color: rgb(155, 155, 155);
+                margin-left: 1vw;
+                margin-top: 1vw;
+            }
+        }  
+    }
+
+    .imagediv:hover .insider {
+        bottom:0
+        
+        
+    }
+}
+
+#box1,
+#box2 {
+    height: 10vw;
+    width: 10vw;
+    background: red;
+    border:5px solid white;
+    border-radius: 1vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.2vw;
+}
+
+#box2 {
+    box-sizing: border-box;
+}
