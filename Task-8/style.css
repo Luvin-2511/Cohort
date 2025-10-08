@@ -1,0 +1,85 @@
+@font-face {
+    font-family: "fonter";
+    src: url(./Font/korataki-rg-3cf0d889.ttf);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "fonter";
+}
+
+html,
+body {
+    height: 100%;
+    width: 100%;
+}
+
+
+#main {
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(to top, rgb(40, 40, 40), rgb(0, 0, 0));
+
+
+
+
+    h1 {
+        color: transparent;
+        font-size: 7vw;
+        background-clip: text;
+        background-image: url('https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExbHQxOGZzNnpseDh4cDRsY3ZobnAxNzdydTN3amlobDIzbHQzNnZsOCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/YJ6Ihp2SDDUZSyOV8x/giphy.gif');
+        text-align: center;
+    }
+
+    ::-webkit-scrollbar {
+        width: 0;
+    }
+
+    .cards {
+        height: 70%;
+        display: flex;
+        gap: 1vw;
+        padding-top: 4vw;
+        overflow-x: scroll;
+        perspective: 1000px;
+        
+        
+        .card {
+            height: 25vw;
+            width: 15vw;
+            border-radius: 1vw;
+            overflow: hidden;
+            transform-style: preserve-3d;
+            flex-shrink: 0;
+            filter: brightness(0);
+            transition: all 0.5s ease;
+            cursor: pointer;
+            box-shadow: 10px 10px 10px black;
+
+
+            video {
+                height: 100%;
+                width: 100%;
+                object-fit: cover;
+            }
+        }
+
+        .card:hover {
+            transform: translateZ(150px);
+            filter: brightness(1);
+            scale: 1.02;
+        }
+
+        .card:hover+* {
+            transform: rotateY(15deg) translateZ(100px);
+            filter: brightness(0.6);
+        }
+
+        .card:has(+*:hover) {
+            transform: rotateY(-15deg) translateZ(100px);
+            filter: brightness(0.6);
+        }
+    }
+}
