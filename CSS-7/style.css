@@ -1,0 +1,189 @@
+@font-face {
+    font-family: "gillu";
+    src: url(./Font/Gilroy-Regular.ttf);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    height: 100%;
+    width: 100%;
+}
+
+
+#page1 {
+    min-height: 100vh;
+    width: 100%;
+    background: black;
+    font-family: "gillu";
+    color: white;
+
+    h1 {
+        font-size: 15vw;
+        font-weight: 900;
+        color: transparent;
+        background-clip: text;
+        text-align: center;
+        text-align:center;
+        background-image: url('https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExY3lnYWN2NHExc21jd2xpYWZqZXZuYnppODY4ejd5MXN1cjAxdHQwdiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/sJvz8Qnfly3BOuotGx/giphy.gif');
+        background-position: center;
+        background-size: contain;
+        /* Used for text borders */
+        -webkit-text-stroke: 0.2px red;
+        
+    }
+
+
+    h4 {
+        background: red;
+        text-align:center;
+        font-size: 1.5vw;
+    }
+
+    a {
+        background: green;
+        font-size: 1.5vw;
+    }
+
+    h3 {
+        font-size: 2vw;
+        text-align: center;
+        margin: 1vw 0;
+    }
+
+    /* Using nth child property : means the nth appearence of the specific tag or class */
+    h4:nth-of-type(2) {
+        display: inline-block;
+        font-size: 1.5vw;
+        background: red;
+        text-align:center;
+    }
+
+    hr {
+        margin: 2vw 0;
+    }
+
+    #boxes {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        .box {
+            height: 7vw;
+            width: 7vw;
+            border: 1px solid white;
+            background: crimson;
+            border-radius: 1vw;
+        }
+        .box:nth-child(2n){
+            background: green;
+        }
+    }
+    #boxes1 {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        .box {
+            height: 7vw;
+            width: 7vw;
+            border: 1px solid white;
+            background: crimson;
+            border-radius: 1vw;
+        }
+        .box:nth-child(2n-1){
+            background: green;
+        }
+    }
+
+    .div {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 1vw;
+        flex-wrap: nowrap;
+        overflow: auto;
+
+        .viewer {
+            height: 30vw;
+            width: 20vw;
+            background: red;
+            border-radius: 1vw;
+            flex-shrink: 0;
+        }
+
+        .viewer:nth-child(1){
+            background-image: url('https://images.pexels.com/photos/32820576/pexels-photo-32820576.jpeg');
+            background-size: cover;
+            background-position: center;
+            
+        }
+        .viewer:nth-child(2){
+            background-image: url('https://images.pexels.com/photos/34023281/pexels-photo-34023281.jpeg');
+            background-size: cover;
+            background-position: center;
+
+        }
+        .viewer:nth-child(3){
+            background-image: url('https://images.pexels.com/photos/34014708/pexels-photo-34014708.jpeg');
+            background-size: cover;
+            background-position: center;
+
+        }
+        .viewer:nth-child(4){
+            background-image: url('https://images.pexels.com/photos/32523803/pexels-photo-32523803.jpeg');
+            background-size: cover;
+            background-position: center;
+
+        }
+        .viewer:nth-child(5){
+            background-image: url('https://images.pexels.com/photos/34174544/pexels-photo-34174544.jpeg');
+            background-size: cover;
+            background-position: center;
+
+        }
+        .viewer:nth-child(6){
+            background-image: url('https://images.pexels.com/photos/32820576/pexels-photo-32820576.jpeg');
+            background-size: cover;
+            background-position: center;
+            
+        }
+        .viewer:nth-child(7){
+            background-image: url('https://images.pexels.com/photos/34023281/pexels-photo-34023281.jpeg');
+            background-size: cover;
+            background-position: center;
+
+        }
+        .viewer:nth-child(8){
+            background-image: url('https://images.pexels.com/photos/34014708/pexels-photo-34014708.jpeg');
+            background-size: cover;
+            background-position: center;
+
+        }
+        .viewer:nth-child(9){
+            background-image: url('https://images.pexels.com/photos/32523803/pexels-photo-32523803.jpeg');
+            background-size: cover;
+            background-position: center;
+
+        }
+        .viewer:nth-child(10){
+            background-image: url('https://images.pexels.com/photos/34174544/pexels-photo-34174544.jpeg');
+            background-size: cover;
+            background-position: center;
+
+        }
+    }
+
+    .div::-webkit-scrollbar {
+        background: rgb(255, 255, 255);
+    }
+
+    .div::-webkit-scrollbar-thumb {
+        background: rgb(21, 21, 21);
+        border-radius: 1vw;
+    }
+     
+}
