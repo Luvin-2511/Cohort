@@ -187,3 +187,47 @@ body {
     }
      
 }
+
+#page2 {
+    min-height: 100vh;
+    width: 100%;
+    background: black;
+    font-family: "gillu";
+    color: white;
+
+    h1 {
+        font-size: 15vw;
+        font-weight: 900;
+        color: transparent;
+        background-clip: text;
+        text-align: center;
+        text-align:center;
+        background-image: url('https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExY3lnYWN2NHExc21jd2xpYWZqZXZuYnppODY4ejd5MXN1cjAxdHQwdiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/sJvz8Qnfly3BOuotGx/giphy.gif');
+        background-position: center;
+        background-size: contain;
+        /* Used for text borders */
+        -webkit-text-stroke: 0.2px red;
+        
+    }
+
+
+    h4 {
+        background: red;
+        text-align:center;
+        font-size: 1.5vw;
+    }
+
+    #parent {
+        height: 100vh;
+        width: 100%;
+        display: grid;
+        grid-template-columns: 25% 25% 25% 25%;
+        grid-template-rows: 33% 33% 33%;
+
+        .box {
+            background: crimson;
+            border: 1px solid white;
+            border-radius: 1vw;
+        }
+    }
+}
