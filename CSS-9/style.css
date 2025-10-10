@@ -1,0 +1,80 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+html,
+body {
+    height: 100%;
+    width: 100%;
+    background: black;
+}
+
+#main {
+    height: 100%;
+    width: 100%;
+    font-size: 1vw;
+
+    h1 {
+        font-size: 5vw;
+        color: white;
+        text-align: center;
+    }
+    
+    hr {
+        margin-bottom: 2vw;
+        margin-top: 2vw;
+    }
+
+    .px{
+        font-size: 20px;
+        color: white;
+        text-align: center;
+    }
+    
+    .vw {
+        font-size: 4vw;
+        color: white;
+        text-align: center;
+        
+    }
+    .vh {
+        font-size: 4vh;
+        color: white;
+        text-align: center;
+        
+    }
+    
+    .perc {
+        font-size: 60%;
+        color: white;
+        text-align: center;
+    }
+    
+    .rem {
+        font-size: 4rem;
+        color: white;
+        text-align: center;
+
+    }
+    .em {
+        font-size: 4em;
+        color: white;
+        text-align: center;
+
+    }
+    .vmax {
+        font-size: 4vmax;
+        color: white;
+        text-align: center;
+
+    }
+    .vmin {
+        font-size: 4vmin;
+        color: white;
+        text-align: center;
+
+    }
+}
