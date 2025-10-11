@@ -1,0 +1,50 @@
+@import "button";
+@import "flex";
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    height: 100%;
+    width: 100%;
+    background: black;
+}
+
+
+
+
+main {
+    @include flex-box();
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    
+    section {
+        h2 {
+            @include flex-box();
+            text-align: center;
+            color: white;
+            font-size: 3rem;
+            margin-top: 2vw;
+        }
+
+        h3 {
+            text-align: left;
+            color: rgb(30, 121, 68);
+            font-size: 1rem;
+        }
+
+       .red {
+        @include button-layout(red)
+       }
+       .blue {
+        @include button-layout(blue)
+       }
+
+       button:hover {
+        scale: 1.1;
+       }
+    }
+}

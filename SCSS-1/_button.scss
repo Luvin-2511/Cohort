@@ -1,0 +1,15 @@
+
+@mixin button-layout($bg){
+    padding:15px 25px;
+    font-size: 1vw;
+    color: white;
+    font-weight: 500;
+    background: $bg;
+    border: none;
+    outline:none;
+    border-radius: 1vw;
+    cursor: pointer;
+    margin-top: 3vw;
+    margin-right: 1vw;
+    transition: all 0.5s ease;
+}
