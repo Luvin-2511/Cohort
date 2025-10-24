@@ -19,9 +19,9 @@ main {
     height: 100%;
     width: 100%;
     font-family: "apple";
-    
+
     #page1 {
-        height: 107vh;
+        height: 106.3vh;
         width: 100%;
         background: black;
 
@@ -53,7 +53,7 @@ main {
                         svg:hover {
                             opacity: 1;
                         }
-                        
+
                     }
 
                     a:hover {
@@ -62,7 +62,7 @@ main {
                 }
             }
         }
-        
+
         .liner {
             margin-top: 0.6vw;
             height: 3vw;
@@ -84,17 +84,23 @@ main {
             }
         }
 
-        .heroimg{
+        .heroimg {
             height: 90vh;
             width: 100%;
             background: black;
             position: relative;
 
-            img {
+            img,
+            video {
                 height: 100%;
                 width: 100%;
                 object-fit: contain;
                 margin-top: 2.5vw;
+            }
+
+            video {
+                position: absolute;
+                left: 0;
             }
 
             .overbuy {
@@ -123,6 +129,538 @@ main {
                     color: white;
                     font-size: 0.95vw;
                 }
+            }
+        }
+    }
+
+    #page2 {
+        height: 70vw;
+        width: 100%;
+        background: #1D1D1F;
+
+        .topper {
+            height: 5vw;
+            width: 100%;
+            padding-top: 11vw;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            gap: 12vw;
+
+
+            h2 {
+                letter-spacing: -2px;
+                color: white;
+                font-size: 3.2vw;
+            }
+
+            .watch {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                h4 {
+                    color: #2997FF;
+                }
+
+                svg {
+                    color: #2997FF;
+                    height: 1.5vw;
+                }
+
+                h4:hover {
+                    text-decoration: underline;
+                    cursor: pointer;
+                }
+
+            }
+        }
+
+        .scroller {
+            margin-top: 4vw;
+            height: 45vw;
+            display: flex;
+            align-items: center;
+            flex-wrap: nowrap;
+            padding-left: 10vw;
+            padding-right: 10vw;
+            overflow-x: scroll;
+            gap: 1.5vw;
+            scrollbar-width: none;
+            scroll-snap-type: x mandatory;
+            scroll-behavior: smooth;
+
+            .scroll {
+                scroll-snap-align: center;
+                height: 40vw;
+                width: 74vw;
+                background: black;
+                border-radius: 2vw;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                overflow: hidden;
+                position: relative;
+                flex-shrink: 0;
+
+                h1 {
+                    position: absolute;
+                    top: 0vw;
+                    margin-top: 3vw;
+                    color: white;
+                    width: 35vw;
+                    font-size: 1.5vw;
+                    text-align: center;
+
+                }
+
+                img,
+                video {
+                    height: 40vw;
+                    object-fit: cover;
+                }
+
+                video {
+                    position: absolute;
+                }
+
+            }
+        }
+
+        .bar {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1vw;
+
+            .wheel {
+
+                height: 3.5vw;
+                width: 14vw;
+                border-radius: 2vw;
+                background: #262629;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 1vw;
+
+                .dots {
+                    height: 0.5vw;
+                    width: 0.5vw;
+                    border-radius: 50%;
+                    transition: all 0.5s ease;
+                    background: white;
+                }
+
+                .active {
+                    width: 3vw;
+                    border-radius: 2vw;
+                }
+            }
+
+            .play {
+                height: 3.5vw;
+                width: 3.5vw;
+                border-radius: 50%;
+                background: #262629;
+                cursor: pointer;
+            }
+
+            .play:hover {
+                background: #3F3F42;
+            }
+        }
+    }
+
+    #page3 {
+        height: 100vw;
+        width: 100%;
+        background: black;
+        padding-top: 9vw;
+        position: relative;
+
+        h3 {
+            font-size: 1.3vw;
+            color: #FF680C;
+            text-align: center;
+            margin-bottom: 1vw;
+        }
+
+        h1 {
+            color: white;
+            font-size: 4.5vw;
+            text-align: center;
+            letter-spacing: -1px;
+            word-spacing: -5px;
+        }
+
+        h4 {
+            margin: auto;
+            margin-top: 1.5vw;
+            color: rgba(255, 255, 255, 0.516);
+            line-height: 1.8vw;
+            text-align: center;
+            width: 50vw;
+            font-size: 1.2vw;
+        }
+
+        .videocont {
+            position: relative;
+            top: -10vw;
+            width: 60vw;
+            height: 60vw;
+            margin: auto;
+
+            video {
+                height: 100%;
+                width: 100%;
+                object-fit: contain;
+            }
+        }
+
+        .sticker {
+            position: sticky;
+            bottom: 3vw;
+            width: 17vw;
+            gap: 1vw;
+            padding: 0 1vw;
+            margin: auto;
+            height: 3.5vw;
+            background: rgba(255, 255, 255, 0.113);
+            border-radius: 2vw;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+
+            h5 {
+                width: 12.5vw;
+                font-size: 1vw;
+                color: white;
+            }
+
+            .add {
+                height: 2vw;
+                width: 2vw;
+                border-radius: 50%;
+                background: #0071E3;
+                cursor: pointer;
+            }
+        }
+    }
+
+    #page4 {
+        min-height: 100vw;
+        width: 100%;
+        background: black;
+        padding-top: 5vw;
+        position: relative;
+
+        h3 {
+            font-size: 1.3vw;
+            color: #FF680C;
+            text-align: center;
+            margin-bottom: 1vw;
+        }
+
+        h1 {
+            color: white;
+            font-size: 4.5vw;
+            text-align: center;
+            letter-spacing: -1px;
+            word-spacing: -5px;
+        }
+
+        h5 {
+            width: 51vw;
+            line-height: 1.7vw;
+            margin: auto;
+            margin-top: 5vw;
+            font-size: 1.2vw;
+            color: #ffffff92;
+            text-align: center;
+            margin-bottom: 1vw;
+
+            span {
+                color: white;
+            }
+
+        }
+
+
+        .videobaksa {
+            height: 45vw;
+            width: 70vw;
+            position: relative;
+            left: -8vw;
+
+            video {
+                height: 100%;
+                width: 100%;
+                object-fit: contain;
+            }
+        }
+
+        .info {
+            position: absolute;
+            right: 20vw;
+            top: 25vw;
+
+            h3 {
+                color: rgba(255, 255, 255, 0.42);
+                text-align: left;
+                margin: 1.5vw 0;
+
+            }
+
+            h1 {
+                line-height: 2vw;
+                color: #FF680C;
+                text-align: left;
+
+            }
+        }
+
+        .imgcont {
+            height: 50vw;
+            width: 60vw;
+            margin-left: 20vw;
+
+            img {
+                height: 100%;
+                width: 100%;
+                object-fit: contain;
+            }
+        }
+
+        .imgcont2 {
+            height: 50vw;
+            width: 100%;
+
+            img {
+                height: 100%;
+                width: 100%;
+                object-fit: contain;
+            }
+        }
+
+        .mm {
+            margin: auto;
+            height: 3vw;
+            width: 41.7vw;
+            background: #333336;
+            border-radius: 3vw;
+            display: flex;
+
+            .size {
+                margin: 0.3vw;
+                padding: 0.6vw 0.8vw;
+                border-radius: 2vw;
+                color: rgba(255, 255, 255, 0.449);
+                font-size: 0.9vw;
+                font-weight: 500;
+            }
+
+            .active {
+                background: white;
+                color: black;
+            }
+        }
+
+        .parts {
+            height: 10vw;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5vw;
+
+            .part {
+                color: white;
+                text-align: left;
+                width: 20vw;
+
+                h3,
+                h4 {
+                    text-align: left;
+                }
+
+                h3 {
+                    color: white;
+                    margin-bottom: 1.5vw;
+                }
+
+                hr {
+                    background-color: rgba(255, 255, 255, 0.532);
+                    height: 0.1px;
+                    margin-bottom: 1vw;
+                }
+
+                h4 {
+                    color: rgba(255, 255, 255, 0.532);
+                    line-height: 2vw;
+                }
+            }
+        }
+
+        .scrollingsection {
+            min-height: 100vw;
+            width: 100%;
+            padding-top: 12vw;
+            padding-left: 12vw;
+
+            h1 {
+                color: white;
+                font-size: 1.8vw;
+                text-align: left;
+                letter-spacing: 0px;
+                word-spacing: 0px;
+            }
+
+            .scrooller {
+                height: 50vw;
+                width: 100%;
+                padding-top: 2vw;
+                padding-left: 12vw;
+                display: flex;
+                align-items: center;
+                gap: 1vw;
+                overflow-y: hidden;
+                overflow-x: scroll;
+                scrollbar-width: none;
+                scroll-snap-type: x mandatory;
+                scroll-behavior: smooth;
+                
+                .scrooll {
+                    scroll-snap-align: start;
+                    width:60vw;
+                    margin-top: 5vw;
+                    
+                    img {
+                        height: 40vw;
+                        object-fit: cover;
+                        flex-grow: 1;
+                        border-radius: 2vw;
+                    }
+                    
+                    h5 {
+                        position: relative;
+                        top: -4vw;
+                        text-align: left;
+                        width:35vw;
+                        font-size: 1vw;
+                        
+                    }
+                }
+            }
+            
+        }
+
+        .lr {
+            position: relative;
+            top: -35vw;
+            left: 80vw;
+            height: 4vw;
+            width: 10vw;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1vw;
+
+            .left {
+                height: 2.5vw;
+                width: 2.5vw;
+                border-radius: 50%;
+                background: #353537;
+                opacity: 0.4;
+            }
+            
+            .right {
+                height: 2.5vw;
+                width: 2.5vw;
+                border-radius: 50%;
+                background: #353537;
+            }
+        }
+
+        #page4 {
+            position: relative;
+            top: -30vw;
+            min-height: 200vw;
+            background: black;
+            
+            h5 {
+                position: relative;
+                top: -3vw;
+
+            }
+
+            img {
+                position: absolute;
+                left: 40vw;
+                height: 40vw;
+                overflow: hidden;
+                z-index: 20;
+            }
+
+            .abs {
+                height: 37vw;
+                top: 27vw;
+                z-index: 10;
+                position: absolute;
+                left: 41vw;
+            }
+
+            .selector {
+                padding: 0.4vw 0.4vw;
+                margin: auto;
+                margin-top: 45vw;
+                height: 6vw;
+                width: 30vw;
+                border-radius: 1vw;
+                background: #333336;
+                display: flex;
+                gap: 0.3vw;
+
+                .select {
+                    height: 100%;
+                    gap: 0.5vw;
+                    color: white;
+                    font-weight: 600;
+                    padding: 0 0.5vw;
+                    width: calc(100%/4);
+                    border-radius: 1vw;
+                    text-align: center;
+                    font-size: 0.75vw;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                }
+
+                .selected {
+                    background: white;
+                    color: black;
+                }
+            }
+
+            h5 {
+                width: 34vw;
+            }
+
+            .pro {
+                margin-top: 8vw;
+            }
+
+            .phone {
+                height: 35vw;
+                width: 70vw;
+                overflow: hidden;
+                margin-left: 12vw;
+                object-fit: contain;
+                left: 0;
+                top: 119vw;
             }
         }
     }
