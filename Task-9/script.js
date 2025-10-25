@@ -11,3 +11,12 @@ function handleScroll() {
     dots[index].classList.add('active')
 }
 scroller.addEventListener("scroll", handleScroll);
+
+
+let select = document.querySelectorAll('.select')
+select.forEach(e=>{
+    e.classList.remove('selected')
+    e.addEventListener('click',()=>{
+        e.classList.add('selected')
+    })
+})

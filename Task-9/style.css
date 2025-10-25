@@ -28,6 +28,9 @@ main {
         header {
             height: 2.5vw;
             width: 100%;
+            position: relative;
+            z-index: 10;
+            background: black;
 
             ul {
                 display: flex;
@@ -76,6 +79,11 @@ main {
             font-size: 0.65vw;
             gap: 0.5vw;
             font-weight: 100;
+            transition: all 0.5s ease;
+            position: relative;
+            z-index: 5;
+            /* animation: name duration timing-function delay iteration-count direction fill-mode; */
+            animation : topPop 1s linear;
 
             a {
                 color: rgb(0, 119, 255);
@@ -531,30 +539,30 @@ main {
                 scrollbar-width: none;
                 scroll-snap-type: x mandatory;
                 scroll-behavior: smooth;
-                
+
                 .scrooll {
                     scroll-snap-align: start;
-                    width:60vw;
+                    width: 60vw;
                     margin-top: 5vw;
-                    
+
                     img {
                         height: 40vw;
                         object-fit: cover;
                         flex-grow: 1;
                         border-radius: 2vw;
                     }
-                    
+
                     h5 {
                         position: relative;
                         top: -4vw;
                         text-align: left;
-                        width:35vw;
+                        width: 35vw;
                         font-size: 1vw;
-                        
+
                     }
                 }
             }
-            
+
         }
 
         .lr {
@@ -575,7 +583,7 @@ main {
                 background: #353537;
                 opacity: 0.4;
             }
-            
+
             .right {
                 height: 2.5vw;
                 width: 2.5vw;
@@ -584,12 +592,12 @@ main {
             }
         }
 
-        #page4 {
+        #page5 {
             position: relative;
             top: -30vw;
             min-height: 200vw;
             background: black;
-            
+
             h5 {
                 position: relative;
                 top: -3vw;
@@ -637,11 +645,13 @@ main {
                     flex-direction: column;
                     align-items: center;
                     justify-content: center;
+                    cursor: pointer;
                 }
 
                 .selected {
-                    background: white;
-                    color: black;
+                    background: black;
+                    color: white;
+                    filter: invert(1);
                 }
             }
 
@@ -662,6 +672,84 @@ main {
                 left: 0;
                 top: 119vw;
             }
+
+            .scrooller1 {
+                height: 50vw;
+                padding-top: 2vw;
+                display: flex;
+                align-items: center;
+                gap: 1vw;
+                overflow-y: hidden;
+                overflow-x: scroll;
+                scrollbar-width: none;
+                scroll-snap-type: x mandatory;
+                scroll-behavior: smooth;
+                margin-left: 10vw;
+
+                .scrooll {
+                    scroll-snap-align: start;
+                    width: 60vw;
+                    margin-top: 5vw;
+
+                    img {
+                        left: 1vw;
+                        position: relative;
+                        height: 40vw;
+                        object-fit: cover;
+                        border-radius: 2vw;
+                    }
+
+                    h5 {
+                        text-align: left;
+                        width: 35vw;
+                        font-size: 1vw;
+
+                    }
+                }
+            }
         }
+
+        .sticker {
+            position: sticky;
+            bottom: 3vw;
+            width: 18vw;
+            gap: 1vw;
+            padding: 0 1vw;
+            margin: auto;
+            height: 3.5vw;
+            background: rgba(255, 255, 255, 0.113);
+            border-radius: 2vw;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 100;
+
+            h5 {
+                margin-bottom: 5vw;
+                width: 12.5vw;
+                font-size: 1vw;
+                color: white;
+            }
+
+            .add {
+                height: 2vw;
+                width: 2vw;
+                border-radius: 50%;
+                background: #0071E3;
+                cursor: pointer;
+            }
+        }
+    }
+
+}
+
+@keyframes topPop {
+    from {
+        transform: translateY(-60px);
+    }
+    to{
+        
+        transform: translateY(0px);
     }
 }
