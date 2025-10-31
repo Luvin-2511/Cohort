@@ -1,0 +1,1249 @@
+@font-face {
+  font-family: "Inter";
+  src: url(./Font/rP2Yp2ywxg089UriI5-g4vlH9VoD8Cmcqbu0-K4.woff2);
+}
+@font-face {
+  font-family: "sans";
+  src: url(./Font/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2);
+}
+:root {
+  --lefter: 0dvw;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+  background: black;
+}
+
+main {
+  height: 100%;
+  width: 100%;
+  background: black;
+  position: relative;
+}
+main #page1 header {
+  height: 6dvw;
+  width: 100%;
+  position: relative;
+  z-index: 10;
+}
+main #page1 header nav {
+  height: 100%;
+  width: 80%;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+}
+main #page1 header nav .left {
+  display: flex;
+  align-items: end;
+  justify-content: center;
+  color: white;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  font-size: 1.4dvw;
+  gap: 0.5dvw;
+  padding-left: 1dvw;
+}
+main #page1 header nav .left img {
+  height: 2dvw;
+  width: 2dvw;
+  border-radius: 50%;
+  cursor: pointer;
+}
+main #page1 header nav .right {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1dvw;
+  font-size: 1dvw;
+}
+main #page1 header nav .right .buttonout {
+  font-family: "Inter";
+  color: white;
+  height: 3dvw;
+  width: 8dvw;
+  border-radius: 2dvw;
+  background: rgba(255, 255, 255, 0.198);
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  justify-content: center;
+  position: relative;
+}
+main #page1 header nav .right .buttonout .buttonin {
+  position: relative;
+  height: 94.5%;
+  width: 97%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 2dvw;
+  background: black;
+  display: flex;
+  z-index: 10;
+  background-image: url(https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExbXRkczVubmU1ZTRrZXp2ZjRiYWhmdmhpeTV5d3NoenB1bGJocGkxcSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/JrZHAQT0CxmkPWj9LZ/giphy.gif);
+  background-position: center;
+  background-size: cover;
+}
+main #page1 header nav .right .buttonout .revolver {
+  position: absolute;
+  height: 4dvw;
+  width: 3dvw;
+  background: linear-gradient(to left, rgba(233, 233, 233, 0.766), white);
+  bottom: 50%;
+  transform-origin: bottom;
+  transition: all 1s ease;
+  box-shadow: 10px 10px 10px rgb(255, 255, 255);
+  animation: revolve 5s infinite ease-in-out;
+}
+main #page1 header nav .line {
+  height: 1px;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  background: radial-gradient(circle at center, rgba(255, 255, 255, 0.657), rgba(255, 255, 255, 0.123));
+}
+main #page1 .heropanel {
+  font-family: "sans";
+  height: 15dvw;
+  width: 90%;
+  margin: auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+main #page1 .heropanel .herotext {
+  height: -moz-fit-content;
+  height: fit-content;
+  margin-top: 17dvw;
+  width: -moz-fit-content;
+  width: fit-content;
+  font-size: 5dvw;
+  color: transparent;
+  text-align: center;
+  background: linear-gradient(var(--angle), #E8D3BE, #5E95E7);
+  position: relative;
+  -webkit-background-clip: text;
+          background-clip: text;
+  transition: all 2s ease;
+  animation: coloranim 4s infinite ease-in-out;
+  z-index: 10;
+}
+main #page1 .heropanel .herotext h1 {
+  font-weight: 600;
+}
+main #page1 .heropanel .sidetext {
+  color: white;
+  font-size: 1dvw;
+  margin-top: 0.5dvw;
+  font-weight: 400;
+  position: relative;
+  z-index: 10;
+}
+main #page1 .heropanel .sidetext p {
+  margin-top: 0.3dvw;
+}
+main #page1 .heropanel .getstart {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 2dvw;
+  gap: 0.4vw;
+  color: rgba(255, 255, 255, 0.629);
+  padding: 1vw 1.5vw;
+  border-radius: 2dvw;
+  position: relative;
+  z-index: 10;
+  background: rgba(0, 0, 0, 0.614);
+  -webkit-backdrop-filter: blur(10px);
+          backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 255, 255, 0.629);
+  cursor: pointer;
+  overflow: hidden;
+}
+main #page1 .heropanel .getstart::after {
+  content: "";
+  height: 60%;
+  width: 100%;
+  position: absolute;
+  bottom: -70%;
+  background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.253));
+  transition: all 0.4s ease;
+}
+main #page1 .heropanel .getstart:hover::after {
+  bottom: 0%;
+}
+main #page1 .heropanel .backvideo {
+  height: 100vh;
+  width: 99.1vw;
+  position: absolute;
+  z-index: 1;
+  top: 6dvw;
+}
+main #page1 .heropanel .backvideo video {
+  height: 100%;
+  width: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+main #page2 {
+  height: 100%;
+  width: 100%;
+  margin-top: 43dvw;
+  background: black;
+  position: relative;
+}
+main #page2 .autoscroll {
+  height: 20dvw;
+  width: 100%;
+  padding-top: 7dvw;
+}
+main #page2 .autoscroll .scroller {
+  margin-top: 5dvw;
+  height: 15dvw;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-left: 7dvw;
+  overflow-x: hidden;
+}
+main #page2 .autoscroll .scroller .scroll {
+  animation: scrollinganim 2s infinite;
+  height: 10.5dvw;
+  border-radius: 1dvw;
+  width: 25dvw;
+  background-image: url(./Assests/women-bg.webp);
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  margin-left: 2dvw;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+main #page2 .autoscroll .scroller .scroll .left img {
+  height: 4dvw;
+  width: 4dvw;
+  -o-object-fit: cover;
+     object-fit: cover;
+  margin: 0 2.5dvw;
+}
+main #page2 .autoscroll .scroller .scroll .right {
+  height: 100%;
+  width: 100%;
+  font-family: "inter";
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  justify-content: center;
+}
+main #page2 .autoscroll .scroller .scroll .right .top {
+  width: -moz-fit-content;
+  width: fit-content;
+  padding: 0.3dvw 0.8dvw;
+  border-radius: 2dvw;
+  font-size: 1.1dvw;
+  font-weight: 500;
+  color: white;
+  background: linear-gradient(to right, #8D5720 10%, #2A1A16 50%);
+  border: 1px solid rgba(255, 255, 255, 0.32);
+}
+main #page2 .autoscroll .scroller .scroll .right h3 {
+  margin-top: 0.5dvw;
+  font-size: 1.4dvw;
+  color: white;
+  font-weight: 400;
+}
+main #page2 .autoscroll .scroller .scroll .right h5 {
+  font-size: 0.9dvw;
+  color: rgba(255, 255, 255, 0.282);
+  font-weight: 300;
+  text-transform: capitalize;
+}
+main #page2 .autoscroll .scroller .scroll .glower {
+  opacity: 0;
+  position: absolute;
+  height: 2dvw;
+  width: 2dvw;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  box-shadow: 0px 0px 60px 60px rgba(255, 255, 255, 0.161);
+  left: 0;
+  top: 0;
+  z-index: 10;
+  filter: blur(25px);
+  transition: transform 0.05s linear;
+  background: rgba(255, 255, 255, 0.114);
+}
+main #page2 .heading {
+  font-family: "inter";
+  margin-top: 13dvw;
+  color: white;
+  text-align: center;
+}
+main #page2 .heading h1 {
+  font-weight: 400;
+  font-size: 2.5dvw;
+}
+main #page2 .heading h1 span {
+  margin-right: 0.5dvw;
+  display: inline-block;
+  color: transparent;
+  background: linear-gradient(to right, #EFC28D 20%, #E99282 50%);
+  -webkit-background-clip: text;
+          background-clip: text;
+}
+main #page2 .heading h4 {
+  padding-top: 2dvw;
+  font-size: 1.1dvw;
+  color: rgba(255, 255, 255, 0.272);
+  font-weight: 300;
+  width: 18dvw;
+  margin: auto;
+}
+main #page2 .section {
+  height: 40vw;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+main #page2 .section .lefter {
+  height: 100%;
+  width: 55%;
+  cursor: pointer;
+}
+main #page2 .section .lefter .imager {
+  height: 28dvw;
+  width: 37dvw;
+  margin-top: 10dvw;
+  margin-left: 17dvw;
+  background-image: url(./Assests/bg-small.png);
+  background-position: center;
+  background-size: cover;
+  border-radius: 2dvw;
+  border: 1px solid rgba(255, 255, 255, 0.198);
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+main #page2 .section .lefter .imager .icon {
+  position: absolute;
+  height: 70%;
+  width: 70%;
+  -o-object-fit: contain;
+     object-fit: contain;
+  transition: all 1.5s ease;
+  transform-origin: center;
+}
+main #page2 .section .lefter .imager .center {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  -o-object-fit: contain;
+     object-fit: contain;
+  transition: all 1.5s ease;
+  transform-origin: center;
+}
+main #page2 .section .lefter .imager .glower {
+  opacity: 0;
+  position: absolute;
+  height: 2dvw;
+  width: 2dvw;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  box-shadow: 0px 0px 80px 80px rgba(255, 255, 255, 0.161);
+  left: 0;
+  top: 0;
+  z-index: 10;
+  filter: blur(25px);
+  transition: transform 0.05s linear;
+  background: rgba(255, 255, 255, 0.114);
+}
+main #page2 .section .lefter:hover .imager .icon {
+  transform: rotateZ(35deg);
+}
+main #page2 .section .lefter:hover .imager .center {
+  transform: rotate(-35deg);
+  scale: 0.8;
+}
+main #page2 .section .righter {
+  height: 55dvw;
+  width: 45%;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  padding-left: 3dvw;
+}
+main #page2 .section .righter .box {
+  height: 10dvw;
+  width: 10dvw;
+}
+main #page2 .section .righter .box .heading {
+  height: -moz-fit-content;
+  height: fit-content;
+  font-size: 1.4dvw;
+  display: flex;
+  align-items: start;
+  justify-content: flex-start;
+  gap: 0.8dvw;
+  font-family: "sans";
+}
+main #page2 .section .righter .box h5 {
+  font-family: "Inter";
+  margin: 0;
+  height: -moz-fit-content;
+  height: fit-content;
+  width: 22dvw;
+  color: rgba(255, 255, 255, 0.364);
+  margin-left: 3dvw;
+  margin-top: 0.6dvw;
+  font-size: 1.1dvw;
+  font-weight: 400;
+}
+main #page2 .heading1 {
+  font-family: "inter";
+  margin-top: 13dvw;
+  color: white;
+  text-align: center;
+  height: 60dvw;
+  position: relative;
+  overflow: hidden;
+}
+main #page2 .heading1 h1 {
+  font-weight: 400;
+  font-size: 2.5dvw;
+}
+main #page2 .heading1 h1 span {
+  margin-right: 0.5dvw;
+  display: inline-block;
+  color: transparent;
+  background: linear-gradient(to right, #EFC28D 20%, #E99282 50%);
+  -webkit-background-clip: text;
+          background-clip: text;
+}
+main #page2 .heading1 h4 {
+  padding-top: 2dvw;
+  font-size: 1.1dvw;
+  color: rgba(255, 255, 255, 0.272);
+  font-weight: 300;
+  width: 18dvw;
+  margin: auto;
+}
+main #page2 .heading1 .buttonout {
+  font-family: "Inter";
+  color: white;
+  height: 3dvw;
+  width: 13dvw;
+  border-radius: 2dvw;
+  background: rgba(255, 255, 255, 0.227);
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  justify-content: center;
+  position: relative;
+  cursor: pointer;
+  margin: auto;
+  margin-top: 2dvw;
+  margin-bottom: 2dvw;
+}
+main #page2 .heading1 .buttonout .buttonin {
+  position: relative;
+  height: 93%;
+  width: 97.5%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 2dvw;
+  background: rgba(0, 0, 0, 0.364);
+  display: flex;
+  z-index: 10;
+  background-image: url(https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExbXRkczVubmU1ZTRrZXp2ZjRiYWhmdmhpeTV5d3NoenB1bGJocGkxcSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/JrZHAQT0CxmkPWj9LZ/giphy.gif);
+  background-position: center;
+  background-size: cover;
+  gap: 0.5dvw;
+}
+main #page2 .heading1 .buttonout .revolver {
+  position: absolute;
+  height: 6dvw;
+  width: 6dvw;
+  background: linear-gradient(to left, rgba(233, 233, 233, 0.766), white);
+  bottom: 50%;
+  transform-origin: bottom;
+  transition: all 1s ease;
+  box-shadow: 10px 10px 10px rgb(255, 255, 255);
+  animation: revolve 5s infinite ease-in-out;
+}
+main #page2 .heading1 .imgpack {
+  position: absolute;
+  top: 0;
+}
+main #page2 .heading1 .imgpack .comet1 {
+  animation: comet1anim 10s forwards ease infinite;
+  transform: translate(50vw, 50vw) rotate(-15deg);
+}
+main #page2 .heading1 .imgpack .comet2 {
+  animation: comet2anim 10s 5s forwards ease infinite;
+  transform: translate(-50vw, 50vw);
+}
+main #page2 .heading1 .imgpack svg {
+  position: relative;
+  top: -32dvw;
+  scale: 1.5;
+  width: 100vw;
+  height: 50dvw;
+}
+main #page2 .marque {
+  position: relative;
+  top: -33dvw;
+  height: 40dvw;
+  width: 75dvw;
+  margin: auto;
+  border-radius: 2dvw;
+  background-image: url(./Assests/marquebg.jpg);
+  background-position: center;
+  background-size: cover;
+  border: 1px solid rgba(255, 255, 255, 0.132);
+  display: flex;
+}
+main #page2 .marque .left {
+  height: 100%;
+  width: 30%;
+  font-family: "inter";
+  color: white;
+  text-align: left;
+  overflow: hidden;
+  padding: 3dvw;
+  padding-top: 10dvw;
+}
+main #page2 .marque .left h1 {
+  font-weight: 400;
+  font-size: 2.5dvw;
+}
+main #page2 .marque .left h1 span {
+  margin-right: 0.5dvw;
+  display: inline-block;
+  color: transparent;
+  background: linear-gradient(to right, #EFC28D 20%, #E99282 50%);
+  -webkit-background-clip: text;
+          background-clip: text;
+}
+main #page2 .marque .left h4 {
+  padding-top: 2dvw;
+  font-size: 1.1dvw;
+  color: rgba(255, 255, 255, 0.39);
+  font-weight: 300;
+  width: 18dvw;
+  line-height: 1.5dvw;
+  word-spacing: 0.1vw;
+}
+main #page2 .marque .left .buttonout {
+  font-family: "Inter";
+  color: white;
+  height: 3dvw;
+  width: 10dvw;
+  border-radius: 2dvw;
+  background: rgba(255, 255, 255, 0.227);
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  justify-content: center;
+  position: relative;
+  cursor: pointer;
+  margin-top: 2dvw;
+  margin-bottom: 2dvw;
+}
+main #page2 .marque .left .buttonout .buttonin {
+  position: relative;
+  height: 93%;
+  width: 97.5%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 2dvw;
+  background: rgba(0, 0, 0, 0.364);
+  display: flex;
+  z-index: 10;
+  background-image: url(https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExbXRkczVubmU1ZTRrZXp2ZjRiYWhmdmhpeTV5d3NoenB1bGJocGkxcSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/JrZHAQT0CxmkPWj9LZ/giphy.gif);
+  background-position: center;
+  background-size: cover;
+  gap: 0.5dvw;
+}
+main #page2 .marque .left .buttonout .revolver {
+  position: absolute;
+  height: 6dvw;
+  width: 6dvw;
+  background: linear-gradient(to left, rgba(233, 233, 233, 0.766), white);
+  bottom: 50%;
+  transform-origin: bottom;
+  transition: all 1s ease;
+  box-shadow: 10px 10px 10px rgb(255, 255, 255);
+  animation: revolve 5s infinite ease-in-out;
+}
+main #page2 .marque .right {
+  height: 100%;
+  width: 70%;
+}
+main #page2 .marque .right .imageing {
+  height: 33dvw;
+  width: 43dvw;
+  margin-top: 3dvw;
+  margin-left: 7dvw;
+  background-image: url(./Assests/marqueinside.png);
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+main #page2 .marque .right .imageing img {
+  height: 88%;
+  width: 88%;
+  margin-left: 3.5dvw;
+  margin-top: 1.5dvw;
+  -o-object-fit: contain;
+     object-fit: contain;
+}
+main #page2 .marque1 {
+  position: relative;
+  top: -33dvw;
+  height: 40dvw;
+  width: 75dvw;
+  margin: auto;
+  margin-top: 5dvw;
+  border-radius: 2dvw;
+  background-image: url(./Assests/marquebg.jpg);
+  background-position: center;
+  background-size: cover;
+  border: 1px solid rgba(255, 255, 255, 0.132);
+  display: flex;
+  flex-direction: row-reverse;
+}
+main #page2 .marque1 .left {
+  height: 100%;
+  width: 50%;
+  font-family: "inter";
+  color: white;
+  text-align: left;
+  overflow: hidden;
+  padding: 3dvw;
+  padding-top: 10dvw;
+}
+main #page2 .marque1 .left h1 {
+  font-weight: 400;
+  font-size: 2.5dvw;
+}
+main #page2 .marque1 .left h1 span {
+  margin-right: 0.5dvw;
+  display: inline-block;
+  color: transparent;
+  background: linear-gradient(to right, #EFC28D 20%, #E99282 50%);
+  -webkit-background-clip: text;
+          background-clip: text;
+}
+main #page2 .marque1 .left h4 {
+  padding-top: 2dvw;
+  font-size: 1.1dvw;
+  color: rgba(255, 255, 255, 0.39);
+  font-weight: 300;
+  width: 20vw;
+  line-height: 1.5dvw;
+  word-spacing: 0.1vw;
+}
+main #page2 .marque1 .left .buttonout {
+  font-family: "Inter";
+  color: white;
+  height: 3dvw;
+  width: 10dvw;
+  border-radius: 2dvw;
+  background: rgba(255, 255, 255, 0.227);
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  justify-content: center;
+  position: relative;
+  cursor: pointer;
+  margin-top: 2dvw;
+  margin-bottom: 2dvw;
+}
+main #page2 .marque1 .left .buttonout .buttonin {
+  position: relative;
+  height: 93%;
+  width: 97.5%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 2dvw;
+  background: rgba(0, 0, 0, 0.364);
+  display: flex;
+  z-index: 10;
+  background-image: url(https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExbXRkczVubmU1ZTRrZXp2ZjRiYWhmdmhpeTV5d3NoenB1bGJocGkxcSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/JrZHAQT0CxmkPWj9LZ/giphy.gif);
+  background-position: center;
+  background-size: cover;
+  gap: 0.5dvw;
+}
+main #page2 .marque1 .left .buttonout .revolver {
+  position: absolute;
+  height: 6dvw;
+  width: 6dvw;
+  background: linear-gradient(to left, rgba(233, 233, 233, 0.766), white);
+  bottom: 50%;
+  transform-origin: bottom;
+  transition: all 1s ease;
+  box-shadow: 10px 10px 10px rgb(255, 255, 255);
+  animation: revolve 5s infinite ease-in-out;
+}
+main #page2 .marque1 .right {
+  height: 100%;
+  width: 60%;
+}
+main #page2 .marque1 .right .imageing {
+  height: 33dvw;
+  width: 43dvw;
+  margin-top: 3dvw;
+  margin-left: 2dvw;
+  background-image: url(./Assests/marque1.png);
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  padding: 4dvw;
+}
+main #page2 .marque1 .right .imageing .msg1,
+main #page2 .marque1 .right .imageing .msg2,
+main #page2 .marque1 .right .imageing .msg3,
+main #page2 .marque1 .right .imageing .msg4,
+main #page2 .marque1 .right .imageing .msg5,
+main #page2 .marque1 .right .imageing .msg6 {
+  height: 4dvw;
+  width: 100%;
+  margin-bottom: 0.7dvw;
+  transition: all 0.5s ease;
+}
+main #page2 .marque1 .right .imageing .msg1 img,
+main #page2 .marque1 .right .imageing .msg2 img,
+main #page2 .marque1 .right .imageing .msg3 img,
+main #page2 .marque1 .right .imageing .msg4 img,
+main #page2 .marque1 .right .imageing .msg5 img,
+main #page2 .marque1 .right .imageing .msg6 img {
+  height: 100%;
+}
+main #page2 .marque1 .right .imageing .msg1,
+main #page2 .marque1 .right .imageing .msg3,
+main #page2 .marque1 .right .imageing .msg6 {
+  display: flex;
+  justify-content: flex-end;
+}
+main #page2 .marque1 .right .imageing .msg img {
+  transition: all 0.5s ease;
+}
+main #page2 .marque1 .right .imageing .msg img:hover {
+  scale: 1.15;
+  cursor: pointer;
+}
+main #page2 .marque2 {
+  margin: auto;
+  margin-top: 5dvw;
+  position: relative;
+  top: -33dvw;
+  height: 40dvw;
+  width: 75dvw;
+  border-radius: 2dvw;
+  background-image: url(./Assests/marquebg.jpg);
+  background-position: center;
+  background-size: cover;
+  border: 1px solid rgba(255, 255, 255, 0.132);
+  display: flex;
+}
+main #page2 .marque2 .left {
+  height: 100%;
+  width: 30%;
+  font-family: "inter";
+  color: white;
+  text-align: left;
+  overflow: hidden;
+  padding: 3dvw;
+  padding-top: 10dvw;
+}
+main #page2 .marque2 .left h1 {
+  font-weight: 400;
+  font-size: 2.5dvw;
+  width: 20dvw;
+}
+main #page2 .marque2 .left h1 span {
+  margin-right: 0.5dvw;
+  display: inline-block;
+  color: transparent;
+  background: linear-gradient(to right, #EFC28D 20%, #E99282 50%);
+  -webkit-background-clip: text;
+          background-clip: text;
+}
+main #page2 .marque2 .left h4 {
+  padding-top: 2dvw;
+  font-size: 1.1dvw;
+  color: rgba(255, 255, 255, 0.39);
+  font-weight: 300;
+  width: 24dvw;
+  line-height: 1.5dvw;
+  word-spacing: 0.1vw;
+}
+main #page2 .marque2 .left .buttonout {
+  font-family: "Inter";
+  color: white;
+  height: 3dvw;
+  width: 10dvw;
+  border-radius: 2dvw;
+  background: rgba(255, 255, 255, 0.227);
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  justify-content: center;
+  position: relative;
+  cursor: pointer;
+  margin-top: 2dvw;
+  margin-bottom: 2dvw;
+}
+main #page2 .marque2 .left .buttonout .buttonin {
+  position: relative;
+  height: 93%;
+  width: 97.5%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 2dvw;
+  background: rgba(0, 0, 0, 0.364);
+  display: flex;
+  z-index: 10;
+  background-image: url(https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExbXRkczVubmU1ZTRrZXp2ZjRiYWhmdmhpeTV5d3NoenB1bGJocGkxcSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/JrZHAQT0CxmkPWj9LZ/giphy.gif);
+  background-position: center;
+  background-size: cover;
+  gap: 0.5dvw;
+}
+main #page2 .marque2 .left .buttonout .revolver {
+  position: absolute;
+  height: 6dvw;
+  width: 6dvw;
+  background: linear-gradient(to left, rgba(233, 233, 233, 0.766), white);
+  bottom: 50%;
+  transform-origin: bottom;
+  transition: all 1s ease;
+  box-shadow: 10px 10px 10px rgb(255, 255, 255);
+  animation: revolve 5s infinite ease-in-out;
+}
+main #page2 .marque2 .right {
+  height: 100%;
+  width: 70%;
+}
+main #page2 .marque2 .right .imageing {
+  height: 33dvw;
+  width: 43dvw;
+  margin-top: 3dvw;
+  margin-left: 7dvw;
+  background-image: url(./Assests/marqueinside.png);
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+main #page2 .marque2 .right .imageing img {
+  height: 88%;
+  width: 88%;
+  margin-left: 3.5dvw;
+  margin-top: 1.5dvw;
+  -o-object-fit: contain;
+     object-fit: contain;
+}
+main #page2 .autoscroll2 {
+  height: 20dvw;
+  width: 100%;
+  padding: 0 10dvw;
+  position: relative;
+  top: -25dvw;
+}
+main #page2 .autoscroll2 .scroller {
+  height: 15dvw;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-left: 30dvw;
+  overflow-x: hidden;
+}
+main #page2 .autoscroll2 .scroller .scroll {
+  animation: scrollinganim2 2s infinite;
+  height: 15dvw;
+  border-radius: 1dvw;
+  width: 20dvw;
+  background-image: url(./Assests/newbg.png);
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  margin-left: 2dvw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  font-family: "Inter";
+  color: white;
+  text-align: center;
+}
+main #page2 .autoscroll2 .scroller .scroll .logo h2 {
+  font-weight: 400;
+  margin: auto;
+  margin-top: 0.8dvw;
+  margin-bottom: 0.3dvw;
+}
+main #page2 .autoscroll2 .scroller .scroll .logo h6 {
+  font-size: 1dvw;
+  color: rgba(255, 255, 255, 0.57);
+  font-weight: 100;
+  margin: auto;
+}
+main #page2 .autoscroll2 .scroller .scroll .glower {
+  opacity: 0;
+  position: absolute;
+  height: 2dvw;
+  width: 2dvw;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  box-shadow: 0px 0px 60px 60px rgba(255, 255, 255, 0.161);
+  left: 0;
+  top: 0;
+  z-index: 10;
+  filter: blur(25px);
+  transition: transform 0.05s linear;
+  background: rgba(255, 255, 255, 0.114);
+}
+main #page2 .buttonout1 {
+  font-family: "Inter";
+  color: white;
+  height: 3dvw;
+  width: 10dvw;
+  border-radius: 2dvw;
+  background: rgba(255, 255, 255, 0.227);
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  justify-content: center;
+  position: relative;
+  cursor: pointer;
+  margin-top: 2dvw;
+  margin-bottom: 2dvw;
+  margin: auto;
+  top: -25dvw;
+}
+main #page2 .buttonout1 .buttonin {
+  position: relative;
+  height: 93%;
+  width: 97.5%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 2dvw;
+  background: rgba(0, 0, 0, 0.364);
+  display: flex;
+  z-index: 10;
+  background-image: url(https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExbXRkczVubmU1ZTRrZXp2ZjRiYWhmdmhpeTV5d3NoenB1bGJocGkxcSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/JrZHAQT0CxmkPWj9LZ/giphy.gif);
+  background-position: center;
+  background-size: cover;
+  gap: 0.5dvw;
+}
+main #page2 .buttonout1 .revolver {
+  position: absolute;
+  height: 6dvw;
+  width: 6dvw;
+  background: linear-gradient(to left, rgba(233, 233, 233, 0.766), white);
+  bottom: 50%;
+  transform-origin: bottom;
+  transition: all 1s ease;
+  box-shadow: 10px 10px 10px rgb(255, 255, 255);
+  animation: revolve 5s infinite ease-in-out;
+}
+main #page2 .heading2 {
+  position: relative;
+  top: -10dvw;
+  font-family: "inter";
+  color: white;
+  text-align: center;
+}
+main #page2 .heading2 h1 {
+  font-weight: 400;
+  font-size: 2.5dvw;
+}
+main #page2 .heading2 h1 span {
+  margin-right: 0.5dvw;
+  display: inline-block;
+  color: transparent;
+  background: linear-gradient(to right, #EFC28D 20%, #E99282 50%);
+  -webkit-background-clip: text;
+          background-clip: text;
+}
+main #page2 .heading2 h4 {
+  padding-top: 2dvw;
+  font-size: 1.1dvw;
+  color: rgba(255, 255, 255, 0.272);
+  font-weight: 300;
+  width: 18dvw;
+  margin: auto;
+}
+main #page2 .marque3 {
+  position: relative;
+  top: -33dvw;
+  height: 30dvw;
+  width: 75dvw;
+  margin: auto;
+  border-radius: 2dvw;
+  background-image: url(./Assests/marquebg.jpg);
+  background-position: center;
+  background-size: cover;
+  border: 1px solid rgba(255, 255, 255, 0.132);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: start;
+}
+main #page2 .marque3 .left {
+  font-family: "inter";
+  color: white;
+  text-align: left;
+  overflow: hidden;
+  text-align: center;
+}
+main #page2 .marque3 .left h1 {
+  margin-top: 5dvw;
+  font-weight: 400;
+  font-size: 2.5dvw;
+}
+main #page2 .marque3 .left h1 span {
+  margin-right: 0.5dvw;
+  display: inline-block;
+  color: transparent;
+  background: linear-gradient(to right, #EFC28D 20%, #E99282 50%);
+  -webkit-background-clip: text;
+          background-clip: text;
+}
+main #page2 .marque3 .left h4 {
+  margin-top: 2dvw;
+  margin-left: 3dvw;
+  font-size: 1.1dvw;
+  color: rgba(255, 255, 255, 0.39);
+  font-weight: 300;
+  width: 18dvw;
+  line-height: 1.5dvw;
+  word-spacing: 0.1vw;
+}
+main #page2 .marque4 {
+  position: relative;
+  top: -33dvw;
+  height: 22dvw;
+  width: 75dvw;
+  margin: auto;
+  margin-top: 5dvw;
+  border-radius: 2dvw;
+  border: 1px solid rgba(255, 255, 255, 0.132);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: start;
+}
+main #page2 .marque4 svg {
+  height: 100%;
+  width: 100%;
+}
+main #page2 .marque4 h3,
+main #page2 .marque4 h4,
+main #page2 .marque4 h5 {
+  font-family: "Inter";
+  color: white;
+  font-size: 1.2dvw;
+  width: 35dvw;
+  text-align: center;
+  font-weight: 300;
+  position: absolute;
+}
+main #page2 .marque4 h3 {
+  margin-top: 7dvw;
+}
+main #page2 .marque4 h4 {
+  font-size: 1.1dvw;
+  color: rgba(255, 255, 255, 0.575);
+  margin-top: 15dvw;
+}
+main #page2 .marque4 h5 {
+  margin-top: 17dvw;
+  font-size: 1.1dvw;
+  color: rgba(255, 255, 255, 0.552);
+}
+main #page2 .marque4 .glower {
+  opacity: 0;
+  position: absolute;
+  height: 2dvw;
+  width: 2dvw;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  box-shadow: 0px 0px 60px 60px rgba(255, 255, 255, 0.161);
+  left: 0;
+  top: 0;
+  z-index: 10;
+  filter: blur(25px);
+  transition: transform 0.05s linear;
+  background: rgba(255, 255, 255, 0.114);
+}
+main #page2 footer {
+  height: 50dvw;
+  width: 100%;
+  position: relative;
+  z-index: 10;
+  padding-bottom: 15vw;
+  margin-top: -35vw;
+  overflow: hidden;
+}
+main #page2 footer .ender {
+  height: 100%;
+  width: 80%;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+}
+main #page2 footer .ender .left {
+  display: flex;
+  align-items: end;
+  justify-content: center;
+  color: white;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  font-size: 1.4dvw;
+  gap: 0.5dvw;
+  padding-left: 1dvw;
+  margin-top: 30vw;
+}
+main #page2 footer .ender .left img {
+  height: 2dvw;
+  width: 2dvw;
+  border-radius: 50%;
+  cursor: pointer;
+}
+main #page2 footer .ender .right {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2dvw;
+  font-size: 0.85dvw;
+  margin-top: 30vw;
+}
+main #page2 footer .ender .right ul {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1vw;
+  font-family: "sans";
+}
+main #page2 footer .ender .right ul li {
+  color: white;
+  list-style: none;
+}
+main #page2 footer .ender .line {
+  height: 1px;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  top: 3vw;
+  background: radial-gradient(circle at center, rgba(255, 255, 255, 0.657), rgba(255, 255, 255, 0.123));
+  margin-top: 33dvw;
+}
+main #page2 footer p {
+  font-family: "Inter";
+  margin-left: 10dvw;
+  margin-top: 4dvw;
+  color: rgba(255, 255, 255, 0.298);
+}
+main #page2 footer .semicircle {
+  height: 100vw;
+  width: 100vw;
+  border-radius: 50%;
+  position: relative;
+  top: -30dvw;
+  border: 1px solid orange;
+  box-shadow: 0px 0px 20px 20px #513813;
+}
+
+@keyframes revolve {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes coloranim {
+  0% {
+    --angle: 0deg;
+  }
+  20%, 40% {
+    --angle: 90deg;
+  }
+  40%, 50% {
+    --angle: 180deg;
+  }
+  50%, 70% {
+    --angle: 270deg;
+  }
+  100% {
+    --angle: 360deg;
+  }
+}
+@keyframes scrollinganim {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-27dvw);
+  }
+}
+@keyframes scrollinganim2 {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-20.5dvw);
+  }
+}
+@keyframes comet1anim {
+  from {
+    transform: translate(50vw, -50vw);
+  }
+  to {
+    transform: translate(-50vw, 50vw);
+  }
+}
+@keyframes comet2anim {
+  from {
+    transform: translate(-50vw, -50vw) rotate(40deg);
+  }
+  to {
+    transform: translate(50vw, 50vw) rotate(40deg);
+  }
+}/*# sourceMappingURL=style.css.map */
