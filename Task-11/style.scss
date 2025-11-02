@@ -1,0 +1,245 @@
+@font-face {
+    font-family: "Font1";
+    src: url(./Font/Anything\ Script_1\ Italic\ TTF.ttf);
+}
+
+@font-face {
+    font-family: "Font2";
+    src: url(./Font/KAFEINE\ Personal\ Use.ttf);
+}
+
+:root {
+    --orange: #D87A1E;
+}
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    height: 100%;
+    width: 100%;
+}
+
+main {
+    height: 100%;
+    width: 100vw;
+
+
+    #page1 {
+        height: 100vh;
+        width: 100vw;
+        position: relative;
+        background-image: url(./Assests/bg.jpg);
+        background-position: center;
+        background-size: cover;
+        overflow: hidden;
+
+        .left {
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+            width: fit-content;
+            margin-left: 5dvw;
+            padding-top: 1.5dvw;
+            color: var(--orange);
+            font-size: 0.9dvw;
+            font-weight: 100;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5dvw;
+
+            .up,
+            .down {
+                display: flex;
+                text-align: right;
+                align-items: center;
+                justify-content: center;
+                gap: 0.5dvw;
+
+                i {
+                    font-size: 1dvw;
+                }
+            }
+        }
+
+        .line1 {
+            position: absolute;
+            left: 30dvw;
+            top: 3.5dvw;
+            height: 1.5px;
+            width: 50dvw;
+            background: var(--orange);
+        }
+
+        .names {
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            position: absolute;
+            color: var(--orange);
+            text-transform: capitalize;
+            font-size: 1.2dvw;
+            left: 13dvw;
+            top: 10dvw;
+            transform: rotate(-59deg);
+        }
+
+        .center {
+            position: absolute;
+            left: 15dvw;
+            top: 3dvw;
+
+            h1 {
+                font-family: "Font2";
+                font-size: 24dvw;
+                color: var(--orange);
+
+                span {
+                    margin-right: 1dvw;
+                    font-style: italic;
+                }
+            }
+
+        }
+
+        .centerimg {
+            height: 22dvw;
+            width: 22dvw;
+            position: absolute;
+            left: 50%;
+            top: 45%;
+            transform: translate(-50%, -50%);
+            z-index: 2;
+
+            img {
+                height: 100%;
+                width: 100%;
+            }
+        }
+
+        .circle {
+            height: 22dvw;
+            width: 20dvw;
+            position: absolute;
+            left: 62%;
+            top: 63%;
+
+            z-index: 1;
+            transform: translate(-50%, -50%);
+
+            img {
+                height: 100%;
+                width: 100%;
+            }
+        }
+
+        .lungs {
+            height: 25dvw;
+            width: 25dvw;
+            position: absolute;
+            left: 72%;
+            top: 73%;
+            z-index: 1;
+            transform: translate(-50%, -50%) rotate(-25deg);
+
+            img {
+                height: 100%;
+                width: 100%;
+            }
+        }
+
+        .micro {
+            height: 13dvw;
+            width: 10dvw;
+            position: absolute;
+            left: 76.5%;
+            top: 56%;
+            z-index: 0;
+            transform: translate(-50%, -50%) rotate(-90deg);
+
+            img {
+                height: 100%;
+                width: 100%;
+                object-fit: cover;
+            }
+        }
+
+        .bgred {
+            height: 17dvw;
+            width: 68dvw;
+            position: absolute;
+            top: 66.5%;
+            left: 15dvw;
+
+            img {
+                height: 100%;
+                width: 100%;
+                object-fit: cover;
+            }
+
+        }
+
+        .lungsmicro {
+            position: absolute;
+            height: 6dvw;
+            width: 6dvw;
+            left: 35vw;
+            top: 32.5dvw;
+
+            img {
+                height: 100%;
+                width: 100%;
+            }
+
+        }
+
+        .texter {
+            position: absolute;
+            font-family: "Font2";
+            color: var(--orange);
+            width: 13dvw;
+            text-align: center;
+            left: 42dvw;
+            top: 42dvw;
+            line-height: 1.5dvw;
+        }
+
+        .texter2 {
+            position: absolute;
+            font-family: "Font1";
+            color: white;
+            width: 30dvw;
+            border: 2px solid white;
+            left: 35dvw;
+            top: 48dvw;
+        }
+
+        .injection {
+            position: absolute;
+            height: 24dvw;
+            width: 24dvw;
+            left: 11.7dvw;
+            top: 21.5dvw;
+            z-index: 10;
+
+            img {
+                height: 100%;
+                width: 100%;
+                object-fit: contain;
+            }
+
+        }
+
+        .bgoran {
+            height: 6dvw;
+            width: 6dvw;
+            border-radius: 50%;
+            background: #D1B897;
+            left: 18dvw;
+            position: absolute;
+            top: 40dvw;
+        }
+
+    }
+}
