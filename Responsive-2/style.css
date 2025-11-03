@@ -1,0 +1,462 @@
+@font-face {
+  font-family: "Chillax";
+  src: url(./Fonts/63cffc0a3942456e003bc265_Chillax-Regular.woff);
+}
+@font-face {
+  font-family: "Satoshi";
+  src: url(./Fonts/63cffc20aa8997095067596f_Satoshi-Light.woff);
+}
+@font-face {
+  font-family: "Roboto";
+  src: url(./Fonts/L0x5DF4xlVMF-BfR8bXMIjhLq38.woff2);
+}
+:root {
+  --mainColor: #121212;
+  --secondaryColor: #1e1e1e;
+  --yellow: #cebd63;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+}
+
+main {
+  width: 100%;
+  background-color: var(--mainColor);
+}
+main nav {
+  padding: 1rem;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+main nav .left .name {
+  color: white;
+  font-size: 1.2rem;
+  letter-spacing: 0.1rem;
+  font-family: "Satoshi";
+  text-transform: uppercase;
+  margin-left: 0.8rem;
+  cursor: pointer;
+}
+main nav .right {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+  font-family: "Roboto";
+}
+main nav .right .cart {
+  width: -moz-fit-content;
+  width: fit-content;
+  padding: 1rem 1.3rem;
+  background-color: var(--secondaryColor);
+  color: white;
+  letter-spacing: 1px;
+  font-size: 0.9rem;
+  border-radius: 0.5rem;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  cursor: pointer;
+}
+main nav .right .cart .num {
+  height: 1.3rem;
+  width: 1.3rem;
+  background: var(--yellow);
+  border-radius: 50%;
+  color: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+}
+main nav .right .touch {
+  width: -moz-fit-content;
+  width: fit-content;
+  padding: 0.9rem 1.3rem;
+  background-color: var(--yellow);
+  color: black;
+  font-weight: 400;
+  letter-spacing: 1px;
+  font-size: 0.9rem;
+  border-radius: 0.5rem;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+main nav .right .touch:hover {
+  background: #ad9d49;
+}
+main nav .right .hamburger {
+  padding: 1rem 1rem;
+  background-color: var(--secondaryColor);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
+main nav .right .hamburger .line1 {
+  height: 2px;
+  width: 2rem;
+  background: white;
+}
+main nav .right .hamburger .line2,
+main nav .right .hamburger .line3 {
+  height: 1px;
+  width: 2rem;
+  background: white;
+}
+main #page1 {
+  width: 100%;
+}
+main #page1 .part1 {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 0 1rem;
+}
+main #page1 .part1 .main {
+  width: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  border-radius: 1rem;
+}
+main #page1 .part1 .texter {
+  width: 100%;
+  background: var(--secondaryColor);
+  display: flex;
+  flex-direction: column;
+  gap: 5rem;
+  padding: 2rem;
+  color: white;
+  border-radius: 1rem;
+}
+main #page1 .part1 .texter .title {
+  font-size: 0.9rem;
+  font-weight: 400;
+  font-family: "Roboto";
+  text-transform: uppercase;
+  letter-spacing: 0.1rem;
+}
+main #page1 .part1 .texter .content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+main #page1 .part1 .texter .content h4 {
+  font-family: "Chillax";
+  font-size: 2.8rem;
+  line-height: 3.3rem;
+  text-transform: uppercase;
+  font-weight: 400;
+}
+main #page1 .part1 .texter .content h5 {
+  font-family: "Satoshi";
+  width: 95%;
+  font-size: 1.3rem;
+  word-spacing: 0.2rem;
+  line-height: 2rem;
+  color: #9E9D9A;
+}
+main #page1 .part1 .texter .content .story {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  font-family: "Roboto";
+  text-transform: uppercase;
+  font-size: 0.9rem;
+  margin-top: 1rem;
+  cursor: pointer;
+}
+main #page1 .part1 .texter .content .story .button {
+  border: 0.5px solid rgba(255, 255, 255, 0.168);
+  padding: 0.7rem 0.7rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #292929;
+}
+main #page1 .part2 {
+  padding: 2.2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.7rem;
+  width: 100%;
+}
+main #page1 .part2 .top,
+main #page1 .part2 .bottom {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  gap: 7rem;
+  text-transform: uppercase;
+}
+main #page1 .part2 .top .left,
+main #page1 .part2 .top .right,
+main #page1 .part2 .bottom .left,
+main #page1 .part2 .bottom .right {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+}
+main #page1 .part2 .top h5,
+main #page1 .part2 .bottom h5 {
+  font-family: "Roboto";
+  font-weight: 400;
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.475);
+}
+main #page1 .part2 .top h1,
+main #page1 .part2 .bottom h1 {
+  font-family: "Chillax";
+  font-weight: 400;
+  font-size: 2.8rem;
+}
+main #page2 {
+  width: 100%;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+main #page2 .second {
+  width: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  aspect-ratio: 429/376;
+  border-radius: 1rem;
+}
+main #page2 .texter2 {
+  width: 100%;
+  background: var(--secondaryColor);
+  display: flex;
+  flex-direction: column;
+  gap: 5rem;
+  padding: 2rem;
+  color: white;
+  border-radius: 1rem;
+}
+main #page2 .texter2 .title {
+  font-size: 0.9rem;
+  font-weight: 400;
+  font-family: "Roboto";
+  text-transform: uppercase;
+  letter-spacing: 0.1rem;
+}
+main #page2 .texter2 .content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+main #page2 .texter2 .content h4 {
+  font-family: "Chillax";
+  font-size: 2.3rem;
+  line-height: 3rem;
+  text-transform: uppercase;
+  font-weight: 400;
+}
+main #page2 .texter2 .content .h5 h5 {
+  display: inline;
+  font-family: "Satoshi";
+  width: 95%;
+  font-size: 1rem;
+  word-spacing: 0.2rem;
+  line-height: 1.6rem;
+  color: #9E9D9A;
+}
+main #page3 {
+  width: 100%;
+  padding: 0 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+main #page3 .second {
+  width: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  aspect-ratio: 429/376;
+  border-radius: 1rem;
+}
+main #page3 .texter2 {
+  width: 100%;
+  background: var(--secondaryColor);
+  display: flex;
+  flex-direction: column;
+  gap: 5rem;
+  padding: 2rem;
+  color: white;
+  border-radius: 1rem;
+}
+main #page3 .texter2 .title {
+  font-size: 0.9rem;
+  font-weight: 400;
+  font-family: "Roboto";
+  text-transform: uppercase;
+  letter-spacing: 0.1rem;
+}
+main #page3 .texter2 .content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+main #page3 .texter2 .content h4 {
+  font-family: "Chillax";
+  font-size: 2.3rem;
+  line-height: 3rem;
+  text-transform: uppercase;
+  font-weight: 400;
+}
+main #page3 .texter2 .content .h5 h5 {
+  display: inline;
+  font-family: "Satoshi";
+  width: 95%;
+  font-size: 1rem;
+  word-spacing: 0.2rem;
+  line-height: 1.6rem;
+  color: #9E9D9A;
+}
+
+@media (min-width: 1000px) {
+  main #page1 .part1 {
+    flex-direction: row;
+  }
+  main #page1 .part1 .main,
+  main #page1 .part1 .texter {
+    width: 50%;
+  }
+  main #page1 .part1 .texter {
+    padding: 4rem;
+    gap: 16rem;
+  }
+  main #page1 .part1 .texter .content {
+    gap: 1.5rem;
+  }
+  main #page1 .part1 .texter .content h4 {
+    font-size: 4.1rem;
+    line-height: 4.6rem;
+  }
+  main #page1 .part1 .texter .content h5 {
+    width: 80%;
+  }
+  main #page1 .part1 .texter .content .story svg {
+    transition: all 0.5s ease;
+  }
+  main #page1 .part1 .texter .content .story .button {
+    position: relative;
+    overflow: hidden;
+  }
+  main #page1 .part1 .texter .content .story .button .hover {
+    position: absolute;
+    top: -100%;
+  }
+  main #page1 .part1 .texter .content .story .button:hover .hover {
+    animation: down 0.2s 1 forwards ease-in-out;
+  }
+  main #page1 .part1 .texter .content .story .button:hover .svg1 {
+    animation: down 0.2s 1 forwards ease-in-out;
+  }
+  main #page1 .part2 {
+    padding: 4rem;
+    flex-direction: row;
+    justify-content: space-around;
+  }
+  main #page1 .part2 .top,
+  main #page1 .part2 .bottom {
+    gap: 15rem;
+  }
+  main #page1 .part2 .top .left,
+  main #page1 .part2 .top .right,
+  main #page1 .part2 .bottom .left,
+  main #page1 .part2 .bottom .right {
+    gap: 0.2rem;
+  }
+  main #page1 .part2 .top h5,
+  main #page1 .part2 .bottom h5 {
+    font-size: 0.9rem;
+  }
+  main #page1 .part2 .top h1,
+  main #page1 .part2 .bottom h1 {
+    font-size: 4rem;
+  }
+  main #page2 {
+    flex-direction: row-reverse;
+  }
+  main #page2 .second,
+  main #page2 .texter2 {
+    width: 50%;
+  }
+  main #page2 .texter2 {
+    padding: 4rem;
+    gap: 17rem;
+  }
+  main #page2 .texter2 .content h4 {
+    font-size: 3.2rem;
+    line-height: 3.7rem;
+  }
+  main #page2 .texter2 .content .h5 {
+    display: flex;
+    gap: 1rem;
+  }
+  main #page2 .texter2 .content .h5 h5 {
+    width: 20rem;
+    font-size: 1.2rem;
+    line-height: 1.9rem;
+  }
+  main #page3 {
+    flex-direction: row;
+  }
+  main #page3 .second,
+  main #page3 .texter2 {
+    width: 50%;
+  }
+  main #page3 .texter2 {
+    padding: 4rem;
+    gap: 17rem;
+  }
+  main #page3 .texter2 .content h4 {
+    font-size: 3.2rem;
+    line-height: 3.7rem;
+  }
+  main #page3 .texter2 .content .h5 {
+    display: flex;
+    gap: 1rem;
+  }
+  main #page3 .texter2 .content .h5 h5 {
+    width: 20rem;
+    font-size: 1.2rem;
+    line-height: 1.9rem;
+  }
+}
+@keyframes down {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(55px);
+  }
+}/*# sourceMappingURL=style.css.map */
