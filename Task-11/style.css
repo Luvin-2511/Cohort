@@ -163,7 +163,7 @@ main #page1 .lungsmicro {
   position: absolute;
   height: 6dvw;
   width: 6dvw;
-  left: 35vw;
+  left: 36vw;
   top: 32.5dvw;
 }
 main #page1 .lungsmicro img {
@@ -187,7 +187,7 @@ main #page1 .texter2 {
   width: 30dvw;
   border: 2px solid white;
   left: 35dvw;
-  top: 48dvw;
+  top: 49dvw;
 }
 main #page1 .injection {
   position: absolute;
@@ -211,4 +211,201 @@ main #page1 .bgoran {
   left: 18dvw;
   position: absolute;
   top: 40dvw;
+}
+main #page1 .circles4 {
+  display: flex;
+  gap: 0.5dvw;
+  position: absolute;
+  left: 18dvw;
+  top: 35dvw;
+}
+main #page1 .circles4 .cir {
+  height: 3.3dvw;
+  width: 3.3dvw;
+  border-radius: 50%;
+  overflow: hidden;
+}
+main #page1 .circles4 .first {
+  background: #DEA1A1;
+}
+main #page1 .circles4 .second img, main #page1 .circles4 .third img, main #page1 .circles4 .fourth img {
+  height: 100%;
+  width: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+main #page1 .graph {
+  height: 13dvw;
+  width: 13dvw;
+  left: 13dvw;
+  position: absolute;
+  top: 29dvw;
+  transform: rotate(-25deg);
+  z-index: 10;
+}
+main #page1 .graph img {
+  height: 100%;
+  width: 100%;
+  -o-object-fit: contain;
+     object-fit: contain;
+}
+main #page1 .italictext {
+  color: black;
+  font-family: "Font1";
+  position: absolute;
+  left: 17dvw;
+  top: 20dvw;
+}
+main #page1 .blackline {
+  width: 2px;
+  height: 16dvw;
+  background: black;
+  position: absolute;
+  left: 25dvw;
+  top: 35.5dvw;
+}
+main #page1 .arrow {
+  position: absolute;
+  left: 12dvw;
+  top: 17dvw;
+  height: 9dvw;
+  width: 9dvw;
+  transform: rotateZ(360deg) rotateX(520deg);
+  z-index: 10;
+}
+main #page1 .conti {
+  background: #5E5346;
+  height: 13dvw;
+  width: 21dvw;
+  position: absolute;
+  top: 21.5dvw;
+  left: 15dvw;
+}
+main #page1 .conti .specialcir {
+  display: flex;
+  gap: 0.2dvw;
+  position: absolute;
+  left: 4dvw;
+  top: 2dvw;
+}
+main #page1 .conti .specialcir .cir1, main #page1 .conti .specialcir .cir2, main #page1 .conti .specialcir .cir3, main #page1 .conti .specialcir .cir4, main #page1 .conti .specialcir .cir5 {
+  height: 3dvw;
+  width: 3dvw;
+  border-radius: 50%;
+  overflow: hidden;
+}
+main #page1 .conti .specialcir .cir1 img, main #page1 .conti .specialcir .cir2 img, main #page1 .conti .specialcir .cir3 img, main #page1 .conti .specialcir .cir4 img, main #page1 .conti .specialcir .cir5 img {
+  height: 100%;
+  width: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+main #page1 .conti .over {
+  height: 7dvw;
+  width: 7dvw;
+  position: absolute;
+  left: 8dvw;
+  top: 1dvw;
+  z-index: 100;
+}
+main #page1 .conti .over img {
+  height: 5dvw;
+  width: 5dvw;
+  -o-object-fit: contain;
+     object-fit: contain;
+}
+main #page1 .conti .blood {
+  height: 3dvw;
+  width: 3dvw;
+  border-radius: 50%;
+  position: absolute;
+  top: 8dvw;
+}
+main #page1 .conti .white {
+  height: 3dvw;
+  width: 3dvw;
+  position: absolute;
+  top: 8dvw;
+  left: 10dvw;
+  border-radius: 50%;
+  background: white;
+}
+main #page1 .qr {
+  height: 2.5dvw;
+  transform: rotate(-90deg);
+  width: 13dvw;
+  position: absolute;
+  left: 31dvw;
+  top: 22dvw;
+}
+main #page1 .qr img {
+  height: 100%;
+  width: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+main #page1 .rect {
+  position: absolute;
+  left: 34dvw;
+  top: 20dvw;
+  height: 1.2vw;
+  width: 2dvw;
+  background: black;
+}
+main #page1 .emptyrec {
+  position: absolute;
+  left: 37dvw;
+  top: 27dvw;
+  height: 1vw;
+  width: 2.3dvw;
+  border: 3px solid black;
+}
+main #page1 .plus {
+  position: absolute;
+  left: 13dvw;
+  top: 27dvw;
+}
+main #page1 .plus p {
+  font-size: 2.2dvw;
+  font-weight: 900;
+  font-family: "Font2";
+}
+main #page1 .rounded {
+  background: #B4997E;
+  height: 10dvw;
+  width: 6dvw;
+  border-top-left-radius: 5dvw;
+  border-bottom-left-radius: 5dvw;
+  position: absolute;
+  left: 9dvw;
+  top: 37dvw;
+}
+main #page1 .mask {
+  height: 5dvw;
+  width: 5dvw;
+  border-radius: 50%;
+  border: 2px solid #000;
+  position: absolute;
+  left: 8dvw;
+  top: 43dvw;
+}
+main #page1 .mask img {
+  height: 100%;
+  width: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+main #page1 .rounds {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5dvw;
+  position: absolute;
+  left: 13.5dvw;
+  top: 47dvw;
+}
+main #page1 .rounds .gola {
+  height: 1.2dvw;
+  width: 1.2dvw;
+  background: black;
+  border-radius: 50%;
 }/*# sourceMappingURL=style.css.map */
