@@ -1,0 +1,565 @@
+@font-face {
+  font-family: "Font1";
+  src: url(./Font/download.ttf);
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+  background: #09090A;
+}
+
+main {
+  min-height: 200%;
+  width: 100%;
+  background: #09090A;
+  color: white;
+  position: relative;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+main nav {
+  padding: 2rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20rem;
+  position: relative;
+  z-index: 10;
+}
+main nav .center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  margin-left: 10rem;
+}
+main nav .center .community,
+main nav .center .resources {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+main nav .center .community svg,
+main nav .center .resources svg {
+  height: 1rem;
+  width: 1rem;
+}
+main nav .end {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+}
+main nav .end .discord {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+main nav .end .explore {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1rem;
+  background: white;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  color: black;
+}
+main nav .end .explore svg {
+  height: 1rem;
+  width: 1rem;
+}
+main #page1 {
+  min-height: 200%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  flex-direction: column;
+}
+main #page1 .bgimagediv {
+  overflow: hidden;
+  position: absolute;
+  top: -22%;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+main #page1 .bgimagediv .center {
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+main #page1 .bgimagediv .around {
+  top: 25%;
+  position: absolute;
+}
+main #page1 .bgimagediv .end {
+  bottom: -10%;
+  position: absolute;
+}
+main #page1 .bgimagediv .final {
+  top: 80%;
+  z-index: 10;
+  position: absolute;
+}
+main #page1 .hero {
+  height: 100%;
+  width: 100%;
+  padding: 13rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  flex-direction: column;
+  z-index: 10;
+  color: black;
+}
+main #page1 .hero .logo {
+  width: 8rem;
+}
+main #page1 .hero h1 {
+  font-family: "Font1";
+  margin-top: 2rem;
+  font-size: 4.5rem;
+}
+main #page1 .hero h3 {
+  font-size: 2rem;
+  line-height: 1.3rem;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 0.799);
+}
+main #page1 .hero .explore {
+  margin-top: 2rem;
+  padding: 1.2rem 1.8rem;
+  border-radius: 2rem;
+  color: white;
+  background: black;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+main #page1 .hero .explore svg {
+  height: 1rem;
+  width: 1rem;
+}
+main #page1 .hero .explore:hover {
+  background: #212528;
+}
+main #page2 {
+  margin-top: 18rem;
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+main #page2 .light {
+  width: -moz-fit-content;
+  width: fit-content;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  padding: 0.3rem 1rem;
+  border: 1px solid white;
+  border-radius: 2rem;
+  margin-bottom: 1rem;
+}
+main #page2 h1 {
+  font-family: "Font1";
+  font-size: 4.5rem;
+  line-height: 4.2rem;
+}
+main #page2 h3 {
+  margin-top: 2rem;
+  font-weight: 400;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  width: 34rem;
+  font-size: 1.5rem;
+  color: rgba(255, 255, 255, 0.358);
+  text-align: center;
+}
+
+#page3 {
+  height: 100%;
+  width: 100%;
+  background: #09090A;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#page3 .circle {
+  position: absolute;
+  z-index: 10;
+  height: 25vw;
+  width: 25vw;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgb(62, 62, 62) 0%, black 100%);
+  -webkit-backdrop-filter: blur(40px);
+          backdrop-filter: blur(40px);
+  box-shadow: 0px 0px 100px 100px rgba(126, 142, 152, 0.6039215686), inset 0px -20px 40px -10px white;
+}
+#page3 .circle1 {
+  position: absolute;
+  height: 25vw;
+  width: 25vw;
+  border-radius: 50%;
+  background: #1D252A;
+  -webkit-backdrop-filter: blur(40px);
+          backdrop-filter: blur(40px);
+  box-shadow: 0px 0px 110px 110px rgba(98, 98, 98, 0.8235294118);
+}
+#page3 .center {
+  position: relative;
+  z-index: 20;
+  height: 55dvw;
+  width: 55dvw;
+}
+
+#page4 {
+  height: 100%;
+  width: 100%;
+  padding: 7rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+#page4 .left {
+  width: 50%;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  color: white;
+}
+#page4 .left .top h5 {
+  text-transform: uppercase;
+}
+#page4 .left .top h1 {
+  font-family: "Font1";
+  font-size: 4rem;
+}
+#page4 .left .top h5,
+#page4 .left .top h3 {
+  color: rgba(255, 255, 255, 0.586);
+}
+#page4 .left .top h3 {
+  font-size: 1.5rem;
+  font-weight: 400;
+  width: 38rem;
+}
+#page4 .left .bottom {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+#page4 .left .bottom .part {
+  margin-top: 3rem;
+  width: 50%;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+#page4 .left .bottom .part h2 {
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+#page4 .left .bottom .part h4 {
+  line-height: 1.5rem;
+  font-size: 1rem;
+  width: 20rem;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.524);
+}
+#page4 .left p {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-top: 2rem;
+}
+#page4 .right {
+  width: 50%;
+}
+#page4 .right img {
+  height: 45rem;
+  width: 45rem;
+}
+#page4 .over {
+  position: absolute;
+  transform: rotateY(180deg);
+  right: -42%;
+  z-index: 20;
+}
+
+#page5 {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  padding: 7rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+#page5 .left {
+  width: 50%;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  color: white;
+}
+#page5 .left .top h5 {
+  text-transform: uppercase;
+}
+#page5 .left .top h1 {
+  font-family: "Font1";
+  font-size: 4rem;
+}
+#page5 .left .top h5,
+#page5 .left .top h3 {
+  color: rgba(255, 255, 255, 0.586);
+}
+#page5 .left .top h3 {
+  font-size: 1.5rem;
+  font-weight: 400;
+  width: 32rem;
+}
+#page5 .right {
+  width: 50%;
+}
+#page5 .right img {
+  height: 45rem;
+  width: 45rem;
+}
+
+#page6 {
+  height: 100%;
+  width: 100%;
+  padding: 7rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#page6 .left {
+  width: 50%;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  color: white;
+}
+#page6 .left .top h5 {
+  text-transform: uppercase;
+}
+#page6 .left .top h1 {
+  font-family: "Font1";
+  font-size: 4rem;
+}
+#page6 .left .top h5,
+#page6 .left .top h3 {
+  color: rgba(255, 255, 255, 0.586);
+}
+#page6 .left .top h3 {
+  font-size: 1.5rem;
+  font-weight: 400;
+}
+#page6 .right {
+  width: 50%;
+}
+#page6 .right img {
+  height: 45rem;
+  width: 45rem;
+}
+#page6 .over {
+  position: absolute;
+  left: -42%;
+  z-index: 20;
+}
+
+#page7 {
+  height: 100%;
+  width: 100%;
+  padding: 7rem;
+  background: #09090A;
+  color: white;
+}
+#page7 .top h5 {
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.586);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  font-weight: 400;
+}
+#page7 .top h1 {
+  font-family: "Font1";
+  font-size: 4rem;
+}
+#page7 .bottom {
+  margin-top: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2.5rem;
+}
+#page7 .bottom .yolo {
+  height: 30rem;
+  width: 30rem;
+  border-radius: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.099);
+  background: #0E0F10;
+  padding: 2rem;
+  flex-shrink: 0;
+}
+#page7 .bottom .yolo h5 {
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.586);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  font-weight: 400;
+}
+#page7 .bottom .yolo h2 {
+  margin-top: 1rem;
+  font-family: "Font1";
+  font-size: 2rem;
+}
+#page7 .bottom .yolo img {
+  height: 80%;
+  width: 100%;
+  -o-object-fit: contain;
+     object-fit: contain;
+}
+#page7 .bottom .yolo1 {
+  height: 30rem;
+}
+#page7 .bottom .yolo1 .top,
+#page7 .bottom .yolo1 .bottom {
+  height: 45%;
+  padding: 2rem;
+  width: 30rem;
+  border-radius: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.099);
+  background: #0E0F10;
+}
+#page7 .bottom .yolo1 .top h2 {
+  margin-top: 1rem;
+  font-family: "Font1";
+  font-size: 2rem;
+}
+#page7 .bottom .yolo1 .bottom {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+}
+#page7 .bottom .yolo1 .bottom h2 {
+  font-size: 2rem;
+  line-height: 0.1rem;
+  font-family: "Font1";
+}
+#page7 .bottom .yolo1 h5 {
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.586);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  font-weight: 400;
+}
+
+#page8 {
+  height: 100%;
+  width: 100%;
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iOTYwIiBoZWlnaHQ9IjQ4MCIgdmlld0JveD0iMCAwIDk2MCA0ODAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxnIGNsaXAtcGF0aD0idXJsKCNjbGlwMF8xNzYxXzc4NjUpIj4KPGcgZmlsdGVyPSJ1cmwoI2ZpbHRlcjBfZl8xNzYxXzc4NjUpIj4KPGNpcmNsZSBjeD0iNDgzIiBjeT0iNDgwLjUiIHI9IjQwMi41IiBmaWxsPSJ1cmwoI3BhaW50MF9yYWRpYWxfMTc2MV83ODY1KSIvPgo8L2c+CjxjaXJjbGUgY3g9Ijc2MC43MjUiIGN5PSI0NzIuNjg3IiByPSI0LjAyNSIgZmlsbD0idXJsKCNwYWludDFfcmFkaWFsXzE3NjFfNzg2NSkiLz4KPGNpcmNsZSBjeD0iNzYzLjc0NCIgY3k9IjI2Ny45MTYiIHI9IjQuMDI1IiBmaWxsPSJ1cmwoI3BhaW50Ml9yYWRpYWxfMTc2MV83ODY1KSIvPgo8Y2lyY2xlIGN4PSI4MTkuMDg4IiBjeT0iMzA5LjE3MSIgcj0iNC4wMjUiIGZpbGw9InVybCgjcGFpbnQzX3JhZGlhbF8xNzYxXzc4NjUpIi8+CjxjaXJjbGUgY3g9IjcxNy40NTciIGN5PSIzMzcuMzQ3IiByPSI0LjAyNSIgZmlsbD0idXJsKCNwYWludDRfcmFkaWFsXzE3NjFfNzg2NSkiLz4KPGNpcmNsZSBjeD0iNjI1Ljg4NyIgY3k9IjIyNy42NjYiIHI9IjQuMDI1IiBmaWxsPSJ1cmwoI3BhaW50NV9yYWRpYWxfMTc2MV83ODY1KSIvPgo8Y2lyY2xlIGN4PSIzMTIuOTQ0IiBjeT0iMjg0LjUxOSIgcj0iNC4wMjUiIGZpbGw9InVybCgjcGFpbnQ2X3JhZGlhbF8xNzYxXzc4NjUpIi8+CjxjaXJjbGUgY3g9IjM3Ny4zNDMiIGN5PSIyMTMuNTc4IiByPSI0LjAyNSIgZmlsbD0idXJsKCNwYWludDdfcmFkaWFsXzE3NjFfNzg2NSkiLz4KPGNpcmNsZSBjeD0iNjc1LjY5NyIgY3k9IjE4MS4zNzkiIHI9IjQuMDI1IiBmaWxsPSJ1cmwoI3BhaW50OF9yYWRpYWxfMTc2MV83ODY1KSIvPgo8Y2lyY2xlIGN4PSIyMTguMzU2IiBjeT0iMzI5LjI5NiIgcj0iNC4wMjUiIGZpbGw9InVybCgjcGFpbnQ5X3JhZGlhbF8xNzYxXzc4NjUpIi8+CjxjaXJjbGUgY3g9IjE5MC42ODQiIGN5PSIyNjMuODkiIHI9IjQuMDI1IiBmaWxsPSJ1cmwoI3BhaW50MTBfcmFkaWFsXzE3NjFfNzg2NSkiLz4KPGNpcmNsZSBjeD0iMTE5Ljc0NCIgY3k9IjM0MS4zNzMiIHI9IjQuMDI1IiBmaWxsPSJ1cmwoI3BhaW50MTFfcmFkaWFsXzE3NjFfNzg2NSkiLz4KPGNpcmNsZSBjeD0iMjkwLjgwNiIgY3k9IjQ3Ni43MTIiIHI9IjQuMDI1IiBmaWxsPSJ1cmwoI3BhaW50MTJfcmFkaWFsXzE3NjFfNzg2NSkiLz4KPC9nPgo8ZGVmcz4KPGZpbHRlciBpZD0iZmlsdGVyMF9mXzE3NjFfNzg2NSIgeD0iMzAuMTg3NSIgeT0iMjcuNjg3NSIgd2lkdGg9IjkwNS42MjUiIGhlaWdodD0iOTA1LjYyNSIgZmlsdGVyVW5pdHM9InVzZXJTcGFjZU9uVXNlIiBjb2xvci1pbnRlcnBvbGF0aW9uLWZpbHRlcnM9InNSR0IiPgo8ZmVGbG9vZCBmbG9vZC1vcGFjaXR5PSIwIiByZXN1bHQ9IkJhY2tncm91bmRJbWFnZUZpeCIvPgo8ZmVCbGVuZCBtb2RlPSJub3JtYWwiIGluPSJTb3VyY2VHcmFwaGljIiBpbjI9IkJhY2tncm91bmRJbWFnZUZpeCIgcmVzdWx0PSJzaGFwZSIvPgo8ZmVHYXVzc2lhbkJsdXIgc3RkRGV2aWF0aW9uPSIyNS4xNTYyIiByZXN1bHQ9ImVmZmVjdDFfZm9yZWdyb3VuZEJsdXJfMTc2MV83ODY1Ii8+CjwvZmlsdGVyPgo8cmFkaWFsR3JhZGllbnQgaWQ9InBhaW50MF9yYWRpYWxfMTc2MV83ODY1IiBjeD0iMCIgY3k9IjAiIHI9IjEiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIiBncmFkaWVudFRyYW5zZm9ybT0idHJhbnNsYXRlKDQ4MyA0OTEuMzc4KSByb3RhdGUoOTApIHNjYWxlKDM5MS42MjIpIj4KPHN0b3Agc3RvcC1jb2xvcj0id2hpdGUiLz4KPHN0b3Agb2Zmc2V0PSIwLjI2NjE0NSIgc3RvcC1jb2xvcj0id2hpdGUiLz4KPHN0b3Agb2Zmc2V0PSIwLjU5NTQzMyIgc3RvcC1jb2xvcj0iI0ZGQUUzOCIvPgo8c3RvcCBvZmZzZXQ9IjAuNjE2OTE5IiBzdG9wLWNvbG9yPSIjRkY5NTYwIi8+CjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzE5Mzc0OSIvPgo8L3JhZGlhbEdyYWRpZW50Pgo8cmFkaWFsR3JhZGllbnQgaWQ9InBhaW50MV9yYWRpYWxfMTc2MV83ODY1IiBjeD0iMCIgY3k9IjAiIHI9IjEiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIiBncmFkaWVudFRyYW5zZm9ybT0idHJhbnNsYXRlKDc2MC43MjUgNDcyLjY4Nykgcm90YXRlKDkwKSBzY2FsZSg0LjAyNSkiPgo8c3RvcCBzdG9wLWNvbG9yPSJ3aGl0ZSIvPgo8c3RvcCBvZmZzZXQ9IjAuMDAwMSIgc3RvcC1jb2xvcj0id2hpdGUiLz4KPHN0b3Agb2Zmc2V0PSIwLjI4NzU1NyIgc3RvcC1jb2xvcj0id2hpdGUiLz4KPHN0b3Agb2Zmc2V0PSIwLjI4NzY1NyIgc3RvcC1jb2xvcj0id2hpdGUiIHN0b3Atb3BhY2l0eT0iMCIvPgo8L3JhZGlhbEdyYWRpZW50Pgo8cmFkaWFsR3JhZGllbnQgaWQ9InBhaW50Ml9yYWRpYWxfMTc2MV83ODY1IiBjeD0iMCIgY3k9IjAiIHI9IjEiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIiBncmFkaWVudFRyYW5zZm9ybT0idHJhbnNsYXRlKDc2My43NDQgMjY3LjkxNikgcm90YXRlKDkwKSBzY2FsZSg0LjAyNSkiPgo8c3RvcCBzdG9wLWNvbG9yPSJ3aGl0ZSIvPgo8c3RvcCBvZmZzZXQ9IjAuMDAwMSIgc3RvcC1jb2xvcj0id2hpdGUiLz4KPHN0b3Agb2Zmc2V0PSIwLjI4NzU1NyIgc3RvcC1jb2xvcj0id2hpdGUiLz4KPHN0b3Agb2Zmc2V0PSIwLjI4NzY1NyIgc3RvcC1jb2xvcj0id2hpdGUiIHN0b3Atb3BhY2l0eT0iMCIvPgo8L3JhZGlhbEdyYWRpZW50Pgo8cmFkaWFsR3JhZGllbnQgaWQ9InBhaW50M19yYWRpYWxfMTc2MV83ODY1IiBjeD0iMCIgY3k9IjAiIHI9IjEiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIiBncmFkaWVudFRyYW5zZm9ybT0idHJhbnNsYXRlKDgxOS4wODggMzA5LjE3MSkgcm90YXRlKDkwKSBzY2FsZSg0LjAyNSkiPgo8c3RvcCBzdG9wLWNvbG9yPSJ3aGl0ZSIvPgo8c3RvcCBvZmZzZXQ9IjAuMDAwMSIgc3RvcC1jb2xvcj0id2hpdGUiLz4KPHN0b3Agb2Zmc2V0PSIwLjI4NzU1NyIgc3RvcC1jb2xvcj0id2hpdGUiLz4KPHN0b3Agb2Zmc2V0PSIwLjI4NzY1NyIgc3RvcC1jb2xvcj0id2hpdGUiIHN0b3Atb3BhY2l0eT0iMCIvPgo8L3JhZGlhbEdyYWRpZW50Pgo8cmFkaWFsR3JhZGllbnQgaWQ9InBhaW50NF9yYWRpYWxfMTc2MV83ODY1IiBjeD0iMCIgY3k9IjAiIHI9IjEiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIiBncmFkaWVudFRyYW5zZm9ybT0idHJhbnNsYXRlKDcxNy40NTcgMzM3LjM0Nykgcm90YXRlKDkwKSBzY2FsZSg0LjAyNSkiPgo8c3RvcCBzdG9wLWNvbG9yPSJ3aGl0ZSIvPgo8c3RvcCBvZmZzZXQ9IjAuMDAwMSIgc3RvcC1jb2xvcj0id2hpdGUiLz4KPHN0b3Agb2Zmc2V0PSIwLjI4NzU1NyIgc3RvcC1jb2xvcj0id2hpdGUiLz4KPHN0b3Agb2Zmc2V0PSIwLjI4NzY1NyIgc3RvcC1jb2xvcj0id2hpdGUiIHN0b3Atb3BhY2l0eT0iMCIvPgo8L3JhZGlhbEdyYWRpZW50Pgo8cmFkaWFsR3JhZGllbnQgaWQ9InBhaW50NV9yYWRpYWxfMTc2MV83ODY1IiBjeD0iMCIgY3k9IjAiIHI9IjEiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIiBncmFkaWVudFRyYW5zZm9ybT0idHJhbnNsYXRlKDYyNS44ODcgMjI3LjY2Nikgcm90YXRlKDkwKSBzY2FsZSg0LjAyNSkiPgo8c3RvcCBzdG9wLWNvbG9yPSJ3aGl0ZSIvPgo8c3RvcCBvZmZzZXQ9IjAuMDAwMSIgc3RvcC1jb2xvcj0id2hpdGUiLz4KPHN0b3Agb2Zmc2V0PSIwLjI4NzU1NyIgc3RvcC1jb2xvcj0id2hpdGUiLz4KPHN0b3Agb2Zmc2V0PSIwLjI4NzY1NyIgc3RvcC1jb2xvcj0id2hpdGUiIHN0b3Atb3BhY2l0eT0iMCIvPgo8L3JhZGlhbEdyYWRpZW50Pgo8cmFkaWFsR3JhZGllbnQgaWQ9InBhaW50Nl9yYWRpYWxfMTc2MV83ODY1IiBjeD0iMCIgY3k9IjAiIHI9IjEiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIiBncmFkaWVudFRyYW5zZm9ybT0idHJhbnNsYXRlKDMxMi45NDQgMjg0LjUxOSkgcm90YXRlKDkwKSBzY2FsZSg0LjAyNSkiPgo8c3RvcCBzdG9wLWNvbG9yPSJ3aGl0ZSIvPgo8c3RvcCBvZmZzZXQ9IjAuMDAwMSIgc3RvcC1jb2xvcj0id2hpdGUiLz4KPHN0b3Agb2Zmc2V0PSIwLjI4NzU1NyIgc3RvcC1jb2xvcj0id2hpdGUiLz4KPHN0b3Agb2Zmc2V0PSIwLjI4NzY1NyIgc3RvcC1jb2xvcj0id2hpdGUiIHN0b3Atb3BhY2l0eT0iMCIvPgo8L3JhZGlhbEdyYWRpZW50Pgo8cmFkaWFsR3JhZGllbnQgaWQ9InBhaW50N19yYWRpYWxfMTc2MV83ODY1IiBjeD0iMCIgY3k9IjAiIHI9IjEiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIiBncmFkaWVudFRyYW5zZm9ybT0idHJhbnNsYXRlKDM3Ny4zNDMgMjEzLjU3OCkgcm90YXRlKDkwKSBzY2FsZSg0LjAyNSkiPgo8c3RvcCBzdG9wLWNvbG9yPSJ3aGl0ZSIvPgo8c3RvcCBvZmZzZXQ9IjAuMDAwMSIgc3RvcC1jb2xvcj0id2hpdGUiLz4KPHN0b3Agb2Zmc2V0PSIwLjI4NzU1NyIgc3RvcC1jb2xvcj0id2hpdGUiLz4KPHN0b3Agb2Zmc2V0PSIwLjI4NzY1NyIgc3RvcC1jb2xvcj0id2hpdGUiIHN0b3Atb3BhY2l0eT0iMCIvPgo8L3JhZGlhbEdyYWRpZW50Pgo8cmFkaWFsR3JhZGllbnQgaWQ9InBhaW50OF9yYWRpYWxfMTc2MV83ODY1IiBjeD0iMCIgY3k9IjAiIHI9IjEiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIiBncmFkaWVudFRyYW5zZm9ybT0idHJhbnNsYXRlKDY3NS42OTcgMTgxLjM3OSkgcm90YXRlKDkwKSBzY2FsZSg0LjAyNSkiPgo8c3RvcCBzdG9wLWNvbG9yPSJ3aGl0ZSIvPgo8c3RvcCBvZmZzZXQ9IjAuMDAwMSIgc3RvcC1jb2xvcj0id2hpdGUiLz4KPHN0b3Agb2Zmc2V0PSIwLjI4NzU1NyIgc3RvcC1jb2xvcj0id2hpdGUiLz4KPHN0b3Agb2Zmc2V0PSIwLjI4NzY1NyIgc3RvcC1jb2xvcj0id2hpdGUiIHN0b3Atb3BhY2l0eT0iMCIvPgo8L3JhZGlhbEdyYWRpZW50Pgo8cmFkaWFsR3JhZGllbnQgaWQ9InBhaW50OV9yYWRpYWxfMTc2MV83ODY1IiBjeD0iMCIgY3k9IjAiIHI9IjEiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIiBncmFkaWVudFRyYW5zZm9ybT0idHJhbnNsYXRlKDIxOC4zNTYgMzI5LjI5Nikgcm90YXRlKDkwKSBzY2FsZSg0LjAyNSkiPgo8c3RvcCBzdG9wLWNvbG9yPSJ3aGl0ZSIvPgo8c3RvcCBvZmZzZXQ9IjAuMDAwMSIgc3RvcC1jb2xvcj0id2hpdGUiLz4KPHN0b3Agb2Zmc2V0PSIwLjI4NzU1NyIgc3RvcC1jb2xvcj0id2hpdGUiLz4KPHN0b3Agb2Zmc2V0PSIwLjI4NzY1NyIgc3RvcC1jb2xvcj0id2hpdGUiIHN0b3Atb3BhY2l0eT0iMCIvPgo8L3JhZGlhbEdyYWRpZW50Pgo8cmFkaWFsR3JhZGllbnQgaWQ9InBhaW50MTBfcmFkaWFsXzE3NjFfNzg2NSIgY3g9IjAiIGN5PSIwIiByPSIxIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgZ3JhZGllbnRUcmFuc2Zvcm09InRyYW5zbGF0ZSgxOTAuNjg0IDI2My44OSkgcm90YXRlKDkwKSBzY2FsZSg0LjAyNSkiPgo8c3RvcCBzdG9wLWNvbG9yPSJ3aGl0ZSIvPgo8c3RvcCBvZmZzZXQ9IjAuMDAwMSIgc3RvcC1jb2xvcj0id2hpdGUiLz4KPHN0b3Agb2Zmc2V0PSIwLjI4NzU1NyIgc3RvcC1jb2xvcj0id2hpdGUiLz4KPHN0b3Agb2Zmc2V0PSIwLjI4NzY1NyIgc3RvcC1jb2xvcj0id2hpdGUiIHN0b3Atb3BhY2l0eT0iMCIvPgo8L3JhZGlhbEdyYWRpZW50Pgo8cmFkaWFsR3JhZGllbnQgaWQ9InBhaW50MTFfcmFkaWFsXzE3NjFfNzg2NSIgY3g9IjAiIGN5PSIwIiByPSIxIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgZ3JhZGllbnRUcmFuc2Zvcm09InRyYW5zbGF0ZSgxMTkuNzQ0IDM0MS4zNzMpIHJvdGF0ZSg5MCkgc2NhbGUoNC4wMjUpIj4KPHN0b3Agc3RvcC1jb2xvcj0id2hpdGUiLz4KPHN0b3Agb2Zmc2V0PSIwLjAwMDEiIHN0b3AtY29sb3I9IndoaXRlIi8+CjxzdG9wIG9mZnNldD0iMC4yODc1NTciIHN0b3AtY29sb3I9IndoaXRlIi8+CjxzdG9wIG9mZnNldD0iMC4yODc2NTciIHN0b3AtY29sb3I9IndoaXRlIiBzdG9wLW9wYWNpdHk9IjAiLz4KPC9yYWRpYWxHcmFkaWVudD4KPHJhZGlhbEdyYWRpZW50IGlkPSJwYWludDEyX3JhZGlhbF8xNzYxXzc4NjUiIGN4PSIwIiBjeT0iMCIgcj0iMSIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiIGdyYWRpZW50VHJhbnNmb3JtPSJ0cmFuc2xhdGUoMjkwLjgwNiA0NzYuNzEzKSByb3RhdGUoOTApIHNjYWxlKDQuMDI1KSI+CjxzdG9wIHN0b3AtY29sb3I9IndoaXRlIi8+CjxzdG9wIG9mZnNldD0iMC4wMDAxIiBzdG9wLWNvbG9yPSJ3aGl0ZSIvPgo8c3RvcCBvZmZzZXQ9IjAuMjg3NTU3IiBzdG9wLWNvbG9yPSJ3aGl0ZSIvPgo8c3RvcCBvZmZzZXQ9IjAuMjg3NjU3IiBzdG9wLWNvbG9yPSJ3aGl0ZSIgc3RvcC1vcGFjaXR5PSIwIi8+CjwvcmFkaWFsR3JhZGllbnQ+CjxjbGlwUGF0aCBpZD0iY2xpcDBfMTc2MV83ODY1Ij4KPHJlY3Qgd2lkdGg9Ijk2MCIgaGVpZ2h0PSI0ODAiIGZpbGw9IndoaXRlIi8+CjwvY2xpcFBhdGg+CjwvZGVmcz4KPC9zdmc+Cg==);
+  background-position: center;
+  background-size: cover;
+  padding: 13rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  flex-direction: column;
+  z-index: 10;
+  color: black;
+}
+#page8 .logo {
+  width: 8rem;
+  margin-top: 10rem;
+  margin-bottom: 3rem;
+}
+#page8 h1 {
+  font-family: "Font1";
+  line-height: 3rem;
+  font-size: 4.5rem;
+}
+#page8 .explore {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  margin-top: 2rem;
+  padding: 1.2rem 1.8rem;
+  border-radius: 2rem;
+  color: white;
+  background: black;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+#page8 .explore svg {
+  height: 1rem;
+  width: 1rem;
+}
+#page8 .explore:hover {
+  background: #212528;
+}
+
+footer {
+  height: 40%;
+  width: 100%;
+  background: #0A0A0B;
+  padding-left: 15rem;
+  padding-right: 15rem;
+  padding-top: 5rem;
+  display: flex;
+  justify-content: space-between;
+}
+footer .logos {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+footer .logos .logo {
+  display: flex;
+  gap: 2rem;
+}
+footer .parts {
+  display: flex;
+  align-items: start;
+  justify-content: center;
+  gap: 10rem;
+}
+footer .parts .part {
+  display: flex;
+  flex-direction: column;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+footer .parts .part .title {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.369);
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+footer .parts .part ul {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+footer .parts .part ul li {
+  list-style: none;
+  color: rgba(255, 255, 255, 0.673);
+}/*# sourceMappingURL=style.css.map */
