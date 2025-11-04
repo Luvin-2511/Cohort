@@ -245,11 +245,12 @@ main #page2 .second {
   width: 100%;
   -o-object-fit: cover;
      object-fit: cover;
-  aspect-ratio: 429/376;
+  aspect-ratio: 1/1;
   border-radius: 1rem;
 }
 main #page2 .texter2 {
   width: 100%;
+  aspect-ratio: 1/1;
   background: var(--secondaryColor);
   display: flex;
   flex-direction: column;
@@ -299,11 +300,12 @@ main #page3 .second {
   width: 100%;
   -o-object-fit: cover;
      object-fit: cover;
-  aspect-ratio: 429/376;
+  aspect-ratio: 1/1;
   border-radius: 1rem;
 }
 main #page3 .texter2 {
   width: 100%;
+  aspect-ratio: 1/1;
   background: var(--secondaryColor);
   display: flex;
   flex-direction: column;
@@ -339,6 +341,406 @@ main #page3 .texter2 .content .h5 h5 {
   word-spacing: 0.2rem;
   line-height: 1.6rem;
   color: #9E9D9A;
+}
+main #page4 {
+  width: 100%;
+}
+main #page4 .title {
+  padding: 2rem 3rem;
+  font-size: 2rem;
+  font-family: "Chillax";
+  color: white;
+  text-transform: uppercase;
+}
+main #page4 .container {
+  padding: 1rem;
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+main #page4 .container .cont {
+  width: 100%;
+  background-image: url(./Assets/1.webp);
+  aspect-ratio: 1/1;
+  background-position: center;
+  background-size: cover;
+  padding: 1rem;
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 17rem;
+}
+main #page4 .container .cont .top {
+  display: flex;
+  align-items: end;
+  gap: 0.5rem;
+  padding: 1rem;
+  justify-content: end;
+}
+main #page4 .container .cont .top .icon {
+  padding: 0.7rem 0.7rem;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.099);
+  -webkit-backdrop-filter: blur(20px);
+          backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.295);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+main #page4 .container .cont .bottom {
+  text-transform: uppercase;
+  border-radius: 0.5rem;
+  padding: 1.5rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: white;
+  font-family: "Roboto";
+  background: rgba(255, 255, 255, 0.099);
+  -webkit-backdrop-filter: blur(20px);
+          backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.199);
+}
+main #page4 .container .cont .bottom .name {
+  font-size: 1.2rem;
+  font-family: "Chillax";
+}
+main #page4 .container .cont1 {
+  width: 100%;
+  aspect-ratio: 1/1;
+  background-image: url(./Assets/2.webp);
+  background-position: center;
+  background-size: cover;
+  padding: 1rem;
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 17rem;
+}
+main #page4 .container .cont1 .top {
+  display: flex;
+  align-items: end;
+  gap: 0.5rem;
+  padding: 1rem;
+  justify-content: end;
+}
+main #page4 .container .cont1 .top .icon {
+  padding: 0.7rem 0.7rem;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.099);
+  -webkit-backdrop-filter: blur(20px);
+          backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.295);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+main #page4 .container .cont1 .bottom {
+  text-transform: uppercase;
+  border-radius: 0.5rem;
+  padding: 1.5rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: white;
+  font-family: "Roboto";
+  background: rgba(255, 255, 255, 0.099);
+  -webkit-backdrop-filter: blur(20px);
+          backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.199);
+}
+main #page4 .container .cont1 .bottom .name {
+  font-size: 1.2rem;
+  font-family: "Chillax";
+}
+main #page4 .container .cont2 {
+  width: 100%;
+  background-image: url(./Assets/3.webp);
+  background-position: center;
+  background-size: cover;
+  padding: 1rem;
+  aspect-ratio: 1/1;
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 17rem;
+}
+main #page4 .container .cont2 .top {
+  display: flex;
+  align-items: end;
+  gap: 0.5rem;
+  padding: 1rem;
+  justify-content: end;
+}
+main #page4 .container .cont2 .top .icon {
+  padding: 0.7rem 0.7rem;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.099);
+  -webkit-backdrop-filter: blur(20px);
+          backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.295);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+main #page4 .container .cont2 .bottom {
+  text-transform: uppercase;
+  border-radius: 0.5rem;
+  padding: 1.5rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: white;
+  font-family: "Roboto";
+  background: rgba(255, 255, 255, 0.099);
+  -webkit-backdrop-filter: blur(20px);
+          backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.199);
+}
+main #page4 .container .cont2 .bottom .name {
+  font-size: 1.2rem;
+  font-family: "Chillax";
+}
+main #page5 {
+  width: 100%;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+main #page5 .second {
+  width: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  aspect-ratio: 16/9;
+  border-radius: 1rem;
+}
+main #page5 .texter2 {
+  width: 100%;
+  aspect-ratio: 16/9;
+  background: var(--secondaryColor);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 2rem;
+  border-radius: 1rem;
+}
+main #page5 .texter2 .title {
+  color: rgba(255, 255, 255, 0.351);
+  font-size: 0.9rem;
+  font-weight: 400;
+  font-family: "Roboto";
+  text-transform: uppercase;
+  letter-spacing: 0.1rem;
+}
+main #page5 .texter2 .content {
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+  color: white;
+}
+main #page5 .texter2 .content h4 {
+  font-family: "Chillax";
+  font-size: 2.3rem;
+  line-height: 3rem;
+  text-transform: uppercase;
+  font-weight: 400;
+}
+main #page5 .texter2 .content .job {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  font-family: "Roboto";
+  text-transform: uppercase;
+  font-size: 0.9rem;
+  margin-top: 1rem;
+  cursor: pointer;
+}
+main #page5 .texter2 .content .job .button {
+  border: 0.5px solid rgba(255, 255, 255, 0.168);
+  padding: 0.7rem 0.7rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #292929;
+}
+main #page5 .texter2 .content .job:hover {
+  background: #161616;
+}
+main #page6 {
+  width: 100%;
+  padding: 0 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+main #page6 .texter2 {
+  width: 100%;
+  aspect-ratio: 16/9;
+  background: var(--yellow);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 2rem;
+  border-radius: 1rem;
+}
+main #page6 .texter2 .title {
+  color: rgba(0, 0, 0, 0.642);
+  font-size: 0.9rem;
+  font-weight: 400;
+  font-family: "Roboto";
+  text-transform: uppercase;
+  letter-spacing: 0.1rem;
+}
+main #page6 .texter2 .content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  color: black;
+}
+main #page6 .texter2 .content h4 {
+  font-family: "Chillax";
+  font-size: 3rem;
+  line-height: 3.2rem;
+  text-transform: uppercase;
+  font-weight: 400;
+}
+main #page6 .texter2 .content .job {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: black;
+  color: white;
+  gap: 0.7rem;
+  font-family: "Roboto";
+  text-transform: uppercase;
+  font-size: 0.9rem;
+  margin-top: 1rem;
+  padding: 1rem;
+  cursor: pointer;
+  border-radius: 1rem;
+}
+main #page6 .texter2 .content .job .button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+main footer {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+main footer .top {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: space-between;
+  gap: 5rem;
+  border-radius: 1rem;
+  background: var(--secondaryColor);
+}
+main footer .top .upar {
+  font-family: "Satoshi";
+  color: white;
+  text-transform: uppercase;
+  font-size: 1.2rem;
+}
+main footer .top .neeche {
+  display: flex;
+  align-items: end;
+  gap: 0.5rem;
+  justify-content: start;
+}
+main footer .top .neeche .icon {
+  padding: 0.7rem 0.7rem;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.099);
+  -webkit-backdrop-filter: blur(20px);
+          backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.295);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+main footer .center {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 1rem;
+  background: var(--secondaryColor);
+  border-radius: 1rem;
+}
+main footer .center .part {
+  flex-shrink: 0;
+  width: 50%;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  color: white;
+  text-transform: uppercase;
+}
+main footer .center .part .title {
+  font-size: 1.5rem;
+  font-family: "Chillax";
+}
+main footer .center .part ul {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.432);
+}
+main footer .center .part ul li {
+  list-style: none;
+  font-family: "Roboto";
+}
+main footer .center .part .temp {
+  padding: 1rem;
+  border-radius: 0.5rem;
+  background: var(--yellow);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: black;
+  font-family: "Roboto";
+}
+main footer .bottom {
+  padding: 1rem;
+  background: var(--secondaryColor);
+  border-radius: 1rem;
+  text-align: center;
+  font-family: "Roboto";
+  color: rgba(255, 255, 255, 0.37);
+  text-transform: uppercase;
+}
+main footer .bottom h4 {
+  font-weight: 400;
+  line-height: 2rem;
+}
+main footer .bottom h4 a {
+  color: white;
+}
+main footer .bottom .button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
 }
 
 @media (min-width: 1000px) {
@@ -409,6 +811,7 @@ main #page3 .texter2 .content .h5 h5 {
   main #page2 .second,
   main #page2 .texter2 {
     width: 50%;
+    aspect-ratio: 1/1;
   }
   main #page2 .texter2 {
     padding: 4rem;
@@ -427,12 +830,86 @@ main #page3 .texter2 .content .h5 h5 {
     font-size: 1.2rem;
     line-height: 1.9rem;
   }
+  main #page5 {
+    flex-direction: row;
+  }
+  main #page5 .second,
+  main #page5 .texter2 {
+    width: 50%;
+    aspect-ratio: 16/9;
+  }
+  main #page5 .texter2 {
+    padding: 4rem;
+  }
+  main #page5 .texter2 .content {
+    display: flex;
+    flex-direction: column;
+    gap: 10rem;
+  }
+  main #page5 .texter2 .content h4 {
+    font-size: 3.2rem;
+    line-height: 3.7rem;
+  }
+  main #page5 .texter2 .content .story svg {
+    transition: all 0.5s ease;
+  }
+  main #page5 .texter2 .content .story .button {
+    position: relative;
+    overflow: hidden;
+  }
+  main #page5 .texter2 .content .story .button .hover1 {
+    position: absolute;
+    top: -100%;
+  }
+  main #page5 .texter2 .content .story .button:ho1ver .hover {
+    animation: down 0.2s 1 forwards ease-in-out;
+  }
+  main #page5 .texter2 .content .story .button:hover .svg1 {
+    animation: down 0.2s 1 forwards ease-in-out;
+  }
+  main #page6 .texter2 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    aspect-ratio: 5/1;
+  }
+  main #page6 .texter2 .content {
+    display: flex;
+    flex-direction: row;
+    gap: 10rem;
+    align-items: end;
+    justify-content: space-between;
+  }
+  main #page6 .texter2 .content h4 {
+    width: 60%;
+    font-size: 5rem;
+    line-height: 5rem;
+  }
+  main #page6 .texter2 .content .story svg {
+    transition: all 0.5s ease;
+  }
+  main #page6 .texter2 .content .story .button {
+    position: relative;
+    overflow: hidden;
+  }
+  main #page6 .texter2 .content .story .button .hover1 {
+    position: absolute;
+    top: -100%;
+  }
+  main #page6 .texter2 .content .story .button:ho1ver .hover {
+    animation: down 0.2s 1 forwards ease-in-out;
+  }
+  main #page6 .texter2 .content .story .button:hover .svg1 {
+    animation: down 0.2s 1 forwards ease-in-out;
+  }
   main #page3 {
     flex-direction: row;
   }
   main #page3 .second,
   main #page3 .texter2 {
     width: 50%;
+    aspect-ratio: 1/1;
   }
   main #page3 .texter2 {
     padding: 4rem;
@@ -450,6 +927,34 @@ main #page3 .texter2 .content .h5 h5 {
     width: 20rem;
     font-size: 1.2rem;
     line-height: 1.9rem;
+  }
+  main #page4 .title {
+    font-size: 3rem;
+  }
+  main #page4 .container {
+    flex-direction: row;
+  }
+  main footer {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    grid-template-rows: 3fr 1fr;
+    grid-template-areas: "left righttop" "left rightbottom";
+  }
+  main footer .top {
+    grid-area: left;
+  }
+  main footer .center {
+    grid-area: righttop;
+    gap: 2rem;
+  }
+  main footer .center .part {
+    width: 30%;
+  }
+  main footer .bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    grid-area: rightbottom;
   }
 }
 @keyframes down {
