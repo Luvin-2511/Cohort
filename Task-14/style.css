@@ -1,0 +1,224 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --bgColor: black ;
+}
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+}
+
+main {
+  height: 100%;
+  width: 100%;
+  font-family: sans-serif;
+  background: radial-gradient(circle, rgb(106, 201, 147) 0%, black 100%);
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  grid-template-areas: "lefttop center lasttop" "leftcenter center lastcenter" "leftbottom center lastbottom";
+}
+main .lefttop {
+  grid-area: lefttop;
+  padding: 1.3rem 2.3rem;
+}
+main .lefttop .logo {
+  width: 10rem;
+}
+main .center {
+  grid-area: center;
+  min-height: 100%;
+  overflow: hidden;
+  overflow-y: scroll;
+  scroll-snap-type: y mandatory;
+  scrollbar-width: none;
+  scroll-behavior: smooth;
+}
+main .center .cont {
+  animation: scroll 5s forwards;
+  animation-timeline: view();
+  scroll-snap-align: start;
+  height: 100%;
+  width: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 3rem;
+  transition: all 1s ease;
+}
+main .center .cont .text {
+  font-size: 20rem;
+  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+  color: white;
+}
+main .center .cont .image {
+  height: 30rem;
+  position: absolute;
+}
+main .center .cont .image img {
+  height: 100%;
+  width: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+main .center .cont:nth-child(2) {
+  height: 100%;
+  width: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 3rem;
+}
+main .center .cont:nth-child(2) .text {
+  font-size: 20rem;
+  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+  color: white;
+}
+main .center .cont:nth-child(2) .image {
+  height: 30rem;
+  margin-left: 3rem;
+  position: absolute;
+}
+main .center .cont:nth-child(2) .image img {
+  height: 100%;
+  width: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+main .lasttop {
+  grid-area: lasttop;
+  padding: 2rem;
+  padding-right: 3rem;
+}
+main .lasttop ul {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  gap: 1rem;
+}
+main .lasttop ul li {
+  font-size: 1rem;
+  font-weight: 600;
+  color: white;
+  list-style: none;
+}
+main .lasttop ul li button {
+  font-size: 1rem;
+  color: black;
+  padding: 0.8rem 1.5rem;
+  border-radius: 2rem;
+  border: none;
+  outline: none;
+  font-weight: 400;
+}
+main .leftcenter {
+  grid-area: leftcenter;
+  color: white;
+  padding: 3rem;
+}
+main .leftcenter h1 {
+  font-size: 2.7rem;
+  letter-spacing: 0.1rem;
+  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+  margin-top: 1.5rem;
+}
+main .leftcenter h3 {
+  width: 23rem;
+  margin-top: 1.5rem;
+  font-size: 1.1rem;
+  font-weight: 400;
+}
+main .leftbottom {
+  grid-area: leftbottom;
+  padding: 3rem;
+}
+main .leftbottom .logos {
+  height: 100%;
+  display: flex;
+  align-items: end;
+  justify-content: start;
+  color: white;
+  gap: 1.5rem;
+}
+main .leftbottom .logos .logo {
+  font-size: 2rem;
+}
+main .lastcenter {
+  grid-area: lastcenter;
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+  justify-content: center;
+  padding: 4rem;
+  gap: 1.2rem;
+}
+main .lastcenter h2 {
+  font-size: 1.2rem;
+  color: white;
+  font-weight: 400;
+  margin-right: 3rem;
+}
+main .lastcenter .circles {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+main .lastcenter .circles .circle:nth-child(1) {
+  height: 4.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 4.5rem;
+  color: black;
+  border-radius: 50%;
+  background: white;
+}
+main .lastcenter .circles .circle {
+  height: 4.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 4.5rem;
+  color: white;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.55);
+}
+main .lastbottom {
+  grid-area: lastbottom;
+  display: flex;
+  align-items: end;
+  justify-content: end;
+  padding: 2rem 4rem;
+}
+main .lastbottom button {
+  outline: none;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  font-size: 1rem;
+  background: white;
+  border-radius: 2rem;
+}
+
+@keyframes scroll {
+  0% {
+    transform: translateY(-200);
+    scale: 0.7;
+  }
+  50%, 55% {
+    transform: translateY(0);
+    scale: 1;
+  }
+  100% {
+    transform: translateY(-200);
+    scale: 0.7;
+  }
+}/*# sourceMappingURL=style.css.map */
