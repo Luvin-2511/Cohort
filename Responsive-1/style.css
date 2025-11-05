@@ -1,0 +1,68 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+  background: black;
+}
+
+#main {
+  height: 100%;
+  width: 100%;
+  font-size: 1vw;
+}
+#main h1 {
+  font-size: 5vw;
+  color: rgb(35, 34, 34);
+  text-align: center;
+}
+#main hr {
+  margin-bottom: 2vw;
+  margin-top: 2vw;
+}
+#main .px {
+  font-size: 20px;
+  color: white;
+  text-align: center;
+}
+#main .vw {
+  font-size: 4vw;
+  color: white;
+  text-align: center;
+}
+#main .vh {
+  font-size: 4vh;
+  color: white;
+  text-align: center;
+}
+#main .perc {
+  font-size: 60%;
+  color: white;
+  text-align: center;
+}
+#main .rem {
+  font-size: 4rem;
+  color: white;
+  text-align: center;
+}
+#main .em {
+  font-size: 4em;
+  color: white;
+  text-align: center;
+}
+#main .vmax {
+  font-size: 4vmax;
+  color: white;
+  text-align: center;
+}
+#main .vmin {
+  font-size: 4vmin;
+  color: white;
+  text-align: center;
+}/*# sourceMappingURL=style.css.map */
