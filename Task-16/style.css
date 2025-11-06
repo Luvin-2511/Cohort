@@ -1,0 +1,154 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+@font-face {
+  font-family: "Font1";
+  src: url(./remixicon.woff2);
+}
+html,
+body {
+  height: 100%;
+  width: 100%;
+}
+
+main {
+  font-family: Arial, Helvetica, sans-serif;
+  width: 100%;
+}
+main nav {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2rem 4rem;
+}
+main nav .logo {
+  display: flex;
+  align-items: center;
+  font-size: 1.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+main nav ul {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+main nav ul li {
+  font-size: 1.1rem;
+  list-style: none;
+}
+main nav .buttons {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+main nav .buttons h4 {
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+main nav .buttons .talk {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.7rem 1rem;
+  border-radius: 2rem;
+  color: white;
+  background: #2A3966;
+}
+main nav .buttons .talk .circle {
+  width: -moz-fit-content;
+  width: fit-content;
+  padding: 0.25rem 0.3rem;
+  border-radius: 50%;
+  background: #B6C8CF;
+  color: #2A3966;
+}
+main #page {
+  height: 80vh;
+  margin: auto;
+  width: 85%;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  grid-template-areas: "left image image" "left image1 image2";
+  grid-gap: 2rem;
+}
+main #page .left {
+  padding: 2rem;
+  margin-left: 2rem;
+  grid-area: left;
+}
+main #page .left h1 {
+  font-size: 4.5rem;
+  font-weight: 400;
+}
+main #page .left h1 .imagediv {
+  display: inline-block;
+  height: 4rem;
+  width: 10rem;
+  background-image: url(./cap.png);
+}
+main #page .left h1 button {
+  height: 4rem;
+  width: 10rem;
+  border: 1px solid black;
+  font-size: 1rem;
+  font-weight: 600;
+  outline: none;
+  border-radius: 2rem;
+  background: #F0F0F0;
+}
+main #page .left .con {
+  padding-top: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+main #page .left .con .contact {
+  background: #2A3966;
+  color: white;
+  padding: 0.9rem 1.2rem;
+  border-radius: 2rem;
+  font-size: 1.1rem;
+}
+main #page .left .con h3 {
+  font-weight: 400;
+  font-size: 0.9rem;
+  text-decoration: underline;
+}
+main #page .left h5 {
+  font-size: 1rem;
+  margin-top: 4rem;
+  width: 65%;
+  font-weight: 400;
+}
+main #page .left .ender {
+  font-size: 3rem;
+  font-weight: 600;
+  margin-top: 3rem;
+}
+main #page .image {
+  grid-area: image;
+  background-image: url(./1.jpg);
+  background-position: center;
+  background-size: cover;
+  border-radius: 2rem;
+}
+main #page .image1 {
+  grid-area: image1;
+  background-image: url(./2.webp);
+  background-position: center;
+  background-size: cover;
+  border-radius: 2rem;
+}
+main #page .image2 {
+  grid-area: image2;
+  background-image: url(./3.webp);
+  background-position: center;
+  background-size: cover;
+  border-radius: 2rem;
+}/*# sourceMappingURL=style.css.map */
