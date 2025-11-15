@@ -1,0 +1,85 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+}
+
+::-moz-selection {
+  background: none;
+}
+
+::selection {
+  background: none;
+}
+
+main {
+  height: 100%;
+  width: 100%;
+  background: black;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+main .bulb {
+  position: absolute;
+  top: 0;
+  height: 25rem;
+  width: 25rem;
+  left: 50%;
+  transform: translateX(-50%) rotate(180deg);
+  -o-object-fit: contain;
+     object-fit: contain;
+  z-index: 10;
+  filter: drop-shadow(1px 1px 1px white);
+}
+main .button {
+  margin-top: 15rem;
+  height: 8rem;
+  width: 8rem;
+  background: radial-gradient(circle at center, rgb(183, 92, 92), red);
+  border-radius: 50%;
+  font-family: Helvetica, sans-serif;
+  box-shadow: 0px 0px 1px 1px white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  cursor: pointer;
+  font-weight: 600;
+  color: white;
+  transition: all 0.5s ease;
+  position: relative;
+  z-index: 10;
+}
+main .button:active {
+  scale: 0.8;
+}
+main .bright {
+  position: absolute;
+  top: 0;
+  height: 45rem;
+  width: 45rem;
+  z-index: 1;
+  background: yellow;
+  box-shadow: 0 0 60px 60px yellow;
+  display: none;
+  border-radius: 50%;
+}
+main .light {
+  display: none;
+  position: absolute;
+  top: -30%;
+  height: 85rem;
+  width: 85rem;
+  z-index: 1;
+  background: rgba(255, 255, 0, 0.58);
+  box-shadow: 0 0 60px 60px rgba(255, 255, 0, 0.58);
+  border-radius: 50%;
+}/*# sourceMappingURL=style.css.map */

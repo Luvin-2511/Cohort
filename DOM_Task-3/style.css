@@ -1,0 +1,167 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+}
+
+main {
+  height: 100%;
+  width: 100%;
+  background: black;
+  position: relative;
+}
+main .shirt {
+  position: absolute;
+  right: 10rem;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 30rem;
+  width: 30rem;
+  border-radius: 1rem;
+  background: rgb(255, 255, 255);
+  overflow: hidden;
+}
+main .shirt .left {
+  position: absolute;
+  z-index: 1;
+  top: 5%;
+  left: 2%;
+  height: 10rem;
+  width: 7rem;
+  transform: rotate(45deg);
+  background: black;
+}
+main .shirt .logo {
+  position: absolute;
+  right: 20%;
+  top: 12%;
+  z-index: 10;
+  height: 6rem;
+  width: 6rem;
+}
+main .shirt .logo img {
+  height: 100%;
+  width: 100%;
+  -o-object-fit: contain;
+     object-fit: contain;
+}
+main .shirt .cut {
+  height: 7rem;
+  width: 7rem;
+  background: white;
+  position: absolute;
+  left: 50%;
+  clip-path: polygon(100% 0, 100% 40%, 50% 100%, 0 40%, 0 0);
+  transform: translateX(-50%);
+  z-index: 1;
+}
+main .shirt .right {
+  position: absolute;
+  z-index: 1;
+  top: 5%;
+  right: 2%;
+  height: 10rem;
+  width: 7rem;
+  transform: rotate(-45deg);
+  background: black;
+}
+main .shirt .top {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 10rem;
+  width: 20rem;
+  background: black;
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
+}
+main .shirt .bottom {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 20rem;
+  width: 20rem;
+  background: red;
+  border-bottom-left-radius: 1rem;
+  border-bottom-right-radius: 1rem;
+}
+main .details {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  text-align: center;
+}
+main .details h1 {
+  font-size: 10rem;
+  padding-top: 12rem;
+  color: white;
+  line-height: 0.95;
+}
+main .details h4 {
+  font-size: 1.5rem;
+  color: white;
+  margin: 1rem 0;
+}
+main .details h3 {
+  color: white;
+  font-size: 2rem;
+  padding-top: 1rem;
+}
+main .details .trophy {
+  height: 5rem;
+  width: 5rem;
+  margin: auto;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+main .details .trophy img {
+  height: 100%;
+  width: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+main .details .trophy h3 {
+  font-size: 3rem;
+}
+main .details button {
+  padding: 1rem 1.6rem;
+  color: white;
+  background: crimson;
+  border: 1px solid white;
+  border-radius: 1rem;
+  margin: 2rem 0;
+  font-size: 1.5rem;
+  text-transform: uppercase;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.5s ease;
+}
+main .details button:active {
+  scale: 0.9;
+}
+main .captain {
+  border-radius: 2rem;
+  overflow: hidden;
+  position: absolute;
+  left: 10rem;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 30rem;
+  width: 30rem;
+  border-radius: 1rem;
+}
+main .captain img {
+  height: 100%;
+  width: 100%;
+  -o-object-fit: contain;
+     object-fit: contain;
+}/*# sourceMappingURL=style.css.map */
