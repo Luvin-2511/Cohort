@@ -36,6 +36,7 @@ main .shirt .left {
   width: 7rem;
   transform: rotate(45deg);
   background: black;
+  transition: background-color 0.5s ease, color 0.5s ease;
 }
 main .shirt .logo {
   position: absolute;
@@ -50,6 +51,7 @@ main .shirt .logo img {
   width: 100%;
   -o-object-fit: contain;
      object-fit: contain;
+  transition: background-color 0.5s ease, color 0.5s ease;
 }
 main .shirt .cut {
   height: 7rem;
@@ -60,6 +62,7 @@ main .shirt .cut {
   clip-path: polygon(100% 0, 100% 40%, 50% 100%, 0 40%, 0 0);
   transform: translateX(-50%);
   z-index: 1;
+  transition: background-color 0.5s ease, color 0.5s ease;
 }
 main .shirt .right {
   position: absolute;
@@ -70,6 +73,7 @@ main .shirt .right {
   width: 7rem;
   transform: rotate(-45deg);
   background: black;
+  transition: background-color 0.5s ease, color 0.5s ease;
 }
 main .shirt .top {
   position: absolute;
@@ -81,6 +85,7 @@ main .shirt .top {
   background: black;
   border-top-left-radius: 1rem;
   border-top-right-radius: 1rem;
+  transition: background-color 0.5s ease, color 0.5s ease;
 }
 main .shirt .bottom {
   position: absolute;
@@ -92,6 +97,7 @@ main .shirt .bottom {
   background: red;
   border-bottom-left-radius: 1rem;
   border-bottom-right-radius: 1rem;
+  transition: background-color 0.5s ease, color 0.5s ease;
 }
 main .details {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
@@ -99,12 +105,14 @@ main .details {
 }
 main .details h1 {
   font-size: 10rem;
+  transition: background-color 0.5s ease, color 0.5s ease;
   padding-top: 12rem;
   color: white;
   line-height: 0.95;
 }
 main .details h4 {
   font-size: 1.5rem;
+  transition: background-color 0.5s ease, color 0.5s ease;
   color: white;
   margin: 1rem 0;
 }
@@ -112,6 +120,7 @@ main .details h3 {
   color: white;
   font-size: 2rem;
   padding-top: 1rem;
+  transition: background-color 0.5s ease, color 0.5s ease;
 }
 main .details .trophy {
   height: 5rem;
@@ -130,6 +139,7 @@ main .details .trophy img {
      object-fit: cover;
 }
 main .details .trophy h3 {
+  transition: background-color 0.5s ease, color 0.5s ease;
   font-size: 3rem;
 }
 main .details button {
@@ -143,7 +153,7 @@ main .details button {
   text-transform: uppercase;
   cursor: pointer;
   font-weight: 600;
-  transition: all 0.5s ease;
+  transition: background-color 0.5s ease, color 0.5s ease;
 }
 main .details button:active {
   scale: 0.9;
@@ -161,6 +171,7 @@ main .captain {
 }
 main .captain img {
   height: 100%;
+  transition: background-color 0.5s ease, color 0.5s ease;
   width: 100%;
   -o-object-fit: contain;
      object-fit: contain;
