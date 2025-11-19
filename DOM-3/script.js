@@ -8,6 +8,7 @@ button.addEventListener('click',()=>{
     let c1 = Math.floor(Math.random()*256);
     let c2 = Math.floor(Math.random()*256);
     let c3 = Math.floor(Math.random()*256);
+    let s = Math.floor(Math.random()*3);
     let square = document.createElement('div')
     square.style.height="100px";
     square.style.width="100px";
@@ -18,6 +19,7 @@ button.addEventListener('click',()=>{
     square.style.top=`${y}%`
     square.style.rotate=`${r}deg`
     square.style.pointerEvents='none'
+    square.style.scale=s
 
 
     main.appendChild(square)
