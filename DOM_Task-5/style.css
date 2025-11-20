@@ -1,0 +1,105 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+::-moz-selection {
+  background: transparent;
+}
+
+::selection {
+  background: transparent;
+}
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+}
+
+main {
+  height: 100%;
+  width: 100%;
+  background: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+main .downloader {
+  padding: 2rem;
+  width: 30rem;
+  background: transparent;
+  -webkit-backdrop-filter: blur(10px);
+          backdrop-filter: blur(10px);
+  border-radius: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  flex-direction: column;
+  gap: 3rem;
+}
+main .downloader h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  font-family: Arial, Helvetica, sans-serif;
+  color: white;
+  text-align: center;
+}
+main .downloader h2 span {
+  display: block;
+  color: rgba(43, 255, 0, 0.662);
+}
+main .downloader .liner {
+  width: 100%;
+  background: gray;
+  height: 1rem;
+  border-radius: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+main .downloader .liner .insider {
+  position: absolute;
+  height: 100%;
+  width: 0%;
+  background: green;
+  left: 0;
+  top: 0;
+  transition: all 0.5s ease;
+}
+main .downloader .dets {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 2rem;
+  font-weight: 600;
+  font-family: Arial, Helvetica, sans-serif;
+  color: white;
+  text-align: center;
+}
+main .downloader .dets .button {
+  padding: 1rem 2rem;
+  background: green;
+  border-radius: 1rem;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+main .downloader .dets .button:active {
+  scale: 0.95;
+}
+main .videocont {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+main .videocont video {
+  height: 100%;
+  width: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}/*# sourceMappingURL=style.css.map */
