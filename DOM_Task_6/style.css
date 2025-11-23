@@ -1,0 +1,124 @@
+@font-face {
+  font-family: "Font1";
+  src: url(./Fonts/korataki-rg-3cf0d889.ttf);
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Font1";
+}
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+}
+
+main {
+  height: 100%;
+  width: 100%;
+  background-color: black;
+}
+main h1 {
+  font-size: 7rem;
+  color: white;
+  text-align: center;
+  padding-top: 5rem;
+}
+main span {
+  color: #555;
+}
+main .piano {
+  margin-top: 19rem;
+  position: relative;
+}
+main .piano .liner {
+  width: 100%;
+  height: 2rem;
+  margin-bottom: 0.5rem;
+  background: white;
+}
+main .piano .keys {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+main .piano .keys .key {
+  height: 20rem;
+  width: 10rem;
+  background: white;
+  border-bottom-left-radius: 1rem;
+  border-bottom-right-radius: 1rem;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  align-items: end;
+  font-size: 1.5rem;
+  font-weight: 600;
+  transition: all 0.5s ease;
+}
+main .piano .keys .key:active {
+  background: rgb(161, 161, 161) !important;
+}
+main .piano .keys .blacker {
+  position: absolute;
+  height: 13rem;
+  width: 5rem;
+  background: black;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  align-items: end;
+  border-bottom-left-radius: 1rem;
+  border-bottom-right-radius: 1rem;
+  top: 2.5rem;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  color: white;
+  transition: all 0.5s ease;
+}
+main .piano .keys .blacker:active {
+  background: rgb(44, 44, 44) !important;
+}
+main .piano .keys .hover1 {
+  left: 5rem;
+}
+main .piano .keys .hover2 {
+  left: 12.5rem;
+}
+main .piano .keys .hover3 {
+  left: 28rem;
+}
+main .piano .keys .hover4 {
+  left: 35.5rem;
+}
+main .piano .keys .hover5 {
+  left: 43rem;
+}
+main .piano .keys .hover6 {
+  left: 58.5rem;
+}
+main .piano .keys .hover7 {
+  left: 66rem;
+}
+main .piano .keys .hover8 {
+  left: 81.5rem;
+}
+main .piano .keys .hover9 {
+  left: 89rem;
+}
+main .piano .keys .hover10 {
+  left: 96.5rem;
+}
+
+.darker {
+  background: rgb(161, 161, 161) !important;
+}
+
+.whiter {
+  background: rgb(44, 44, 44) !important;
+}/*# sourceMappingURL=style.css.map */

@@ -1,0 +1,144 @@
+@font-face {
+    font-family: "Font1";
+    src: url(./Fonts/korataki-rg-3cf0d889.ttf);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Font1";
+}
+
+html,
+body {
+    height: 100%;
+    width: 100%;
+}
+
+main {
+    height: 100%;
+    width: 100%;
+    background-color: black;
+
+    h1 {
+        font-size: 7rem;
+        color: white;
+        text-align: center;
+        padding-top: 5rem;
+    }
+
+    span {
+        color: #555;
+    }
+
+    .piano {
+        margin-top: 19rem;
+        position: relative;
+
+        .liner {
+            width: 100%;
+            height: 2rem;
+            margin-bottom: 0.5rem;
+            background: white;
+        }
+
+        .keys {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+
+            .key {
+                height: 20rem;
+                width: 10rem;
+                background: white;
+                border-bottom-left-radius: 1rem;
+                border-bottom-right-radius: 1rem;
+                cursor: pointer;
+                display: flex;
+                justify-content: center;
+                text-align: center;
+                align-items: end;
+                font-size: 1.5rem;
+                font-weight: 600;
+                transition: all 0.5s ease;
+            }
+
+            .key:active {
+                background: rgb(161, 161, 161) !important;
+            }
+
+            .blacker {
+                position: absolute;
+                height: 13rem;
+                width: 5rem;
+                background: black;
+                display: flex;
+                justify-content: center;
+                text-align: center;
+                align-items: end;
+                border-bottom-left-radius: 1rem;
+                border-bottom-right-radius: 1rem;
+                top: 2.5rem;
+                cursor: pointer;
+                font-size: 1rem;
+                font-weight: 600;
+                color: white;
+                transition: all 0.5s ease;
+            }
+
+            .blacker:active {
+                    background: rgb(44, 44, 44) !important;
+
+            }
+
+            .hover1 {
+                left: 5rem;
+            }
+
+            .hover2 {
+                left: 12.5rem;
+            }
+
+            .hover3 {
+                left: 28rem;
+            }
+
+            .hover4 {
+                left: 35.5rem;
+            }
+
+            .hover5 {
+                left: 43rem;
+            }
+
+            .hover6 {
+                left: 58.5rem;
+            }
+
+            .hover7 {
+                left: 66rem;
+            }
+
+            .hover8 {
+                left: 81.5rem;
+            }
+
+            .hover9 {
+                left: 89rem;
+            }
+
+            .hover10 {
+                left: 96.5rem;
+            }
+        }
+    }
+}
+
+.darker {
+    background: rgb(161, 161, 161) !important;
+}
+.whiter {
+    background: rgb(44, 44, 44) !important;
+}
