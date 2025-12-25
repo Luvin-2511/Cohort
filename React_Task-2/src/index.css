@@ -1,0 +1,279 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Poppins;
+}
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+}
+
+.nav {
+  padding: 0 2rem;
+  height: 5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+
+  ul {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3rem;
+
+    .navbut {
+      width: fit-content;
+      padding: 0.2rem 0.5rem;
+      border: 1px solid rgba(0, 0, 0, 0.606);
+      border-radius: 1.5rem;
+      background: transparent;
+      color: black;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+
+      h4 {
+        position: relative;
+        font-weight: 400;
+        z-index: 10;
+      }
+    }
+
+    .navbut::after {
+      content: "";
+      position: absolute;
+      z-index: 1;
+      height: 100%;
+      width: 100%;
+      background: black;
+      top: 100%;
+      left: 0;
+      transition: all 0.5s ease;
+    }
+
+    .navbut:hover h4 {
+      color: white;
+    }
+
+    .navbut:hover::after {
+      top: 0%;
+    }
+  }
+
+  .book {
+    padding: 0.5rem 0.8rem;
+    border-radius: 1.5rem;
+    background: #000;
+    color: white;
+    font-size: 0.9rem;
+    cursor: pointer;
+  }
+}
+
+.hero {
+  margin: auto;
+  border-radius: 2rem;
+  height: 89vh;
+  width: 95vw;
+  background-image: url(./assets/_club-de-padel.jpg);
+  background-position: left;
+  background-size: cover;
+  text-align: center;
+  color: white;
+  display: flex;
+  align-items: center;
+  padding-top: 10rem;
+  flex-direction: column;
+  gap: 2rem;
+
+  h1 {
+    font-size: 4rem;
+    font-weight: 400;
+    line-height: 4rem;
+  }
+
+  h4 {
+    font-size: 1.1rem;
+    font-weight: 400;
+  }
+
+  .btn {
+    padding: 0.6rem 1.5rem;
+    border-radius: 1.5rem;
+    background: #000;
+    color: white;
+    font-size: 1.1rem;
+    cursor: pointer;
+  }
+
+  .bottom {
+    padding: 0 2rem;
+    width: 100%;
+    margin-top: 15rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .left {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      h5 {
+        text-align: left;
+        font-size: 1.1rem;
+        font-weight: 400;
+        width: 17rem;
+      }
+
+      .imager {
+        height: 3.5rem;
+        width: 9rem;
+        border-radius: 2rem;
+        padding: 0.4rem 0.8rem;
+        background-color: rgba(255, 255, 255, 0.413);
+        backdrop-filter: blur(100);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+
+        img {
+          position: absolute;
+          height: 2.5rem;
+          width: 2.5rem;
+          border-radius: 50%;
+          object-fit: cover;
+        }
+
+        img:nth-child(1) {
+          left: 10%;
+        }
+
+        img:nth-child(2) {
+          left: 35%;
+        }
+
+        img:nth-child(3) {
+          left: 60%;
+        }
+      }
+    }
+
+    .right {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+
+      .bluer {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+  }
+}
+
+.second {
+  height: 100vh;
+  width: 100%;
+  padding: 2rem;
+
+  .top {
+    padding: 0 2rem;
+    display: flex;
+    align-items: start;
+    justify-content: space-between;
+
+    .navbut {
+      width: fit-content;
+      padding: 0.2rem 0.5rem;
+      border: 1px solid rgba(0, 0, 0, 0.606);
+      border-radius: 1.5rem;
+      background: transparent;
+      color: black;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+
+      h4 {
+        position: relative;
+        font-weight: 400;
+        z-index: 10;
+      }
+    }
+
+    h2 {
+      width: 55rem;
+      font-size: 1.8rem;
+      font-weight: 500;
+    }
+
+  }
+
+  .middle {
+    margin-top: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3rem;
+
+    .cont {
+      height: 28rem;
+      width: 28rem;
+      border-radius: 1rem;
+      overflow: hidden;
+
+      img {
+        height: 100%;
+        width: 100%;
+        border-radius: 2rem;
+        object-fit: cover;
+        object-position: left;
+      }
+    }
+
+  }
+
+  h3 {
+    padding-top: 2rem;
+    font-size: 1.8rem;
+    font-weight: 400;
+    text-align: center;
+  }
+
+  .flexer {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+
+    .sampler {
+      margin-top: 2rem;
+      display: flex;
+      text-align: center;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      
+      h1 {
+        font-size: 3rem;
+        font-weight: 600;
+        color: black;
+      }
+      h5 {
+        font-size: 1.2rem;
+        font-weight: 400;
+        color: rgba(0, 0, 0, 0.565);
+      }
+    }
+  }
+}
