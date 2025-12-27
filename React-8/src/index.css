@@ -1,0 +1,10 @@
+@import "tailwindcss";
+
+body {
+    background: black;
+    color: white;
+}
+
+.other {
+    background: conic-gradient(violet,indigo,blue,green,yellow,orange,red,violet);
+}
