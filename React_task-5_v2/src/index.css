@@ -1,0 +1,27 @@
+@import "tailwindcss";
+
+* {
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+#root {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+::-webkit-scrollbar {
+  width: 0;
+}
+
+body{
+  background: black;
+  color: white;
+}
+
+::selection {
+  background: white;
+  color: black;
+}
