@@ -1,0 +1,16 @@
+@import "tailwindcss";
+
+@font-face {
+    font-family:'poker';
+    src: url('./assets/Pokemon\ Hollow.ttf');
+}
+
+@font-face {
+    font-family: 'poker2';
+    src: url('./assets/Pokemon\ Solid.ttf');
+}
+
+
+h1 {
+    font-family: 'poker2';
+}
