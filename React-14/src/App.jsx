@@ -8,6 +8,8 @@ import Project from './pages/Project'
 import Navbar from './components/Navbar'
 import Coder from './pages/Coder'
 import Codex from './pages/Codex'
+import Anyproject from './pages/Anyproject'
+import NotFound from './pages/NotFound'
 
 const App = () => {
   return (
@@ -21,6 +23,8 @@ const App = () => {
         <Route path='/courses/coder' element={<Coder />}/>
         <Route path='/courses/codex' element={<Codex />}/>
         <Route path='/project' element={<Project />}/>
+        <Route path='/project/:anyproject' element={<Anyproject />}/>
+        <Route path='*' element={<NotFound />}/>
       </Routes>
     </div>
   )
