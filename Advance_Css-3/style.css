@@ -10,39 +10,38 @@ body {
     width: 100%;
 }
 
-body {
-    background: rgb(59, 59, 59);
-    color: white;
-}
-
-@property --rotate{
-    syntax:"<angle>";
-    initial-value: 0deg;
+@property --border{
+    syntax: "<angle>";
     inherits: false;
+    initial-value: 0deg;
 }
 
-@keyframes rotator {
+@keyframes borderanim {
     from {
-        --rotate:0deg;
-    }to {
-        --rotate:360deg;
+        --border:0deg
+    }to{
+        --border:360deg
     }
 }
 
 main {
     height: 100%;
+    width: 100%;
+    background: rgb(15, 15, 15);
     display: flex;
     align-items: center;
     justify-content: center;
 
     .card {
-        height: 500px;
-        width: 300px;
+        height: 35rem;
+        width: 22rem;
         border-radius: 1rem;
+        padding: 5px;
         background:
-            linear-gradient(rgb(0, 0, 0)) padding-box,
-            conic-gradient(from var(--rotate),black, black, red,black,black,black,black) border-box;
-        border: 5px solid transparent;
-        animation: rotator 3s linear infinite;
+            linear-gradient(black) padding-box,
+            conic-gradient(from var(--border),black,black,black,red,black,black,black) border-box
+        ;
+        border: 7px solid transparent;
+        animation: borderanim 5s linear infinite;
     }
 }
