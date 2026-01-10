@@ -4,3 +4,23 @@ body {
     background: black;
     color: white;
 }
+
+.hoverer::after {
+    content:"";
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: -100%;
+    background: rgba(57, 246, 0, 0.436);
+    transition: all 0.5s ease;
+}
+
+.hoverer:hover::after {
+    left: 0;
+}
+
+.tit:hover {
+    text-shadow: 1px 1px 40px green;
+    cursor: pointer;
+}
