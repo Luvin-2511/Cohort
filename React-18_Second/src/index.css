@@ -1,1 +1,19 @@
 @import "tailwindcss";
+
+body {
+    background-color: black;
+    color: white;
+}
+
+.loader {
+    animation: loading 2s ease infinite forwards;
+}
+
+@keyframes loading {
+    from {
+        background-color: rgb(255,255,255,0.2);
+
+    }to {
+        background-color: rgb(255,255,255,0.1);
+    }
+}
