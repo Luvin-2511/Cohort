@@ -1,8 +1,9 @@
 @import "tailwindcss";
 
-body {
-    background: black;
-    color: white;
+:root {
+    --lightBg:white;
+    --DarkBg:black;
+
 }
 
 .hoverer::after {
@@ -21,6 +22,9 @@ body {
 }
 
 .tit:hover {
-    text-shadow: 1px 1px 40px green;
+    text-shadow:
+    0 0 5px  #00ffff,
+    0 0 10px #00ffff,
+    0 0 20px #00ffff;
     cursor: pointer;
 }
