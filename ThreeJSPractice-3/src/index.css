@@ -1,0 +1,10 @@
+body {
+  background: black;
+}
+
+html,
+body,
+#root {
+  height: 99%;
+  width: 99%;
+}
