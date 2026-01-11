@@ -10,7 +10,7 @@ const Product = () => {
   return (
     <div className='min-h-screen w-full flex-wrap p-4 flex gap-5'>
       {!products ? <div>
-
+        Loading
       </div> :
         <>
           {
