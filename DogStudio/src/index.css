@@ -1,7 +1,13 @@
+@font-face {
+  font-family: Heebro;
+  src: url(./assets/heebo.regular.ttf);
+}
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: Heebro;
 }
 
 html,
@@ -10,4 +16,125 @@ body,
   height: 100%;
   width: 100%;
   background: black;
+}
+
+main {
+  section {
+    min-height: 100vh;
+    width: 100%;
+    position: relative;
+    z-index: 2;
+  }
+}
+
+#section-1 {
+  color: white;
+
+  nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 3rem;
+
+    .nav-elem {
+      max-width: 10rem;
+      cursor: pointer;
+
+      svg {
+        height: 2rem;
+      }
+
+    }
+
+    .nav-elem:nth-child(2) {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      margin-right: 15rem;
+
+      i {
+        color: red;
+      }
+    }
+
+    .nav-elem:nth-child(2):hover {
+      gap: 0.2rem;
+    }
+
+
+    .nav-elem:nth-child(3){
+      i {
+        font-size: 1.5rem;
+      }
+    }
+  }
+
+  .hero {
+    width: 100%;
+    min-height: 34rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .hero-left,.hero-right {
+      width: 50%;
+    }
+
+    .hero-left {
+      text-align: right;
+      font-size: 4rem;
+      line-height: 6.5rem;
+
+      h1 {
+        font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+        letter-spacing: -0.4rem;
+      }
+    }
+  }
+
+  .side {
+    height: 30rem;
+    width: 100%;
+    display: flex;
+    align-items: start;
+    gap: 12rem;
+    justify-content: center;
+
+    .side-left,.side-right {
+      width: 50%;
+    }
+
+    .side-right {
+      display: flex;
+      flex-direction: column;
+      align-items: left;
+      gap: 1.7rem;
+      justify-content: start;
+      text-align: left;
+      padding-top: 4rem;
+      
+      h4 {
+        width: 23rem;
+        font-size: 1.5rem;
+        font-weight: 200;
+        color: rgba(255, 255, 255, 0.747);
+      }
+      
+      h5 {
+        width: 23rem;
+        color: gray;
+        line-height: 1.5rem;
+        font-size: 0.9rem;
+        font-weight: 200;
+      }
+
+      h6 {
+        margin-top: 2rem;
+        color: rgba(255, 255, 255, 0.789);
+      }
+    }
+  }
 }
