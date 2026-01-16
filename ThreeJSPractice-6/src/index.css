@@ -11,3 +11,7 @@ body,
   width: 100%;
   background: black;
 }
+
+Canvas {
+  background: url('bg.jpg');
+}
