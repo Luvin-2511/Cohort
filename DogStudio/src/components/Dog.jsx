@@ -65,7 +65,7 @@ const Dog = () => {
                 trigger: '#section-1',
                 markers: true,
                 start: 'top top',
-                endTrigger: '#section-3',
+                endTrigger: 'footer',
                 end: 'bottom bottom',
                 scrub: true
             }
@@ -75,6 +75,8 @@ const Dog = () => {
         .to(modelRef.current.scene.position,{
             z:'-=1',
             y:'+=0.3'
+        }).to(modelRef.current.scene.rotation,{
+            y:'+=0.1'
         })
         .to(modelRef.current.scene.rotation,{
             x:`+=${Math.PI/8}`
