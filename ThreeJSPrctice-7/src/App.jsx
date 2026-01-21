@@ -45,8 +45,6 @@ const App = () => {
   ]
 
   const { camera } = useThree()
-  console.log(camera);
-
 
 
   const model = useGLTF('/Standing.glb')
@@ -131,24 +129,24 @@ const App = () => {
     }
     const playerSize = 0.5
     for (let wall of walls) {
-      const [wx,,wz] = wall.position
+      const [wx, , wz] = wall.position
       const [width, , depth] = wall.args
       const rotY = wall.rotation[1]
 
-      const isVertical = Math.abs(Math.abs(rotY)-Math.PI/2)<0.001
-      const wallWidth = isVertical?depth:width
-      const walldepth = isVertical?width:depth
+      const isVertical = Math.abs(Math.abs(rotY) - Math.PI / 2) < 0.001
+      const wallWidth = isVertical ? depth : width
+      const walldepth = isVertical ? width : depth
       const distX = Math.abs(newPos.x - wx)
       const distZ = Math.abs(newPos.z - wz)
 
-      if(distX < (playerSize + wallWidth)/2 && distZ <(playerSize + walldepth/2)){
+      if (distX < (playerSize + wallWidth) / 2 && distZ < (playerSize + walldepth / 2)) {
         canMove = false
       }
 
-      if(canMove){
+      if (canMove) {
         playerRef.current.position.copy(newPos)
-        camera.position.lerp(new THREE.Vector3(newPos.x,newPos.y+5,newPos.z+2),0.1)
-        camera.lookAt(newPos.x,newPos.y,newPos.z)
+        camera.position.lerp(new THREE.Vector3(newPos.x, newPos.y + 5, newPos.z + 2), 0.1)
+        camera.lookAt(newPos.x, newPos.y, newPos.z)
       }
     }
   })
