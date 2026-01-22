@@ -80,6 +80,37 @@ body {
     transition: background-color 0.2s;
 }
 
+img.base-image {
+    background: none !important;
+    object-fit: cover;
+    pointer-events: auto;
+}
+
+.shape:not(img) {
+    background-color: #5f83a3;
+}
+
+
+.base-image {
+    background: none;
+    object-fit: cover;
+    position: absolute;
+    z-index: 10;
+}
+
+img.shape {
+    background: none !important;
+}
+
+.shape.selected-Shape {
+    background: something;
+}
+
+
+.shape {
+    background-color: #5f83a3;
+}
+
 .project-name:hover {
     background-color: var(--hover-bg);
 }
@@ -352,13 +383,23 @@ body {
 
     img {
         position: absolute;
-        height: 1.5rem;
-        width: 1.5rem;
+        height: auto;
+        width: 250px;
         object-fit: cover;
-        opacity: 0;
-        transition: all linear;
-        pointer-events: none;
+        pointer-events: auto;
     }
+}
+
+.image-wrapper {
+    position: absolute;
+    display: inline-block;
+}
+
+.image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    pointer-events: none;
 }
 
 .bottom-toolbar {
@@ -551,7 +592,7 @@ body {
 
 .base-text {
     min-height: 2rem;
-    min-width: 10rem;
+    width: fit-content;
     padding: 0.5rem;
     position: absolute;
     font-size: 1rem;

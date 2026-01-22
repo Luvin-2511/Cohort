@@ -4,11 +4,13 @@ let toolbtn = document.querySelectorAll('.tool-btn')
 let propertyPanel = document.querySelector('.right-sidebar')
 let moveUpBtn = document.querySelector('#move-up-btn')
 let moveDownBtn = document.querySelector('#move-down-btn')
+let imageInput = document.getElementById('image-input')
 let selectedTool = ""
 let selectedShape = null
 let Rectid = 1
 let Circid = 1
 let TextId = 1
+let ImageId = 1
 let isDragging = false
 let startX = 0
 let startY = 0
@@ -83,6 +85,7 @@ const updateLayerList = () => {
     })
 }
 
+
 const moveLayerUp = () => {
     if (!selectedShape) return
     const currentZ = parseInt(selectedShape.style.zIndex) || 0
@@ -99,6 +102,34 @@ const moveLayerDown = () => {
     updateLayerList()
 }
 
+
+imageInput.addEventListener('change', (e) => {
+    const file = e.target.files[0]
+    if (!file) return
+    const reader = new FileReader()
+    console.log(reader);
+
+    reader.onload = () => {
+        const img = document.createElement('img')
+        img.src = reader.result
+        img.classList.add('base-image', 'shape')
+        img.id = 'Image' + ImageId++
+        img.style.position = 'absolute'
+        img.style.left = '100px'
+        img.style.top = '100px'
+        img.style.zIndex = ZInd++
+        canvas.appendChild(img)
+        selectedShape = img
+        addCorners(img)
+        updateLayerList()
+        showPropertyPanel(img)
+        saveToLocalStorage()
+    }
+    reader.readAsDataURL(file)
+    imageInput.value = ''
+})
+
+
 const saveToLocalStorage = () => {
     const shapes = document.querySelectorAll('.shape')
     let data = []
@@ -108,21 +139,27 @@ const saveToLocalStorage = () => {
 
         const shapeData = {
             id: shape.id,
-            type: shape.classList.contains('base-rect') ? 'rectangle' :
-                shape.classList.contains('base-circ') ? 'circle' : 'text',
+            type:
+                shape.classList.contains('base-rect') ? 'rectangle' :
+                    shape.classList.contains('base-circ') ? 'circle' :
+                        shape.classList.contains('base-text') ? 'text' :
+                            shape.classList.contains('base-image') ? 'image' :
+                                '',
             left: parseInt(shape.style.left) || 0,
             top: parseInt(shape.style.top) || 0,
             width: shape.offsetWidth,
             height: shape.offsetHeight,
-            backgroundColor: shape.style.backgroundColor || '',
             zIndex: parseInt(shape.style.zIndex) || 0,
             rotation: shape.style.transform || '',
+            backgroundColor: shape.style.backgroundColor || '',
             textContent: shape.textContent || '',
             fontSize: shape.style.fontSize || '',
             fontFamily: shape.style.fontFamily || '',
             fontWeight: shape.style.fontWeight || '',
-            color: shape.style.color || ''
+            color: shape.style.color || '',
+            imageSrc: shape.tagName === 'IMG' ? shape.src : null
         }
+
         data.push(shapeData)
     })
     localStorage.setItem('Data', JSON.stringify(data))
@@ -153,7 +190,13 @@ const LoadFromLocalStorage = () => {
             element.style.fontFamily = shapeKaData.fontFamily
             element.style.fontWeight = shapeKaData.fontWeight
             element.style.color = shapeKaData.color
+        } else if (shapeKaData.type === 'image') {
+            element = document.createElement('img')
+            element.classList.add('base-image', 'shape')
+            element.id = shapeKaData.id
+            element.src = shapeKaData.imageSrc
         }
+
 
         element.style.left = shapeKaData.left + 'px'
         element.style.top = shapeKaData.top + 'px'
@@ -176,7 +219,10 @@ window.addEventListener('DOMContentLoaded', () => {
 })
 
 toolbtn.forEach(btn => {
-    btn.addEventListener('click', function () {
+    btn.addEventListener('click', function (e) {
+        if (e.currentTarget.title === 'Image') {
+            imageInput.click()
+        }
         toolbtn.forEach(b => b.classList.remove('active'));
         this.classList.add('active');
     });
@@ -189,7 +235,8 @@ toolbtn.forEach(btn => {
 
 const showPropertyPanel = (shape) => {
     let context = ""
-    if (shape.classList.contains('base-rect') || shape.classList.contains('base-circ')) {
+    if (shape.classList.contains('base-rect') || shape.classList.contains('base-circ') ||
+        shape.classList.contains('base-image')) {
         context = `<div class="panel-header">
         <span class="layer-name">Rectangle</span>
         <div class="panel-icons">
@@ -571,3 +618,118 @@ document.getElementById('canvas').addEventListener('click', () => {
     }
 });
 
+
+const exportAsJSON = () => {
+    const shapes = document.querySelectorAll('.shape');
+    let data = [];
+
+    shapes.forEach(shape => {
+        const shapeData = {
+            id: shape.id,
+            type: shape.classList.contains('base-rect') ? 'rectangle' :
+                  shape.classList.contains('base-circ') ? 'circle' :
+                  shape.classList.contains('base-text') ? 'text' :
+                  shape.classList.contains('base-image') ? 'image' : '',
+            left: parseInt(shape.style.left) || 0,
+            top: parseInt(shape.style.top) || 0,
+            width: shape.offsetWidth,
+            height: shape.offsetHeight,
+            zIndex: parseInt(shape.style.zIndex) || 0,
+            rotation: shape.style.transform || '',
+            backgroundColor: shape.style.backgroundColor || '',
+            textContent: shape.textContent || '',
+            fontSize: shape.style.fontSize || '',
+            fontFamily: shape.style.fontFamily || '',
+            fontWeight: shape.style.fontWeight || '',
+            color: shape.style.color || '',
+            imageSrc: shape.tagName === 'IMG' ? shape.src : null
+        };
+        data.push(shapeData);
+    });
+
+    const jsonString = JSON.stringify(data, null, 2);
+    const blob = new Blob([jsonString], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'design-export.json';
+    a.click();
+    URL.revokeObjectURL(url);
+};
+const exportAsHTML = () => {
+    const shapes = document.querySelectorAll('.shape');
+    let htmlContent = `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exported Design</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+        .canvas {
+            position: relative;
+            width: 100%;
+            min-height: 100vh;
+            background-color: #f5f5f5;
+        }
+        .shape {
+            position: absolute;
+        }
+        .base-rect {
+            background-color: #4a90e2;
+        }
+        .base-circ {
+            background-color: #e24a4a;
+            border-radius: 50%;
+            width: 100px;
+            height: 100px;
+        }
+        .base-text {
+            font-size: 16px;
+            color: #000;
+            white-space: pre-wrap;
+        }
+        .base-image {
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body>
+    <div class="canvas">
+`;
+
+    shapes.forEach(shape => {
+        const type = shape.classList.contains('base-rect') ? 'rectangle' :
+                     shape.classList.contains('base-circ') ? 'circle' :
+                     shape.classList.contains('base-text') ? 'text' :
+                     shape.classList.contains('base-image') ? 'image' : '';
+
+        if (type === 'text') {
+            htmlContent += `        <div class="shape base-text" style="left: ${shape.style.left}; top: ${shape.style.top}; z-index: ${shape.style.zIndex}; font-size: ${shape.style.fontSize}; font-family: ${shape.style.fontFamily}; font-weight: ${shape.style.fontWeight}; color: ${shape.style.color}; transform: ${shape.style.transform};">${shape.textContent}</div>\n`;
+        } else if (type === 'image') {
+            htmlContent += `        <img class="shape base-image" src="${shape.src}" style="left: ${shape.style.left}; top: ${shape.style.top}; width: ${shape.style.width}; height: ${shape.style.height}; z-index: ${shape.style.zIndex}; transform: ${shape.style.transform};">\n`;
+        } else if (type === 'rectangle') {
+            htmlContent += `        <div class="shape base-rect" style="left: ${shape.style.left}; top: ${shape.style.top}; width: ${shape.style.width}; height: ${shape.style.height}; background-color: ${shape.style.backgroundColor}; z-index: ${shape.style.zIndex}; transform: ${shape.style.transform};"></div>\n`;
+        } else if (type === 'circle') {
+            htmlContent += `        <div class="shape base-circ" style="left: ${shape.style.left}; top: ${shape.style.top}; width: ${shape.style.width}; height: ${shape.style.height}; background-color: ${shape.style.backgroundColor}; z-index: ${shape.style.zIndex}; transform: ${shape.style.transform};"></div>\n`;
+        }
+    });
+
+    htmlContent += `    </div>
+</body>
+</html>`;
+
+    const blob = new Blob([htmlContent], { type: 'text/html' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'design-export.html';
+    a.click();
+    URL.revokeObjectURL(url);
+};
+document.querySelector('#export-json-btn')?.addEventListener('click', exportAsJSON);
+document.querySelector('#export-html-btn')?.addEventListener('click', exportAsHTML);
