@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="./favicon/Figma-Logo-PNG-Image.webp" type="image/x-icon">
+    <link rel="stylesheet" href="./Styles/canvas.css">
+    <title>Untitled - Figma</title>
+
+</head>
+
+<body>
+    <div class="editor-container">
+        <nav class="top-navbar">
+            <div class="navbar-left">
+                <button class="logo-btn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <rect x="3" y="3" width="7" height="7" rx="1"></rect>
+                        <rect x="14" y="3" width="7" height="7" rx="1"></rect>
+                        <rect x="14" y="14" width="7" height="7" rx="1"></rect>
+                        <rect x="3" y="14" width="7" height="7" rx="1"></rect>
+                    </svg>
+                </button>
+                <button class="icon-btn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"></path>
+                        <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                        <polyline points="7 3 7 8 15 8"></polyline>
+                    </svg>
+                </button>
+                <div class="project-name">
+                    <span class="project-title">Untitled</span>
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                </div>
+                <span class="project-status">Drafts</span>
+                <span class="project-status">Free</span>
+            </div>
+
+            <div class="navbar-center">
+                <button class="tab-btn active">Design</button>
+                <button class="tab-btn">Prototype</button>
+            </div>
+
+            <div class="navbar-right">
+                <button class="icon-btn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                    </svg>
+                </button>
+                <button class="icon-btn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                        <circle cx="12" cy="12" r="3"></circle>
+                    </svg>
+                </button>
+                <div class="zoom-display">100 %</div>
+                <button class="share-btn">Save</button>
+            </div>
+        </nav>
+
+        <div class="editor-main">
+            <aside class="left-sidebar">
+                <div class="sidebar-section">
+                    <div class="sidebar-tabs">
+                        <button class="sidebar-tab active">File</button>
+                        <button class="sidebar-tab">Assets</button>
+                    </div>
+                </div>
+
+                <div class="sidebar-section">
+                    <div class="section-header">
+                        <span>Pages</span>
+                        <button class="icon-btn" style="padding: 2px;">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 4v16m8-8H4"></path>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="section-content">
+                        <div class="page-item active">
+                            <div class="page-info">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <rect x="3" y="3" width="18" height="18" rx="2"></rect>
+                                </svg>
+                                <span>Page 1</span>
+                            </div>
+                            <span class="page-percentage">100 %</span>
+                            <button class="icon-btn" style="padding: 2px;">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <circle cx="12" cy="12" r="1"></circle>
+                                    <circle cx="12" cy="5" r="1"></circle>
+                                    <circle cx="12" cy="19" r="1"></circle>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sidebar-section" style="flex: 1; display: flex; flex-direction: column;">
+                    <div class="section-header">
+                        <span>Layers</span>
+                    </div>
+                    <div class="layers-list">
+
+                    </div>
+                    <div class="layer-controls">
+                        <button id="move-up-btn" title="Move Layer Up">Move Up</button>
+                        <button id="move-down-btn" title="Move Layer Down">Move Down</button>
+                    </div>
+                </div>
+            </aside>
+
+            <div class="canvas-container">
+                <button class="controls-toggle" id="controls-toggle">Keyboard Controls</button>
+                <div class="controls-info" id="controls-info" style="display: none;">
+                    <div class="control-item">
+                        <span class="control-desc">Move Shape</span>
+                        <span class="control-key">Arrow Keys</span>
+                    </div>
+                    <div class="control-item">
+                        <span class="control-desc">Delete Shape</span>
+                        <span class="control-key">Delete</span>
+                    </div>
+                </div>
+
+                <div class="canvas-wrapper">
+                    <div id="canvas">
+
+                    </div>
+                </div>
+
+                <div class="bottom-toolbar">
+                    <button class="tool-btn active" title="Select (V)">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M3 3l7.07 16.97 2.51-7.39 7.39-2.51L3 3z"></path>
+                        </svg>
+                    </button>
+
+                    <button class="tool-btn" title="Image">
+                        <svg width="24" height="24" stroke="white" viewBox="0 0 24 24" data-fpl-icon-size="24">
+                            <path fill="var(--fpl-icon-color, var(--color-icon))"
+                                d="M16 6a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2zM8 7a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V8a1 1 0 0 0-1-1zm1.725 4.582a.5.5 0 0 1 .629.064l3.5 3.5a.5.5 0 1 1-.707.707L10 12.708l-1.146 1.146a.5.5 0 1 1-.708-.707l1.5-1.5zM14 8a2 2 0 1 1 0 4 2 2 0 0 1 0-4m0 1a1 1 0 1 0 0 2 1 1 0 0 0 0-2">
+                            </path>
+                        </svg>
+                    </button>
+
+                    <div class="tool-separator"></div>
+
+                    <button class="tool-btn" title="Rectangle">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <rect x="4" y="6" width="16" height="12" rx="1" stroke-width="2"></rect>
+                        </svg>
+                    </button>
+
+                    <button class="tool-btn" title="Circle">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <circle cx="12" cy="12" r="8" stroke-width="2"></circle>
+                        </svg>
+                    </button>
+
+                    <button class="tool-btn" title="Line">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <line x1="4" y1="20" x2="20" y2="4" stroke-width="2" stroke-linecap="round"></line>
+                        </svg>
+                    </button>
+
+                    <button class="tool-btn" title="Pen">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M12 19l7-7 3 3-7 7-3-3z" stroke-width="2"></path>
+                            <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z" stroke-width="2"></path>
+                            <path d="M2 2l7.586 7.586" stroke-width="2"></path>
+                            <circle cx="11" cy="11" r="2" stroke-width="2"></circle>
+                        </svg>
+                    </button>
+
+                    <button class="tool-btn" title="Text">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <polyline points="4 7 4 4 20 4 20 7" stroke-width="2"></polyline>
+                            <line x1="9" y1="20" x2="15" y2="20" stroke-width="2"></line>
+                            <line x1="12" y1="4" x2="12" y2="20" stroke-width="2"></line>
+                        </svg>
+                    </button>
+
+                    <div class="tool-separator"></div>
+
+                    <button class="tool-btn" title="Comment">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" stroke-width="2"></path>
+                        </svg>
+                    </button>
+
+                    <div class="tool-separator"></div>
+
+                    <button class="tool-btn" title="Components">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <rect x="3" y="3" width="7" height="7" stroke-width="2"></rect>
+                            <rect x="14" y="3" width="7" height="7" stroke-width="2"></rect>
+                            <rect x="14" y="14" width="7" height="7" stroke-width="2"></rect>
+                            <rect x="3" y="14" width="7" height="7" stroke-width="2"></rect>
+                        </svg>
+                    </button>
+
+                    <button class="tool-btn" title="Resources">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path
+                                d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"
+                                stroke-width="2"></path>
+                        </svg>
+                    </button>
+
+                    <button class="tool-btn" title="Code">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <polyline points="16 18 22 12 16 6" stroke-width="2"></polyline>
+                            <polyline points="8 6 2 12 8 18" stroke-width="2"></polyline>
+                        </svg>
+                    </button>
+                </div>
+
+                <button class="help-btn">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <circle cx="12" cy="12" r="10" stroke-width="2"></circle>
+                        <path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3" stroke-width="2"></path>
+                        <line x1="12" y1="17" x2="12.01" y2="17" stroke-width="2" stroke-linecap="round"></line>
+                    </svg>
+                </button>
+            </div>
+
+            <aside class="right-sidebar">
+
+            </aside>
+
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.8.0/fonts/remixicon.css" rel="stylesheet" />
+    <link rel="shortcut icon" href="./favicon/Figma-Logo-PNG-Image.webp" type="image/x-icon">
+    <link href="./Styles/editor.css" rel="stylesheet" />
+    <title>Home-Figma</title>
+</head>
+
+<body>
+    <main>
+        <div class="left-sidebar">
+            <div class="sidebar-header">
+                <div class="user-profile">
+                    <div class="user-avatar"></div>
+                    <span>Luvin</span>
+                </div>
+                <svg class="notification-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9">
+                    </path>
+                </svg>
+            </div>
+
+            <div class="search-box">
+                <svg width="16" stroke="white" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                </svg>
+                <input type="text" placeholder="Search">
+            </div>
+
+            <nav>
+                <div class="nav-item active">
+                    <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    Recents
+                </div>
+                <div class="nav-item">
+                    <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z">
+                        </path>
+                    </svg>
+                    Community
+                </div>
+
+                <div class="team-section">
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z">
+                            </path>
+                        </svg>
+                        Luvin's team
+                    </div>
+                    <span class="team-badge">Free</span>
+                </div>
+
+                <div class="nav-item">
+                    <div class="nav-item-logo">
+                        <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
+                            </path>
+                        </svg>
+                        Drafts
+                    </div>
+                    <i class="ri-add-circle-fill"></i>
+                </div>
+                <div class="nav-item">
+                    <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z">
+                        </path>
+                    </svg>
+                    All projects
+                </div>
+                <div class="nav-item">
+                    <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253">
+                        </path>
+                    </svg>
+                    Resources
+                </div>
+                <div class="nav-item">
+                    <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16">
+                        </path>
+                    </svg>
+                    Trash
+                </div>
+            </nav>
+
+            <div class="upgrade-section">
+                <p>Ready to go beyond this free plan? Upgrade for premium features.</p>
+                <button class="upgrade-btn">View plans</button>
+            </div>
+
+            <div class="starred-section">
+                <div class="section-title">Starred</div>
+                <div class="nav-item">
+                    <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"></path>
+                    </svg>
+                    Team project
+                </div>
+            </div>
+        </div>
+        <div class="main-content">
+            <div class="top-bar">
+                <h1 class="page-title">Recents</h1>
+                <div class="top-actions">
+                    <button style="--hover-color:#394360" class="action-btn">
+                        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01">
+                            </path>
+                        </svg>
+                        Design
+                    </button>
+                    <button style="--hover-color:#473956" class="action-btn">
+                        <span style="color: #9747FF;">⬡</span>
+                        FigJam
+                    </button>
+                    <button style="--hover-color:#603A2A" class="action-btn">Slides</button>
+                    <button style="--hover-color:#51344A" class="action-btn">Buzz</button>
+                    <button style="--hover-color:#393956" class="action-btn">Site</button>
+                    <button style="--hover-color:#565656" class="action-btn">Make</button>
+                </div>
+            </div>
+            <div class="community-section">
+                <div class="section-header">
+                    <h2>Recommended resources from Community</h2>
+                    <div class="section-actions">
+                        <button class="icon-btn">
+                            <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15">
+                                </path>
+                            </svg>
+                        </button>
+                        <button class="icon-btn">
+                            <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="resource-grid">
+                    <div class="resource-card">
+                        <div class="resource-thumbnail gradient-1">
+                            <img src="./Images/ad1695336369ff56304dd0c0bf60100b24a598a6.png" alt="">
+                        </div>
+                        <div class="resource-info">
+                            <div class="resource-title">Mobile Product Review</div>
+                            <div class="resource-meta">
+                                <span>by @natasha and 1 other</span>
+                                <span>♥ 10k</span>
+                                <span>👁 181k</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="resource-card">
+                        <div class="resource-thumbnail gradient-2">
+                            <img src="./Images/420732e145e404a47477c5760791273ad1d58e81.png" alt="">
+                        </div>
+                        <div class="resource-info">
+                            <div class="resource-title">Problem Statement Template</div>
+                            <div class="resource-meta">
+                                <span>by FigJam Templates</span>
+                                <span>♥ 561</span>
+                                <span>👁 13.2k</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="resource-card">
+                        <div class="resource-thumbnail gradient-3">
+                            <img src="./Images/Image4.png" alt="">
+                        </div>
+                        <div class="resource-info">
+                            <div class="resource-title">User Journey Map</div>
+                            <div class="resource-meta">
+                                <span>by buzzwill and 1 other</span>
+                                <span>♥ 861</span>
+                                <span>👁 19.6k</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="resource-card">
+                        <div class="resource-thumbnail gradient-4">
+                            <img src="./Images/Image3.png" alt="">
+                        </div>
+                        <div class="resource-info">
+                            <div class="resource-title">50+ Landing page designs</div>
+                            <div class="resource-meta">
+                                <span>by Yan Liu</span>
+                                <span>♥ 4.3k</span>
+                                <span>👁 185k</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="recents-section">
+                <div class="tabs">
+                    <div class="tab active">Recently viewed</div>
+                    <div class="tab">Shared files</div>
+                    <div class="tab">Shared projects</div>
+                </div>
+
+                <div class="recents-controls">
+                    <div></div>
+                    <div class="view-controls">
+                        <button class="filter-btn">All organizations ▼</button>
+                        <button class="filter-btn">All files ▼</button>
+                        <button class="filter-btn">Last viewed ▼</button>
+                        <button class="icon-btn">
+                            <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M3 3h7v7H3V3zm11 0h7v7h-7V3zM3 14h7v7H3v-7zm11 0h7v7h-7v-7z"></path>
+                            </svg>
+                        </button>
+                        <button class="icon-btn">
+                            <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M4 6h16M4 12h16M4 18h16"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="projects-grid">
+                    <a href="./canvas.html">
+                        <div class="project-card">
+                            <div class="project-thumbnail dark">
+                                <i class="ri-add-circle-line"></i>
+                                <div class="fake-ui ui-dark"></div>
+                            </div>
+                            <div class="project-footer">
+                                <div class="project-icon">
+                                </div>
+                                <div class="project-details">
+                                    <div class="project-name">Create New Project</div>
+                                    <div class="project-time">Get Started</div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    <!-- <div class="project-card">
+                        <div class="project-thumbnail"></div>
+                        <div class="project-footer">
+                            <div class="project-icon"></div>
+                            <div class="project-details">
+                                <div class="project-name">Untitled</div>
+                                <div class="project-time">Edited 1 hour ago</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-card">
+                        <div class="project-thumbnail"></div>
+                        <div class="project-footer">
+                            <div class="project-icon"></div>
+                            <div class="project-details">
+                                <div class="project-name">Untitled</div>
+                                <div class="project-time">Edited 12 days ago</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-card">
+                        <div class="project-thumbnail light">
+                            <div class="fake-ui ui-light"></div>
+                        </div>
+                        <div class="project-footer">
+                            <div class="project-icon"></div>
+                            <div class="project-details">
+                                <div class="project-name">Jewellery Website Templates (Community)</div>
+                                <div class="project-time">Edited 3 months ago</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-card">
+                        <div class="project-thumbnail light">
+                            <div class="fake-ui ui-figjam"></div>
+                        </div>
+                        <div class="project-footer">
+                            <div class="project-icon figjam"></div>
+                            <div class="project-details">
+                                <div class="project-name">FigJam basics</div>
+                                <div class="project-time">Edited 3 months ago</div>
+                            </div>
+                        </div>
+                    </div> -->
+                </div>
+
+</body>
+
+</html>
