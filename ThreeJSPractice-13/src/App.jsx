@@ -1,17 +1,23 @@
 import { useGLTF } from '@react-three/drei'
-import React from 'react'
+import React, { Suspense } from 'react'
+
+const Model = () => {
+  const model = useGLTF('/ben_10_cannonbolt.glb')
+  
+  return (
+    <primitive 
+      object={model.scene} 
+      position={[0, 0, 0]}
+      scale={100}
+    />
+  )
+}
 
 const App = () => {
-  const model = useGLTF('/ben_10_cannonbolt.glb')
-  console.log(model.scene);
-
   return (
-    <>
-      <mesh>
-        <primitive object={model.scene} />
-        <meshStandardMaterial color='red' />
-      </mesh>
-    </>
+    <Suspense fallback={null}>
+      <Model />
+    </Suspense>
   )
 }
 
