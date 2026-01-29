@@ -14,4 +14,8 @@ app.get('/notes',(req,res)=>{
     res.send(notes)
 })
 
+app.patch('/notes/:index',(req,res)=>{
+    notes[req.params.index] = req.body
+})
+
 module.exports = app
