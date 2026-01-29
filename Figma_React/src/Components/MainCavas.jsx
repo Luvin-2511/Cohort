@@ -9,15 +9,16 @@ const MainCanvas = () => {
 
     const handleCursor = (e) => {
         if (!cursorRef.current) return
-        cursorRef.current.style.transform = `translate(${e.clientX - canvasRef.current.getBoundingClientRect()}px,${e.clientY - canvasRef.current.getBoundingClientRect().top}px)`
+        const leftSpace = canvasRef.current.getBoundingClientRect()
+        cursorRef.current.style.transform = `translate(${e.clientX - leftSpace.left}px,${e.clientY - leftSpace.top}px)`
     }
 
     const showCursor = () => {
-        cursorRef.current.opacity = 1
+        cursorRef.current.style.opacity = 1
     }
 
     const hideCursor = () => {
-        cursorRef.current.opacity = 0
+        cursorRef.current.style.opacity = 0
     }
 
     return (
@@ -26,7 +27,7 @@ const MainCanvas = () => {
             onMouseLeave={hideCursor}
             onMouseEnter={showCursor}
             onMouseMove={handleCursor}
-            className="flex-1 bg-[#1c1c1c] relative flex flex-col">
+            className="flex-1 cursor-none bg-[#1c1c1c] relative flex flex-col">
             <Cursor ref={cursorRef} />
             <TopBar />
             <div className="flex-1 flex items-center justify-center">

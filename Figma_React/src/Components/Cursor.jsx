@@ -4,7 +4,7 @@ import cursor from '../cursor.png'
 const Cursor = (props) => {
     return (
         <>
-            <img ref={props.ref} className='h-6 w-6 absolute object-contain' src={cursor} alt="Cursor img" />
+            <img ref={props.ref} className='h-6 w-6 opacity-0 absolute  pointer-events-none object-contain' src={cursor} alt="Cursor img" />
         </>
     )
 }
