@@ -15,25 +15,25 @@ const BottomToolbar = () => {
             id: "frame",
             dividerAfter: true,
             svg: (
-                <svg width="24" height="24" fill="white" viewBox="0 0 24 24" data-fpl-icon-size="24L"><path fill="var(--fpl-icon-color, var(--color-icon))" fill-rule="evenodd" d="M7.5 4a.5.5 0 0 0-.5.5V7H4.5a.5.5 0 0 0 0 1H7v8H4.5a.5.5 0 0 0 0 1H7v2.5a.5.5 0 0 0 1 0V17h8v2.5a.5.5 0 0 0 1 0V17h2.5a.5.5 0 0 0 0-1H17V8h2.5a.5.5 0 0 0 0-1H17V4.5a.5.5 0 0 0-1 0V7H8V4.5a.5.5 0 0 0-.5-.5M16 8H8v8h8z" clip-rule="evenodd"></path></svg>
+                <svg width="24" height="24" fill="white" viewBox="0 0 24 24" data-fpl-icon-size="24L"><path fill="var(--fpl-icon-color, var(--color-icon))" fillRule="evenodd" d="M7.5 4a.5.5 0 0 0-.5.5V7H4.5a.5.5 0 0 0 0 1H7v8H4.5a.5.5 0 0 0 0 1H7v2.5a.5.5 0 0 0 1 0V17h8v2.5a.5.5 0 0 0 1 0V17h2.5a.5.5 0 0 0 0-1H17V8h2.5a.5.5 0 0 0 0-1H17V4.5a.5.5 0 0 0-1 0V7H8V4.5a.5.5 0 0 0-.5-.5M16 8H8v8h8z" clipRule="evenodd"></path></svg>
             ),
         },
         {
             id: "rectangle",
             svg: (
-                <svg width="24" height="24" fill="white" viewBox="0 0 24 24" data-fpl-icon-size="24"><path fill="var(--fpl-icon-color, var(--color-icon))" fill-rule="evenodd" d="M16.5 7h-9a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5m-9-1A1.5 1.5 0 0 0 6 7.5v9A1.5 1.5 0 0 0 7.5 18h9a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 16.5 6z" clip-rule="evenodd"></path></svg>
+                <svg width="24" height="24" fill="white" viewBox="0 0 24 24" data-fpl-icon-size="24"><path fill="var(--fpl-icon-color, var(--color-icon))" fillRule="evenodd" d="M16.5 7h-9a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5m-9-1A1.5 1.5 0 0 0 6 7.5v9A1.5 1.5 0 0 0 7.5 18h9a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 16.5 6z" clipRule="evenodd"></path></svg>
             ),
         },
         {
             id: "circle",
             svg: (
-                <svg width="24" height="24" fill="white" viewBox="0 0 24 24" data-fpl-icon-size="24"><path fill="var(--fpl-icon-color, var(--color-icon))" fill-rule="evenodd" d="M12 18a6 6 0 1 0 0-12 6 6 0 0 0 0 12m0 1a7 7 0 1 0 0-14 7 7 0 0 0 0 14" clip-rule="evenodd"></path></svg>
+                <svg width="24" height="24" fill="white" viewBox="0 0 24 24" data-fpl-icon-size="24"><path fill="var(--fpl-icon-color, var(--color-icon))" fillRule="evenodd" d="M12 18a6 6 0 1 0 0-12 6 6 0 0 0 0 12m0 1a7 7 0 1 0 0-14 7 7 0 0 0 0 14" clipRule="evenodd"></path></svg>
             )
         },
         {
             id: "line",
             svg: (
-                <svg width="24" height="24" fill="white" viewBox="0 0 24 24" data-fpl-icon-size="24"><path fill="var(--fpl-icon-color, var(--color-icon))" fill-rule="evenodd" d="M17.854 6.146a.5.5 0 0 1 0 .708l-11 11a.5.5 0 0 1-.708-.708l11-11a.5.5 0 0 1 .708 0" clip-rule="evenodd"></path></svg>
+                <svg width="24" height="24" fill="white" viewBox="0 0 24 24" data-fpl-icon-size="24"><path fill="var(--fpl-icon-color, var(--color-icon))" fillRule="evenodd" d="M17.854 6.146a.5.5 0 0 1 0 .708l-11 11a.5.5 0 0 1-.708-.708l11-11a.5.5 0 0 1 .708 0" clipRule="evenodd"></path></svg>
             ),
         },
         {
@@ -82,7 +82,7 @@ const BottomToolbar = () => {
     }
 
     return (
-        <div onClick={handlebottomBar} className="cursor-none absolute bottom-6 left-1/2 -translate-x-1/2 bg-[#2a2a2a] border border-[#3a3a3a] rounded-xl px-2 py-2 flex items-center gap-1 shadow-2xl">
+        <div onClick={handlebottomBar} className="cursor-none absolute z-9 bottom-6 left-1/2 -translate-x-1/2 bg-[#2a2a2a] border border-[#3a3a3a] rounded-xl px-2 py-2 flex items-center gap-1 shadow-2xl">
             {
                 Tools.map((tool, idx) => {
                     return (

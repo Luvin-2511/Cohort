@@ -5,6 +5,28 @@ import { useContext, useEffect, useRef, useState } from 'react';
 import { canvasCon } from '../Context/CanvasContext.jsx';
 
 const MainCanvas = () => {
+    let handles = [
+        {
+            id: 'tl',
+            left: -3,
+            top: -3
+        },
+        {
+            id: 'tr',
+            right: -3,
+            top: -3
+        },
+        {
+            id: 'bl',
+            left: -3,
+            bottom: -3
+        },
+        {
+            id: 'br',
+            right: -3,
+            bottom: -3
+        },
+    ]
     const cursorRef = useRef(null)
     const canvasRef = useRef(null)
     const { selectedShape, setSelectedShape } = useContext(canvasCon)
@@ -37,6 +59,10 @@ const MainCanvas = () => {
     }
 
     const ShapeCreator = (e) => {
+        setSelectedShape(null)
+        if (e.target.classList.contains('shape')) {
+            setSelectedShape(e.target.id)
+        }
         const bounds = canvasRef.current.getBoundingClientRect()
         const x = e.clientX - bounds.left
         const y = e.clientY - bounds.top
@@ -49,6 +75,7 @@ const MainCanvas = () => {
             }])
             setRectId(rectId + 1)
             setActiveId(null)
+            setSelectedShape(`rect${rectId}`)
         }
         // For Circle Shape
         if (activeId === 'circle') {
@@ -61,20 +88,20 @@ const MainCanvas = () => {
             ])
             setCircleId(circleId + 1)
             setActiveId(null)
+            setSelectedShape(`circle${circleId}`)
         }
         // For Line
         if (activeId === 'line') {
             setLine(prev => [...prev, {
-                id: `circle${lineId}`,
+                id: `line${lineId}`,
                 x: x,
                 y: y,
             }])
             setLineId(lineId + 1)
             setActiveId(null)
+            setSelectedShape(`line${lineId}`)
         }
     }
-
-
 
     return (
         <main
@@ -91,15 +118,42 @@ const MainCanvas = () => {
             </div>
 
             {rects.map((rect, idx) => {
-                return <div
-                    key={idx}
-                    id={rect.id}
-                    style={{
-                        left: `${rect.x}px`,
-                        top: `${rect.y}px`
-                    }}
-                    className="shape h-[100px] w-[100px] rounded translate-[-50%] bg-[#d9d9d9] absolute">
-                </div>
+                return (
+                    <div
+                        key={idx}
+                        id={rect.id}
+                        style={{
+                            left: `${rect.x}px`,
+                            top: `${rect.y}px`
+                        }}
+                        className={`shape h-[100px] w-[100px] hover:border-2 hover:border-blue-500 ${selectedShape === rect.id ? 'border-2 border-blue-500' : ''} rounded translate-[-50%] bg-[#d9d9d9] absolute`}
+                    >
+                        {
+                            selectedShape === rect.id ?
+                                <>
+                                    {handles.map((handle) => {
+                                        return (
+                                            <div
+                                                key={handle.id}
+                                                id={handle.id}
+                                                className={'h-2 w-2 bg-white border-[2px] border-blue-500 absolute'}
+                                                style={{
+                                                    left: handle.left,
+                                                    right: handle.right,
+                                                    top: handle.top,
+                                                    bottom: handle.bottom,
+                                                }}
+                                            >
+                                            </div>)
+                                    })}
+                                </>
+                                :
+                                <>
+
+                                </>
+                        }
+                    </div>
+                )
             })}
 
             {circs.map((circ, idx) => {
@@ -111,7 +165,31 @@ const MainCanvas = () => {
                             left: `${circ.x}px`,
                             top: `${circ.y}px`
                         }}
-                        className="shape h-[100px] w-[100px] rounded-full rounded translate-[-50%] bg-[#d9d9d9] absolute">
+                        className={`shape h-[100px] w-[100px] hover:border-2 rounded-full ${selectedShape === circ.id ? 'border-2 border-blue-500' : ''} hover:border-blue-500 rounded translate-[-50%] bg-[#d9d9d9] absolute`}>
+                        {
+                            selectedShape === circ.id ?
+                                <>
+                                    {handles.map((handle) => {
+                                        return (
+                                            <div
+                                                key={handle.id}
+                                                id={handle.id}
+                                                className={'h-2 w-2 bg-white border-[2px] border-blue-500 absolute'}
+                                                style={{
+                                                    left: handle.left,
+                                                    right: handle.right,
+                                                    top: handle.top,
+                                                    bottom: handle.bottom,
+                                                }}
+                                            >
+                                            </div>)
+                                    })}
+                                </>
+                                :
+                                <>
+
+                                </>
+                        }
                     </div>
                 )
             })}
