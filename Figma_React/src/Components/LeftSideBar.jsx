@@ -3,12 +3,12 @@ const LeftSidebar = () => {
         <aside className="w-52 bg-[#242424] border-r border-[#2f2f2f] flex flex-col">
             <div className="h-12 flex items-center justify-between px-3 border-b border-[#2f2f2f]">
                 <div className="flex items-center gap-2">
-                    <svg width="24" height="24" fill="none" viewBox="0 0 24 24" data-fpl-icon-size="24L"><path fill="white" fill-rule="evenodd" d="M7 7c0 1.043.533 1.963 1.341 2.5A3 3 0 0 0 7 12c0 1.043.533 1.963 1.341 2.5A3 3 0 1 0 13 17v-2.764A3 3 0 1 0 16.659 9.5 3 3 0 0 0 15 4h-5a3 3 0 0 0-3 3m8 2a2 2 0 1 0 0-4h-2v4zm-2 3a2 2 0 1 0 4 0 2 2 0 0 0-4 0m-1 2h-2a2 2 0 1 1 0-4h2zm-2 1h2v2a2 2 0 1 1-2-2m2-6h-2a2 2 0 1 1 0-4h2z" clip-rule="evenodd"></path></svg>
+                    <svg width="24" height="24" fill="none" viewBox="0 0 24 24" data-fpl-icon-size="24L"><path fill="white" fillRule="evenodd" d="M7 7c0 1.043.533 1.963 1.341 2.5A3 3 0 0 0 7 12c0 1.043.533 1.963 1.341 2.5A3 3 0 1 0 13 17v-2.764A3 3 0 1 0 16.659 9.5 3 3 0 0 0 15 4h-5a3 3 0 0 0-3 3m8 2a2 2 0 1 0 0-4h-2v4zm-2 3a2 2 0 1 0 4 0 2 2 0 0 0-4 0m-1 2h-2a2 2 0 1 1 0-4h2zm-2 1h2v2a2 2 0 1 1-2-2m2-6h-2a2 2 0 1 1 0-4h2z" clipRule="evenodd"></path></svg>
                     <svg width="8" height="8" viewBox="0 0 8 8" fill="none" className="text-gray-500">
                         <path d="M4 6L1 3L7 3L4 6Z" fill="currentColor" />
                     </svg>
                 </div>
-                <svg width="24" height="24" fill="none" viewBox="0 0 24 24" data-fpl-icon-size="24"><path fill="white" fill-rule="evenodd" d="M10 7h8a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1h-8zM9 7H6a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h3zM4 8a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z" clip-rule="evenodd"></path></svg>
+                <svg width="24" height="24" fill="none" viewBox="0 0 24 24" data-fpl-icon-size="24"><path fill="white" fillRule="evenodd" d="M10 7h8a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1h-8zM9 7H6a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h3zM4 8a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z" clipRule="evenodd"></path></svg>
             </div>
             <div className="px-4 py-3 border-b border-[#2f2f2f]">
                 <div className="flex items-center gap-2">

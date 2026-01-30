@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { canvasCon } from "../Context/CanvasContext";
 
 const BottomToolbar = () => {
     const Tools = [
@@ -14,32 +15,25 @@ const BottomToolbar = () => {
             id: "frame",
             dividerAfter: true,
             svg: (
-                <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
-                    <path
-                        fill="white"
-                        fillRule="evenodd"
-                        d="M7.5 4a.5.5 0 0 0-.5.5V7H4.5a.5.5 0 0 0 0 1H7v8H4.5a.5.5 0 0 0 0 1H7v2.5a.5.5 0 0 0 1 0V17h8v2.5a.5.5 0 0 0 1 0V17h2.5a.5.5 0 0 0 0-1H17V8h2.5a.5.5 0 0 0 0-1H17V4.5a.5.5 0 0 0-1 0V7H8V4.5a.5.5 0 0 0-.5-.5"
-                        clipRule="evenodd"
-                    />
-                </svg>
+                <svg width="24" height="24" fill="white" viewBox="0 0 24 24" data-fpl-icon-size="24L"><path fill="var(--fpl-icon-color, var(--color-icon))" fill-rule="evenodd" d="M7.5 4a.5.5 0 0 0-.5.5V7H4.5a.5.5 0 0 0 0 1H7v8H4.5a.5.5 0 0 0 0 1H7v2.5a.5.5 0 0 0 1 0V17h8v2.5a.5.5 0 0 0 1 0V17h2.5a.5.5 0 0 0 0-1H17V8h2.5a.5.5 0 0 0 0-1H17V4.5a.5.5 0 0 0-1 0V7H8V4.5a.5.5 0 0 0-.5-.5M16 8H8v8h8z" clip-rule="evenodd"></path></svg>
             ),
         },
         {
             id: "rectangle",
             svg: (
-                <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-                    <rect x="4" y="4" width="10" height="10" rx="1" stroke="currentColor" strokeWidth="1.5" />
-                    <path d="M4 7L2 7M4 11L2 11M14 7L16 7M14 11L16 11" stroke="currentColor" strokeWidth="1.5" />
-                </svg>
+                <svg width="24" height="24" fill="white" viewBox="0 0 24 24" data-fpl-icon-size="24"><path fill="var(--fpl-icon-color, var(--color-icon))" fill-rule="evenodd" d="M16.5 7h-9a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5m-9-1A1.5 1.5 0 0 0 6 7.5v9A1.5 1.5 0 0 0 7.5 18h9a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 16.5 6z" clip-rule="evenodd"></path></svg>
             ),
+        },
+        {
+            id: "circle",
+            svg: (
+                <svg width="24" height="24" fill="white" viewBox="0 0 24 24" data-fpl-icon-size="24"><path fill="var(--fpl-icon-color, var(--color-icon))" fill-rule="evenodd" d="M12 18a6 6 0 1 0 0-12 6 6 0 0 0 0 12m0 1a7 7 0 1 0 0-14 7 7 0 0 0 0 14" clip-rule="evenodd"></path></svg>
+            )
         },
         {
             id: "line",
             svg: (
-                <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-                    <path d="M3 15L6 12L12 6L15 3" stroke="currentColor" strokeWidth="1.5" />
-                    <circle cx="3" cy="15" r="1.5" fill="currentColor" />
-                </svg>
+                <svg width="24" height="24" fill="white" viewBox="0 0 24 24" data-fpl-icon-size="24"><path fill="var(--fpl-icon-color, var(--color-icon))" fill-rule="evenodd" d="M17.854 6.146a.5.5 0 0 1 0 .708l-11 11a.5.5 0 0 1-.708-.708l11-11a.5.5 0 0 1 .708 0" clip-rule="evenodd"></path></svg>
             ),
         },
         {
@@ -49,15 +43,6 @@ const BottomToolbar = () => {
                     <path d="M5 4H13M9 4V14M7 14H11" stroke="currentColor" strokeWidth="1.5" />
                 </svg>
             ),
-        },
-        {
-            id: "tools",
-            svg: (
-                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" className="text-gray-300">
-                    <path d="M9 3V9M9 9L13 7M9 9L5 7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                    <circle cx="9" cy="12" r="3" stroke="currentColor" strokeWidth="1.5" fill="none" />
-                </svg>
-            )
         },
         {
             id: "comment",
@@ -88,24 +73,21 @@ const BottomToolbar = () => {
         },
     ];
 
-    const [activeId, setActiveId] = useState(null)
+    const { activeId, setActiveId } = useContext(canvasCon)
 
     const handlebottomBar = (e) => {
         const btn = e.target.closest('.bottom-btn')
         if (!btn) return
         setActiveId(btn.dataset.id);
-        if(activeId === 'rectangle'){
-            
-        }
     }
 
     return (
-        <div onClick={handlebottomBar} className="absolute bottom-6 left-1/2 -translate-x-1/2 bg-[#2a2a2a] border border-[#3a3a3a] rounded-xl px-2 py-2 flex items-center gap-1 shadow-2xl">
+        <div onClick={handlebottomBar} className="cursor-none absolute bottom-6 left-1/2 -translate-x-1/2 bg-[#2a2a2a] border border-[#3a3a3a] rounded-xl px-2 py-2 flex items-center gap-1 shadow-2xl">
             {
                 Tools.map((tool, idx) => {
                     return (
                         <React.Fragment key={idx}>
-                            <button data-id={tool.id} className={`bottom-btn ${activeId === tool.id ? "bg-[#0d99ff]" : "hover:bg-[#3a3a3a]"} w-9 h-9 rounded-lg flex items-center justify-center cursor-pointer transition-colors`}>
+                            <button data-id={tool.id} className={`${activeId ? "cursor-crosshair" : "cursor-none"} bottom-btn ${activeId === tool.id ? "bg-[#0d99ff]" : "hover:bg-[#3a3a3a]"} w-9 h-9 rounded-lg flex items-center justify-center transition-colors`}>
                                 {tool.svg}
                             </button>
                             {tool.dividerAfter ? <div className="w-px h-6 bg-[#3a3a3a] mx-1" /> : <></>}
