@@ -29,6 +29,7 @@ const MainCanvas = () => {
     ]
     const cursorRef = useRef(null)
     const canvasRef = useRef(null)
+    const rectRef = useRef(null)
     const { selectedShape, setSelectedShape } = useContext(canvasCon)
     const { activeId, setActiveId } = useContext(canvasCon)
     // Rectangle Shape State
@@ -40,12 +41,25 @@ const MainCanvas = () => {
     // Line State
     const [line, setLine] = useState([])
     const [lineId, setLineId] = useState(1)
-
+    // Dragging & Resizing
+    const [dragging, setDragging] = useState(false)
+    const [resizing, setResizing] = useState(false)
+    // Shape Drag Attribute
+    const dragRef = useRef({
+        shapeId:null,
+        handle:null,
+        startX:0,
+        startY:0,
+        startW:0,
+        startH:0,
+        startTop:0,
+        startLeft:0,
+    })
 
     const handleCursor = (e) => {
-        if (!cursorRef.current) return
         const leftSpace = canvasRef.current.getBoundingClientRect()
         cursorRef.current.style.transform = `translate(${e.clientX - leftSpace.left}px,${e.clientY - leftSpace.top}px)`
+
     }
 
     const showCursor = () => {
@@ -103,6 +117,17 @@ const MainCanvas = () => {
         }
     }
 
+    const dragShaper = (e) => {
+        const shape = e.target.closest('.shape')
+        if(!shape) return
+        const handle = e.target.closest('.handle')
+        setDragging(true)
+    }
+
+    const stopDrag = () => {
+        setDragging(false)
+    }
+
     return (
         <main
             onClick={ShapeCreator}
@@ -110,16 +135,21 @@ const MainCanvas = () => {
             onMouseLeave={hideCursor}
             onMouseEnter={showCursor}
             onMouseMove={handleCursor}
+            onMouseDown={dragShaper}
+            onMouseUp={stopDrag}
             className="flex-1 cursor-none bg-[#1c1c1c] relative flex flex-col">
             <Cursor ref={cursorRef} />
             <TopBar />
-            <div className={`${activeId ? "cursor-crosshair" : "cursor-none"} flex-1 flex items-center justify-center`}>
+            <div
+                className={`${activeId ? "cursor-crosshair" : "cursor-none"} flex-1 flex items-center justify-center`}
+            >
                 <div className="w-full h-full bg-[#1e1e1e]" />
             </div>
 
             {rects.map((rect, idx) => {
                 return (
                     <div
+                        ref={rectRef}
                         key={idx}
                         id={rect.id}
                         style={{
@@ -134,9 +164,11 @@ const MainCanvas = () => {
                                     {handles.map((handle) => {
                                         return (
                                             <div
+                                                onMouseEnter={hideCursor}
+                                                onMouseLeave={showCursor}
                                                 key={handle.id}
                                                 id={handle.id}
-                                                className={'h-2 w-2 bg-white border-[2px] border-blue-500 absolute'}
+                                                className={`handle h-2 w-2 ${handle.id === 'tl' ? 'cursor-nw-resize' : ''} ${handle.id === 'br' ? 'cursor-se-resize' : ''} ${handle.id === 'tr' ? 'cursor-ne-resize' : ''} ${handle.id === 'bl' ? 'cursor-sw-resize' : ''} bg-white border-[2px] border-blue-500 absolute`}
                                                 style={{
                                                     left: handle.left,
                                                     right: handle.right,
@@ -172,9 +204,11 @@ const MainCanvas = () => {
                                     {handles.map((handle) => {
                                         return (
                                             <div
+                                                onMouseEnter={hideCursor}
+                                                onMouseLeave={showCursor}
                                                 key={handle.id}
                                                 id={handle.id}
-                                                className={'h-2 w-2 bg-white border-[2px] border-blue-500 absolute'}
+                                                className={`handle h-2 w-2 ${handle.id === 'tl' ? 'cursor-nw-resize' : ''} ${handle.id === 'br' ? 'cursor-se-resize' : ''} ${handle.id === 'tr' ? 'cursor-ne-resize' : ''} ${handle.id === 'bl' ? 'cursor-sw-resize' : ''} bg-white border-[2px] border-blue-500 absolute`}
                                                 style={{
                                                     left: handle.left,
                                                     right: handle.right,
