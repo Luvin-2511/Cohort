@@ -1,72 +1,167 @@
-const RightSidebar = () => {
-    return (
-        <aside className="w-64 bg-[#242424] border-l border-[#2f2f2f] flex flex-col">
+import { useContext } from "react";
+import { canvasCon } from "../Context/CanvasContext";
 
-      <div className="h-12 px-4 border-b border-[#2f2f2f] flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <button className="text-xs font-medium text-gray-200">Design</button>
-          <button className="text-xs text-gray-500">Prototype</button>
-        </div>
-        <div className="flex items-center gap-1">
-          <span className="text-xs text-gray-400">100%</span>
-          <svg width="8" height="8" viewBox="0 0 8 8" fill="none" className="text-gray-500">
-            <path d="M4 6L1 3L7 3L4 6Z" fill="currentColor" />
-          </svg>
-        </div>
-      </div>
+/* ---------- Small UI pieces ---------- */
 
-      <div className="p-4 space-y-4 text-xs">
-        <div>
-          <div className="text-gray-400 mb-2 font-medium">Page</div>
-          <div className="flex items-center justify-between bg-[#2a2a2a] px-3 py-2 rounded">
-            <span className="font-mono">#1E1E1E</span>
-            <div className="flex items-center gap-2">
-              <span>100</span>
-              <span className="text-gray-500">%</span>
-              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" className="text-gray-500">
-                <circle cx="6" cy="6" r="2" fill="currentColor" />
-              </svg>
-            </div>
-          </div>
-        </div>
-
-        <div className="flex items-center justify-between text-gray-400 py-2">
-          <span className="font-medium">Variables</span>
-          <button className="hover:text-gray-200">
-            <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-              <path d="M6 2V10M2 6H10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-            </svg>
-          </button>
-        </div>
-
-        <div className="flex items-center justify-between text-gray-400 py-2">
-          <span className="font-medium">Styles</span>
-          <button className="hover:text-gray-200">
-            <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-              <path d="M6 2V10M2 6H10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-            </svg>
-          </button>
-        </div>
-
-        <div className="flex items-center justify-between text-gray-400 py-2">
-          <span className="font-medium">Export</span>
-          <button className="hover:text-gray-200">
-            <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-              <path d="M6 2V10M2 6H10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-            </svg>
-          </button>
-        </div>
-      </div>
-      <div className="mt-auto p-4">
-        <button className="w-8 h-8 rounded-full bg-[#2a2a2a] flex items-center justify-center hover:bg-[#3a3a3a] transition-colors ml-auto">
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="text-gray-400">
-            <circle cx="8" cy="8" r="6" stroke="currentColor" strokeWidth="1.5" fill="none" />
-            <path d="M8 11V11.5M8 5C6.89543 5 6 5.89543 6 7C6 7.5 6.5 8 7 8H8C8.5 8 9 8.5 9 9" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-          </svg>
-        </button>
-      </div>
-    </aside>
-    );
+// const { shapeProperty } = useContext(canvasCon);
+const handleShapeProps = (e) => {
+  console.log(e.target.id);
 }
 
-export default RightSidebar
+const Section = ({ title, right }) => (
+  <div className="border-t border-[#2a2a2a] pt-4 space-y-3">
+    <div className="flex items-center justify-between">
+      <span className="text-xs font-semibold text-gray-300">{title}</span>
+      {right}
+    </div>
+  </div>
+);
+
+const Input = ({ label, suffix }) => (
+  <div className="bg-[#2a2a2a] rounded px-2 py-1.5 flex flex-col">
+    <span className="text-[10px] uppercase text-gray-400">{label}</span>
+    <div className="flex items-center gap-1">
+      <input
+        id={label}
+        onChange={handleShapeProps}
+        className="bg-transparent w-full text-sm font-medium text-gray-200 outline-none"
+      />
+      {suffix && <span className="text-xs text-gray-400">{suffix}</span>}
+    </div>
+  </div>
+);
+
+const Btn = ({ children }) => (
+  <button className="w-7 h-7 bg-[#2a2a2a] hover:bg-[#3a3a3a] rounded flex items-center justify-center text-gray-300">
+    {children}
+  </button>
+);
+
+/* ---------- Sidebar ---------- */
+
+const RightSidebar = () => {
+  const { selectedShape, canvasColor, setCanvasColor } = useContext(canvasCon);
+  const changeBgColor = (e) => {
+    setCanvasColor(e.target.value);
+    console.log(canvasColor);
+  }
+
+
+  return (
+    <aside className="w-[320px] h-screen bg-[#1e1e1e] border-l border-[#2a2a2a] flex flex-col">
+
+      {/* Top Bar */}
+      <div className="h-12 px-4 border-b border-[#2f2f2f] flex items-center justify-between">
+        <div className="flex gap-3 text-xs">
+          <span className="font-semibold text-gray-200">Design</span>
+          <span className="text-gray-500">Prototype</span>
+        </div>
+        <div className="text-xs text-gray-400 flex items-center gap-1">
+          100%
+          <span>▾</span>
+        </div>
+      </div>
+
+      {/* ================= NO SELECTION ================= */}
+      {!selectedShape && (
+        <div className="p-4 space-y-4 text-xs text-gray-400">
+          <div className="space-y-2">
+            <span className="font-semibold">Page</span>
+            <div className="flex items-center gap-2 bg-[#2a2a2a] px-3 mt-2 py-2 rounded">
+              <input onChange={changeBgColor} value={canvasColor} type="color" name="bg-canvas" id="bg-canvas" />
+              <label htmlFor="bg-canvas" className="">Canvas Background color</label>
+            </div>
+          </div>
+
+          {["Variables", "Styles", "Export"].map(t => (
+            <div key={t} className="flex justify-between items-center py-2">
+              <span className="font-semibold">{t}</span>
+              <span>+</span>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* ================= SHAPE SELECTED ================= */}
+      {selectedShape && (
+        <div className="p-4 space-y-6 text-sm overflow-y-auto">
+
+          {/* Object Header */}
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <div className="w-4 h-4 border border-gray-400 rounded-sm" />
+              <span className="font-semibold">Rectangle</span>
+            </div>
+            <div className="flex gap-2">
+              <Btn>◻</Btn>
+              <Btn>◯</Btn>
+              <Btn>⧉</Btn>
+            </div>
+          </div>
+
+          {/* Position */}
+          <Section title="Position" />
+          <div className="space-y-3">
+            <div className="flex justify-around">
+              {["⟸", "⇤", "⇥", "⟹", "⇳", "⇵"].map(i => <Btn key={i}>{i}</Btn>)}
+            </div>
+
+            <div className="grid grid-cols-2 gap-2">
+              <Input label="X" />
+              <Input label="Y" />
+            </div>
+
+            <div className="flex gap-2">
+              <Input label="Rotation" suffix="°" />
+              <Btn>🔒</Btn>
+              <Btn>⇄</Btn>
+              <Btn>⇅</Btn>
+            </div>
+          </div>
+
+          {/* Layout */}
+          <Section title="Layout" />
+          <div className="grid grid-cols-2 gap-2">
+            <Input label="W" />
+            <Input label="H" />
+          </div>
+
+          {/* Appearance */}
+          <Section
+            title="Appearance"
+            right={
+              <div className="flex gap-2">
+                <Btn>👁</Btn>
+                <Btn>💧</Btn>
+              </div>
+            }
+          />
+          <div className="grid grid-cols-2 gap-2">
+            <Input label="Opacity" suffix="%" />
+            <Input label="Corner radius" />
+          </div>
+
+          {/* Fill */}
+          <Section
+            title="Fill"
+            right={
+              <div className="flex gap-2">
+                <Btn>⧉</Btn>
+                <Btn>+</Btn>
+              </div>
+            }
+          />
+          <div className="flex gap-2 items-center">
+            <div className="w-6 h-6 rounded bg-[#d9d9d9]" />
+            <Input label="Color" />
+            <Input label="Opacity" suffix="%" />
+            <Btn>👁</Btn>
+            <Btn>−</Btn>
+          </div>
+        </div>
+      )}
+    </aside>
+  );
+};
+
+export default RightSidebar;
