@@ -3,7 +3,6 @@ import { canvasCon } from "../Context/CanvasContext";
 
 /* ---------- Small UI pieces ---------- */
 
-// const { shapeProperty } = useContext(canvasCon);
 const handleShapeProps = (e) => {
   console.log(e.target.id);
 }
@@ -40,10 +39,9 @@ const Btn = ({ children }) => (
 /* ---------- Sidebar ---------- */
 
 const RightSidebar = () => {
-  const { selectedShape, canvasColor, setCanvasColor } = useContext(canvasCon);
+  const { selectedShape, canvasColor, setCanvasColor, shapeProperty } = useContext(canvasCon);
   const changeBgColor = (e) => {
     setCanvasColor(e.target.value);
-    console.log(canvasColor);
   }
 
 

@@ -5,9 +5,9 @@ export const canvasCon = createContext()
 const CanvasContext = ({ children }) => {
     const [activeId, setActiveId] = useState(null)
     const [selectedShape, setSelectedShape] = useState(null)
-    const [canvasColor, setCanvasColor] = useState(null)
+    const [canvasColor, setCanvasColor] = useState('#1e1e1e')
     const shapeProperty = useRef({
-        bg:null,
+        bg:'#d9d9d9',
         x:0,
         y:0,
         rot:0,

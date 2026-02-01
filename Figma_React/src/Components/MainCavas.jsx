@@ -29,7 +29,7 @@ const MainCanvas = () => {
     ]
     const cursorRef = useRef(null)
     const canvasRef = useRef(null)
-    const { selectedShape, setSelectedShape, canvasColor } = useContext(canvasCon)
+    const { selectedShape, setSelectedShape, canvasColor, shapeProperty } = useContext(canvasCon)
     const { activeId, setActiveId } = useContext(canvasCon)
     // Rectangle Shape State
     const [rects, setRects] = useState([])
@@ -164,7 +164,7 @@ const MainCanvas = () => {
             setRects(prev => [...prev, {
                 id: `rect${rectId}`,
                 x: x,
-                y: y
+                y: y,
             }])
             setRectId(rectId + 1)
             setActiveId(null)
@@ -208,6 +208,15 @@ const MainCanvas = () => {
         const y = e.clientY - leftSpace.top
 
         const shapeData = rects.find(r => r.id === shape.id) || circs.find(c => c.id === shape.id)
+        shapeProperty.current({
+            x:shapeData.x,
+            y:shapeData.y,
+            rot:0,
+            wid: rectBox.width,
+            hgt: rectBox.height,
+            opacity:1,
+            bradius:1,
+        })
         dragRef.current = {
             shapeId: shape.id,
             handle: handle ? handle.id : null,
@@ -217,10 +226,6 @@ const MainCanvas = () => {
             startLeft: shapeData.x,
             startW: rectBox.width,
             startH: rectBox.height,
-        }
-
-        if (selectedShape) {
-
         }
     }
 
@@ -245,10 +250,10 @@ const MainCanvas = () => {
                 className={`${activeId ? "cursor-crosshair" : "cursor-none"} flex-1 flex items-center justify-center`}
             >
                 <div
-                style={{
-                    backgroundColor:canvasColor
-                }}
-                 className="w-full h-full" />
+                    style={{
+                        backgroundColor: canvasColor
+                    }}
+                    className="w-full h-full" />
             </div>
 
             {rects.map((rect, idx) => {
