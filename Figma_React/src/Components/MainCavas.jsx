@@ -170,6 +170,7 @@ const MainCanvas = () => {
             setActiveId(null)
             setSelectedShape(`rect${rectId}`)
         }
+        
         // For Circle Shape
         if (activeId === 'circle') {
             setCircs(prev => [...prev
