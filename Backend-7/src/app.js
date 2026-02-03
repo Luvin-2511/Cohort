@@ -17,4 +17,30 @@ app.post('/api/notes',async (req, res) => {
     })
 })
 
+app.get('/api/notes',async (req,res)=>{
+    const notes = await noteModel.find()
+    res.status(200).json({
+        message:"Notes fetched successfully !",
+        notes
+    })
+})
+
+app.delete('/api/notes/:id',async (req,res)=>{
+    const notes = await noteModel.findByIdAndDelete(req.params.id)
+    res.status(200).json({
+        message:"Note deleted successfully !",
+        notes
+    })
+})
+
+app.patch('/api/notes/:id',(req,res)=>{
+    const notes = noteModel.findByIdAndUpdate(req.params.id,{
+       "description":req.body
+    })
+    res.status(200).json({
+        message:"Note updated successfully !",
+        notes
+    })
+})
+
 module.exports = app
