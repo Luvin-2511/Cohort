@@ -1,0 +1,23 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body,
+main {
+    height: 100%;
+    width: 100%;
+    background: black;
+}
+
+
+.scroller {
+    position: absolute;
+    height: 80px;
+    width: 80px;
+    border: 4px solid white;
+    border-radius: 50%;
+
+}
