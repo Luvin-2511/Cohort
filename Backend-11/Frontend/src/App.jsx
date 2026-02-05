@@ -1,7 +1,59 @@
 import React from "react";
+import axios from "axios";
+import { useState } from "react";
+import { useEffect } from "react";
 
 const App = () => {
-  
+  const [notes, setNotes] = useState([]);
+  const [updater, setUpdater] = useState(null);
+
+  const handleForm = (e) => {
+    e.preventDefault();
+    const { title, description } = e.target.elements;
+    console.log(title.value);
+
+    axios
+      .post("http://localhost:3000/api/notes", {
+        title: title.value,
+        description: description.value,
+      })
+      .then((res) => {
+        res.data;
+        fetchNotes();
+        title.value = "";
+        description.value = "";
+      });
+  };
+
+  const fetchNotes = () => {
+    axios.get("http://localhost:3000/api/notes").then((res) => {
+      console.log(res.data);
+      setNotes(res.data.notes);
+    });
+  };
+
+  const handledelete = (id) => {
+    axios.delete(`http://localhost:3000/api/notes/${id}`).then((res) => {
+      console.log(res.data);
+      fetchNotes();
+    });
+  };
+
+  const handleUpdate = (id,e) => {
+    e.preventDefault();
+    axios.patch(`http://localhost:3000/api/notes/${id}`,{description:e.target.newDesc.value})
+    .then((res)=>{
+      console.log(res.data);
+      fetchNotes()
+      e.target.newDesc.value=""
+      setUpdater(null)
+    })
+
+  }
+
+  useEffect(() => {
+    fetchNotes();
+  }, []);
 
   return (
     <div className="min-h-screen bg-black p-8">
@@ -13,7 +65,7 @@ const App = () => {
       <div className="max-w-6xl mx-auto relative z-10">
         {/* Form Section */}
         <div className="mb-12">
-          <form  className="relative group">
+          <form onSubmit={handleForm} className="relative group">
             <div className="absolute -inset-0.5 bg-linear-to-r from-pink-500 to-purple-500 rounded-2xl opacity-20 group-hover:opacity-40 blur transition duration-500"></div>
 
             <div className="relative bg-linear-to-br from-gray-900 to-black border border-pink-500/30 rounded-2xl p-8">
@@ -90,7 +142,7 @@ const App = () => {
                   </button>
                   <button
                     onClick={() => {
-                      setupdater(note._id);
+                      setUpdater(note._id);
                     }}
                     className="px-4 py-2 cursor-pointer mt-5 bg-linear-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 text-white font-semibold rounded-xl transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-pink-500/50"
                   >
@@ -100,7 +152,7 @@ const App = () => {
                     onSubmit={(e) => {
                       handleUpdate(note._id, e);
                     }}
-                    className={` ${updater === note._id ? "flex" : "hidden"} mt-6 items-center justify-center gap-5`}
+                    className={` ${updater==note._id?'flex':'hidden'} mt-6 items-center justify-center gap-5`}
                   >
                     <input
                       name="newDesc"
