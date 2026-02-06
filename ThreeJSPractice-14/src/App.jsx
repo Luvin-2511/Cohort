@@ -11,29 +11,11 @@ gsap.registerPlugin(ScrollTrigger, useGSAP);
 const ThreeElement = ({ scale }) => {
   const model = useGLTF("/Miles.glb");
   const modelRef = useRef();
-  useGSAP(
-    () => {
-      if (!modelRef.current) return;
-      gsap.to(modelRef.current.position, {
-        z: 20,
-        scrollTrigger: {
-          trigger: "#page-1",
-          endTrigger: "#page-2",
-          markers: true,
-          start: "top top",
-          end: "bottom top",
-          scrub: true,
-        },
-      });
-    },
-    { dependencies: [model], scope: modelRef },
-  );
 
   return (
     <Canvas>
       <Environment preset="sunset" />
       <ambientLight intensity={10} position={[0, 10, 0]} />
-      {/* <OrbitControls /> */}
       <primitive
         ref={modelRef}
         object={model.scene}
