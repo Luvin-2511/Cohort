@@ -7,6 +7,7 @@ import { useGSAP } from "@gsap/react";
 import { Suspense, useEffect, useRef, useState } from "react";
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 import Lenis from "lenis";
+import Loading from  './components/Loading'
 
 const Model = ({ modelRef, onModelLoaded }) => {
   const model = useGLTF("/Miles.glb");
@@ -43,6 +44,9 @@ const ThreeElement = ({ modelRef, onModelLoaded }) => {
 
 const App = () => {
   const modelRef = useRef(null);
+  const bgRef = useRef(null)
+  const bgRef2 = useRef(null)
+  const bgRef3 = useRef(null)
   const [ModelLoaded, setModelLoaded] = useState(false);
 
   useEffect(() => {
@@ -63,6 +67,7 @@ const App = () => {
     };
   }, []);
 
+
   useGSAP(() => {
     if (!modelRef.current || !ModelLoaded) return;
 
@@ -70,7 +75,7 @@ const App = () => {
       modelRef.current.position,
       {
         z: 2,
-        x:3,
+        x: 3,
         scrollTrigger: {
           trigger: "nav",
           endTrigger: "#page-1",
@@ -103,7 +108,7 @@ const App = () => {
           trigger: "#page-1",
           endTrigger: "#page-2",
           start: "top top",
-          end: "bottom top",
+          end: "bottom bottom",
           scrub: true,
         },
       },
@@ -112,8 +117,7 @@ const App = () => {
     gsap.to(
       modelRef.current.position,
       {
-        x: -52,
-        z:-2,
+        z: -2,
         scrollTrigger: {
           trigger: "#page-1",
           endTrigger: "#page-2",
@@ -124,11 +128,72 @@ const App = () => {
       },
       "b",
     );
+    gsap.to(bgRef.current,{
+      opacity:0,
+      scrollTrigger:{
+        trigger:'nav',
+        start:'top top',
+        endTrigger:'#page-1',
+        end:'bottom bottom',
+        scrub:true,
+      }
+    },"c")
+    gsap.to(bgRef3.current,{
+      opacity:1,
+      scrollTrigger:{
+        trigger:'nav',
+        start:'top top',
+        endTrigger:'#page-1',
+        end:'bottom bottom',
+        scrub:true,
+      }
+    },"c")
+     gsap.to(bgRef2.current,{
+      opacity:1,
+      scrollTrigger:{
+        trigger:'#page-1',
+        start:'top top',
+        endTrigger:'#page-2',
+        end:'bottom bottom',
+        scrub:true,
+      }
+    },"d")
+     gsap.to(bgRef3.current,{
+      opacity:0,
+      scrollTrigger:{
+        trigger:'#page-1',
+        start:'bottom top',
+        endTrigger:'#page-2',
+        end:'bottom bottom',
+        scrub:true,
+      }
+    },"d")
   }, [ModelLoaded]);
 
   return (
     <>
       <main>
+        <div
+        ref={bgRef}
+          style={{
+            backgroundImage: 'url("/wal.jpg")',
+          }}
+          className="bg"
+        ></div>
+        <div
+        ref={bgRef2}
+          style={{
+            backgroundImage: 'url("/wal3.jpg")',
+          }}
+          className="bg"
+        ></div>
+        <div
+        ref={bgRef3}
+          style={{
+            backgroundImage: 'url("/wal4.jpg")',
+          }}
+          className="bg"
+        ></div>
         <h1 className="hero-heading">Morales </h1>
         <div className="abover">
           <Navbar />

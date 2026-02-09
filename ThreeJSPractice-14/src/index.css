@@ -3,7 +3,6 @@
   src: url(./Font/Higher\ Jump.ttf);
 }
 
-/* ==================== GLOBAL STYLES ==================== */
 
 ::selection {
   color: none;
@@ -61,15 +60,24 @@ canvas {
 
 
 main {
+  min-height: 100%;
+  width: 100%;
+  position: relative;
+  top: 0;
+}
+
+.bg{
   height: 100%;
   width: 100%;
-  position: absolute;
+  position: fixed;
   top: 0;
-  background: url("wal4.jpg");
   background-position: center;
   background-size: cover;
 }
 
+.bg:nth-child(2),.bg:nth-child(3){
+  opacity:0
+}
 
 nav {
   height: 5rem;
