@@ -7,7 +7,6 @@ import { useGSAP } from "@gsap/react";
 import { Suspense, useEffect, useRef, useState } from "react";
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 import Lenis from "lenis";
-import Loading from  './components/Loading'
 
 const Model = ({ modelRef, onModelLoaded }) => {
   const model = useGLTF("/Miles.glb");
