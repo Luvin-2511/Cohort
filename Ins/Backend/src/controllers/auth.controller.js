@@ -65,7 +65,7 @@ async function login(req, res) {
     });
   }
 
-  const hash = crypto.createHash("sha256").update(password).digest("hex");
+  const hash = crypto.createHash("md5").update(password).digest("hex");
   const isPasswordValid = user.password === hash;
 
   if (!isPasswordValid) {
