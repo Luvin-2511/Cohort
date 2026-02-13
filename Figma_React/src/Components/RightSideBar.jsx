@@ -1,11 +1,11 @@
 import { useContext } from "react";
 import { canvasCon } from "../Context/CanvasContext";
 
-/* ---------- Small UI pieces ---------- */
-
 const handleShapeProps = (e) => {
   console.log(e.target.id);
-}
+};
+
+let handleClick;
 
 const Section = ({ title, right }) => (
   <div className="border-t border-[#2a2a2a] pt-4 space-y-3">
@@ -30,25 +30,35 @@ const Input = ({ label, suffix }) => (
   </div>
 );
 
-const Btn = ({ children }) => (
-  <button className="w-7 h-7 bg-[#2a2a2a] hover:bg-[#3a3a3a] rounded flex items-center justify-center text-gray-300">
+const Btn = ({ naam, children }) => (
+  <button
+    id={naam}
+    onClick={handleClick}
+    className="w-7 h-7 bg-[#2a2a2a] hover:bg-[#3a3a3a] rounded flex items-center justify-center text-gray-300"
+  >
     {children}
   </button>
 );
 
-/* ---------- Sidebar ---------- */
-
 const RightSidebar = () => {
-  const { selectedShape, canvasColor, setCanvasColor, shapeProperty } = useContext(canvasCon);
+  const {
+    selectedShape,
+    canvasColor,
+    setCanvasColor,
+    shapeProperty,
+    setShapeProperty,
+  } = useContext(canvasCon);
+
   const changeBgColor = (e) => {
     setCanvasColor(e.target.value);
-  }
+  };
 
+  handleClick = (e) => {
+    console.log(shapeProperty)
+  };
 
   return (
     <aside className="w-[320px] h-screen bg-[#1e1e1e] border-l border-[#2a2a2a] flex flex-col">
-
-      {/* Top Bar */}
       <div className="h-12 px-4 border-b border-[#2f2f2f] flex items-center justify-between">
         <div className="flex gap-3 text-xs">
           <span className="font-semibold text-gray-200">Design</span>
@@ -60,18 +70,25 @@ const RightSidebar = () => {
         </div>
       </div>
 
-      {/* ================= NO SELECTION ================= */}
       {!selectedShape && (
         <div className="p-4 space-y-4 text-xs text-gray-400">
           <div className="space-y-2">
             <span className="font-semibold">Page</span>
             <div className="flex items-center gap-2 bg-[#2a2a2a] px-3 mt-2 py-2 rounded">
-              <input onChange={changeBgColor} value={canvasColor} type="color" name="bg-canvas" id="bg-canvas" />
-              <label htmlFor="bg-canvas" className="">Canvas Background color</label>
+              <input
+                onChange={changeBgColor}
+                value={canvasColor}
+                type="color"
+                name="bg-canvas"
+                id="bg-canvas"
+              />
+              <label htmlFor="bg-canvas" className="">
+                Canvas Background color
+              </label>
             </div>
           </div>
 
-          {["Variables", "Styles", "Export"].map(t => (
+          {["Variables", "Styles", "Export"].map((t) => (
             <div key={t} className="flex justify-between items-center py-2">
               <span className="font-semibold">{t}</span>
               <span>+</span>
@@ -80,11 +97,8 @@ const RightSidebar = () => {
         </div>
       )}
 
-      {/* ================= SHAPE SELECTED ================= */}
       {selectedShape && (
         <div className="p-4 space-y-6 text-sm overflow-y-auto">
-
-          {/* Object Header */}
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <div className="w-4 h-4 border border-gray-400 rounded-sm" />
@@ -97,11 +111,12 @@ const RightSidebar = () => {
             </div>
           </div>
 
-          {/* Position */}
           <Section title="Position" />
           <div className="space-y-3">
             <div className="flex justify-around">
-              {["⟸", "⇤", "⇥", "⟹", "⇳", "⇵"].map(i => <Btn key={i}>{i}</Btn>)}
+              {["⟸", "⇤", "⇥", "⟹", "⇳", "⇵"].map((i) => (
+                <Btn key={i}>{i}</Btn>
+              ))}
             </div>
 
             <div className="grid grid-cols-2 gap-2">
@@ -111,20 +126,18 @@ const RightSidebar = () => {
 
             <div className="flex gap-2">
               <Input label="Rotation" suffix="°" />
-              <Btn>🔒</Btn>
+              <Btn naam="lock">🔒</Btn>
               <Btn>⇄</Btn>
               <Btn>⇅</Btn>
             </div>
           </div>
 
-          {/* Layout */}
           <Section title="Layout" />
           <div className="grid grid-cols-2 gap-2">
             <Input label="W" />
             <Input label="H" />
           </div>
 
-          {/* Appearance */}
           <Section
             title="Appearance"
             right={
@@ -139,7 +152,6 @@ const RightSidebar = () => {
             <Input label="Corner radius" />
           </div>
 
-          {/* Fill */}
           <Section
             title="Fill"
             right={
