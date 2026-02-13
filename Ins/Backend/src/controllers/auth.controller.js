@@ -1,9 +1,17 @@
 const userModel = require("../models/user.model");
 const crypto = require("crypto");
 const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
 
 async function register(req, res) {
   const { username, email, password } = req.body;
+
+  if(!username || !email || !password){
+    return res.status(400).json({
+      message:"Fill the form correctly"
+    })
+  }
+
   const isUserExist = await userModel.findOne({
     $or: [
       {
@@ -21,7 +29,7 @@ async function register(req, res) {
     });
   }
 
-  const hash = crypto.createHash("sha256").update(password).digest("hex");
+  const hash = await bcrypt.hash(password, 10);
 
   const user = await userModel.create({
     email,
@@ -39,10 +47,10 @@ async function register(req, res) {
 
   res.cookie("token", token);
 
-  res.status(200).json({
+  res.status(201).json({
     message: "User created successfully !",
     user,
-  });
+  })
 }
 
 async function login(req, res) {
@@ -65,8 +73,7 @@ async function login(req, res) {
     });
   }
 
-  const hash = crypto.createHash("sha256").update(password).digest("hex");
-  const isPasswordValid = user.password === hash;
+  const isPasswordValid = await bcrypt.compare(password, user.password);
 
   if (!isPasswordValid) {
     return res.status(400).json({
@@ -84,9 +91,9 @@ async function login(req, res) {
   res.cookie("token", token);
 
   res.status(200).json({
-    message:"Login successfull !",
-    user
-  })
+    message: "Login successfull !",
+    user,
+  });
 }
 
 module.exports = { register, login };

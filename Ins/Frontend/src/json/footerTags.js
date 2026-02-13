@@ -1,0 +1,17 @@
+export const footerLinks = [
+  "Meta",
+  "About",
+  "Blog",
+  "Jobs",
+  "Help",
+  "API",
+  "Privacy",
+  "Terms",
+  "Locations",
+  "Instagram Lite",
+  "Meta AI",
+  "Meta AI Articles",
+  "Threads",
+  "Contact Uploading & Non-Users",
+  "Meta Verified",
+];
