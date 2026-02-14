@@ -43,6 +43,7 @@ async function register(req, res) {
       username,
     },
     process.env.JWT_SECRET,
+    {expiresIn:'1d'}
   );
 
   res.cookie("token", token);
@@ -86,6 +87,7 @@ async function login(req, res) {
       id: user._id,
     },
     process.env.JWT_SECRET,
+    {expiresIn:'1d'}
   );
 
   res.cookie("token", token);
