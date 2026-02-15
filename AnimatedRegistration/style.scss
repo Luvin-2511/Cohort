@@ -1,0 +1,209 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+}
+
+main {
+  height: 100%;
+  width: 100%;
+  background: rgb(0, 0, 0);
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+
+  .lamp {
+    height: 40%;
+    width: 20%;
+    display: flex;
+    align-items: start;
+    justify-content: center;
+    position: relative;
+
+    .top {
+      height: 10rem;
+      width: 11rem;
+      background: linear-gradient(
+        180deg,
+        rgba(255, 140, 0, 0.9) 0%,
+        rgba(255, 100, 0, 0.95) 50%,
+        rgba(200, 80, 0, 1) 100%
+      );
+      position: relative;
+      z-index: 10;
+      clip-path: polygon(28% 20%, 72% 20%, 95% 100%, 5% 100%);
+      box-shadow:
+        0 0 60px rgba(255, 140, 0, 0.6),
+        inset 0 -20px 40px rgba(0, 0, 0, 0.3),
+        inset 0 20px 20px rgba(255, 180, 100, 0.3);
+      filter: drop-shadow(0 10px 30px rgba(255, 140, 0, 0.4));
+    }
+
+    .top::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 50%;
+      height: 30%;
+      background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.4) 0%,
+        transparent 100%
+      );
+      border-radius: 50%;
+      filter: blur(8px);
+    }
+
+    .top::after {
+      content: "";
+      position: absolute;
+      bottom: -50px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 200px;
+      height: 200px;
+      background: radial-gradient(
+        circle,
+        rgba(255, 180, 100, 0.3) 0%,
+        rgba(255, 140, 0, 0.1) 40%,
+        transparent 70%
+      );
+      border-radius: 50%;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    .danda {
+      position: absolute;
+      height: 10rem;
+      width: 8px;
+      background: #3e3e3e;
+      top: 44%;
+    }
+
+    .bottom {
+      position: absolute;
+      height: 5px;
+      width: 7rem;
+      background: #3e3e3e;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: 2.5rem;
+    }
+
+    .string {
+      position: absolute;
+      left: 10%;
+      top: 35%;
+      border-radius: 2rem;
+      transform: rotateZ(90deg);
+    }
+  }
+
+  .bg-light {
+    position: relative;
+    top: -15rem;
+    left: 0.2rem;
+    height: 600px;
+    width: 500px;
+    clip-path: polygon(39% 0, 60% 0, 100% 100%, 0% 100%);
+    background: linear-gradient(rgba(128, 103, 28, 0.5),rgba(128, 103, 28, 0.2), transparent);
+    filter: drop-shadow(0 0 20px rgb(255, 217, 102, 0.4));
+    pointer-events: none;
+    transition: all 0.3s ease;
+    opacity: 0;
+  }
+
+  .round-light {
+    position: absolute;
+    background: #fff;
+    height: 500px;
+    width: 500px;
+    top: -10%;
+    border-radius: 50%;
+    background: radial-gradient(
+      circle at center,
+      rgba(128, 103, 28, 0.2),
+      transparent
+    );
+    pointer-events: none;
+    box-shadow: 0px 0px 20px 20px rgba(120, 98, 32, 0.055);
+    transition: all 0.3s ease;
+    opacity: 0;
+  }
+
+  .form-container {
+    position: absolute;
+    top: 60%;
+    transform: translateY(-50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 40;
+    opacity: 0;
+
+    form {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      padding: 2rem;
+      border-radius: 12px;
+      width: 320px;
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+      transition: all 0.2s ease;
+
+      h2 {
+        color: #fff;
+        text-align: center;
+        font-weight: 500;
+      }
+
+      .input-group {
+        input {
+          width: 100%;
+          padding: 0.8rem;
+          background: transparent;
+          border: 1px solid rgba(255, 255, 255, 0.2);
+          border-radius: 6px;
+          color: #fff;
+          outline: none;
+          transition: 0.3s ease;
+
+          &::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+          }
+
+          &:focus {
+            border-color: orange;
+            box-shadow: 0 0 10px rgba(255, 140, 0, 0.5);
+          }
+        }
+      }
+
+      button {
+        padding: 0.8rem;
+        border: none;
+        border-radius: 6px;
+        background: linear-gradient(45deg, orange, orangered);
+        color: #fff;
+        font-weight: 600;
+        cursor: pointer;
+        transition: 0.3s ease;
+
+        &:hover {
+          transform: scale(1.05);
+          box-shadow: 0 0 15px rgba(255, 140, 0, 0.6);
+        }
+      }
+    }
+  }
+}
