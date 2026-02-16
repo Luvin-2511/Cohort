@@ -3,6 +3,7 @@ let line = document.querySelector(".string svg path");
 let light1 = document.querySelector(".bg-light");
 let light2 = document.querySelector(".round-light");
 let form = document.querySelector(".form-container");
+let lampTop = document.querySelector('.lamp .top')
 
 let dragged = false;
 let lampOn = false;
@@ -33,9 +34,9 @@ window.addEventListener("mouseup", () => {
       light2.style.opacity = 1;
       form.style.opacity = 1
     } else if (lampOn == false) {
-        light1.style.opacity = 0;
-        light2.style.opacity = 0;
-        form.style.opacity = 0
+      light1.style.opacity = 0;
+      light2.style.opacity = 0;
+      form.style.opacity = 0
     }
     dragged = false;
     gsap.to(line, {
