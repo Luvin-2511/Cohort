@@ -1,0 +1,52 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html,
+body,
+#root {
+  height: 100%;
+  width: 100%;
+  background: black;
+  cursor: none;
+}
+
+main {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+canvas {
+  height: 100%;
+  width: 100%;
+}
+
+.crosshair {
+  height: 2rem;
+  width: 2rem;
+  position: absolute;
+  filter: invert(100);
+  z-index: 100;
+  
+}
+
+
+@keyframes shaker {
+  0% {
+    transform: translate(0, 0);
+  }
+  25% {
+    transform: translate(-4px, 2px);
+  }
+  50% {
+    transform: translate(4px, -2px);
+  }
+  75% {
+    transform: translate(-2px, 4px);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
