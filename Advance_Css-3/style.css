@@ -1,47 +1,54 @@
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
-
 html,
 body {
-    height: 100%;
-    width: 100%;
+  height: 100%;
+  width: 100%;
 }
 
-@property --border{
-    syntax: "<angle>";
-    inherits: false;
-    initial-value: 0deg;
-}
-
-@keyframes borderanim {
-    from {
-        --border:0deg
-    }to{
-        --border:360deg
-    }
+@property --degreeAngle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
 }
 
 main {
-    height: 100%;
-    width: 100%;
-    background: rgb(15, 15, 15);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  height: 100%;
+  width: 100%;
+  background-color: rgb(21, 21, 21);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-    .card {
-        height: 35rem;
-        width: 22rem;
-        border-radius: 1rem;
-        padding: 5px;
-        background:
-            linear-gradient(black) padding-box,
-            conic-gradient(from var(--border),black,black,black,red,black,black,black) border-box
-        ;
-        border: 7px solid transparent;
-        animation: borderanim 5s linear infinite;
-    }
+  .card {
+    height: 30rem;
+    width: 20rem;
+    position: absolute;
+    border-radius: 0.5rem;
+    transition: all 0.2s ease;
+    background:
+      linear-gradient(black) padding-box,
+      conic-gradient(from var(--degreeAngle), black, red, black) border-box;
+    border: 0px solid transparent;
+    animation: revolver 2s infinite linear;
+    animation-play-state: paused;
+  }
+
+  .card:hover {
+    animation-play-state: running;
+    box-shadow: 0 0 60px red;
+    border-width: 5px;
+  }
+}
+
+@keyframes revolver {
+  from {
+    --degreeAngle: 0deg;
+  }
+  to {
+    --degreeAngle: 360deg;
+  }
 }
