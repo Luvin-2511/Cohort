@@ -383,8 +383,7 @@ main #page4 .container .cont .top .icon {
   padding: 0.7rem 0.7rem;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.099);
-  -webkit-backdrop-filter: blur(20px);
-          backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.295);
   cursor: pointer;
   display: flex;
@@ -401,8 +400,7 @@ main #page4 .container .cont .bottom {
   color: white;
   font-family: "Roboto";
   background: rgba(255, 255, 255, 0.099);
-  -webkit-backdrop-filter: blur(20px);
-          backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.199);
 }
 main #page4 .container .cont .bottom .name {
@@ -433,8 +431,7 @@ main #page4 .container .cont1 .top .icon {
   padding: 0.7rem 0.7rem;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.099);
-  -webkit-backdrop-filter: blur(20px);
-          backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.295);
   cursor: pointer;
   display: flex;
@@ -451,8 +448,7 @@ main #page4 .container .cont1 .bottom {
   color: white;
   font-family: "Roboto";
   background: rgba(255, 255, 255, 0.099);
-  -webkit-backdrop-filter: blur(20px);
-          backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.199);
 }
 main #page4 .container .cont1 .bottom .name {
@@ -483,8 +479,7 @@ main #page4 .container .cont2 .top .icon {
   padding: 0.7rem 0.7rem;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.099);
-  -webkit-backdrop-filter: blur(20px);
-          backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.295);
   cursor: pointer;
   display: flex;
@@ -501,8 +496,7 @@ main #page4 .container .cont2 .bottom {
   color: white;
   font-family: "Roboto";
   background: rgba(255, 255, 255, 0.099);
-  -webkit-backdrop-filter: blur(20px);
-          backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.199);
 }
 main #page4 .container .cont2 .bottom .name {
@@ -670,8 +664,7 @@ main footer .top .neeche .icon {
   padding: 0.7rem 0.7rem;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.099);
-  -webkit-backdrop-filter: blur(20px);
-          backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.295);
   cursor: pointer;
   display: flex;
