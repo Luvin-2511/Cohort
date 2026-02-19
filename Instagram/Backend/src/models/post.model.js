@@ -1,18 +1,18 @@
 const mongoose = require('mongoose')
 
-const postSchema = new mongoose.Schema({
+const postSchema  = new mongoose.Schema({
     caption:{
         type:String,
-        default:"",
+        default:""
     },
-    imgUrl:{
-        type:String, 
-        required:[true,"Cant post without an image"]
+    url:{
+        type:String,
+        required:[true,"Enter a Post Url !"]
     },
     user:{
         type:mongoose.Schema.Types.ObjectId,
-        ref:'userigers',
-        required:[true,"You cant create a post !"]
+        ref:"user",
+        required:[true,"Unauthorized"]
     }
 })
 
