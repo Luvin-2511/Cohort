@@ -14,29 +14,7 @@ const imagekit = new ImageKit({
  */
 async function createPostController(req, res) {
   const { caption } = req.body;
-
-  /**
-   * Token fetching and if its not there returning
-   */
-  const token = req.cookies.token;
-  if (!token) {
-    return res.status(401).json({
-      message: "Unauthorized user !",
-    });
-  }
-
-  /**
-   * Checking authenticity of User by verifying token
-   */
-  let decoded;
-  try {
-    decoded = jwt.verify(token, process.env.JWT_SECRET);
-  } catch (err) {
-    return res.status(409).json({
-      message: "Unauthorized user",
-    });
-  }
-
+  
   /**
    * If user doesnt send a file then return
    */
@@ -59,11 +37,11 @@ async function createPostController(req, res) {
   const post = await postModel.create({
     caption: caption,
     url: file.url,
-    user: decoded.id,
+    user: req.user.id,
   });
 
   res.status(201).json({
-    message: `Post created successfully by ${decoded.username}`,
+    message: `Post created successfully by ${req.user.username}`,
     post,
   });
 }
@@ -72,32 +50,10 @@ async function createPostController(req, res) {
  * Fetched Posts
  */
 async function getPostController(req, res) {
-  const token = req.cookies.token;
-  /**
-   * Verifying Tokens exists or not
-   */
-  if (!token) {
-    return res.status(401).json({
-      message: "Unauthorized User !",
-    });
-  }
-
-  /**
-   * Verify Tokens authenticity
-   */
-  let decoded;
-  try {
-    decoded = jwt.verify(token, process.env.JWT_SECRET);
-  } catch (err) {
-    return res.status(401).json({
-      message: "Unauthorized User !",
-    });
-  }
-
   /**
    * Getting ID of user and using it to fetch all the posts created by user
    */
-  const userId = decoded.id;
+  const userId = req.user.id;
   const post = await postModel.find({
     user: userId,
   });
@@ -112,32 +68,10 @@ async function getPostController(req, res) {
  * Fetches Specific Post
  */
 async function getPostDetailController(req, res) {
-  const token = req.cookies.token;
-  /**
-   * Verifying Tokens exists or not
-   */
-  if (!token) {
-    return res.status(401).json({
-      message: "Unauthorized User !",
-    });
-  }
-
-  /**
-   * Verify Tokens authenticity
-   */
-  let decoded;
-  try {
-    decoded = jwt.verify(token, process.env.JWT_SECRET);
-  } catch (err) {
-    return res.status(401).json({
-      message: "Unauthorized User !",
-    });
-  }
-
   /**
    * Requiring necessary params
    */
-  const userId = decoded.id;
+  const userId = req.user.id;
   const postId = req.params.postId;
 
   /**
