@@ -113,7 +113,7 @@ async function loginController(req, res) {
    */
   const token = jwt.sign({
     id:user._id,
-    username:username
+    username:user.username
   },process.env.JWT_SECRET,{
     expiresIn:'7d'
   })

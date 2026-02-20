@@ -3,13 +3,11 @@ const mongoose = require("mongoose");
 let followSchema = new mongoose.Schema(
   {
     follower: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "user",
+      type: String,
       required: [true, "You have to login first !"],
     },
     followee: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "user",
+      type: String,
       required: [true, "You have to login first !"],
     },
   },
@@ -18,6 +16,8 @@ let followSchema = new mongoose.Schema(
   },
 );
 
-const followModel = mongoose.model('follow',followSchema)
+followSchema.index({ follower: 1, followee: 1 }, { unique: true });
 
-module.exports = followModel
+const followModel = mongoose.model("follow", followSchema);
+
+module.exports = followModel;
