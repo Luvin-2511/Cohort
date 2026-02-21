@@ -151,8 +151,29 @@ async function logoutController(req, res) {
   })
 }
 
+
+/**
+ * Get current logged-in user Details
+ */
+async function getMeController(req,res) {
+  const userId = req.user.id
+  /**
+   * Finding user from Db using current user ID fetched from token
+   */
+  const user = await userModel.findById(userId)
+
+  return res.status(200).json({
+    message:"User fetched successfully !",
+    user:{
+      username:user.username,
+      email:user.email,
+    }
+  })
+}
+
 module.exports = {
   registerController,
   loginController,
-  logoutController
+  logoutController,
+  getMeController
 };
