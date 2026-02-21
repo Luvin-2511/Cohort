@@ -2,11 +2,14 @@ const userModel = require("../models/user.model");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
+/**
+ * Register User
+ */
 async function registerController(req, res) {
   const { username, email, password } = req.body;
 
   /**
-   * If User doesn't enter something it will return 
+   * If User doesn't enter something it will return
    */
   if (!username || !email || !password) {
     return res.status(400).json({
@@ -53,7 +56,7 @@ async function registerController(req, res) {
       email: email,
     },
     process.env.JWT_SECRET,
-    {expiresIn:'7d'}
+    { expiresIn: "7d" },
   );
 
   res.cookie("token", token);
@@ -67,70 +70,89 @@ async function registerController(req, res) {
   });
 }
 
+/**
+ * Login User
+ */
 async function loginController(req, res) {
   const { username, email, password } = req.body;
 
-   /**
-   * If User doesn't enter something it will return 
+  /**
+   * If User doesn't enter something it will return
    */
-  if(!password){
+  if (!password) {
     return res.status(400).json({
-        message:"Please fill all the field correctly",
-    })
+      message: "Please fill all the field correctly",
+    });
   }
 
-   /**
+  /**
    * Finds user based on either username or email and if it doesnt exist it will return
    */
   const user = await userModel.findOne({
-    $or:[
-        {
-            username:username
-        },{
-            email:email,
-        }
-    ]
-  })
+    $or: [
+      {
+        username: username,
+      },
+      {
+        email: email,
+      },
+    ],
+  });
 
-  if(!user){
+  if (!user) {
     return res.status(404).json({
-        message:"User not registered !"
-    })
+      message: "User not registered !",
+    });
   }
 
   /**
    * Verifies the hashed password and if wrong returns
    */
-  const isPasswordValid = await bcrypt.compare(password,user.password)
-  if(!isPasswordValid){
+  const isPasswordValid = await bcrypt.compare(password, user.password);
+  if (!isPasswordValid) {
     return res.status(400).json({
-        message:"Incorrect Password !"
-    })
+      message: "Incorrect Password !",
+    });
   }
 
   /**
    * Creates token and send it in cookie
    */
-  const token = jwt.sign({
-    id:user._id,
-    username:user.username
-  },process.env.JWT_SECRET,{
-    expiresIn:'7d'
-  })
+  const token = jwt.sign(
+    {
+      id: user._id,
+      username: user.username,
+    },
+    process.env.JWT_SECRET,
+    {
+      expiresIn: "7d",
+    },
+  );
 
-  res.cookie("token",token)
+  res.cookie("token", token);
 
   /**
-   * Logged in successfully 
+   * Logged in successfully
    */
   res.status(200).json({
-    message:"Logged in successfully !",
-    user
-  })
+    message: "Logged in successfully !",
+    user,
+  });
+}
 
+/**
+ * Logout User
+ */
+async function logoutController(req, res) {
+  res.clearCookie("token")
+  
+  return res.status(200).json({
+    message:"User logout successfully !"
+  })
 }
 
 module.exports = {
   registerController,
   loginController,
+  logoutController
 };

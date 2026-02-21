@@ -1,5 +1,5 @@
 import React from "react";
-import { footerLinks } from "../json/footerTags";
+import { footerLinks } from "../../../json/footerTags.js";
 
 const Footer = () => {
   return (

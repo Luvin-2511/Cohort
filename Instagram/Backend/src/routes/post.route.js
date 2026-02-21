@@ -13,10 +13,17 @@ postRouter.post(
 );
 
 postRouter.get("/", identifyUser, postController.getPostController);
+
 postRouter.get(
   "/:postId",
   identifyUser,
   postController.getPostDetailController,
+);
+
+postRouter.post(
+  "/like/:postId",
+  identifyUser,
+  postController.likePostController,
 );
 
 module.exports = postRouter;
