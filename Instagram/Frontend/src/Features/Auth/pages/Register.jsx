@@ -1,155 +1,151 @@
-import React, {useState} from "react";
-import {Link, useNavigate} from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import Footer from "../components/Footer";
 import axios from "axios";
 
 const Register = () => {
     const navigate = useNavigate();
-    const [username, setUsername] = useState(null)
-    const [email, setEmail] = useState(null)
-    const [password, setPassword] = useState(null)
+    const [username, setUsername] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
 
-    const handleRegisterForm = (e) => {
+    const handleRegisterForm = async (e) => {
         e.preventDefault();
-        axios
-            .post("http://localhost:3000/api/auth/register", {
-                email: email,
-                username: username,
-                password: password,
-            },{
-                withCredentials:true
-            })
-            .then((res) => {
-                console.log(res.data);
-                if (res.status === 201) navigate('/login')
-            });
+        try {
+            const res = await axios.post(
+                "http://localhost:3000/api/auth/register",
+                {
+                    email,
+                    username,
+                    password,
+                },
+                { withCredentials: true }
+            );
+
+            if (res.status === 201) navigate("/login");
+        } catch (err) {
+            console.log(err);
+        }
     };
 
     return (
-        <div>
-            <div>
-                <div className="bg-[#000000] h-screen w-screen">
-                    <div className="cont flex p-32 pt-16 flex-col items-center justify-center">
-                        <form
-                            onSubmit={handleRegisterForm}
-                            className="right relative bottom-[2vw] w-[20vw] h-fit border rounded-[1px] border-[#ffffff31] flex items-center flex-col"
-                        >
-                            <div className="img relative bottom-[2.5vw]">
-                                <img
-                                    className="h-[13vw] "
-                                    src="./src/assets/logo.webp"
-                                    alt=""
-                                />
-                            </div>
-                            <div
-                                className="text font-semibold relative bottom-[7vw] leading-5 text-gray-400 w-[16vw] text-center">
-                                Sign up to see photos and videos from your friends.
-                            </div>
-                            <div
-                                className="facebook text-md text-white cursor-pointer hover:bg-[#4a67f9] relative bottom-[6vw] bg-[#4A5DF9] px-[3.2vw] py-[0.4vw] rounded-lg flex items-center justify-center gap-[0.5vw]">
-                                <svg
-                                    aria-label="Log in with Facebook"
-                                    className="x1lliihq x1n2onr6 x173jzuc"
-                                    fill="currentColor"
-                                    height="20"
-                                    role="img"
-                                    viewBox="0 0 16 16"
-                                    width="20"
-                                >
-                                    <title>Log in with Facebook</title>
-                                    <g clipPath="url(#a)">
-                                        <path
-                                            d="M8 0C3.6 0 0 3.6 0 8c0 4 2.9 7.3 6.8 7.9v-5.6h-2V8h2V6.2c0-2 1.2-3.1 3-3.1.9 0 1.8.2 1.8.2v2h-1c-1 0-1.3.6-1.3 1.3V8h2.2l-.4 2.3H9.2v5.6C13.1 15.3 16 12 16 8c0-4.4-3.6-8-8-8Z"
-                                            fill="currentColor"
-                                        ></path>
-                                    </g>
-                                    <defs>
-                                        <clipPath id="a">
-                                            <rect fill="currentColor" height="16" width="16"></rect>
-                                        </clipPath>
-                                    </defs>
-                                </svg>
-                                <div className="text-sm font-semibold">
-                                    Log in with Facebook
-                                </div>
-                            </div>
-                            <div
-                                className="or flex items-center justify-center mt-5 text-white gap-[1vw] relative bottom-[5vw] text-sm ">
-                                <div className="idhar w-[6.5vw] h-[0.05vw] bg-gray-800"></div>
-                                OR
-                                <div className="udhar  w-[6.5vw] h-[0.05vw] bg-gray-800"></div>
-                            </div>
-                            <div className="ids flex flex-col gap-[0.5vw] mt-5 relative bottom-[4vw]">
-                                <input
-                                    onInput={(e)=>{setEmail(e.target.value)}}
-                                    className="placeholder-[#A8A886] text-white bg-[#121212] text-[0.7vw] px-[0.5vw] py-[0.6vw] border-[0.05px] rounded-sm border-gray-600 w-[16vw]"
-                                    name="email"
-                                    type="text"
-                                    placeholder="Email"
-                                />
-                                <input
-                                    onInput={(e)=>{setPassword(e.target.value)}}
-                                    className="placeholder-[#A8A886] text-white bg-[#121212] text-[0.7vw] px-[0.5vw] py-[0.6vw] border-[0.05px] rounded-sm border-gray-600 w-[16vw]"
-                                    name="password"
-                                    type="password"
-                                    placeholder="Password"
-                                />
-                                <input
-                                    onInput={(e)=>{setUsername(e.target.value)}}
-                                    className="placeholder-[#A8A886] text-white bg-[#121212] text-[0.7vw] px-[0.5vw] py-[0.6vw] border-[0.05px] rounded-sm border-gray-600 w-[16vw]"
-                                    name="username"
-                                    type="text"
-                                    placeholder="Username"
-                                />
-                            </div>
-                            <div
-                                className="texter1 text-gray-300 relative bottom-[3.4vw]  w-[15vw] font-light text-[0.7vw] text-center">
-                                People who use our service may have uploaded your contact
-                                information to Instagram.{" "}
-                                <a className="text-blue-400" href="">
-                                    Learn More
-                                </a>
-                            </div>
-                            <div
-                                className="texter1 text-gray-300 relative bottom-[2.7vw]  w-[15vw] font-light text-[0.7vw] text-center">
-                                By signing up, you agree to our{" "}
-                                <a className="text-blue-400" href="">
-                                    Terms{" "}
-                                </a>{" "}
-                                ,{" "}
-                                <a className="text-blue-400" href="">
-                                    {" "}
-                                    Privacy Policy
-                                </a>{" "}
-                                and{" "}
-                                <a className="text-blue-400" href="">
-                                    {" "}
-                                    Cookies Policy.
-                                </a>
-                            </div>
-                            <div className="button relative bottom-[1.9vw]">
-                                <button
-                                    className="bg-[#3441AF] text-sm rounded-md font-bold text-[#AFAFB3] py-[0.4vw] px-[6.3vw]">
-                                    Sign up
-                                </button>
-                            </div>
-                        </form>
-                        <div
-                            className="account relative bottom-[1.4vw] w-[20vw] h-[5vw] text-white flex flex-col items-center justify-center border rounded-[1px] border-[#ffffff31]">
-                            <h5 className="font-semibold text-[0.82vw]">Have an account?</h5>
-                            <Link
-                                className="text-blue-400 font-semibold relative bottom-[0.28vw] text-[0.82vw]"
-                                to="/login"
-                            >
-                                Log in
-                            </Link>
-                        </div>
+        <div className="bg-black min-h-screen flex flex-col justify-between">
+
+            <div className="flex flex-col items-center justify-center
+                      py-10 md:py-16 lg:py-20">
+
+                {/* REGISTER CARD */}
+                <form
+                    onSubmit={handleRegisterForm}
+                    className="w-[90vw] md:w-[26vw] lg:w-[22vw]
+                     border border-[#ffffff31]
+                     flex flex-col items-center
+                     px-6 py-8"
+                >
+                    {/* LOGO */}
+                    <img
+                        className="h-[10rem] md:h-[8vw] lg:h-[6vw] mb-4"
+                        src="./src/assets/logo.webp"
+                        alt=""
+                    />
+
+                    {/* TEXT */}
+                    <p className="text-gray-400 text-sm text-center mb-6">
+                        Sign up to see photos and videos from your friends.
+                    </p>
+
+                    {/* FACEBOOK BUTTON */}
+                    <div className="w-full bg-[#4A5DF9] hover:bg-[#3f53e6]
+                          text-white py-2 rounded-lg
+                          flex items-center justify-center gap-3
+                          font-semibold text-sm cursor-pointer mb-5">
+                        <svg fill="currentColor" height="18" viewBox="0 0 16 16" width="18">
+                            <path d="M8 0C3.6 0 0 3.6 0 8c0 4 2.9 7.3 6.8 7.9v-5.6h-2V8h2V6.2c0-2 1.2-3.1 3-3.1.9 0 1.8.2 1.8.2v2h-1c-1 0-1.3.6-1.3 1.3V8h2.2l-.4 2.3H9.2v5.6C13.1 15.3 16 12 16 8c0-4.4-3.6-8-8-8Z" />
+                        </svg>
+                        Log in with Facebook
                     </div>
-                    <div className="relative bottom-[2vw]">
-                        <Footer/>
+
+                    {/* OR DIVIDER */}
+                    <div className="flex items-center w-full text-white gap-3 text-sm mb-5">
+                        <div className="flex-1 h-[1px] bg-gray-800"></div>
+                        OR
+                        <div className="flex-1 h-[1px] bg-gray-800"></div>
                     </div>
+
+                    {/* INPUTS */}
+                    <div className="flex flex-col gap-3 w-full">
+                        <input
+                            onChange={(e) => setEmail(e.target.value)}
+                            className="rounded-md text-white bg-[#121212]
+                         placeholder-[#A8A886]
+                         border border-gray-600
+                         px-4 py-2 text-sm"
+                            type="text"
+                            placeholder="Email"
+                        />
+
+                        <input
+                            onChange={(e) => setPassword(e.target.value)}
+                            className="rounded-md text-white bg-[#121212]
+                         placeholder-[#A8A886]
+                         border border-gray-600
+                         px-4 py-2 text-sm"
+                            type="password"
+                            placeholder="Password"
+                        />
+
+                        <input
+                            onChange={(e) => setUsername(e.target.value)}
+                            className="rounded-md text-white bg-[#121212]
+                         placeholder-[#A8A886]
+                         border border-gray-600
+                         px-4 py-2 text-sm"
+                            type="text"
+                            placeholder="Username"
+                        />
+                    </div>
+
+                    {/* SMALL TEXT */}
+                    <p className="text-gray-400 text-xs text-center mt-5">
+                        People who use our service may have uploaded your contact
+                        information.{" "}
+                        <span className="text-blue-400 cursor-pointer">Learn More</span>
+                    </p>
+
+                    <p className="text-gray-400 text-xs text-center mt-3">
+                        By signing up, you agree to our{" "}
+                        <span className="text-blue-400 cursor-pointer">Terms</span>,{" "}
+                        <span className="text-blue-400 cursor-pointer">Privacy Policy</span>{" "}
+                        and{" "}
+                        <span className="text-blue-400 cursor-pointer">Cookies Policy</span>.
+                    </p>
+
+                    {/* SIGN UP BUTTON */}
+                    <button
+                        type="submit"
+                        className="bg-[#3441AF] mt-6
+                       text-[#AFAFB3]
+                       rounded-md font-bold
+                       w-full py-2"
+                    >
+                        Sign up
+                    </button>
+                </form>
+
+                {/* LOGIN CARD */}
+                <div className="w-[90vw] md:w-[26vw] lg:w-[22vw]
+                        border border-[#ffffff31]
+                        text-white
+                        flex items-center justify-center
+                        mt-4 py-5 text-sm">
+                    Have an account?{" "}
+                    <Link to="/login" className="text-blue-400 ml-2 font-semibold">
+                        Log in
+                    </Link>
                 </div>
             </div>
+
+            <Footer />
         </div>
     );
 };
