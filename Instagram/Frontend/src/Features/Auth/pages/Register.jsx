@@ -37,7 +37,7 @@ const Register = () => {
                 {/* REGISTER CARD */}
                 <form
                     onSubmit={handleRegisterForm}
-                    className="w-[90vw] md:w-[26vw] lg:w-[22vw]
+                    className="min-w-[clamp(20rem,20vw,50rem)] md:w-[26vw] lg:w-[22vw]
                      border border-[#ffffff31]
                      flex flex-col items-center
                      px-6 py-8"
