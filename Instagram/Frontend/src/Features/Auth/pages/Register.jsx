@@ -1,36 +1,27 @@
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, {useState} from "react";
+import {Link, useNavigate} from "react-router-dom";
 import Footer from "../components/Footer";
-import axios from "axios";
+import "../styles/auth.style.scss"
+import useAuth from "../Hooks/useAuth.jsx";
 
 const Register = () => {
     const navigate = useNavigate();
+    const {handleRegister, loading} = useAuth()
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
     const handleRegisterForm = async (e) => {
         e.preventDefault();
-        try {
-            const res = await axios.post(
-                "http://localhost:3000/api/auth/register",
-                {
-                    email,
-                    username,
-                    password,
-                },
-                { withCredentials: true }
-            );
-
-            if (res.status === 201) navigate("/login");
-        } catch (err) {
-            console.log(err);
-        }
+        await handleRegister(username, email, password)
+        navigate('/')
     };
 
     return (
         <div className="bg-black min-h-screen flex flex-col justify-between">
-
+            <div
+                className={`loadingLiner ${loading ? "animate-[Loading_0.7s_linear_forwards]" : ""} transition-all duration-700 absolute animate-loader py-0.5 bg-gradient-to-l from-pink-500 via-blue-600 via-blue-400 via-pink-500 to-blue-500`}>
+            </div>
             <div className="flex flex-col items-center justify-center
                       py-10 md:py-16 lg:py-20">
 
@@ -60,7 +51,8 @@ const Register = () => {
                           flex items-center justify-center gap-3
                           font-semibold text-sm cursor-pointer mb-5">
                         <svg fill="currentColor" height="18" viewBox="0 0 16 16" width="18">
-                            <path d="M8 0C3.6 0 0 3.6 0 8c0 4 2.9 7.3 6.8 7.9v-5.6h-2V8h2V6.2c0-2 1.2-3.1 3-3.1.9 0 1.8.2 1.8.2v2h-1c-1 0-1.3.6-1.3 1.3V8h2.2l-.4 2.3H9.2v5.6C13.1 15.3 16 12 16 8c0-4.4-3.6-8-8-8Z" />
+                            <path
+                                d="M8 0C3.6 0 0 3.6 0 8c0 4 2.9 7.3 6.8 7.9v-5.6h-2V8h2V6.2c0-2 1.2-3.1 3-3.1.9 0 1.8.2 1.8.2v2h-1c-1 0-1.3.6-1.3 1.3V8h2.2l-.4 2.3H9.2v5.6C13.1 15.3 16 12 16 8c0-4.4-3.6-8-8-8Z"/>
                         </svg>
                         Log in with Facebook
                     </div>
@@ -145,7 +137,7 @@ const Register = () => {
                 </div>
             </div>
 
-            <Footer />
+            <Footer/>
         </div>
     );
 };
