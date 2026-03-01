@@ -77,6 +77,10 @@ function App() {
     <main
       style={{
         animation: firing ? "shaker 0.12s infinite" : "",
+        backgroundImage:'url("./bg.webp")',
+        backgroundRepeat:'no-repeat',
+        backgroundPosition:'center',
+        backgroundSize:'cover'
       }}
       onMouseMove={handleCrosshair}
       onMouseEnter={showCrosshair}
