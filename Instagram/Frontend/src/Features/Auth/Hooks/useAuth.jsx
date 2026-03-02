@@ -9,7 +9,8 @@ const UseAuth = () => {
         setLoading(true)
         try {
             const response = await Login(username, password)
-            setUser = response.user
+            setUser(response.user)
+            console.log(response)
         } catch (err) {
             console.log(err)
         } finally {
@@ -20,7 +21,8 @@ const UseAuth = () => {
         setLoading(true)
         try {
             const response = await Register(username, email, password)
-            setUser = response.user
+            console.log(response)
+            setUser(response.user)
         } catch (err) {
             console.log(err)
         } finally {

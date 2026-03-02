@@ -20,8 +20,9 @@ export async function Login(username, password) {
 
 export async function Register(username, email, password) {
     try {
-        const response = await axios.post('/register', {
+        const response = await api.post('/register', {
             username,
+            email,
             password
         })
         return response.data
