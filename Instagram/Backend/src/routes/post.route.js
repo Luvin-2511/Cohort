@@ -6,24 +6,32 @@ const upload = multer(multer.memoryStorage({}));
 const identifyUser = require("../middlewares/auth.middleware");
 
 postRouter.post(
-  "/",
-  upload.single("post"),
-  identifyUser,
-  postController.createPostController,
+    "/",
+    upload.single("post"),
+    identifyUser,
+    postController.createPostController,
 );
+
+postRouter.get(
+    "/feed",
+    identifyUser,
+    postController.getFeedController
+)
 
 postRouter.get("/", identifyUser, postController.getPostController);
 
 postRouter.get(
-  "/:postId",
-  identifyUser,
-  postController.getPostDetailController,
+    "/:postId",
+    identifyUser,
+    postController.getPostDetailController,
 );
 
 postRouter.post(
-  "/like/:postId",
-  identifyUser,
-  postController.likePostController,
+    "/like/:postId",
+    identifyUser,
+    postController.likePostController,
 );
+
+
 
 module.exports = postRouter;

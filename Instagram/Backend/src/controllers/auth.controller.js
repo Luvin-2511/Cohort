@@ -29,7 +29,7 @@ async function registerController(req, res) {
                 username: username,
             },
         ],
-    });
+    })
 
     if (isUserAlreadyExists) {
         return res.status(409).json({
@@ -97,7 +97,7 @@ async function loginController(req, res) {
                 email: email,
             },
         ],
-    });
+    }).select("+password")
 
     if (!user) {
         return res.status(404).json({
