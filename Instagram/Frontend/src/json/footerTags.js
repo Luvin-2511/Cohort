@@ -1,5 +1,4 @@
 export const footerLinks = [
-  "Meta",
   "About",
   "Blog",
   "Jobs",
@@ -8,10 +7,10 @@ export const footerLinks = [
   "Privacy",
   "Terms",
   "Locations",
-  "Instagram Lite",
-  "Meta AI",
-  "Meta AI Articles",
+  "Snaply Lite",
+  "Snaply AI",
+  "Snaply AI Articles",
   "Threads",
   "Contact Uploading & Non-Users",
-  "Meta Verified",
+  "Snaply Verified",
 ];

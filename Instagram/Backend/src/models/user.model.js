@@ -15,6 +15,14 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: [true, "Fill all the field correctly"],
         select: false
+    },
+    bio:{
+        type:String,
+        default:""
+    },
+    profileImg:{
+        type:String,
+        default:"https://ik.imagekit.io/wsgqsbyj3x/nullUser.webp?updatedAt=1772541937469"
     }
 })
 

@@ -166,9 +166,12 @@ async function getMeController(req, res) {
         user: {
             username: user.username,
             email: user.email,
+            bio:user.bio,
+            profileImg:user.profileImg
         }
     })
 }
+
 
 module.exports = {
     registerController,

@@ -17,7 +17,7 @@ async function createPostController(req, res) {
     const {caption} = req.body;
 
     /**
-     * If user doesnt send a file then return
+     * If user doesn't send a file then return
      */
     if (!req.file) {
         return res.status(400).json({message: "File missing!"});
@@ -129,6 +129,34 @@ async function likePostController(req, res) {
     })
 }
 
+/**
+ * Unlike a Post
+ */
+async function unlikePostController(req, res) {
+    const {postId} = req.params;
+    const {username} = req.user;
+
+    const isLikedPost = await likeModel.findOne({
+        post: postId,
+        user: username
+    })
+
+    if (!isLikedPost) {
+        return res.status(400).json({
+            message: "Post isn't liked"
+        })
+    }
+
+    await likeModel.findOneAndDelete({_id: isLikedPost._id})
+
+    return res.status(200).json({
+        message: "Post unliked successfully"
+    })
+}
+
+/**
+ * Get feed meaning all the posts
+ */
 async function getFeedController(req, res) {
     const {username} = req.user
     const posts = await postModel.find().populate('user').lean()
@@ -146,10 +174,40 @@ async function getFeedController(req, res) {
     })
 }
 
+/**
+ * Delete Post (only Owner can)
+ */
+async function deletePostController(req, res) {
+    const {postId} = req.params;
+    const {id} = req.user
+    const post = await postModel.findById(postId)
+
+    if (!post) {
+        return res.status(404).json({
+            message: "Post not found !"
+        })
+    }
+
+    const isOwnerOfPost = post.user.toString() === id;
+    if (!isOwnerOfPost) {
+        return res.status(403).json({
+            message: "You cannot delete Other's Post! "
+        })
+    }
+
+    await postModel.findByIdAndDelete(postId)
+
+    return res.status(200).json({
+        message: "Post deleted successfully !"
+    })
+}
+
 module.exports = {
     createPostController,
     getPostController,
     getPostDetailController,
     likePostController,
-    getFeedController
+    getFeedController,
+    unlikePostController,
+    deletePostController
 };

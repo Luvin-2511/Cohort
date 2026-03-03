@@ -12,13 +12,23 @@ postRouter.post(
     postController.createPostController,
 );
 
+postRouter.delete(
+    "/:postId",
+    identifyUser,
+    postController.deletePostController
+)
+
 postRouter.get(
     "/feed",
     identifyUser,
     postController.getFeedController
 )
 
-postRouter.get("/", identifyUser, postController.getPostController);
+postRouter.get(
+    "/",
+    identifyUser,
+    postController.getPostController
+);
 
 postRouter.get(
     "/:postId",
@@ -31,7 +41,11 @@ postRouter.post(
     identifyUser,
     postController.likePostController,
 );
-
+postRouter.post(
+    "/unlike/:postId",
+    identifyUser,
+    postController.unlikePostController,
+);
 
 
 module.exports = postRouter;

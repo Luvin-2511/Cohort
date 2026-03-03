@@ -36,7 +36,7 @@ const Register = () => {
                     {/* LOGO */}
                     <img
                         className="h-[10rem] md:h-[8vw] lg:h-[6vw] mb-4"
-                        src="./src/assets/logo.webp"
+                        src="./src/assets/logobg.png"
                         alt=""
                     />
 

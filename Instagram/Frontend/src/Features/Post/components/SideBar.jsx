@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import {Link, useLocation, useNavigate} from 'react-router-dom'
 import useAuth from "../../Auth/Hooks/useAuth.jsx";
+import logo from '../../../assets/logobg.png'
 
 const Sidebar = ({creatoropen, setcreatoropen}) => {
     const navigate = useNavigate()
@@ -118,22 +119,22 @@ const Sidebar = ({creatoropen, setcreatoropen}) => {
                 className="message hidden md:flex fixed bottom-[2vw] bg-[#212328] w-[15.5vw] h-[3.5vw] rounded-4xl px-[1vw] right-[3%] gap-[0.6vw] text-white items-center font-bold cursor-pointer hover:bg-[#38393E]"
             >
                 <svg aria-label="Messages" fill="white" height="24" role="img" viewBox="0 0 24 24" width="24">
-                    <title>Messages</title>
+                    <title>Followers</title>
                     <path
                         d="M13.973 20.046 21.77 6.928C22.8 5.195 21.55 3 19.535 3H4.466C2.138 3 .984 5.825 2.646 7.456l4.842 4.752 1.723 7.121c.548 2.266 3.571 2.721 4.762.717Z"
                         fill="none" stroke="currentColor" strokeLinejoin="round" strokeWidth="2"></path>
                     <line fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
                           x1="7.488" x2="15.515" y1="12.208" y2="7.641"></line>
                 </svg>
-                Messages
+                Followers
             </div>
 
             {/* ===================== DESKTOP SIDEBAR (md+) — full with text labels ===================== */}
             <div
                 className={`hidden md:flex fixed transition-all ${searchOpen ? "-left-[100vw]" : "left-0"} w-[14.5%] h-full border-r-[1px] border-r-gray-800 flex-col`}>
-                <div className="logo relative left-[0.7vw] bottom-[0.5vw]">
+                <div className="logo w-[12vw] h-[4rem] overflow-hidden relative ml-2  mt-3 mb-15 bottom-[0.5vw]">
                     <Link to='/'>
-                        <img className="h-[7.6vw] hover:cursor-pointer" alt="" src="./src/ins1.webp"/>
+                        <img className="w-[10vw] object-cover hover:cursor-pointer" alt="" src={logo}/>
                     </Link>
                 </div>
                 <div className="wrapper flex flex-col items-center relative bottom-[1.5vw] text-white">
@@ -212,7 +213,7 @@ const Sidebar = ({creatoropen, setcreatoropen}) => {
                             <line fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round"
                                   strokeWidth="2" x1="7.488" x2="15.515" y1="12.208" y2="7.641"></line>
                         </svg>
-                        Messages
+                        Followers
                     </div>
 
                     {/* Notifications */}
@@ -589,7 +590,7 @@ const Sidebar = ({creatoropen, setcreatoropen}) => {
                     className="z-[100] absolute bg-[#212328] text-white right-[1vw] rounded-xl bottom-[1vw] h-[30vw] w-[21vw]">
                     <div
                         className="top h-[4vw] px-[0.8vw] border-b-[2px] border-gray-800 flex justify-between items-center">
-                        <h3 className='font-bold'>Messages</h3>
+                        <h3 className='font-bold'>Followers</h3>
                         <div className="svgs flex items-center gap-[1vw]">
                             <svg aria-label="Expand" className='cursor-pointer' fill="white" height="20" role="img"
                                  viewBox="0 0 24 24" width="20"><title>Expand</title>
@@ -605,8 +606,8 @@ const Sidebar = ({creatoropen, setcreatoropen}) => {
                             </svg>
                         </div>
                     </div>
-                    <h2 className='font-medium text-sm h-[25vw] flex items-center justify-center'>No messages
-                        found.</h2>
+                    <h2 className='font-medium text-sm h-[25vw] flex items-center justify-center'>No Followers
+                        yet.</h2>
                 </div>
             )}
         </div>

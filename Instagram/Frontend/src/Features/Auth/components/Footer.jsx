@@ -19,7 +19,7 @@ const Footer = () => {
             English
           </div>
           <div className="cont text-gray-400 font-sm text-[0.69vw]">
-            © 2025 Instagram from Meta
+            © 2026 Snaply from Luvin
           </div>
         </div>
       </div>

@@ -16,6 +16,7 @@ const Login = () => {
         navigate('/')
     };
 
+
     return (
         <div className="bg-[#000000] min-h-screen w-full flex flex-col justify-between">
             <div
@@ -43,7 +44,7 @@ const Login = () => {
                     <div className="flex items-center justify-center mb-6">
                         <img
                             className="h-[15rem] md:h-[10vw] lg:h-[8vw]"
-                            src="./src/assets/logo.webp"
+                            src="./src/assets/logobg.png"
                             alt=""
                         />
                     </div>

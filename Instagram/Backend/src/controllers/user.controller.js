@@ -1,5 +1,11 @@
 const followModel = require("../models/follow.model");
 const userModel = require("../models/user.model");
+const ImageKit = require('@imagekit/nodejs')
+const {toFile} = require('@imagekit/nodejs')
+
+const imagekit = new ImageKit({
+    privateKey: process.env.IMAGEKIT_PRIVATE_KEY
+})
 
 /**
  * Follow a User
@@ -141,7 +147,7 @@ async function followStatusController(req, res) {
     const followStatusUpdate = await followModel.findOneAndUpdate({
         follower: follower,
         followee: followee,
-        status:"pending"
+        status: "pending"
     }, {
         status: status
     }, {
@@ -163,8 +169,51 @@ async function followStatusController(req, res) {
     })
 }
 
+
+/**
+ * Updates the user's bio and Profile Image
+ */
+async function updateUserInfo(req, res) {
+    const {bio} = req.body
+    const {username} = req.user;
+
+    if (bio === "" || !req.file) {
+        return res.status(400).json({
+            message: "Enter the Details correctly !"
+        })
+    }
+
+    const file = await imagekit.files.upload({
+        file: await toFile(Buffer.from(req.file.buffer), "profile"),
+        fileName: `profile-${username}`,
+        folder: "Cohort_Insta_Clone",
+    })
+
+    const user = await userModel.findOneAndUpdate({
+            username
+        },
+        {
+            bio: bio,
+            profileImg: file.url
+        },
+        {new: true}
+    )
+
+    if (!user) {
+        return res.status(404).json({
+            message: "user not found"
+        })
+    }
+
+    res.status(200).json({
+        message: "Profile updated successfully",
+        user
+    })
+}
+
 module.exports = {
     followUserController,
     unfollowUserController,
     followStatusController,
+    updateUserInfo
 };

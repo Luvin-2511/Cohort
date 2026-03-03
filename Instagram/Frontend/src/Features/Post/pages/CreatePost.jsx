@@ -1,5 +1,7 @@
-import {useRef, useState} from "react";
+import React, {useRef, useState} from "react";
 import {useNavigate} from "react-router-dom";
+import usePost from "../Hooks/usePost.jsx";
+import useAuth from "../../Auth/Hooks/useAuth.jsx";
 
 const ImageVideoIcon = () => (
     <svg width="80" height="70" viewBox="0 0 80 70" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -19,29 +21,34 @@ export default function CreatePost() {
     const [submitted, setSubmitted] = useState(false);
     const fileInputRef = useRef(null);
     const MAX_CAPTION = 2000;
-
-    if (submitted) {
-        navigate('/')
-    }
+    const {handleCreatePost, loading} = usePost()
+    const {user} = useAuth()
 
     const handleFile = (file) => {
+        if (preview?.url) {
+            URL.revokeObjectURL(preview.url);
+        }
+
         const url = URL.createObjectURL(file);
-        setPreview({url, type: file.type.startsWith("video") ? "video" : "image"});
+        setPreview({
+            url,
+            type: file.type.startsWith("video") ? "video" : "image"
+        });
     };
+
 
     const handleSelect = (e) => {
         const file = e.target.files[0];
         if (file) handleFile(file);
     };
 
-    const handleSubmit = () => {
+    const handleSubmit = async (e) => {
+        e.preventDefault()
         if (!preview) return;
         setSubmitted(true);
-        setTimeout(() => {
-            setSubmitted(false);
-            setPreview(null);
-            setCaption("");
-        }, 2500);
+        const file = fileInputRef.current.files[0]
+        await handleCreatePost(file, caption)
+        navigate('/')
     };
 
     return (
@@ -300,13 +307,19 @@ export default function CreatePost() {
         }
       `}</style>
 
+                {loading &&
+                    <div
+                        className={`loadingLiner ${loading ? "animate-[Loading_0.7s_linear_forwards]" : ""} transition-all duration-700 absolute animate-loader py-0.5 bg-gradient-to-l from-pink-500 via-blue-600 via-blue-400 via-pink-500 to-blue-500`}>
+                    </div>
+                }
             <div className="cp-wrap">
                 <div className="cp-card">
 
                     {/* LEFT */}
                     <div className="cp-left">
                         <button className="cp-back-btn" onClick={() => navigate('/')}>
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                 strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                                 <path d="M19 12H5M5 12L12 19M5 12L12 5"/>
                             </svg>
                         </button>
@@ -341,16 +354,17 @@ export default function CreatePost() {
 
                         <div className="cp-user-row">
                             <div className="cp-avatar">R</div>
-                            <span className="cp-username">rahulvardaan903</span>
+                            <span className="cp-username">{user.username}</span>
+                            <span className="text-sm text-gray-500">{user.email}</span>
                         </div>
 
                         <div className="cp-caption-zone">
-              <textarea
-                  className="cp-textarea"
-                  value={caption}
-                  onChange={(e) => setCaption(e.target.value.slice(0, MAX_CAPTION))}
-                  placeholder="Write a caption..."
-              />
+                            <input
+                                className="cp-textarea"
+                                value={caption}
+                                onChange={(e) => setCaption(e.target.value.slice(0, MAX_CAPTION))}
+                                placeholder="Write a caption..."
+                            />
                             <div className="cp-char-row">
                                 <span className="cp-emoji">😊</span>
                                 <span className="cp-count">{caption.length} / {MAX_CAPTION.toLocaleString()}</span>
