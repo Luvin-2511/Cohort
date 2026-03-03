@@ -31,3 +31,12 @@ export async function Register(username, email, password) {
         console.log(err)
     }
 }
+
+export const Logout = async () => {
+    try {
+        const response = await api.post('/logout')
+        console.log(response.data)
+    } catch (err) {
+        console.log(err)
+    }
+}

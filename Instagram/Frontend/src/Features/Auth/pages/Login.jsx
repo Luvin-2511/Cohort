@@ -6,7 +6,7 @@ import "../styles/auth.style.scss"
 
 const Login = () => {
     const navigate = useNavigate();
-    const {user, loading, handleLogin} = useAuth()
+    const {user, loadingAuth, handleLogin} = useAuth()
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
@@ -19,7 +19,7 @@ const Login = () => {
     return (
         <div className="bg-[#000000] min-h-screen w-full flex flex-col justify-between">
             <div
-                className={`loadingLiner ${loading?"animate-[Loading_0.7s_linear_forwards]":""} transition-all duration-700 absolute animate-loader py-0.5 bg-gradient-to-l from-pink-500 via-blue-600 via-blue-400 via-pink-500 to-blue-500`}>
+                className={`loadingLiner ${loadingAuth?"animate-[Loading_0.7s_linear_forwards]":""} transition-all duration-700 absolute animate-loader py-0.5 bg-gradient-to-l from-pink-500 via-blue-600 via-blue-400 via-pink-500 to-blue-500`}>
             </div>
             <div className="flex flex-col md:flex-row items-center justify-center
                       md:px-16 lg:px-24

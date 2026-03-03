@@ -9,7 +9,7 @@ export const getFeed = async () => {
     try {
         const response = await api.get('/feed')
         return response.data
-    }catch (err){
+    } catch (err) {
         console.log(err)
     }
 }

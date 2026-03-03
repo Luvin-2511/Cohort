@@ -3,8 +3,9 @@ import {createContext, useState} from "react";
 export const postContext = createContext()
 
 const PostContextProvider = ({children}) => {
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(true)
     const [feed, setFeed] = useState(null)
+
     return (
         <postContext.Provider value={{loading, setLoading, feed, setFeed}}>
             {children}

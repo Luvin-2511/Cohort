@@ -1,12 +1,12 @@
 import {useContext} from "react";
 import {AuthContext} from "../auth.context.jsx";
-import {Login, Register} from "../Services/auth.api.jsx";
+import {Login, Logout, Register} from "../Services/auth.api.jsx";
 
 const UseAuth = () => {
-    const {user, setUser, loading, setLoading} = useContext(AuthContext)
+    const {user, setUser, loadingAuth, setLoadingAuth} = useContext(AuthContext)
 
     const handleLogin = async (username, password) => {
-        setLoading(true)
+        setLoadingAuth(true)
         try {
             const response = await Login(username, password)
             setUser(response.user)
@@ -14,11 +14,11 @@ const UseAuth = () => {
         } catch (err) {
             console.log(err)
         } finally {
-            setLoading(false)
+            setLoadingAuth(false)
         }
     }
     const handleRegister = async (username, email, password) => {
-        setLoading(true)
+        setLoadingAuth(true)
         try {
             const response = await Register(username, email, password)
             console.log(response)
@@ -26,12 +26,24 @@ const UseAuth = () => {
         } catch (err) {
             console.log(err)
         } finally {
-            setLoading(false)
+            setLoadingAuth(false)
+        }
+    }
+
+    const handleLogout = async () => {
+        try {
+            const data = await Logout()
+            console.log(data)
+            setUser(null)
+            return true
+        } catch (err) {
+            console.log(err)
+            return false
         }
     }
 
     return {
-        user, loading, handleLogin, handleRegister
+        user, loadingAuth, handleLogin, handleRegister, handleLogout
     }
 }
 export default UseAuth

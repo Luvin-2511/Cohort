@@ -6,7 +6,7 @@ import useAuth from "../Hooks/useAuth.jsx";
 
 const Register = () => {
     const navigate = useNavigate();
-    const {handleRegister, loading} = useAuth()
+    const {handleRegister, loadingAuth} = useAuth()
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -20,7 +20,7 @@ const Register = () => {
     return (
         <div className="bg-black min-h-screen flex flex-col justify-between">
             <div
-                className={`loadingLiner ${loading ? "animate-[Loading_0.7s_linear_forwards]" : ""} transition-all duration-700 absolute animate-loader py-0.5 bg-gradient-to-l from-pink-500 via-blue-600 via-blue-400 via-pink-500 to-blue-500`}>
+                className={`loadingLiner ${loadingAuth ? "animate-[Loading_0.7s_linear_forwards]" : ""} transition-all duration-700 absolute animate-loader py-0.5 bg-gradient-to-l from-pink-500 via-blue-600 via-blue-400 via-pink-500 to-blue-500`}>
             </div>
             <div className="flex flex-col items-center justify-center
                       py-10 md:py-16 lg:py-20">
