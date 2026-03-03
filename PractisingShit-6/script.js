@@ -1,6 +1,7 @@
 let main = document.querySelector('main')
-let buttonElement = document.querySelector('main button')
+let buttons = document.querySelectorAll('.logo-tag')
 
+buttons.forEach((buttonElement)=>{
 buttonElement.addEventListener('mousemove', (e) => {
     const btnOnMouseX = e.offsetX;
     const btnOnMouseY = e.offsetY;
@@ -9,11 +10,13 @@ buttonElement.addEventListener('mousemove', (e) => {
     const x = btnOnMouseX - MouseFromCenterX/2;
     const y = btnOnMouseY - MouseFromCenterY/2;
     buttonElement.style.transform = `translateX(${x}px) translateY(${y}px)`
-    buttonElement.style.boxShadow = `${-x}px ${-y}px 0 #111`;
+    buttonElement.style.filter = `drop-shadow(${-x * 0.3}px ${-y * 0.3}px 10px rgba(0,0,0,0.4))`;
 })
 
 buttonElement.addEventListener('mouseleave',()=> {
     buttonElement.style.transform = ""
-    buttonElement.style.boxShadow = "";
+    buttonElement.style.filter = "";
+})
+
 })
 
