@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Montserrat:wght@300;400;500&display=swap");
 * {
   margin: 0;
   padding: 0;
@@ -121,52 +122,142 @@ main .form-container {
   opacity: 0;
 }
 main .form-container form {
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(10px);
-  padding: 2rem;
-  border-radius: 12px;
-  width: 320px;
+  font-family: "Montserrat", sans-serif;
+  background: linear-gradient(145deg, rgba(20, 16, 10, 0.92) 0%, rgba(12, 10, 6, 0.96) 100%);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  padding: 2.8rem 2.4rem;
+  border-radius: 2px;
+  width: 340px;
   display: flex;
   flex-direction: column;
-  gap: 1.2rem;
+  gap: 1.4rem;
+  border: 1px solid rgba(200, 160, 60, 0.15);
+  box-shadow: 0 0 0 1px rgba(200, 160, 60, 0.05), 0 30px 80px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 200, 80, 0.08);
   transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+main .form-container form::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 10%;
+  right: 10%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(200, 160, 60, 0.5), transparent);
+}
+main .form-container form::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 10%;
+  right: 10%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(200, 160, 60, 0.2), transparent);
 }
 main .form-container form h2 {
-  color: #fff;
+  font-family: "Cormorant Garamond", serif;
+  color: rgba(220, 185, 100, 0.95);
   text-align: center;
+  font-weight: 300;
+  font-size: 1.75rem;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  margin-bottom: 0.3rem;
+}
+main .form-container form .divider {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin: -0.5rem 0;
+}
+main .form-container form .divider::before, main .form-container form .divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(200, 160, 60, 0.3));
+}
+main .form-container form .divider::after {
+  background: linear-gradient(270deg, transparent, rgba(200, 160, 60, 0.3));
+}
+main .form-container form .divider span {
+  color: rgba(200, 160, 60, 0.4);
+  font-size: 0.5rem;
+  letter-spacing: 0.2em;
+}
+main .form-container form .input-group {
+  position: relative;
+}
+main .form-container form .input-group label {
+  display: block;
+  font-size: 0.62rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(200, 160, 60, 0.55);
+  margin-bottom: 0.5rem;
   font-weight: 500;
 }
 main .form-container form .input-group input {
   width: 100%;
-  padding: 0.8rem;
-  background: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 6px;
-  color: #fff;
+  padding: 0.85rem 1rem;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(200, 160, 60, 0.15);
+  border-radius: 1px;
+  color: rgba(255, 240, 200, 0.9);
   outline: none;
   transition: 0.3s ease;
+  font-family: "Montserrat", sans-serif;
+  font-size: 0.82rem;
+  letter-spacing: 0.05em;
+  font-weight: 300;
 }
 main .form-container form .input-group input::-moz-placeholder {
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.15);
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
 }
 main .form-container form .input-group input::placeholder {
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.15);
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
 }
 main .form-container form .input-group input:focus {
-  border-color: orange;
-  box-shadow: 0 0 10px rgba(255, 140, 0, 0.5);
+  border-color: rgba(200, 160, 60, 0.55);
+  background: rgba(200, 160, 60, 0.04);
+  box-shadow: 0 0 0 1px rgba(200, 160, 60, 0.1), 0 0 20px rgba(200, 140, 0, 0.08);
 }
 main .form-container form button {
-  padding: 0.8rem;
-  border: none;
-  border-radius: 6px;
-  background: linear-gradient(45deg, orange, orangered);
-  color: #fff;
-  font-weight: 600;
+  padding: 0.9rem;
+  border: 1px solid rgba(200, 160, 60, 0.4);
+  border-radius: 1px;
+  background: linear-gradient(135deg, rgba(180, 130, 30, 0.2) 0%, rgba(120, 80, 10, 0.25) 100%);
+  color: rgba(220, 185, 100, 0.9);
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
+  font-size: 0.7rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
   cursor: pointer;
-  transition: 0.3s ease;
+  transition: 0.35s ease;
+  margin-top: 0.4rem;
+  position: relative;
+  overflow: hidden;
+}
+main .form-container form button::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(200, 160, 60, 0.15), transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
 main .form-container form button:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 15px rgba(255, 140, 0, 0.6);
+  background: linear-gradient(135deg, rgba(200, 160, 60, 0.25) 0%, rgba(160, 100, 20, 0.3) 100%);
+  border-color: rgba(200, 160, 60, 0.7);
+  box-shadow: 0 0 20px rgba(200, 140, 0, 0.2), inset 0 1px 0 rgba(255, 200, 80, 0.1);
+  color: rgb(240, 210, 130);
+}
+main .form-container form button:hover::before {
+  opacity: 1;
 }/*# sourceMappingURL=style.css.map */
