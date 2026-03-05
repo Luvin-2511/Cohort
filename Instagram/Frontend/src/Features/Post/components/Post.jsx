@@ -1,12 +1,13 @@
 import React, {useEffect, useRef, useState} from 'react'
 import "../styles/post.scss"
 
-const Post = ({postData, loading, handleLikePost, handleunLikePost, handleDeletePost}) => {
+const Post = ({postData, loading, handleLikePost, handleunLikePost, handleDeletePost, handleFollowUser}) => {
     const RandomLike = Math.floor(Math.random() * 100000).toLocaleString()
     const RandomComment = Math.floor(Math.random() * 10000).toLocaleString()
     const [menuOpen, setMenuOpen] = useState(false)
     const [following, setFollowing] = useState(false)
     const menuRef = useRef(null)
+    const [followRecord, setfollowRecord] = useState(null)
 
     // Close menu when clicking outside
     useEffect(() => {
@@ -18,6 +19,23 @@ const Post = ({postData, loading, handleLikePost, handleunLikePost, handleDelete
         document.addEventListener('mousedown', handleClickOutside)
         return () => document.removeEventListener('mousedown', handleClickOutside)
     }, [])
+
+    const handleClickedSubmit = async () => {
+        const response = await handleFollowUser(postData.user.username)
+        setfollowRecord(response)
+    }
+
+    const getFollowLabel = () => {
+        if (followRecord?.status === 'pending') return 'Requested'
+        if (followRecord?.status === 'accepted' || following) return 'Following'
+        return 'Follow'
+    }
+
+    const getFollowColor = () => {
+        if (followRecord?.status === 'pending') return '#a8a8a8'
+        if (followRecord?.status === 'accepted' || following) return '#a8a8a8'
+        return 'rgb(0, 149, 246)'
+    }
 
     return (
         <div className='flex items-center justify-center w-full py-3 px-4'>
@@ -46,11 +64,18 @@ const Post = ({postData, loading, handleLikePost, handleunLikePost, handleDelete
 
                         <span className="text-gray-500 text-xs">•</span>
                         <button
-                            onClick={() => setFollowing(prev => !prev)}
-                            className="text-sm font-semibold cursor-pointer transition-colors"
-                            style={{ color: following ? '#a8a8a8' : 'rgb(0, 149, 246)' }}
+                            onClick={async () => {
+                                // Only allow clicking if not already pending/following
+                                if (!followRecord) {
+                                    setFollowing(prev => !prev)
+                                    handleClickedSubmit()
+                                }
+                            }}
+                            disabled={!!followRecord}
+                            className={`text-sm font-semibold transition-colors ${followRecord ? 'cursor-default' : 'cursor-pointer'}`}
+                            style={{color: getFollowColor()}}
                         >
-                            {following ? 'Following' : 'Follow'}
+                            {getFollowLabel()}
                         </button>
                     </div>
 

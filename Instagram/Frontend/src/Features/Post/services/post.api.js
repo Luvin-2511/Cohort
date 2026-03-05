@@ -73,3 +73,32 @@ export const updateProfile = async (file,bio) => {
         console.log(err)
     }
 }
+
+export const followUser = async (followeeUsername) => {
+    try {
+        const response = await api.post('/user/follow/'+followeeUsername)
+        return response.data
+    }catch (e){
+        console.log(e)
+    }
+}
+
+export const followStatusUpdate = async (followername,status) => {
+    try {
+        const response = await api.patch('/user/follow/'+followername,{
+            status:status
+        })
+        return response.data
+    }catch (err){
+        console.log(err)
+    }
+}
+
+export const getFollowRequests = async () => {
+    try {
+        const response = await api.get('/user/follow')
+        return response.data
+    }catch (e) {
+        console.log(e)
+    }
+}

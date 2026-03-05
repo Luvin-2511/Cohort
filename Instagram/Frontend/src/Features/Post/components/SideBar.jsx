@@ -1,11 +1,19 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import {Link, useLocation, useNavigate} from 'react-router-dom'
 import useAuth from "../../Auth/Hooks/useAuth.jsx";
 import logo from '../../../assets/logobg.png'
 
-const Sidebar = ({creatoropen, setcreatoropen}) => {
+const Sidebar = ({
+                     creatoropen,
+                     setcreatoropen,
+                     fetchFollowRequests,
+                     handlefollowStatusUpdate,
+                     followRequest,
+                     setfollowRequest
+                 }) => {
     const navigate = useNavigate()
     const [searchOpen, setSearchOpen] = useState(false)
+    const [notifOpen, setNotifOpen] = useState(false)
     const [file, setFile] = useState(null)
     const [text, setText] = useState("")
     const [moreOpen, setMoreOpen] = useState(false)
@@ -14,8 +22,25 @@ const Sidebar = ({creatoropen, setcreatoropen}) => {
     const [svgToggle, setSvgToggle] = useState(false)
     const [metaToggle, setMetaToggle] = useState(false)
     const {handleLogout} = useAuth()
-
     const loc = useLocation().pathname
+
+    useEffect(() => {
+        if (notifOpen && fetchFollowRequests) {
+            fetchFollowRequests().then(setfollowRequest)
+        }
+    }, [notifOpen])
+
+
+
+    const handleAccept = async (followerUsername) => {
+        await handlefollowStatusUpdate(followerUsername, "accepted")
+        setfollowRequest(prev => prev.filter(r => r.follower !== followerUsername))
+    }
+
+    const handleReject = async (followerUsername) => {
+        await handlefollowStatusUpdate(followerUsername, "rejected")
+        setfollowRequest(prev => prev.filter(r => r.follower !== followerUsername))
+    }
 
     const loadFile = (event) => {
         const uploadedFile = event.target.files[0]
@@ -29,6 +54,12 @@ const Sidebar = ({creatoropen, setcreatoropen}) => {
 
     const handleSearchToggle = () => {
         setSearchOpen(prev => !prev)
+        setNotifOpen(false)
+    }
+
+    const handleNotifToggle = () => {
+        setNotifOpen(prev => !prev)
+        setSearchOpen(false)
     }
 
     const handleMoreToggle = () => {
@@ -43,8 +74,69 @@ const Sidebar = ({creatoropen, setcreatoropen}) => {
 
     const isCreatorOpen = creatoropen
 
+    // Notifications Panel
+    const NotificationsPanel = () => (
+        <div
+            className={`fixed top-0 left-0 md:left-[4vw] h-full w-full md:w-[22vw] bg-[#000] md:bg-[#1a1a1a] z-30 border-r border-gray-800 transition-transform duration-300 ${notifOpen ? 'translate-x-0 pointer-events-auto' : '-translate-x-130 pointer-events-none'}`}>
+            <div className="p-6">
+                <div className="flex items-center justify-between mb-6">
+                    <h2 className="text-white text-xl font-bold">Notifications</h2>
+                    <svg onClick={handleNotifToggle} className="cursor-pointer md:hidden" fill="white" height="18"
+                         viewBox="0 0 24 24" width="18">
+                        <line fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round"
+                              strokeWidth="2" x1="21" x2="3" y1="3" y2="21"></line>
+                        <line fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round"
+                              strokeWidth="2" x1="21" x2="3" y1="21" y2="3"></line>
+                    </svg>
+                </div>
+
+                <p className="text-gray-400 text-sm font-semibold mb-3">Follow Requests</p>
+
+                {followRequest?.length === 0 ? (
+                    <p className="text-gray-500 text-sm mt-8 text-center">No new follow requests</p>
+                ) : (
+                    <div className="flex flex-col gap-3">
+                        {followRequest?.map((req) => (
+                            <div key={req._id} className="flex items-center justify-between gap-2">
+                                <div className="flex items-center gap-2">
+                                    <div className="h-10 w-10 rounded-full bg-gray-700 overflow-hidden flex-shrink-0">
+                                        <img
+                                            className="h-full w-full object-cover"
+                                            src={req.profileImg || `https://ui-avatars.com/api/?name=${req.follower}&background=333&color=fff`}
+                                            alt=""
+                                        />
+                                    </div>
+                                    <div>
+                                        <p className="text-white text-sm font-semibold">{req.follower}</p>
+                                        <p className="text-gray-400 text-xs">wants to follow you</p>
+                                    </div>
+                                </div>
+                                <div className="flex gap-2 flex-shrink-0">
+                                    <button
+                                        onClick={() => handleAccept(req.follower)}
+                                        className="bg-[rgb(0,149,246)] hover:bg-[#1a8fe3] text-white text-xs font-semibold px-3 py-1.5 rounded-lg transition-colors"
+                                    >
+                                        Confirm
+                                    </button>
+                                    <button
+                                        onClick={() => handleReject(req.follower)}
+                                        className="bg-[#333] hover:bg-[#444] text-white text-xs font-semibold px-3 py-1.5 rounded-lg transition-colors"
+                                    >
+                                        Delete
+                                    </button>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                )}
+            </div>
+        </div>
+    )
+
     return (
         <div>
+            <NotificationsPanel/>
+
             {/* Post Creator Modal */}
             <div
                 className={`absolute ${isCreatorOpen ? "flex" : "hidden"} h-full w-full bg-[#000000ab] z-20 items-center justify-center`}>
@@ -113,7 +205,7 @@ const Sidebar = ({creatoropen, setcreatoropen}) => {
                 </div>
             </div>
 
-            {/* Floating Messages Button — hidden on mobile */}
+            {/* Floating Messages Button */}
             <div
                 onClick={() => setMsgOpen(true)}
                 className="message hidden md:flex fixed bottom-[2vw] bg-[#212328] w-[15.5vw] h-[3.5vw] rounded-4xl px-[1vw] right-[3%] gap-[0.6vw] text-white items-center font-bold cursor-pointer hover:bg-[#38393E]"
@@ -129,9 +221,9 @@ const Sidebar = ({creatoropen, setcreatoropen}) => {
                 Followers
             </div>
 
-            {/* ===================== DESKTOP SIDEBAR (md+) — full with text labels ===================== */}
+            {/* ===================== DESKTOP SIDEBAR (md+) ===================== */}
             <div
-                className={`hidden md:flex fixed transition-all ${searchOpen ? "-left-[100vw]" : "left-0"} w-[14.5%] h-full border-r-[1px] border-r-gray-800 flex-col`}>
+                className={`hidden md:flex fixed transition-all ${searchOpen || notifOpen ? "-left-[100vw]" : "left-0"} w-[14.5%] h-full border-r-[1px] border-r-gray-800 flex-col`}>
                 <div className="logo w-[12vw] h-[4rem] overflow-hidden relative ml-2  mt-3 mb-15 bottom-[0.5vw]">
                     <Link to='/'>
                         <img className="w-[10vw] object-cover hover:cursor-pointer" alt="" src={logo}/>
@@ -142,7 +234,7 @@ const Sidebar = ({creatoropen, setcreatoropen}) => {
                     {/* Home */}
                     <Link to='/'>
                         <div
-                            className={`home flex ${loc === '/' ? "font-bold" : "font-semilight"} items-center gap-[1vw] rounded-lg h-[3vw] w-[13vw] mb-[0.3vw] hover:cursor-pointer hover:bg-[#1A1A1A]`}>
+                            className={`home flex ${loc === '/' ? "font-bold bg-[#1A1A1A]" : "font-semilight"} items-center gap-[1vw] rounded-lg h-[3vw] w-[13vw] mb-[0.3vw] hover:cursor-pointer hover:bg-[#1A1A1A]`}>
                             {loc === '/' ? (
                                 <svg className='ml-[0.85vw]' aria-label="Home" fill="white" height="24" role="img"
                                      viewBox="0 0 24 24" width="24"><title>Home</title>
@@ -218,7 +310,8 @@ const Sidebar = ({creatoropen, setcreatoropen}) => {
 
                     {/* Notifications */}
                     <div
-                        className="home flex items-center gap-[1vw] rounded-lg h-[3vw] w-[13vw] mb-[0.3vw] hover:cursor-pointer hover:bg-[#1A1A1A]">
+                        onClick={handleNotifToggle}
+                        className={`home flex items-center gap-[1vw] rounded-lg h-[3vw] w-[13vw] mb-[0.3vw] hover:cursor-pointer hover:bg-[#1A1A1A] ${notifOpen ? 'font-bold' : ''}`}>
                         <svg aria-label="Notifications" className='ml-[0.85vw]' fill="white" height="24" role="img"
                              viewBox="0 0 24 24" width="24"><title>Notifications</title>
                             <path
@@ -230,7 +323,7 @@ const Sidebar = ({creatoropen, setcreatoropen}) => {
                     {/* Create */}
                     <div
                         onClick={() => {
-                            navigate('/create-post')
+                            navigate('/create-post');
                             setcreatoropen(true)
                         }}
                         className="home flex items-center gap-[1vw] rounded-lg h-[3vw] w-[13vw] mb-[0.3vw] hover:cursor-pointer hover:bg-[#1A1A1A]">
@@ -245,11 +338,11 @@ const Sidebar = ({creatoropen, setcreatoropen}) => {
                     {/* Profile */}
                     <Link to='/profile'>
                         <div
-                            className={`home flex ${loc === '/profile' ? "font-bold" : "font-semilight"} items-center gap-[1vw] rounded-lg h-[3vw] w-[13vw] mb-[0.3vw] hover:cursor-pointer hover:bg-[#1A1A1A]`}>
+                            className={`home flex ${loc === '/profile' ? "font-bold bg-[#1A1A1A]" : "font-semilight"} items-center gap-[1vw] rounded-lg h-[3vw] w-[13vw] mb-[0.3vw] hover:cursor-pointer hover:bg-[#1A1A1A]`}>
                             <div
                                 className={`ml-[0.85vw] bg-white ${loc === '/profile' ? "border-2 border-white" : ""} overflow-hidden h-[1.5vw] w-[1.5vw] rounded-full`}>
                                 <img className="h-full w-full object-cover"
-                                     src="https://imgs.search.brave.com/ZKYDA1AnTDG4bikMzyAShVXD1wBPxfe_F8kNuvgLC98/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93YWxs/cGFwZXJhY2Nlc3Mu/Y29tL2Z1bGwvMzQ5/Nzc3Ni5qcGc"
+                                     src="https://imgs.search.brave.com/ZKYDA1AnTDG4bikMzyAShVXD1wBPxfe_F8kNuvgLC98/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93YWxs/cGFwZXJhY2Nlc3Mu/Y29tL2Z1bGwvMzQ5Nzc3Ni5qcGc"
                                      alt=""/>
                             </div>
                             Profile
@@ -342,7 +435,7 @@ const Sidebar = ({creatoropen, setcreatoropen}) => {
                                     className="bg-[#ffffff16] h-[0.1vw] top-[0.5vw] w-[16vw] relative right-[0.5vw]"></div>
                                 <div
                                     onClick={() => {
-                                        const success = handleLogout()
+                                        const success = handleLogout();
                                         if (success) {
                                             navigate('/login')
                                         }
@@ -400,16 +493,15 @@ const Sidebar = ({creatoropen, setcreatoropen}) => {
                 </div>
             </div>
 
-            {/* ===================== MOBILE SIDEBAR (< md) — icons only, always visible ===================== */}
+            {/* ===================== MOBILE SIDEBAR (< md) ===================== */}
             <div
                 className="fixed top-0 left-0 h-full flex flex-col md:hidden z-10 bg-black border-r-[1px] border-r-gray-800"
-                style={{ width: '5rem', minWidth: '5rem', marginRight: '0rem' }}
-            >
+                style={{width: '5rem', minWidth: '5rem'}}>
                 <Link to='/'>
                     <div
                         className="shortlogo h-12 w-12 rounded-lg flex items-center justify-center transition-all hover:bg-[#1A1A1A] mx-auto mt-4">
-                        <svg aria-label="Instagram" className='h-6 w-6' fill="white" height="24"
-                             role="img" viewBox="0 0 24 24" width="24"><title>Instagram</title>
+                        <svg aria-label="Instagram" className='h-6 w-6' fill="white" height="24" role="img"
+                             viewBox="0 0 24 24" width="24"><title>Instagram</title>
                             <path
                                 d="M12 2.982c2.937 0 3.285.011 4.445.064a6.087 6.087 0 0 1 2.042.379 3.408 3.408 0 0 1 1.265.823 3.408 3.408 0 0 1 .823 1.265 6.087 6.087 0 0 1 .379 2.042c.053 1.16.064 1.508.064 4.445s-.011 3.285-.064 4.445a6.087 6.087 0 0 1-.379 2.042 3.643 3.643 0 0 1-2.088 2.088 6.087 6.087 0 0 1-2.042.379c-1.16.053-1.508.064-4.445.064s-3.285-.011-4.445-.064a6.087 6.087 0 0 1-2.043-.379 3.408 3.408 0 0 1-1.264-.823 3.408 3.408 0 0 1-.823-1.265 6.087 6.087 0 0 1-.379-2.042c-.053-1.16-.064-1.508-.064-4.445s.011-3.285.064-4.445a6.087 6.087 0 0 1 .379-2.042 3.408 3.408 0 0 1 .823-1.265 3.408 3.408 0 0 1 1.265-.823 6.087 6.087 0 0 1 2.042-.379c1.16-.053 1.508-.064 4.445-.064M12 1c-2.987 0-3.362.013-4.535.066a8.074 8.074 0 0 0-2.67.511 5.392 5.392 0 0 0-1.949 1.27 5.392 5.392 0 0 0-1.269 1.948 8.074 8.074 0 0 0-.51 2.67C1.012 8.638 1 9.013 1 12s.013 3.362.066 4.535a8.074 8.074 0 0 0 .511 2.67 5.392 5.392 0 0 0 1.27 1.949 5.392 5.392 0 0 0 1.948 1.269 8.074 8.074 0 0 0 2.67.51C8.638 22.988 9.013 23 12 23s3.362-.013 4.535-.066a8.074 8.074 0 0 0 2.67-.511 5.625 5.625 0 0 0 3.218-3.218 8.074 8.074 0 0 0 .51-2.67C22.988 15.362 23 14.987 23 12s-.013-3.362-.066-4.535a8.074 8.074 0 0 0-.511-2.67 5.392 5.392 0 0 0-1.27-1.949 5.392 5.392 0 0 0-1.948-1.269 8.074 8.074 0 0 0-2.67-.51C15.362 1.012 14.987 1 12 1Zm0 5.351A5.649 5.649 0 1 0 17.649 12 5.649 5.649 0 0 0 12 6.351Zm0 9.316A3.667 3.667 0 1 1 15.667 12 3.667 3.667 0 0 1 12 15.667Zm5.872-10.859a1.32 1.32 0 1 0 1.32 1.32 1.32 1.32 0 0 0-1.32-1.32Z"></path>
                         </svg>
@@ -465,16 +557,19 @@ const Sidebar = ({creatoropen, setcreatoropen}) => {
                                   strokeWidth="2" x1="7.488" x2="15.515" y1="12.208" y2="7.641"></line>
                         </svg>
                     </div>
-                    <div className="p-3 rounded-lg hover:bg-[#1A1A1A] transition-all cursor-pointer">
-                        <svg aria-label="Notifications" className='h-6 w-6' fill="white" height="24"
-                             role="img" viewBox="0 0 24 24" width="24"><title>Notifications</title>
+                    {/* Notifications - mobile */}
+                    <div onClick={handleNotifToggle}
+                         className={`p-3 rounded-lg ${notifOpen ? "bg-[#1A1A1A]" : "hover:bg-[#1A1A1A]"} transition-all cursor-pointer`}>
+                        <svg aria-label="Notifications" className='h-6 w-6' fill="white" height="24" role="img"
+                             viewBox="0 0 24 24" width="24"><title>Notifications</title>
                             <path
                                 d="M16.792 3.904A4.989 4.989 0 0 1 21.5 9.122c0 3.072-2.652 4.959-5.197 7.222-2.512 2.243-3.865 3.469-4.303 3.752-.477-.309-2.143-1.823-4.303-3.752C5.141 14.072 2.5 12.167 2.5 9.122a4.989 4.989 0 0 1 4.708-5.218 4.21 4.21 0 0 1 3.675 1.941c.84 1.175.98 1.763 1.12 1.763s.278-.588 1.11-1.766a4.17 4.17 0 0 1 3.679-1.938m0-2a6.04 6.04 0 0 0-4.797 2.127 6.052 6.052 0 0 0-4.787-2.127A6.985 6.985 0 0 0 .5 9.122c0 3.61 2.55 5.827 5.015 7.97.283.246.569.494.853.747l1.027.918a44.998 44.998 0 0 0 3.518 3.018 2 2 0 0 0 2.174 0 45.263 45.263 0 0 0 3.626-3.115l.922-.824c.293-.26.59-.519.885-.774 2.334-2.025 4.98-4.32 4.98-7.94a6.985 6.985 0 0 0-6.708-7.218Z"></path>
                         </svg>
                     </div>
-                    <div
-                        onClick={() => { navigate('/create-post'); setcreatoropen(true) }}
-                        className="p-3 rounded-lg hover:bg-[#1A1A1A] transition-all cursor-pointer">
+                    <div onClick={() => {
+                        navigate('/create-post');
+                        setcreatoropen(true)
+                    }} className="p-3 rounded-lg hover:bg-[#1A1A1A] transition-all cursor-pointer">
                         <svg aria-label="New post" className='h-6 w-6' fill="white" height="24" role="img"
                              viewBox="0 0 24 24" width="24"><title>New post</title>
                             <path
@@ -486,17 +581,16 @@ const Sidebar = ({creatoropen, setcreatoropen}) => {
                             <div
                                 className={`bg-white ${loc === '/profile' ? "border-2 border-white" : ""} overflow-hidden h-6 w-6 rounded-full`}>
                                 <img className="h-full w-full object-cover"
-                                     src="https://imgs.search.brave.com/ZKYDA1AnTDG4bikMzyAShVXD1wBPxfe_F8kNuvgLC98/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93YWxs/cGFwZXJhY2Nlc3Mu/Y29tL2Z1bGwvMzQ5/Nzc3Ni5qcGc"
-                                     alt=""/>
-                            </div>
+                                     src="https://imgs.search.brave.com/ZKYDA1AnTDG4bikMzyAShVXD1wBPxfe_F8kNuvgLC98/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93YWxs/cGFwZXJhY2Nlc3Mu/Y29tL2Z1bGwvMzQ5Nzc3Ni5qcGc"
+                                     alt=""/></div>
                         </div>
                     </Link>
                 </div>
             </div>
 
-            {/* ===================== DESKTOP icon-only sidebar (shown when search is open on md+) ===================== */}
+            {/* ===================== DESKTOP icon-only sidebar (search open) ===================== */}
             <div
-                className={`transition-all hidden md:flex ${searchOpen ? "scale-100" : "scale-0"} fixed w-[4vw] h-full flex-col`}>
+                className={`transition-all hidden md:flex fixed left-0 w-[4vw] h-full flex-col ${searchOpen || notifOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}>
                 <Link to='/'>
                     <div
                         className="shortlogo h-[3vw] w-[3vw] rounded-lg flex items-center justify-between transition-all hover:bg-[#1A1A1A] ml-[0.5vw] mt-[1.1vw]">
@@ -508,15 +602,17 @@ const Sidebar = ({creatoropen, setcreatoropen}) => {
                     </div>
                 </Link>
                 <div className="icons h-[73vw] flex flex-col items-center gap-[0.5vw]">
-                    <div className="icon p-[0.7vw] rounded-lg hover:bg-[#1A1A1A] transition-all cursor-pointer">
-                        <svg aria-label="Home" className='h-[1.5vw] w-[1.5vw]' fill="white" height="24" role="img"
-                             viewBox="0 0 24 24" width="24"><title>Home</title>
-                            <path
-                                d="m21.762 8.786-7-6.68C13.266.68 10.734.68 9.238 2.106l-7 6.681A4.017 4.017 0 0 0 1 11.68V20c0 1.654 1.346 3 3 3h5.005a1 1 0 0 0 1-1L10 15c0-1.103.897-2 2-2 1.09 0 1.98.877 2 1.962L13.999 22a1 1 0 0 0 1 1H20c1.654 0 3-1.346 3-3v-8.32a4.021 4.021 0 0 0-1.238-2.894ZM21 20a1 1 0 0 1-1 1h-4.001L16 15c0-2.206-1.794-4-4-4s-4 1.794-4 4l.005 6H4a1 1 0 0 1-1-1v-8.32c0-.543.226-1.07.62-1.447l7-6.68c.747-.714 2.013-.714 2.76 0l7 6.68c.394.376.62.904.62 1.448V20Z"></path>
-                        </svg>
-                    </div>
+                    <Link to='/'>
+                        <div className="icon p-[0.7vw] rounded-lg hover:bg-[#1A1A1A] transition-all cursor-pointer">
+                            <svg aria-label="Home" className='h-[1.5vw] w-[1.5vw]' fill="white" height="24" role="img"
+                                 viewBox="0 0 24 24" width="24"><title>Home</title>
+                                <path
+                                    d="m21.762 8.786-7-6.68C13.266.68 10.734.68 9.238 2.106l-7 6.681A4.017 4.017 0 0 0 1 11.68V20c0 1.654 1.346 3 3 3h5.005a1 1 0 0 0 1-1L10 15c0-1.103.897-2 2-2 1.09 0 1.98.877 2 1.962L13.999 22a1 1 0 0 0 1 1H20c1.654 0 3-1.346 3-3v-8.32a4.021 4.021 0 0 0-1.238-2.894ZM21 20a1 1 0 0 1-1 1h-4.001L16 15c0-2.206-1.794-4-4-4s-4 1.794-4 4l.005 6H4a1 1 0 0 1-1-1v-8.32c0-.543.226-1.07.62-1.447l7-6.68c.747-.714 2.013-.714 2.76 0l7 6.68c.394.376.62.904.62 1.448V20Z"></path>
+                            </svg>
+                        </div>
+                    </Link>
                     <div onClick={handleSearchToggle}
-                         className="icon p-[0.7vw] rounded-lg bg-[#1A1A1A] transition-all cursor-pointer">
+                         className={`icon p-[0.7vw] rounded-lg ${searchOpen ? 'bg-[#1A1A1A]' : 'hover:bg-[#1A1A1A]'} transition-all cursor-pointer`}>
                         <svg aria-label="Search" className='h-[1.5vw] w-[1.5vw]' fill="white" height="24" role="img"
                              viewBox="0 0 24 24" width="24"><title>Search</title>
                             <path d="M18.5 10.5a8 8 0 1 1-8-8 8 8 0 0 1 8 8Z" fill="none" stroke="white"
@@ -555,16 +651,17 @@ const Sidebar = ({creatoropen, setcreatoropen}) => {
                                   strokeWidth="2" x1="7.488" x2="15.515" y1="12.208" y2="7.641"></line>
                         </svg>
                     </div>
-                    <div className="icon p-[0.7vw] rounded-lg hover:bg-[#1A1A1A] transition-all cursor-pointer">
+                    <div onClick={handleNotifToggle}
+                         className={`icon p-[0.7vw] rounded-lg ${notifOpen ? 'bg-[#1A1A1A]' : 'hover:bg-[#1A1A1A]'} transition-all cursor-pointer`}>
                         <svg aria-label="Notifications" className='h-[1.5vw] w-[1.5vw]' fill="white" height="24"
                              role="img" viewBox="0 0 24 24" width="24"><title>Notifications</title>
                             <path
                                 d="M16.792 3.904A4.989 4.989 0 0 1 21.5 9.122c0 3.072-2.652 4.959-5.197 7.222-2.512 2.243-3.865 3.469-4.303 3.752-.477-.309-2.143-1.823-4.303-3.752C5.141 14.072 2.5 12.167 2.5 9.122a4.989 4.989 0 0 1 4.708-5.218 4.21 4.21 0 0 1 3.675 1.941c.84 1.175.98 1.763 1.12 1.763s.278-.588 1.11-1.766a4.17 4.17 0 0 1 3.679-1.938m0-2a6.04 6.04 0 0 0-4.797 2.127 6.052 6.052 0 0 0-4.787-2.127A6.985 6.985 0 0 0 .5 9.122c0 3.61 2.55 5.827 5.015 7.97.283.246.569.494.853.747l1.027.918a44.998 44.998 0 0 0 3.518 3.018 2 2 0 0 0 2.174 0 45.263 45.263 0 0 0 3.626-3.115l.922-.824c.293-.26.59-.519.885-.774 2.334-2.025 4.98-4.32 4.98-7.94a6.985 6.985 0 0 0-6.708-7.218Z"></path>
                         </svg>
                     </div>
-                    <div
-                        onClick={() => { navigate('/create-post') }}
-                        className="icon p-[0.7vw] rounded-lg hover:bg-[#1A1A1A] transition-all cursor-pointer">
+                    <div onClick={() => {
+                        navigate('/create-post')
+                    }} className="icon p-[0.7vw] rounded-lg hover:bg-[#1A1A1A] transition-all cursor-pointer">
                         <svg aria-label="New post" className='h-[1.5vw] w-[1.5vw]' fill="white" height="24" role="img"
                              viewBox="0 0 24 24" width="24"><title>New post</title>
                             <path
@@ -576,9 +673,8 @@ const Sidebar = ({creatoropen, setcreatoropen}) => {
                             <div
                                 className={`bg-white ${loc === '/profile' ? "border-2 border-white" : ""} overflow-hidden h-[1.5vw] w-[1.5vw] rounded-full`}>
                                 <img className="h-full w-full object-cover"
-                                     src="https://imgs.search.brave.com/ZKYDA1AnTDG4bikMzyAShVXD1wBPxfe_F8kNuvgLC98/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93YWxs/cGFwZXJhY2Nlc3Mu/Y29tL2Z1bGwvMzQ5/Nzc3Ni5qcGc"
-                                     alt=""/>
-                            </div>
+                                     src="https://imgs.search.brave.com/ZKYDA1AnTDG4bikMzyAShVXD1wBPxfe_F8kNuvgLC98/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93YWxs/cGFwZXJhY2Nlc3Mu/Y29tL2Z1bGwvMzQ5Nzc3Ni5qcGc"
+                                     alt=""/></div>
                         </div>
                     </Link>
                 </div>
@@ -606,8 +702,7 @@ const Sidebar = ({creatoropen, setcreatoropen}) => {
                             </svg>
                         </div>
                     </div>
-                    <h2 className='font-medium text-sm h-[25vw] flex items-center justify-center'>No Followers
-                        yet.</h2>
+                    <h2 className='font-medium text-sm h-[25vw] flex items-center justify-center'>No Followers yet.</h2>
                 </div>
             )}
         </div>

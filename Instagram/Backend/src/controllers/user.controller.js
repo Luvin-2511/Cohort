@@ -145,14 +145,15 @@ async function followStatusController(req, res) {
      * Updates the follow Model
      */
     const followStatusUpdate = await followModel.findOneAndUpdate({
-        follower: follower,
-        followee: followee,
-        status: "pending"
-    }, {
-        status: status
-    }, {
-        returnDocument: "after"
-    })
+            follower: follower,
+            followee: followee,
+            status: ["pending"]
+        }, {
+            status: status
+        }, {
+            returnDocument: "after"
+        },
+        {new: true})
 
     /**
      * If not present in the DB it will return
@@ -211,9 +212,27 @@ async function updateUserInfo(req, res) {
     })
 }
 
+/**
+ * Get follow Request of user
+ */
+async function getFollowRequestsController(req, res) {
+    const followee = req.user.username
+
+    const requests = await followModel.find({
+        followee: followee,
+        status: "pending"
+    })
+
+    return res.status(200).json({
+        message: "Follow requests fetched successfully",
+        requests
+    })
+}
+
 module.exports = {
     followUserController,
     unfollowUserController,
     followStatusController,
-    updateUserInfo
+    updateUserInfo,
+    getFollowRequestsController
 };

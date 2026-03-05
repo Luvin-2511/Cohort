@@ -202,6 +202,7 @@ async function deletePostController(req, res) {
     })
 }
 
+
 module.exports = {
     createPostController,
     getPostController,

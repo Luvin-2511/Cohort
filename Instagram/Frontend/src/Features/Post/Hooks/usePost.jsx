@@ -1,11 +1,31 @@
 import {useContext, useEffect} from 'react'
 import {postContext} from "../post.context.jsx";
-import {createPost, deletePost, getFeed, getPost, likePost, unLikePost, updateProfile} from "../services/post.api.js";
+import {
+    createPost,
+    deletePost,
+    followStatusUpdate,
+    followUser,
+    getFeed,
+    getFollowRequests,
+    getPost,
+    likePost,
+    unLikePost,
+    updateProfile
+} from "../services/post.api.js";
 import useAuth from "../../Auth/Hooks/useAuth.jsx";
 
 
 const UsePost = () => {
-    const {loading, setLoading, feed, setFeed, userPosts, setuserPosts} = useContext(postContext)
+    const {
+        loading,
+        setLoading,
+        feed,
+        setFeed,
+        userPosts,
+        setuserPosts,
+        followRequest,
+        setfollowRequest
+    } = useContext(postContext)
     const {setUser} = useAuth()
 
     const handleGetFeed = async () => {
@@ -93,6 +113,45 @@ const UsePost = () => {
         }
     }
 
+    const handleFollowUser = async (followeeUsername) => {
+        setLoading(true)
+        try {
+            const response = await followUser(followeeUsername)
+            return (response.followRecord)
+        } catch (err) {
+            console.log(err)
+        } finally {
+            setLoading(false)
+        }
+    }
+
+    const handlefollowStatusUpdate = async (followername, status) => {
+        setLoading(true)
+        try {
+            const response = await followStatusUpdate(followername, status)
+            return (response.followRecord)
+        } catch (e) {
+            console.log(e)
+        } finally {
+            setLoading(false)
+        }
+    }
+
+
+    const handleGetFollowRequest = async () => {
+        setLoading(true)
+        try {
+            const response = await getFollowRequests()
+            console.log(response.requests)
+            setfollowRequest(response.requests)
+        } catch (e) {
+            console.log(e)
+        } finally {
+            setLoading(false)
+        }
+    }
+
+
     useEffect(() => {
         handleGetFeed()
     }, []);
@@ -101,6 +160,9 @@ const UsePost = () => {
     return {
         loading,
         feed,
+        userPosts,
+        followRequest,
+        setfollowRequest,
         handleGetFeed,
         handleCreatePost,
         handleLikePost,
@@ -108,7 +170,9 @@ const UsePost = () => {
         handleDeletePost,
         handleGetPost,
         handleUpdateProfile,
-        userPosts
+        handleFollowUser,
+        handlefollowStatusUpdate,
+        handleGetFollowRequest
     }
 }
 export default UsePost

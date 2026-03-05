@@ -4,11 +4,25 @@ import Sidebar from "../components/SideBar.jsx";
 import usePost from "../Hooks/usePost.jsx";
 
 const Feed = () => {
-    const {loading, feed, handleGetFeed, handleLikePost, handleunLikePost, handleDeletePost} = usePost()
+    const {
+        loading,
+        feed,
+        handleGetFeed,
+        handleLikePost,
+        handleunLikePost,
+        handleDeletePost,
+        handleFollowUser,
+        followRecord,
+        followRequest,
+        setfollowRequest,
+        handleGetFollowRequest,
+        handlefollowStatusUpdate
+    } = usePost()
 
 
     useEffect(() => {
         handleGetFeed()
+        handleGetFollowRequest()
     }, [])
 
 
@@ -22,10 +36,13 @@ const Feed = () => {
                         <Sidebar/>
                     </div> :
                     <>
-                        <Sidebar/>
+                        <Sidebar followRequest={followRequest} setfollowRequest={setfollowRequest} handlefollowStatusUpdate={handlefollowStatusUpdate}/>
                         {feed.map((postData) => {
                             return <Post key={postData._id} postData={postData} loading={loading}
-                                         handleLikePost={handleLikePost} handleDeletePost={handleDeletePost} handleunLikePost={handleunLikePost}/>
+                                         handleFollowUser={handleFollowUser}
+                                         followRecord={followRecord}
+                                         handleLikePost={handleLikePost} handleDeletePost={handleDeletePost}
+                                         handleunLikePost={handleunLikePost}/>
                         })}
                     </>
                 }
