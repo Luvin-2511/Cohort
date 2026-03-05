@@ -1,5 +1,215 @@
+@font-face {
+  font-family: "Font1";
+  src: url("./assets/Fonts/montreal.woff2") format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Font2";
+  src: url("./assets/Fonts/tusker.woff2") format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 * {
   margin: 0;
   padding: 0;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
 
+html, body, #root {
+  height: 100%;
+  background: #edece8;
+}
+
+main {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+  position: relative;
+
+  .custom-cursor {
+    height: 15px;
+    width: 15px;
+    border-radius: 50%;
+    background: #fb5eff;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    transition: all 0.1s linear;
+    z-index: 100;
+  }
+
+  .video-wrapper {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    transition: transform 0.4s ease, opacity 0.2s ease;
+
+    video {
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+    }
+  }
+
+  nav {
+    position: relative;
+    width: 100%;
+    padding-inline: 5rem;
+    padding-block: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .logo-wrapper {
+      width: 10rem;
+
+      .logo {
+        width: 100%;
+        aspect-ratio: 16/9;
+        object-fit: contain;
+      }
+    }
+  }
+
+  .text-wrapper {
+    width: max-content;
+    gap: 5rem;
+    display: flex;
+    animation: revolving-text-animation 20s linear forwards infinite;
+    transition: transform 0.1s ease;
+
+    .text-liner {
+      width: 100%;
+      display: flex;
+      align-items: end;
+      gap: 5rem;
+
+      .revolving-text-wrapper {
+        display: flex;
+        align-items: start;
+
+        .revolving-text {
+          font-weight: 400;
+          display: flex;
+
+          .revolving-broken-text {
+            font-family: Font2;
+            text-transform: uppercase;
+            font-size: 10rem;
+            line-height: 18rem;
+            letter-spacing: 0.1rem;
+            display: inline-block;
+            cursor: pointer;
+            transform: scaleY(1.5);
+            transform-origin: bottom;
+            transition: transform 0.2s ease;
+
+          }
+
+          .revolving-broken-text:has(+*+*:hover ) {
+            transform: scaleY(2.0);
+          }
+
+          .revolving-broken-text:has(+*:hover ) {
+            transform: scaleY(2.5);
+          }
+
+          .revolving-broken-text:hover {
+            transform: scaleY(3);
+          }
+
+          .revolving-broken-text:hover + * {
+            transform: scaleY(2.5);
+          }
+
+          .revolving-broken-text:hover + * + * {
+            transform: scaleY(2.0);
+          }
+        }
+
+        .revolving-text:hover {
+          color: #fb5eff;
+        }
+      }
+
+    }
+
+
+  }
+
+  .text-wrapper:hover .revolving-text {
+    color: rgba(255, 255, 255, 0.10);
+    backdrop-filter: blur(4px);
+  }
+
+  .text-wrapper:hover {
+    animation-play-state: paused;
+  }
+
+}
+
+@keyframes revolving-text-animation {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.loader-wrapper {
+  min-height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  font-family: Font2;
+  position: absolute;
+  z-index: 10;
+  background: #131313;
+
+  .loader {
+    width: 100%;
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+
+    .left-tagline {
+      padding-inline: 1rem;
+      padding-block: 0.5rem;
+      font-size: 2rem;
+      color: white;
+      transform: scaleY(1.3);
+      transform-origin: bottom;
+      -webkit-text-stroke: 0.01px gray;
+      letter-spacing: -0.1rem;
+    }
+
+    .right-side {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 10rem;
+
+      .load-count {
+        color: #fb5eff;
+        font-size: 10rem;
+      }
+
+      .loading-text {
+        font-size: 2rem;
+        color:white;
+        padding-inline: 2rem;
+        padding-block: 0.5rem;
+      }
+    }
+  }
 }
