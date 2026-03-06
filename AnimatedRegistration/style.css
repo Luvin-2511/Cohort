@@ -1,4 +1,5 @@
-@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Montserrat:wght@300;400;500&display=swap");
+@charset "UTF-8";
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Montserrat:wght@300;400;500&display=swap");
 * {
   margin: 0;
   padding: 0;
@@ -19,6 +20,8 @@ main {
   align-items: center;
   flex-direction: column;
 }
+
+/* ── LAMP ── */
 main .lamp {
   height: 40%;
   width: 20%;
@@ -27,16 +30,18 @@ main .lamp {
   justify-content: center;
   position: relative;
 }
+
 main .lamp .top {
   height: 10rem;
   width: 11rem;
-  background: linear-gradient(180deg, rgba(255, 140, 0, 0.9) 0%, rgba(255, 100, 0, 0.95) 50%, rgb(200, 80, 0) 100%);
+  background: linear-gradient(180deg, rgba(210, 165, 60, 0.95) 0%, rgba(180, 120, 20, 0.98) 45%, rgb(130, 80, 8) 100%);
   position: relative;
   z-index: 10;
   clip-path: polygon(28% 20%, 72% 20%, 95% 100%, 5% 100%);
-  box-shadow: 0 0 60px rgba(255, 140, 0, 0.6), inset 0 -20px 40px rgba(0, 0, 0, 0.3), inset 0 20px 20px rgba(255, 180, 100, 0.3);
-  filter: drop-shadow(0 10px 30px rgba(255, 140, 0, 0.4));
+  box-shadow: 0 0 60px rgba(210, 165, 60, 0.45), 0 0 120px rgba(180, 130, 20, 0.2), inset 0 -20px 40px rgba(0, 0, 0, 0.35), inset 0 20px 20px rgba(255, 210, 100, 0.25);
+  filter: drop-shadow(0 10px 30px rgba(200, 155, 30, 0.35));
 }
+
 main .lamp .top::before {
   content: "";
   position: absolute;
@@ -49,6 +54,7 @@ main .lamp .top::before {
   border-radius: 50%;
   filter: blur(8px);
 }
+
 main .lamp .top::after {
   content: "";
   position: absolute;
@@ -62,6 +68,7 @@ main .lamp .top::after {
   z-index: -1;
   pointer-events: none;
 }
+
 main .lamp .danda {
   position: absolute;
   height: 10rem;
@@ -69,6 +76,7 @@ main .lamp .danda {
   background: #3e3e3e;
   top: 44%;
 }
+
 main .lamp .bottom {
   position: absolute;
   height: 5px;
@@ -78,6 +86,7 @@ main .lamp .bottom {
   transform: translateX(-50%);
   bottom: 2.5rem;
 }
+
 main .lamp .string {
   position: absolute;
   left: 10%;
@@ -85,6 +94,8 @@ main .lamp .string {
   border-radius: 2rem;
   transform: rotateZ(90deg);
 }
+
+/* ── LIGHT EFFECTS ── */
 main .bg-light {
   position: relative;
   top: -15rem;
@@ -92,12 +103,13 @@ main .bg-light {
   height: 600px;
   width: 500px;
   clip-path: polygon(39% 0, 60% 0, 100% 100%, 0% 100%);
-  background: linear-gradient(rgba(128, 103, 28, 0.5), rgba(128, 103, 28, 0.2), transparent);
-  filter: drop-shadow(0 0 20px rgba(255, 217, 102, 0.4));
+  background: linear-gradient(rgba(180, 140, 30, 0.45), rgba(150, 115, 20, 0.2), transparent);
+  filter: drop-shadow(0 0 20px rgba(210, 165, 60, 0.35));
   pointer-events: none;
   transition: all 0.3s ease;
   opacity: 0;
 }
+
 main .round-light {
   position: absolute;
   background: #fff;
@@ -111,6 +123,8 @@ main .round-light {
   transition: all 0.3s ease;
   opacity: 0;
 }
+
+/* ── FORM CONTAINER ── */
 main .form-container {
   position: absolute;
   top: 60%;
@@ -120,144 +134,251 @@ main .form-container {
   align-items: center;
   z-index: 40;
   opacity: 0;
+  transition: opacity 0.4s ease;
 }
+
 main .form-container form {
   font-family: "Montserrat", sans-serif;
-  background: linear-gradient(145deg, rgba(20, 16, 10, 0.92) 0%, rgba(12, 10, 6, 0.96) 100%);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  padding: 2.8rem 2.4rem;
+  background: linear-gradient(160deg, rgba(16, 12, 7, 0.97) 0%, rgba(9, 7, 4, 0.99) 100%);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  padding: 2.8rem 2.5rem 2.5rem;
   border-radius: 2px;
-  width: 340px;
+  width: 360px;
   display: flex;
   flex-direction: column;
-  gap: 1.4rem;
-  border: 1px solid rgba(200, 160, 60, 0.15);
-  box-shadow: 0 0 0 1px rgba(200, 160, 60, 0.05), 0 30px 80px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 200, 80, 0.08);
-  transition: all 0.2s ease;
+  gap: 0;
+  border: 1px solid rgba(200, 160, 60, 0.13);
+  box-shadow: 0 0 0 1px rgba(200, 160, 60, 0.04), 0 40px 100px rgba(0, 0, 0, 0.85), 0 0 60px rgba(150, 105, 5, 0.06), inset 0 1px 0 rgba(255, 200, 80, 0.07);
   position: relative;
   overflow: hidden;
 }
+
 main .form-container form::before {
   content: "";
   position: absolute;
   top: 0;
-  left: 10%;
-  right: 10%;
+  left: 12%;
+  right: 12%;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(200, 160, 60, 0.5), transparent);
+  background: linear-gradient(90deg, transparent, rgba(210, 165, 60, 0.6), transparent);
 }
+
 main .form-container form::after {
   content: "";
   position: absolute;
   bottom: 0;
-  left: 10%;
-  right: 10%;
+  left: 20%;
+  right: 20%;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(200, 160, 60, 0.2), transparent);
+  background: linear-gradient(90deg, transparent, rgba(210, 165, 60, 0.18), transparent);
 }
-main .form-container form h2 {
-  font-family: "Cormorant Garamond", serif;
-  color: rgba(220, 185, 100, 0.95);
+
+/* ── Form Header ── */
+.form-header {
   text-align: center;
-  font-weight: 300;
-  font-size: 1.75rem;
-  letter-spacing: 0.35em;
-  text-transform: uppercase;
-  margin-bottom: 0.3rem;
+  margin-bottom: 2rem;
 }
-main .form-container form .divider {
+
+.form-header h2 {
+  font-family: "Cormorant Garamond", serif;
+  font-weight: 300;
+  font-style: italic;
+  font-size: 2rem;
+  color: rgba(230, 195, 110, 0.95);
+  letter-spacing: 0.04em;
+  margin-bottom: 0.4rem;
+  line-height: 1;
+}
+
+.form-header p {
+  font-size: 0.56rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: rgba(200, 160, 60, 0.32);
+  font-weight: 400;
+}
+
+/* ── Ornament ── */
+.ornament {
   display: flex;
   align-items: center;
-  gap: 0.8rem;
-  margin: -0.5rem 0;
+  gap: 0.65rem;
+  margin-bottom: 1.9rem;
 }
-main .form-container form .divider::before, main .form-container form .divider::after {
+
+.ornament::before,
+.ornament::after {
   content: "";
   flex: 1;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(200, 160, 60, 0.3));
+  background: linear-gradient(90deg, transparent, rgba(200, 160, 60, 0.25));
 }
-main .form-container form .divider::after {
-  background: linear-gradient(270deg, transparent, rgba(200, 160, 60, 0.3));
+
+.ornament::after {
+  background: linear-gradient(270deg, transparent, rgba(200, 160, 60, 0.25));
 }
-main .form-container form .divider span {
-  color: rgba(200, 160, 60, 0.4);
-  font-size: 0.5rem;
-  letter-spacing: 0.2em;
+
+.ornament-dot {
+  width: 4px;
+  height: 4px;
+  background: rgba(200, 160, 60, 0.4);
+  transform: rotate(45deg);
+  flex-shrink: 0;
+  display: block;
 }
-main .form-container form .input-group {
+
+/* ── Input Groups ── */
+.input-group {
+  position: relative;
+  margin-bottom: 1.2rem;
+}
+
+.input-group label {
+  display: block;
+  font-size: 0.57rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(200, 155, 55, 0.45);
+  margin-bottom: 0.42rem;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+.input-group:focus-within label {
+  color: rgba(210, 165, 60, 0.78);
+}
+
+.input-wrap {
   position: relative;
 }
-main .form-container form .input-group label {
-  display: block;
-  font-size: 0.62rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: rgba(200, 160, 60, 0.55);
-  margin-bottom: 0.5rem;
-  font-weight: 500;
+
+.input-icon {
+  position: absolute;
+  left: 0.88rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 13px;
+  height: 13px;
+  color: rgb(210, 165, 60);
+  opacity: 0.26;
+  pointer-events: none;
+  transition: opacity 0.3s;
 }
-main .form-container form .input-group input {
+
+.input-group:focus-within .input-icon {
+  opacity: 0.55;
+}
+
+.input-group input {
   width: 100%;
-  padding: 0.85rem 1rem;
+  padding: 0.8rem 1rem 0.8rem 2.55rem;
   background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(200, 160, 60, 0.15);
-  border-radius: 1px;
-  color: rgba(255, 240, 200, 0.9);
+  border: 1px solid rgba(200, 160, 60, 0.12);
+  border-radius: 2px;
+  color: rgba(245, 225, 168, 0.9);
   outline: none;
   transition: 0.3s ease;
   font-family: "Montserrat", sans-serif;
-  font-size: 0.82rem;
-  letter-spacing: 0.05em;
+  font-size: 0.79rem;
+  letter-spacing: 0.04em;
   font-weight: 300;
 }
-main .form-container form .input-group input::-moz-placeholder {
-  color: rgba(255, 255, 255, 0.15);
-  font-size: 0.78rem;
-  letter-spacing: 0.08em;
+
+.input-group input::-moz-placeholder {
+  color: rgba(255, 255, 255, 0.12);
+  letter-spacing: 0.07em;
 }
-main .form-container form .input-group input::placeholder {
-  color: rgba(255, 255, 255, 0.15);
-  font-size: 0.78rem;
-  letter-spacing: 0.08em;
+
+.input-group input::placeholder {
+  color: rgba(255, 255, 255, 0.12);
+  letter-spacing: 0.07em;
 }
-main .form-container form .input-group input:focus {
-  border-color: rgba(200, 160, 60, 0.55);
-  background: rgba(200, 160, 60, 0.04);
-  box-shadow: 0 0 0 1px rgba(200, 160, 60, 0.1), 0 0 20px rgba(200, 140, 0, 0.08);
+
+.input-group input:focus {
+  border-color: rgba(200, 160, 60, 0.46);
+  background: rgba(200, 160, 60, 0.038);
+  box-shadow: 0 0 0 1px rgba(200, 160, 60, 0.08), 0 0 20px rgba(170, 120, 0, 0.07);
 }
-main .form-container form button {
-  padding: 0.9rem;
-  border: 1px solid rgba(200, 160, 60, 0.4);
-  border-radius: 1px;
-  background: linear-gradient(135deg, rgba(180, 130, 30, 0.2) 0%, rgba(120, 80, 10, 0.25) 100%);
-  color: rgba(220, 185, 100, 0.9);
+
+/* ── Forgot ── */
+.forgot-row {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: -0.5rem;
+  margin-bottom: 1.75rem;
+}
+
+.forgot-row a {
+  font-size: 0.57rem;
+  letter-spacing: 0.1em;
+  color: rgba(185, 145, 48, 0.35);
+  text-decoration: none;
+  transition: color 0.25s;
+}
+
+.forgot-row a:hover {
+  color: rgba(210, 165, 60, 0.72);
+}
+
+/* ── Submit Button ── */
+.btn-submit {
+  width: 100%;
+  padding: 0.88rem;
+  border: 1px solid rgba(200, 160, 60, 0.36);
+  border-radius: 2px;
+  background: linear-gradient(135deg, rgba(170, 122, 26, 0.2) 0%, rgba(105, 68, 8, 0.25) 100%);
+  color: rgba(222, 185, 92, 0.9);
   font-family: "Montserrat", sans-serif;
   font-weight: 500;
-  font-size: 0.7rem;
-  letter-spacing: 0.3em;
+  font-size: 0.62rem;
+  letter-spacing: 0.32em;
   text-transform: uppercase;
   cursor: pointer;
-  transition: 0.35s ease;
-  margin-top: 0.4rem;
   position: relative;
   overflow: hidden;
+  transition: border-color 0.32s, box-shadow 0.32s, color 0.32s, background 0.32s;
 }
-main .form-container form button::before {
+
+.btn-submit::before {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, rgba(200, 160, 60, 0.15), transparent);
+  background: linear-gradient(135deg, rgba(210, 165, 60, 0.15), transparent 55%);
   opacity: 0;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.35s;
 }
-main .form-container form button:hover {
-  background: linear-gradient(135deg, rgba(200, 160, 60, 0.25) 0%, rgba(160, 100, 20, 0.3) 100%);
-  border-color: rgba(200, 160, 60, 0.7);
-  box-shadow: 0 0 20px rgba(200, 140, 0, 0.2), inset 0 1px 0 rgba(255, 200, 80, 0.1);
-  color: rgb(240, 210, 130);
+
+.btn-submit:hover {
+  background: linear-gradient(135deg, rgba(198, 152, 42, 0.25) 0%, rgba(138, 88, 12, 0.28) 100%);
+  border-color: rgba(210, 165, 60, 0.65);
+  color: rgba(242, 212, 122, 0.96);
+  box-shadow: 0 0 28px rgba(185, 130, 0, 0.2), inset 0 1px 0 rgba(255, 210, 70, 0.09);
 }
-main .form-container form button:hover::before {
+
+.btn-submit:hover::before {
   opacity: 1;
+}
+
+.btn-submit:active {
+  transform: translateY(1px);
+}
+
+/* ── Form Footer ── */
+.form-footer {
+  margin-top: 1.45rem;
+  text-align: center;
+  font-size: 0.57rem;
+  letter-spacing: 0.12em;
+  color: rgba(165, 125, 42, 0.28);
+}
+
+.form-footer a {
+  color: rgba(200, 160, 60, 0.46);
+  text-decoration: none;
+  transition: color 0.25s;
+}
+
+.form-footer a:hover {
+  color: rgba(215, 170, 65, 0.85);
 }/*# sourceMappingURL=style.css.map */
