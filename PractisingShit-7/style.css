@@ -1,0 +1,61 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+::-webkit-scrollbar {
+    width: 0;
+}
+
+html,
+main,
+body {
+    height: 100%;
+    background: black;
+}
+
+main {
+    display: flex;
+    align-items: center;
+    position: relative;
+    justify-content: center;
+
+    .guitar-wrapper {
+        min-width: 100%;
+
+        .guitar-img {
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+        }
+
+    }
+
+    svg {
+        position: absolute;
+        overflow: visible;
+    }
+    
+    .first-chord {
+        top: 26%;
+        transform: rotateZ(-15deg);
+        left: 15%;
+    }
+    
+    .second-chord {
+        top: 28%;
+        left: 15.5%;
+        transform: rotateZ(-15deg);
+    }
+    .third-chord {
+        top: 30%;
+        left: 15.8%;
+        transform: rotateZ(-16deg);
+    }
+    .fourth-chord {
+        top: 32%;
+        left: 16%;
+        transform: rotateZ(-16deg);
+    }
+}
