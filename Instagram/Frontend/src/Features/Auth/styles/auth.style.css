@@ -1,0 +1,8 @@
+@keyframes Loading {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
+  }
+}/*# sourceMappingURL=auth.style.css.map */
