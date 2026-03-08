@@ -1,0 +1,106 @@
+@import url("https://fonts.googleapis.com/css2?family=Epilogue:ital,wght@0,100..900;1,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&display=swap");
+
+main {
+  height: 100%;
+  position: relative;
+
+  #page1 {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    .video-wrapper {
+      height: 100%;
+      min-width: 100%;
+      position: absolute;
+      z-index: -1;
+      padding: 1rem;
+
+      video {
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+        object-position: center;
+        border-radius: 1.5rem;
+      }
+    }
+
+    nav {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      .left-logo {
+        width: 120px;
+        padding: 2rem;
+        position: relative;
+
+        h4 {
+          font-family: Epilogue;
+          transform: translate(30%, -115%);
+          color: white;
+          font-size: 2.5rem;
+          font-weight: 900;
+        }
+      }
+
+      .main-logo {
+        width: 200px;
+        padding: 1rem;
+        padding-top: 0;
+      }
+
+      .right-logo {
+        width: 110px;
+        padding-inline: 2.5rem;
+        padding-top: 0;
+      }
+    }
+
+    .hero-text-wrapper {
+      width: fit-content;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding-inline: 10rem;
+      padding-block: 5rem;
+      text-align: center;
+      position: relative;
+
+      .smiley {
+        position: absolute;
+        width: 7rem;
+        transform: rotate(-20deg);
+        top: 11%;
+        left: 26%;
+      }
+
+      .bold-text {
+        font-size: 7rem;
+        color: white;
+        font-family: Epilogue;
+        font-weight: 900;
+        line-height: 7rem;
+
+        .italic-text {
+          font-family: Lora;
+          font-style: italic;
+          font-weight: 200;
+        }
+
+        .mainstream-text {
+          position: relative;
+
+          svg {
+            position: absolute;
+            top: -2%;
+            left: -5%;
+          }
+        }
+      }
+    }
+  }
+}
