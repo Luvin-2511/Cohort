@@ -1,0 +1,38 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html,
+body {
+  height: 100%;
+}
+
+main {
+  height: 100%;
+  background: black;
+
+  .writer {
+    position: absolute;
+    height: 100px;
+    width: 100px;
+    background: black;
+    border-radius: 50%;
+    z-index: 10;
+  }
+
+  .img {
+    height: 100%;
+    background: url('./image.jpg');
+    background-position: center;
+    background-size: cover;
+    position: relative;
+
+    .img-wrapper {
+      position: absolute;
+      height: 100%;
+      width: 100%;
+      background: radial-gradient(circle 100px at 100px 100px,transparent,black),radial-gradient(circle 100px at 400px 400px,black,black);
+    }
+  }
+}

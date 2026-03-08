@@ -1,0 +1,43 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html,
+body,
+#root {
+  height: 100%;
+}
+
+main {
+  height: 100%;
+  background: #1c1c1c;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .dots-container {
+    display: grid;
+    width: fit-content;
+
+    .dot-wrapper {
+      display: flex;
+      width: fit-content;
+      padding: 0.6rem;
+      border-radius: 50%;
+      transition: all 0.4s ease;
+      margin: 0.1rem;
+      cursor: crosshair;
+
+      .dot {
+        background: linear-gradient(to bottom, black, white);
+        border-radius: 50%;
+        padding: 0.2rem;
+      }
+    }
+  }
+
+  .dot-wrapper:hover {
+    background: gray;
+  }
+}
