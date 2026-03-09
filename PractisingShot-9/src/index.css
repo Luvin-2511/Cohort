@@ -1,0 +1,113 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+main {
+  height: 100%;
+  background: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.button-wrapper {
+  height: 150px;
+  width: 300px;
+  position: relative;
+  padding-inline: 3rem;
+  padding-block: 1rem;
+  border-radius: 2rem;
+  display: flex;
+  outline: none;
+  border: none;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(to right, #398c54, #13ff61);
+  color: white;
+  transition: all 0.5s cubic-bezier(0.215, 0.61, 0.355, 1);
+  cursor: pointer;
+  overflow: hidden;
+
+  .button-text {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 100%;
+    pointer-events: none;
+    font-family:
+      system-ui,
+      -apple-system,
+      BlinkMacSystemFont,
+      "Segoe UI",
+      Roboto,
+      Oxygen,
+      Ubuntu,
+      Cantarell,
+      "Open Sans",
+      "Helvetica Neue",
+      sans-serif;
+    font-size: 4rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    transition: transform 0.5s ease;
+  }
+
+  .button-text span {
+    display: inline-block;
+  }
+  .button-text span {
+    transition: transform calc(var(--i)*0.1s) ease;
+  }
+
+  .button-text-hover {
+    text-transform: uppercase;
+    position: relative;
+    pointer-events: none;
+    font-family:
+      system-ui,
+      -apple-system,
+      BlinkMacSystemFont,
+      "Segoe UI",
+      Roboto,
+      Oxygen,
+      Ubuntu,
+      Cantarell,
+      "Open Sans",
+      "Helvetica Neue",
+      sans-serif;
+    font-size: 4rem;
+    font-weight: 600;
+    position: absolute;
+    top: 20%;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    transition: transform 0.5s ease;
+    background: red;
+    background: transparent;
+  }
+
+  .button-text-hover span {
+    display: inline-block;
+    transition:transform calc(var(--ihov)*0.1s) ease;
+  }
+}
+
+.button-wrapper:hover {
+  box-shadow: 0 0 60px 10px #50c878;
+}
+
+.button-wrapper:hover .button-text>span {
+  transform: translateY(-135%);
+}
+.button-wrapper:hover .button-text-hover>span {
+  transform: translateY(-135%);
+}
