@@ -15,7 +15,7 @@ body {
 main {
   height: 100%;
   width: 100%;
-  background: rgb(0, 0, 0);
+  background: #0d0d0d ;
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -205,6 +205,7 @@ main .form-container form::after {
   letter-spacing: 0.04em;
   margin-bottom: 0.4rem;
   line-height: 1;
+  pointer-events: none;
 }
 
 .form-header p {
