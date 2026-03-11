@@ -28,11 +28,26 @@ main {
     background-size: cover;
     position: relative;
 
+    .hoverer {
+      position: absolute;
+      z-index: 10;
+      height: 100px;
+      width: 100px;
+      mix-blend-mode:screen;
+      border-radius: 50%;
+      background: black;
+      box-shadow: 0 0 50px 40px red;
+    }
+
     .img-wrapper {
       position: absolute;
       height: 100%;
       width: 100%;
-      background: radial-gradient(circle 100px at 100px 100px,transparent,black),radial-gradient(circle 100px at 400px 400px,black,black);
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: black
     }
   }
 }

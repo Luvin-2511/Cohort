@@ -1,5 +1,6 @@
-const img = document.querySelector(".img");
-const imgWrapper = document.querySelector(".img-wrapper");
+// const img = document.querySelector(".img");
+
+// const imgWrapper = document.querySelector(".img-wrapper");
 
 // img.addEventListener("mousemove", (e) => {
 //   if (!imgWrapper.style.background) {
