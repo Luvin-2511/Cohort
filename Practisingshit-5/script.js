@@ -3,7 +3,7 @@ let imageOverlay = document.querySelector('.image-overlay')
 
 for (let i = 0; i < 200; i++) {
     let box = document.createElement('div')
-    box.style.minHeight = '42px'
+    box.style.minHeight = '22px'
     box.style.minWidth = '42px'
     box.classList.add('box')
     imageOverlay.appendChild(box)
