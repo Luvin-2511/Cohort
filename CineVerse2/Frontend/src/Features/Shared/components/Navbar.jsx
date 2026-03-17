@@ -1,13 +1,42 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import "../styles/Navbar.scss";
 import { useNavigate } from "react-router-dom";
+import useAuth from "../../Auth/hooks/useAuth";
 
 const Navbar = () => {
   const [isBigNavVisible, setIsBigVisible] = useState(false);
   const bigNavRef = useRef(null);
+  const navRef = useRef(null);
   const linksRef = useRef([]);
   const navigate = useNavigate();
+  const { handleLogout } = useAuth();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const { success } = await handleLogout();
+    console.log(success);
+    if (success) {
+      navigate("/");
+    }
+  };
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!navRef.current) return;
+      if (window.scrollY > 100) {
+        navRef.current.style.transform = "translateY(-100%)";
+      } else {
+        navRef.current.style.transform = "translateY(0%)";
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   const menuItems = [
     { label: "Browse", to: "/browse" },
@@ -18,6 +47,11 @@ const Navbar = () => {
 
   const openNav = () => {
     setIsBigVisible(true);
+    gsap.fromTo(
+      bigNavRef.current,
+      { yPercent: 100 },
+      { yPercent: -10.3, duration: 0.65, ease: "power3.inOut" },
+    );
     gsap.fromTo(
       linksRef.current.filter(Boolean),
       { yPercent: 110, opacity: 0 },
@@ -44,11 +78,16 @@ const Navbar = () => {
   return (
     <nav>
       {/* Small Nav */}
-      <div className="small-nav">
+      <div ref={navRef} className="small-nav">
         <div className="nav-container-small nav-cont">
           <h4>Name</h4>
         </div>
-        <div className="nav-container-medium nav-cont">
+        <div
+          onClick={() => {
+            navigate("/browse");
+          }}
+          className="nav-container-medium nav-cont"
+        >
           <h4>Browse</h4>
         </div>
         <div onClick={openNav} className="nav-container-large nav-cont">
@@ -89,6 +128,9 @@ const Navbar = () => {
               </button>
             </div>
           ))}
+          <div onClick={handleSubmit} className="logout-button">
+            <h4> Logout</h4>
+          </div>
         </nav>
 
         <div className="big-nav__footer">

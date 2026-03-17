@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
 import useAuth from "../../Auth/hooks/useAuth";
 import { Navigate } from "react-router-dom";
+import Loader from "./Loader";
+import LineLoader from "./LineLoader";
 
 const Protected = ({ children }) => {
   const { authLoading, user, handleGetMe } = useAuth();
@@ -10,7 +12,9 @@ const Protected = ({ children }) => {
   }, []);
 
   if (authLoading) {
-    return <h1>Loading</h1>;
+    return (
+      <LineLoader />
+    );
   }
 
   if (!user) {

@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react'
 import useAuth from '../../Auth/hooks/useAuth'
 import { Navigate } from 'react-router-dom'
+import Loader from './Loader'
+import LineLoader from './LineLoader'
 
 const Public = ({children}) => {
   const {authLoading,user,handleGetMe} = useAuth()
@@ -9,8 +11,10 @@ const Public = ({children}) => {
      handleGetMe()
   },[])
 
-  if(authLoading){
-    return <h1>Loading</h1>
+  if (authLoading) {
+    return (
+      <LineLoader />
+    );
   }
 
   if(user){

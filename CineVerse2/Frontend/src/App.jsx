@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import AppRoutes from "./AppRoutes";
 import Lenis from "lenis";
 import AuthProvider from "./Features/Auth/auth.context";
+import MovieProvider from "./Features/Movies/movie.context";
 
 const App = () => {
   useEffect(() => {
@@ -24,7 +25,9 @@ const App = () => {
 
   return (
     <AuthProvider>
-      <AppRoutes />
+      <MovieProvider>
+        <AppRoutes />
+      </MovieProvider>
     </AuthProvider>
   );
 };
