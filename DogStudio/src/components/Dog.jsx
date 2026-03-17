@@ -63,7 +63,6 @@ const Dog = () => {
         const tl = gsap.timeline({
             scrollTrigger: {
                 trigger: '#section-1',
-                markers: true,
                 start: 'top top',
                 endTrigger: 'footer',
                 end: 'bottom bottom',
