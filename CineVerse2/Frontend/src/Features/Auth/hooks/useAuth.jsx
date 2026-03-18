@@ -3,7 +3,7 @@ import { AuthContext } from "../auth.context";
 import { GetMe, Login, Logout, Register } from "../services/Auth.api";
 
 const useAuth = () => {
-  const { authLoading, user, setAuthLoading, setUser } =
+  const { authLoading, user, setAuthLoading, setUser, updateUser } =
     useContext(AuthContext);
 
   const handleLogin = async (email, password) => {
@@ -11,7 +11,7 @@ const useAuth = () => {
     try {
       const response = await Login(email, password);
       setUser(response.user);
-      return response.success
+      return response.success;
     } catch (err) {
       console.log(err);
     } finally {
@@ -24,7 +24,7 @@ const useAuth = () => {
     try {
       const response = await Register(name, email, password);
       setUser(response.user);
-      return response.success
+      return response.success;
     } catch (err) {
       console.log(err);
     } finally {
@@ -39,6 +39,7 @@ const useAuth = () => {
       setUser(response.user);
     } catch (err) {
       console.log(err);
+      setUser(null);
     } finally {
       setAuthLoading(false);
     }
@@ -61,6 +62,7 @@ const useAuth = () => {
     setAuthLoading,
     user,
     setUser,
+    updateUser,
     handleLogin,
     handleRegister,
     handleLogout,

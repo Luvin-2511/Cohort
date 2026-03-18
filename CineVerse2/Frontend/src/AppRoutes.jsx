@@ -9,6 +9,9 @@ import Browse from "./Features/Movies/pages/Browse";
 import Loader from "./Features/Shared/components/Loader";
 import PageLoader from "./Features/Shared/components/PageLoader";
 import MovieDetail from "./Features/Movies/pages/MovieDetail";
+import FavoritesPage from "./Features/User/pages/Favorites";
+import HistoryPage from "./Features/User/pages/History";
+import WatchlistPage from "./Features/User/pages/WatchList";
 
 const AppRoutes = () => {
   return (
@@ -47,7 +50,46 @@ const AppRoutes = () => {
               </Protected>
             }
           />
-          <Route path="/movie/:movieId" element={<MovieDetail />} />
+          <Route
+            path="/movie/:movieId"
+            element={
+              <Protected>
+                <MovieDetail />
+              </Protected>
+            }
+          />
+          <Route
+            path="/tv/:movieId"
+            element={
+              <Protected>
+                <MovieDetail />
+              </Protected>
+            }
+          />
+          <Route
+            path="/favorites/"
+            element={
+              <Protected>
+                <FavoritesPage />
+              </Protected>
+            }
+          />
+          <Route
+            path="/history/"
+            element={
+              <Protected>
+                <HistoryPage />
+              </Protected>
+            }
+          />
+          <Route
+            path="/watchlist/"
+            element={
+              <Protected>
+                <WatchlistPage />
+              </Protected>
+            }
+          />
         </Routes>
       </PageLoader>
     </BrowserRouter>

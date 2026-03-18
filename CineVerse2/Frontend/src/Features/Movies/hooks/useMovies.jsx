@@ -2,11 +2,16 @@ import React, { useContext, useEffect } from "react";
 import { MovieContext } from "../movie.context";
 import {
   getGenreList,
+  getMovieDetail,
   getNowPlaying,
   getParticularGenre,
   getPopular,
   getTopRated,
   getTrending,
+  getMovieTrailer,
+  searchMovie,
+  getActorsOfMovie,
+  getSimilarMovies,
 } from "../services/Movie.api";
 
 const useMovies = () => {
@@ -25,17 +30,50 @@ const useMovies = () => {
     setGenre,
     selectedGenre,
     setselectedGenre,
+    movieDetail,
+    setmovieDetail,
+    selectedType,
+    setSelectedType,
   } = useContext(MovieContext);
+
+  useEffect(() => {
+    setPage(1);
+    setMovies([]);
+    fetchMovies(category, 1);
+  }, [category,selectedType]);
+
+  useEffect(() => {
+    if (page === 1) return;
+    fetchMovies(category, page);
+  }, [page, selectedType]);
+
+  useEffect(() => {
+    handleGenre();
+  }, []);
 
   const fetchMovies = async (cat = category, pg = page) => {
     setLoading(true);
     try {
       let data;
-      if (cat === "trending") data = await getTrending("movie", "week", pg);
-      if (cat === "popular") data = await getPopular("movie", pg);
-      if (cat === "top_rated") data = await getTopRated(pg, "movie");
-      if (cat === "now_playing") data = await getNowPlaying(pg, "movie");
-      setMovies(pg === 1 ? data.results : [...movies, ...data.results]);
+      if (cat === "trending")
+        data = await getTrending(selectedType, "week", pg);
+      if (cat === "popular") data = await getPopular(selectedType, pg);
+      if (cat === "top_rated") data = await getTopRated(pg, selectedType);
+      if (cat === "now_playing") {
+        if (selectedType === "movie") {
+          data = await getNowPlaying(pg, "movie");
+        } else {
+          return;
+        }
+      }
+      if (!data || !data.results) return;
+
+      setMovies((prev) =>
+        pg === 1 ? data.results : [...prev, ...data.results],
+      );
+      if (pg >= data.total_pages) {
+        sethasMore(false);
+      }
     } catch (err) {
       console.log(err);
     } finally {
@@ -49,23 +87,56 @@ const useMovies = () => {
   };
 
   const handleParticularGenre = async (genreId) => {
-    const response = await getParticularGenre("movie",genreId,page);
-    setMovies(response.results)
-    return response.results
+    const response = await getParticularGenre(selectedType, genreId, page);
+    setMovies(response.results);
+    return response.results;
   };
 
-  useEffect(() => {
-    fetchMovies(category, page);
-  }, [category, page]);
+  const handleMovieDetail = async (movieId) => {
+    setLoading(true);
+    try {
+      const response = await getMovieDetail(selectedType, movieId);
+      setmovieDetail(response);
+      return response;
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-  useEffect(() => {
-    handleGenre();
-  }, []);
+  const handleMovieTrailer = async (movieId) => {
+    const response = await getMovieTrailer(selectedType, movieId);
+    return response.results.find(
+      (vid) => vid.type == "Trailer" && vid.site == "YouTube",
+    );
+  };
+
+  const handleSearch = async (search) => {
+    setLoading(true);
+    try {
+      const response = await searchMovie(selectedType, search);
+      setMovies(response.results);
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleActorsOfMovie = async (movieId) => {
+    const response = await getActorsOfMovie(selectedType, movieId);
+    return response;
+  };
+
+  const handleSimilarMovies = async (movieId) => {
+    const response = await getSimilarMovies(selectedType, movieId);
+    return response.results;
+  };
 
   return {
     loading,
     movies,
-    fetchMovies,
     category,
     setCategory,
     setPage,
@@ -74,7 +145,16 @@ const useMovies = () => {
     genre,
     selectedGenre,
     setselectedGenre,
-    handleParticularGenre
+    movieDetail,
+    selectedType,
+    setSelectedType,
+    fetchMovies,
+    handleParticularGenre,
+    handleMovieDetail,
+    handleMovieTrailer,
+    handleSearch,
+    handleActorsOfMovie,
+    handleSimilarMovies,
   };
 };
 

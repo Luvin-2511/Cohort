@@ -10,6 +10,8 @@ const MovieProvider = ({ children }) => {
   const [hasMore, sethasMore] = useState(true);
   const [genre, setGenre] = useState(null);
   const [selectedGenre, setselectedGenre] = useState(null);
+  const [movieDetail,setmovieDetail] = useState({})
+  const [selectedType,setSelectedType] = useState("movie")
 
   return (
     <MovieContext.Provider
@@ -28,6 +30,10 @@ const MovieProvider = ({ children }) => {
         setGenre,
         selectedGenre,
         setselectedGenre,
+        movieDetail,
+        setmovieDetail,
+        selectedType,
+        setSelectedType
       }}
     >
       {children}

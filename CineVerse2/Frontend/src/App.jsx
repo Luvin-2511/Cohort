@@ -3,11 +3,12 @@ import AppRoutes from "./AppRoutes";
 import Lenis from "lenis";
 import AuthProvider from "./Features/Auth/auth.context";
 import MovieProvider from "./Features/Movies/movie.context";
+import UserProvider from "./Features/User/user.context";
 
 const App = () => {
   useEffect(() => {
     const lenis = new Lenis({
-      duration: 1.7,
+      duration: 1.2,
       easing: (t) => 1 - Math.pow(1 - t, 3),
       smooth: true,
     });
@@ -26,7 +27,9 @@ const App = () => {
   return (
     <AuthProvider>
       <MovieProvider>
-        <AppRoutes />
+        <UserProvider>
+          <AppRoutes />
+        </UserProvider>
       </MovieProvider>
     </AuthProvider>
   );

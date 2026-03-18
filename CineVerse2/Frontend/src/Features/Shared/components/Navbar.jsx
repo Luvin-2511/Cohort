@@ -10,7 +10,7 @@ const Navbar = () => {
   const navRef = useRef(null);
   const linksRef = useRef([]);
   const navigate = useNavigate();
-  const { handleLogout } = useAuth();
+  const { handleLogout,user } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -80,7 +80,7 @@ const Navbar = () => {
       {/* Small Nav */}
       <div ref={navRef} className="small-nav">
         <div className="nav-container-small nav-cont">
-          <h4>Name</h4>
+          <h4>{user.name}</h4>
         </div>
         <div
           onClick={() => {

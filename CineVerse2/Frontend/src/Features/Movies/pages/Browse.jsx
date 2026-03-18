@@ -2,55 +2,64 @@ import MovieCard from "../components/Moviecard";
 import Navbar from "../../Shared/components/Navbar";
 import "../styles/browse.scss";
 import useMovies from "../hooks/useMovies";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import MovieSkeleton from "../components/MovieSkeleton";
+import LineLoader from "../../Shared/components/LineLoader";
 
-const CATEGORIES = [
-  { key: "trending", label: "Trending" },
-  { key: "popular", label: "Popular" },
-  { key: "now_playing", label: "Now Playing" },
-  { key: "top_rated", label: "Top Rated" },
-];
-
-const GENRES = [
-  { id: "", name: "All Genres" },
-  { id: 28, name: "Action" },
-  { id: 35, name: "Comedy" },
-  { id: 18, name: "Drama" },
-  { id: 27, name: "Horror" },
-  { id: 10749, name: "Romance" },
-  { id: 878, name: "Sci-Fi" },
-  { id: 53, name: "Thriller" },
-  { id: 16, name: "Animation" },
-  { id: 99, name: "Documentary" },
-];
 
 const Browse = () => {
   const {
     movies,
     setPage,
-    page,
     category,
-    fetchMovies,
     setCategory,
     genre,
     selectedGenre,
     setselectedGenre,
+    loading,
     handleParticularGenre,
+    handleSearch,
+    selectedType,
+    setSelectedType
   } = useMovies();
   const sentinalRef = useRef(null);
+  
+  const CATEGORIES = [
+    { key: "trending", label: "Trending" },
+    { key: "popular", label: "Popular" },
+    {
+      key: selectedType === "tv" ? "on_the_air" : "now_playing",
+      label: selectedType === "tv" ? "On The Air" : "Now Playing",
+    },
+    { key: "top_rated", label: "Top Rated" },
+  ];
+  const [search, setSearch] = useState("");
+  
+  useEffect(() => {
+    const handleTimeout = setTimeout(() => {
+      handleSearch(search);
+    }, 500);
+    return () => {
+      clearTimeout(handleTimeout);
+    };
+  }, [search]);
 
   useEffect(() => {
-    const observer = new IntersectionObserver((entries) => {
-      if (entries[0].isIntersecting) {
-        fetchMovies(category, page + 1);
-        setPage((prev) => prev + 1);
-      }
-    });
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && !loading) {
+          setPage((prev) => prev + 1);
+        }
+      },
+      { threshold: 0.1 },
+    );
 
     if (sentinalRef.current) observer.observe(sentinalRef.current);
     return () => observer.disconnect();
-  }, [page, category]);
-  console.log(genre);
+  }, [category, loading]);
+
+  const isFirstLoad = loading && movies.length === 0;
+  const isPaginating = loading && movies.length > 0;
 
   return (
     <div className="browse">
@@ -70,7 +79,7 @@ const Browse = () => {
           {CATEGORIES.map((cat) => (
             <button
               onClick={() => {
-                setselectedGenre(null)
+                setselectedGenre(null);
                 setCategory(cat.key);
                 setPage(1);
               }}
@@ -97,7 +106,23 @@ const Browse = () => {
             <circle cx="11" cy="11" r="8" />
             <path d="M21 21l-4.35-4.35" />
           </svg>
-          <input type="text" placeholder="Search movies, shows..." />
+          <input
+            value={search}
+            onInput={(e) => {
+              setSearch(e.target.value);
+            }}
+            type="text"
+            placeholder="Search movies, shows..."
+          />
+        </div>
+
+        <div className="switch-movie-tv">
+          <select value={selectedType} onChange={(e)=>{
+            setSelectedType(e.target.value)
+          }} name="selection" id="selection">
+            <option value="movie">Movie</option>
+            <option value="tv">TV</option>
+          </select>
         </div>
 
         <div className="browse__genre">
@@ -105,7 +130,7 @@ const Browse = () => {
             genre.map((g) => (
               <button
                 onClick={() => {
-                  handleParticularGenre(g.id)
+                  handleParticularGenre(g.id);
                   setselectedGenre(g);
                 }}
                 style={{
@@ -123,17 +148,20 @@ const Browse = () => {
 
       {/* Grid */}
       <div className="browse__grid">
-        {movies.length == 0 ? (
+        {!loading && movies.length === 0 ? (
           <div className="browse__empty">
             <div className="empty-icon">🎬</div>
             <h3>NOTHING FOUND</h3>
             <p>Try a different search or category.</p>
           </div>
+        ) : isFirstLoad ? (
+          <MovieSkeleton count={20} />
         ) : (
           <>
-            {movies.map((movie) => {
-              return <MovieCard features={movie} />;
-            })}
+            {movies.map((movie) => (
+              <MovieCard key={movie.id} features={movie} />
+            ))}
+            {isPaginating && <MovieSkeleton count={10} />}
           </>
         )}
       </div>
