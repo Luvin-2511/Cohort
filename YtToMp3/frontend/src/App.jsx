@@ -56,9 +56,6 @@ export default function HomePage() {
     try {
       const response = await axios.get(
         `${BASE_URL}/api/info?url=${encodeURIComponent(url)}`,
-        {
-          withCredentials: true,
-        },
       );
       setShowResult(response.data.videoDetail);
       setTimeout(
