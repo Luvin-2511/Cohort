@@ -25,7 +25,7 @@ async function videoInfoController(req, res) {
     const info = await ytdlp(url, {
       dumpSingleJson: true,
       noWarnings: true,
-      cookies: "/app/cookies.txt",
+      cookies: "/app/cookie.txt",
     });
 
     return res.status(200).json({
