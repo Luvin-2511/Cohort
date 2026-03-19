@@ -7,6 +7,7 @@ import MovieDetailSkeleton from "../components/MovieDetailSkeleton";
 import useFavorites from "../../User/hooks/useFavorites";
 import useWatchlist from "../../User/hooks/useWatchList";
 import useHistory from "../../User/hooks/useHistory";
+import ToggleButton from "../../Shared/components/ToggleButton";
 
 const IMG_BASE_BACKDROP = "https://image.tmdb.org/t/p/original";
 const IMG_BASE_POSTER   = "https://image.tmdb.org/t/p/w500";
@@ -120,6 +121,7 @@ const MovieDetail = () => {
     },
   ];
 
+
   const currentSource      = activeSource
     ? SOURCES.find((s) => s.id === activeSource.id) || SOURCES[0]
     : SOURCES[0];
@@ -140,13 +142,13 @@ const MovieDetail = () => {
             <div className="left-server-links">
               {SOURCES.map((source) => (
                 <div
-                  key={source.id}
-                  style={{
-                    backgroundColor: currentSource.name === source.name ? "#e8ff00" : "",
-                    color:           currentSource.name === source.name ? "black"   : "",
-                  }}
-                  onClick={(e) => { e.preventDefault(); setActiveSource(source); }}
-                  className="link-tag"
+                key={source.id}
+                style={{
+                  backgroundColor: currentSource.name === source.name ? "#e8ff00" : "",
+                  color:           currentSource.name === source.name ? "black"   : "",
+                }}
+                onClick={(e) => { e.preventDefault(); setActiveSource(source); }}
+                className="link-tag"
                 >
                   {source.name}
                   <div className="small-text">{source.id}</div>
@@ -161,11 +163,11 @@ const MovieDetail = () => {
                 </>
               ) : (
                 <iframe
-                  allowFullScreen
-                  key={`${currentSource.id}-s${selectedSeason}-e${selectedEpisode}`}
-                  src={currentSource.url}
-                  allow="autoplay; encrypted-media; fullscreen"
-                  style={{ width: "100%", height: "100%", border: "none" }}
+                allowFullScreen
+                key={`${currentSource.id}-s${selectedSeason}-e${selectedEpisode}`}
+                src={currentSource.url}
+                allow="autoplay; encrypted-media; fullscreen"
+                style={{ width: "100%", height: "100%", border: "none" }}
                 />
               )}
             </div>
@@ -175,8 +177,8 @@ const MovieDetail = () => {
         <div className="detail__hero-backdrop">
           {movieDetail.backdrop_path ? (
             <img
-              src={`${IMG_BASE_BACKDROP}${movieDetail.backdrop_path}`}
-              alt={movieDetail.original_title || movieDetail.name}
+            src={`${IMG_BASE_BACKDROP}${movieDetail.backdrop_path}`}
+            alt={movieDetail.original_title || movieDetail.name}
             />
           ) : (
             <div style={{ width: "100%", height: "100%", background: "#111" }} />
@@ -212,6 +214,7 @@ const MovieDetail = () => {
           <p className="detail__hero-overview">{movieDetail.overview}</p>
 
           <div className="detail__hero-actions">
+            <ToggleButton />
 
             <button className="detail__hero-play" onClick={() => setModalOpen(true)}>
               <svg viewBox="0 0 24 24" fill="currentColor">
