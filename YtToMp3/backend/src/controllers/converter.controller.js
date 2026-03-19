@@ -23,10 +23,11 @@ async function videoInfoController(req, res) {
     }
 
     const info = await ytdlp(url, {
-  dumpSingleJson: true,
-  noWarnings: true,
-  cookies: '/app/cookie.txt',
-});
+      dumpSingleJson: true,
+      noWarnings: true,
+      cookies: "/app/cookie.txt",
+      skipDownload: true,
+    });
 
     return res.status(200).json({
       success: true,
