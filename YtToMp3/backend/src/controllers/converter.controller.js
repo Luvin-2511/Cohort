@@ -1,4 +1,5 @@
 const ytdlp = require("yt-dlp-exec");
+const fs = require("fs");
 /**
  * @route POST api/info
  * @description Fetches the yt video detail
@@ -21,13 +22,15 @@ async function videoInfoController(req, res) {
         message: "Invalid URL",
       });
     }
+    const cookiesPath = "/tmp/cookie.txt";
+    fs.writeFileSync(cookiesPath, process.env.YOUTUBE_COOKIES);
 
     const info = await ytdlp(url, {
-  dumpSingleJson: true,
-  noWarnings: true,
-  cookies: '/app/cookie.txt',
-  format: 'worstaudio/worst',
-});
+      dumpSingleJson: true,
+      noWarnings: true,
+      cookies: cookiesPath,
+      noCheckFormats: true,
+    });
 
     return res.status(200).json({
       success: true,
