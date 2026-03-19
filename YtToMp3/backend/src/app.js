@@ -5,9 +5,9 @@ const converterRouter = require('./routes/converter.route');
 const app = express();
 
 const allowedOrigins = [
-  'http://localhost:5173', 
-  'https://yump3.vercel.app', 
-  'https://yump3-git-main-luvin-2511s-projects.vercel.app' 
+  'http://localhost:5173',
+  'https://yump3.vercel.app',
+  'https://yump3-git-main-luvin-2511s-projects.vercel.app',
 ];
 
 app.use(cors({
