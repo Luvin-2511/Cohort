@@ -4,6 +4,7 @@ RUN ln -s /usr/bin/python3 /usr/bin/python
 WORKDIR /app
 COPY package*.json ./
 RUN npm install
+RUN ./node_modules/yt-dlp-exec/bin/yt-dlp -U
 COPY . .
-EXPOSE 3000
+EXPOSE 8080
 CMD ["node", "server.js"]
