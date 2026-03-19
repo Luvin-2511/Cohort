@@ -1,6 +1,5 @@
 FROM node:20
-RUN apt-get update && apt-get install -y python3 pip ffmpeg
-RUN pip install yt-dlp --break-system-packages
+RUN apt-get update && apt-get install -y python3 ffmpeg
 WORKDIR /app
 COPY package*.json ./
 RUN npm install
