@@ -26,7 +26,6 @@ async function videoInfoController(req, res) {
   dumpSingleJson: true,
   noWarnings: true,
   cookies: '/app/cookie.txt',
-  format: 'bestaudio/best',
 });
 
     return res.status(200).json({
