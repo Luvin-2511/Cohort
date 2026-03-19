@@ -41,8 +41,7 @@ export default function HomePage() {
   const [downloading, setDownloading] = useState(false);
   const inputRef = useRef(null);
   const resultRef = useRef(null);
-  
-
+  const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
   useEffect(() => {
     const interval = setInterval(() => {
       setGlitch(true);
@@ -56,7 +55,7 @@ export default function HomePage() {
     setLoading(true);
     try {
       const response = await axios.get(
-        `http://localhost:3000/api/info?url=${encodeURIComponent(url)}`,
+        `${BASE_URL}/api/info?url=${encodeURIComponent(url)}`,
         {
           withCredentials: true,
         },
@@ -81,7 +80,7 @@ export default function HomePage() {
   const handleDownload = () => {
     setDownloading(true);
     setTimeout(() => {
-      window.location.href = `http://localhost:3000/api/convert?url=${encodeURIComponent(url)}`;
+      window.location.href = `${BASE_URL}/api/convert?url=${encodeURIComponent(url)}`;
       setTimeout(() => setDownloading(false), 4000);
     }, 100);
   };
@@ -227,9 +226,7 @@ export default function HomePage() {
                   src={showResult.thumbnail}
                   alt={showResult.title}
                 />
-                <div className="hp__result-duration">
-                  {showResult.duration}
-                </div>
+                <div className="hp__result-duration">{showResult.duration}</div>
               </div>
 
               <div className="hp__result-body">
