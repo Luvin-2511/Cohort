@@ -37,12 +37,12 @@ async function videoInfoController(req, res) {
         duration: info.duration_string,
       },
     });
-   } catch (err) {
+  } catch (err) {
     return res.status(500).json({
       success: false,
       message: err.message,
-  });
-
+    });
+  }
 }
 
 /**
