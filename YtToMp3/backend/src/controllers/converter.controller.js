@@ -1,0 +1,71 @@
+const ytdlp = require("yt-dlp-exec");
+/**
+ * @route POST api/info
+ * @description Fetches the yt video detail
+ * @param {import('express').Request} req
+ * @param {import('express').Response} res
+ */
+async function videoInfoController(req, res) {
+  try {
+    const { url } = req.query;
+    if (!url) {
+      return res.status(404).json({
+        success: false,
+        message: "URL is required !",
+      });
+    }
+    const isValidURL = url.includes("youtube.com");
+    if (!isValidURL) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid URL",
+      });
+    }
+
+    const info = await ytdlp(url, {
+      dumpSingleJson: true,
+      noWarnings: true,
+    });
+
+    return res.status(200).json({
+      success: true,
+      message: "Fetched successfully !",
+      videoDetail: {
+        title: info.title,
+        thumbnail: info.thumbnail,
+        description: info.description,
+        duration: info.duration_string,
+      },
+    });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      message: "Server Error",
+    });
+  }
+}
+
+/**
+ * @route POST api/convert
+ * @description Converts it into mp3
+ * @param {import('express').Request} req
+ * @param {import('express').Response} res
+ */
+async function converterController(req, res) {
+  const { url } = req.query;
+  res.setHeader("Content-Type", "audio/mpeg");
+  res.setHeader("Content-Disposition", 'attachment; filename="audio.mp3"');
+  const stream = ytdlp.exec(url,{
+    extractAudio:true,
+    audioFormat:'mp3',
+    output:'-'
+  })
+
+  stream.stdout.pipe(res)
+  stream.on('error', (e) => res.status(500).json({ error: e.message }))
+}
+
+module.exports = {
+  videoInfoController,
+  converterController,
+};
