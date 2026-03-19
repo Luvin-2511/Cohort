@@ -14,7 +14,7 @@ async function videoInfoController(req, res) {
         message: "URL is required !",
       });
     }
-    const isValidURL = url.includes("youtube.com");
+    const isValidURL = url.includes("youtube.com") || url.includes("youtu.be");
     if (!isValidURL) {
       return res.status(400).json({
         success: false,
@@ -55,14 +55,14 @@ async function converterController(req, res) {
   const { url } = req.query;
   res.setHeader("Content-Type", "audio/mpeg");
   res.setHeader("Content-Disposition", 'attachment; filename="audio.mp3"');
-  const stream = ytdlp.exec(url,{
-    extractAudio:true,
-    audioFormat:'mp3',
-    output:'-'
-  })
+  const stream = ytdlp.exec(url, {
+    extractAudio: true,
+    audioFormat: "mp3",
+    output: "-",
+  });
 
-  stream.stdout.pipe(res)
-  stream.on('error', (e) => res.status(500).json({ error: e.message }))
+  stream.stdout.pipe(res);
+  stream.on("error", (e) => res.status(500).json({ error: e.message }));
 }
 
 module.exports = {
