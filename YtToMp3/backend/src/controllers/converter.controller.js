@@ -75,9 +75,6 @@ async function converterController(req, res) {
       });
     }
 
-    res.setHeader("Content-Type", "audio/mpeg");
-    res.setHeader("Content-Disposition", 'attachment; filename="audio.mp3"');
-
     const cookiesPath = "/tmp/cookie.txt";
     const hasCookies =
       !!process.env.YOUTUBE_COOKIES && fs.existsSync(cookiesPath);
@@ -93,20 +90,39 @@ async function converterController(req, res) {
       ],
     });
 
+    res.setHeader("Content-Type", "audio/mpeg");
+    res.setHeader("Content-Disposition", 'attachment; filename="audio.mp3"');
+
     stream.stdout.pipe(res);
-    stream.stderr.on("data", (d) =>
-      console.error("yt-dlp stderr:", d.toString())
-    );
+    
+    stream.stderr.on("data", (d) => {
+      const msg = d.toString();
+      console.error("yt-dlp stderr:", msg);
+    });
+
     stream.on("error", (e) => {
       console.error("stream error:", e);
-      res.status(500).json({ error: e.message });
+      if (!res.headersSent) {
+        res.status(500).json({ error: e.message });
+      } else {
+        res.end();
+      }
     });
+
+    res.on("close", () => {
+       try { stream.kill(); } catch (err) {}
+    });
+
   } catch (err) {
     console.error("converterController error:", err);
-    return res.status(500).json({
-      success: false,
-      message: err.message,
-    });
+    if (!res.headersSent) {
+      return res.status(500).json({
+        success: false,
+        message: err.message,
+      });
+    } else {
+      res.end();
+    }
   }
 }
 

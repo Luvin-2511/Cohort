@@ -5,5 +5,5 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm install
 COPY . .
-EXPOSE 8080
-CMD ["sh", "-c", "./node_modules/yt-dlp-exec/bin/yt-dlp -U && node server.js"]
+EXPOSE 3000
+CMD ["npm", "start"]
