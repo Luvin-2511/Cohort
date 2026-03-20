@@ -1,0 +1,81 @@
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap");
+:root {
+  --bgColor: black;
+  --textColor: white;
+}
+
+.light-theme {
+  --bgColor: white;
+  --textColor: black;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html,
+body,
+#root {
+  height: 100%;
+  width: 100%;
+}
+#root {
+  background: var(--bgColor);
+  color: var(--textColor);
+  font-family: "Bebas Neue";
+}
+
+body {
+  transition:
+    background 0.3s,
+    color 0.3s;
+}
+
+.page-wrapper {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .hero-text {
+    font-family: "Bebas Neue";
+    font-size: 6rem;
+    font-weight: 600;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .button-toggle {
+    font-size: 2rem;
+    padding: 1.5rem 1rem;
+    cursor: pointer;
+    border-radius: 50%;
+    position: fixed;
+    bottom: 5%;
+    right: 5%;
+    transition: scale 0.5s linear;
+  }
+
+  .button-toggle:active {
+    scale: 0.9;
+  }
+}
+
+::view-transition-old(root){
+  animation: none;
+}
+
+::view-transition-new(root){
+  clip-path: circle(0% at var(--x,50%) var(--y,50%));
+  animation:expand 1s ease-in-out forwards
+}
+
+@keyframes expand {
+  from {
+    clip-path: circle(0% at var(--x,50%) var(--y,50%));
+  } to {
+    clip-path: circle(150% at var(--x,50%) var(--y,50%));
+  }
+}

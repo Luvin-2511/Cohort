@@ -1,11 +1,6 @@
 const ytdlp = require("yt-dlp-exec");
 const fs = require("fs");
-/**
- * @route POST api/info
- * @description Fetches the yt video detail
- * @param {import('express').Request} req
- * @param {import('express').Response} res
- */
+
 async function videoInfoController(req, res) {
   try {
     const { url } = req.query;
@@ -15,6 +10,7 @@ async function videoInfoController(req, res) {
         message: "URL is required !",
       });
     }
+
     const isValidURL = url.includes("youtube.com") || url.includes("youtu.be");
     if (!isValidURL) {
       return res.status(400).json({
@@ -22,14 +18,23 @@ async function videoInfoController(req, res) {
         message: "Invalid URL",
       });
     }
+
     const cookiesPath = "/tmp/cookie.txt";
-    fs.writeFileSync(cookiesPath, process.env.YOUTUBE_COOKIES);
+    const hasCookies = !!process.env.YOUTUBE_COOKIES;
+
+    if (hasCookies) {
+      fs.writeFileSync(cookiesPath, process.env.YOUTUBE_COOKIES);
+    }
 
     const info = await ytdlp(url, {
       dumpSingleJson: true,
       noWarnings: true,
-      cookies: cookiesPath,
       noCheckFormats: true,
+      ...(hasCookies && { cookies: cookiesPath }),
+      addHeader: [
+        "referer:youtube.com",
+        "user-agent:Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+      ],
     });
 
     return res.status(200).json({
@@ -43,6 +48,7 @@ async function videoInfoController(req, res) {
       },
     });
   } catch (err) {
+    console.error("videoInfoController error:", err);
     return res.status(500).json({
       success: false,
       message: err.message,
@@ -50,28 +56,58 @@ async function videoInfoController(req, res) {
   }
 }
 
-/**
- * @route POST api/convert
- * @description Converts it into mp3
- * @param {import('express').Request} req
- * @param {import('express').Response} res
- */
 async function converterController(req, res) {
-  const { url } = req.query;
-  res.setHeader("Content-Type", "audio/mpeg");
-  res.setHeader("Content-Disposition", 'attachment; filename="audio.mp3"');
-  const stream = ytdlp.exec(url, {
-    extractAudio: true,
-    audioFormat: "mp3",
-    output: "-",
-    addHeader: [
-      "referer:youtube.com",
-      "user-agent:Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-    ],
-  });
+  try {
+    const { url } = req.query;
 
-  stream.stdout.pipe(res);
-  stream.on("error", (e) => res.status(500).json({ error: e.message }));
+    if (!url) {
+      return res.status(400).json({
+        success: false,
+        message: "URL is required !",
+      });
+    }
+
+    const isValidURL = url.includes("youtube.com") || url.includes("youtu.be");
+    if (!isValidURL) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid URL",
+      });
+    }
+
+    res.setHeader("Content-Type", "audio/mpeg");
+    res.setHeader("Content-Disposition", 'attachment; filename="audio.mp3"');
+
+    const cookiesPath = "/tmp/cookie.txt";
+    const hasCookies =
+      !!process.env.YOUTUBE_COOKIES && fs.existsSync(cookiesPath);
+
+    const stream = ytdlp.exec(url, {
+      extractAudio: true,
+      audioFormat: "mp3",
+      output: "-",
+      ...(hasCookies && { cookies: cookiesPath }),
+      addHeader: [
+        "referer:youtube.com",
+        "user-agent:Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+      ],
+    });
+
+    stream.stdout.pipe(res);
+    stream.stderr.on("data", (d) =>
+      console.error("yt-dlp stderr:", d.toString())
+    );
+    stream.on("error", (e) => {
+      console.error("stream error:", e);
+      res.status(500).json({ error: e.message });
+    });
+  } catch (err) {
+    console.error("converterController error:", err);
+    return res.status(500).json({
+      success: false,
+      message: err.message,
+    });
+  }
 }
 
 module.exports = {
