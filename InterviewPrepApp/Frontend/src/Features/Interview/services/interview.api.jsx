@@ -41,12 +41,15 @@ export const setReports = async () => {
   }
 };
 
-export const setResumePdf = async ({reportId}) => {
+export const setResumePdf = async ({ reportId }) => {
   try {
-    const response = await api.post(`/api/interview/resume-pdf/${reportId}`)
-    return response.data
-  }catch(err){
-    console.log(err)
+    const response = await api.post(
+      `/api/interview/resume-pdf/${reportId}`,
+      {},
+      { responseType: "arraybuffer" },
+    );
+    return response.data;
+  } catch (err) {
+    console.log(err);
   }
-}
-
+};
