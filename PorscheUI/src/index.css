@@ -4,3 +4,35 @@
 ::-webkit-scrollbar {
   display: none;
 }
+
+@font-face {
+  font-family: "Font1";
+  src: url(./assets/font.otf);
+}
+
+* {
+  font-family: "Font1";
+}
+
+@keyframes move-left {
+  from {
+    transform: translateX(-50%);
+  }to{
+    transform: translateX(0);
+  }
+}
+
+@keyframes move-right {
+  from {
+    transform: translateX(0);
+  }to{
+    transform: translateX(-50%);
+  }
+}
+
+.text-line-1 {
+  animation: move-left 17s linear forwards infinite;
+}
+.text-line-2 {
+  animation: move-right 17s linear forwards infinite;
+}
