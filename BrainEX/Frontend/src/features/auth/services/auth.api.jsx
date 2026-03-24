@@ -32,7 +32,7 @@ export async function register({email,username,password}){
 
 export async function getMe(){
   try {
-    const response = await api.post('/api/auth/get-me')
+    const response = await api.get('/api/auth/get-me')
     return response.data
   }catch(err){
     console.log(err)
