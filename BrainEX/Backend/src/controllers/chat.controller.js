@@ -11,24 +11,25 @@ import { generateAiResponse, generateAiTitle } from "../services/ai.service.js";
 export async function responseGenerateController(req, res) {
   const { message, chat: chatId } = req.body;
   const { id } = req.user;
-  const aiResponse = await generateAiResponse(message);
 
-  let aiTitle = null,chat = null
+  let aiTitle = null,
+    chat = null;
   if (!chatId) {
     aiTitle = await generateAiTitle(message);
     chat = await chatModel.create({
       user: id,
       title: aiTitle,
     });
-  }else{
-    const messages = await messageModel.find({chat:chatId})
   }
 
   const humanMessage = await messageModel.create({
     chat: chatId || chat._id,
-    content:message,
-    role:"user"
-  })
+    content: message,
+    role: "user",
+  });
+
+  const messages = await messageModel.find({ chat: chatId });
+  const aiResponse = await generateAiResponse(messages);
 
   const aiMessage = await messageModel.create({
     chat: chatId || chat._id,
@@ -40,6 +41,7 @@ export async function responseGenerateController(req, res) {
     response: aiResponse,
     title: aiTitle,
     chat,
+    humanMessage,
     aiMessage,
   });
 }
