@@ -20,10 +20,18 @@ export async function responseGenerateController(req, res) {
       user: id,
       title: aiTitle,
     });
+  }else{
+    const messages = await messageModel.find({chat:chatId})
   }
 
+  const humanMessage = await messageModel.create({
+    chat: chatId || chat._id,
+    content:message,
+    role:"user"
+  })
+
   const aiMessage = await messageModel.create({
-    chat: chat._id,
+    chat: chatId || chat._id,
     content: aiResponse,
     role: "ai",
   });
