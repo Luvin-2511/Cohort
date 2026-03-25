@@ -15,9 +15,9 @@ const mistralModel = new ChatMistralAI({
 export async function generateAiResponse(messages) {
   const response = await geminiModel.invoke(messages.map((message)=>{
     if(message.role == "ai"){
-        return new AIMessage(message)
+        return new AIMessage(message.content)
     }else{
-        return new HumanMessage(message)
+        return new HumanMessage(message.content)
     }
   }));
   return response.text;

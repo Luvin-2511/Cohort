@@ -2,189 +2,98 @@ import { useState, useEffect, useRef } from "react";
 import { gsap } from "https://cdn.skypack.dev/gsap";
 import useAuth from "../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
-import {PerplexityLoader} from "../../shared/components/Loader";
+import { PerplexityLoader } from "../../shared/components/Loader";
 
-function HelixCanvas() {
+/* ─── Neural Canvas (purple, matching login) ─────────────────────────────── */
+function NeuralCanvas() {
   const ref = useRef(null);
   useEffect(() => {
     const canvas = ref.current;
     const ctx = canvas.getContext("2d");
-    let raf,
-      t = 0;
-    const resize = () => {
-      canvas.width = canvas.offsetWidth;
-      canvas.height = canvas.offsetHeight;
-    };
+    let raf;
+    const resize = () => { canvas.width = canvas.offsetWidth; canvas.height = canvas.offsetHeight; };
     resize();
     window.addEventListener("resize", resize);
-
+    const N = 65;
+    const nodes = Array.from({ length: N }, () => ({
+      x: Math.random(), y: Math.random(),
+      vx: (Math.random() - 0.5) * 0.00042,
+      vy: (Math.random() - 0.5) * 0.00042,
+      r: Math.random() * 1.8 + 0.8,
+      phase: Math.random() * Math.PI * 2,
+    }));
+    let mouse = { x: -999, y: -999 };
+    const onMove = (e) => { mouse.x = e.clientX / canvas.width; mouse.y = e.clientY / canvas.height; };
+    window.addEventListener("mousemove", onMove);
     const draw = () => {
-      const W = canvas.width,
-        H = canvas.height;
+      const W = canvas.width, H = canvas.height;
       ctx.clearRect(0, 0, W, H);
-      t += 0.012;
-
-      const STRANDS = 3;
-      const POINTS = 28;
-      for (let s = 0; s < STRANDS; s++) {
-        const offset = (s / STRANDS) * Math.PI * 2;
-        const baseX = W * (0.2 + s * 0.3);
-
-        for (let i = 0; i < POINTS - 1; i++) {
-          const p1 = i / POINTS,
-            p2 = (i + 1) / POINTS;
-          const y1 = p1 * H,
-            y2 = p2 * H;
-          const x1 = baseX + Math.sin(p1 * Math.PI * 4 + t + offset) * 50;
-          const x2 = baseX + Math.sin(p2 * Math.PI * 4 + t + offset) * 50;
-          const bright = (Math.sin(p1 * Math.PI * 4 + t + offset) + 1) / 2;
-          const alpha = 0.08 + bright * 0.25;
-
-          ctx.beginPath();
-          ctx.moveTo(x1, y1);
-          ctx.lineTo(x2, y2);
-          ctx.strokeStyle = `rgba(20,184,166,${alpha})`;
-          ctx.lineWidth = 1.5;
-          ctx.stroke();
-
-          if (i % 4 === 0) {
-            const cx = baseX + Math.sin(p1 * Math.PI * 4 + t + offset) * 50;
-            const cy = y1;
-            const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, 5);
-            g.addColorStop(0, `rgba(45,212,191,${0.6 * bright + 0.1})`);
-            g.addColorStop(1, "rgba(45,212,191,0)");
-            ctx.beginPath();
-            ctx.arc(cx, cy, 5, 0, Math.PI * 2);
-            ctx.fillStyle = g;
-            ctx.fill();
-          }
-        }
-
-        if (s < STRANDS - 1) {
-          for (let i = 0; i < POINTS; i += 5) {
-            const p = i / POINTS,
-              y = p * H;
-            const x1 = baseX + Math.sin(p * Math.PI * 4 + t + offset) * 50;
-            const nextOffset = ((s + 1) / STRANDS) * Math.PI * 2;
-            const nextBase = W * (0.2 + (s + 1) * 0.3);
-            const x2 =
-              nextBase + Math.sin(p * Math.PI * 4 + t + nextOffset) * 50;
-            ctx.beginPath();
-            ctx.moveTo(x1, y);
-            ctx.lineTo(x2, y);
-            ctx.strokeStyle = "rgba(20,184,166,0.08)";
-            ctx.lineWidth = 0.8;
-            ctx.stroke();
+      for (let i = 0; i < N; i++) {
+        for (let j = i + 1; j < N; j++) {
+          const a = nodes[i], b = nodes[j];
+          const dx = (a.x - b.x) * W, dy = (a.y - b.y) * H;
+          const d = Math.sqrt(dx * dx + dy * dy);
+          if (d < 145) {
+            ctx.beginPath(); ctx.moveTo(a.x * W, a.y * H); ctx.lineTo(b.x * W, b.y * H);
+            ctx.strokeStyle = `rgba(124,92,252,${(1 - d / 145) * 0.22})`; ctx.lineWidth = 0.7; ctx.stroke();
           }
         }
       }
-
-      for (let i = 0; i < 20; i++) {
-        const x = (Math.sin(t * 0.3 + i * 0.7) * 0.4 + 0.5) * W;
-        const y = (Math.cos(t * 0.2 + i * 1.1) * 0.4 + 0.5) * H;
-        const r = Math.sin(t + i) * 1 + 1.5;
-        ctx.beginPath();
-        ctx.arc(x, y, r, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(103,232,249,${0.1 + Math.abs(Math.sin(t + i)) * 0.15})`;
-        ctx.fill();
-      }
-
+      nodes.forEach(n => {
+        n.phase += 0.020;
+        const glow = (Math.sin(n.phase) + 1) / 2;
+        const mx = (n.x - mouse.x) * W, my = (n.y - mouse.y) * H;
+        const md = Math.sqrt(mx * mx + my * my);
+        const pull = md < 120 ? (1 - md / 120) * 0.0028 : 0;
+        n.vx -= (n.x - mouse.x) * pull; n.vy -= (n.y - mouse.y) * pull;
+        n.x += n.vx; n.y += n.vy;
+        if (n.x < 0 || n.x > 1) n.vx *= -1; if (n.y < 0 || n.y > 1) n.vy *= -1;
+        const g = ctx.createRadialGradient(n.x * W, n.y * H, 0, n.x * W, n.y * H, n.r * 5);
+        g.addColorStop(0, `rgba(124,92,252,${0.82 * glow + 0.12})`);
+        g.addColorStop(1, "rgba(124,92,252,0)");
+        ctx.beginPath(); ctx.arc(n.x * W, n.y * H, n.r * 5, 0, Math.PI * 2);
+        ctx.fillStyle = g; ctx.fill();
+        ctx.beginPath(); ctx.arc(n.x * W, n.y * H, n.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(192,170,255,${0.55 + 0.4 * glow})`; ctx.fill();
+      });
       raf = requestAnimationFrame(draw);
     };
     draw();
-    return () => {
-      cancelAnimationFrame(raf);
-      window.removeEventListener("resize", resize);
-    };
+    return () => { cancelAnimationFrame(raf); window.removeEventListener("resize", resize); window.removeEventListener("mousemove", onMove); };
   }, []);
+  return <canvas ref={ref} style={{ position: "absolute", inset: 0, width: "100%", height: "100%", opacity: 0.48 }} />;
+}
+
+function GridOverlay() {
   return (
-    <canvas
-      ref={ref}
-      style={{
-        position: "absolute",
-        inset: 0,
-        width: "100%",
-        height: "100%",
-        opacity: 0.7,
-      }}
-    />
+    <svg style={{ position: "absolute", inset: 0, width: "100%", height: "100%", opacity: 0.04, pointerEvents: "none" }}>
+      <defs><pattern id="reg-grid" width="48" height="48" patternUnits="userSpaceOnUse">
+        <path d="M 48 0 L 0 0 0 48" fill="none" stroke="#7c5cfc" strokeWidth="0.5"/>
+      </pattern></defs>
+      <rect width="100%" height="100%" fill="url(#reg-grid)"/>
+    </svg>
   );
 }
 
-function BrainLogo() {
+function BrainLogo({ size = 1 }) {
   return (
-    <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-      <svg width="38" height="38" viewBox="0 0 38 38">
-        <polygon
-          points="19,2 35,11 35,27 19,36 3,27 3,11"
-          fill="none"
-          stroke="#14b8a6"
-          strokeWidth="1.2"
-        />
-        <polygon
-          points="19,8 29,14 29,24 19,30 9,24 9,14"
-          fill="rgba(20,184,166,0.08)"
-          stroke="#14b8a6"
-          strokeWidth="0.7"
-          strokeDasharray="2,2"
-        />
-        <polygon
-          points="19,13 24,16 24,22 19,25 14,22 14,16"
-          fill="rgba(20,184,166,0.15)"
-          stroke="#14b8a6"
-          strokeWidth="0.5"
-        />
-        <circle cx="19" cy="19" r="3.5" fill="#14b8a6" />
-        <circle
-          cx="19"
-          cy="19"
-          r="5.5"
-          fill="none"
-          stroke="rgba(20,184,166,0.3)"
-          strokeWidth="0.8"
-        />
-        {[0, 60, 120, 180, 240, 300].map((deg, i) => {
+    <div style={{ display: "flex", alignItems: "center", gap: 10 * size }}>
+      <svg width={38 * size} height={38 * size} viewBox="0 0 38 38">
+        <polygon points="19,2 35,11 35,27 19,36 3,27 3,11" fill="none" stroke="#7c5cfc" strokeWidth="1.2"/>
+        <polygon points="19,8 29,14 29,24 19,30 9,24 9,14" fill="rgba(124,92,252,0.08)" stroke="#7c5cfc" strokeWidth="0.7" strokeDasharray="2,2"/>
+        <polygon points="19,13 24,16 24,22 19,25 14,22 14,16" fill="rgba(124,92,252,0.15)" stroke="#9273ff" strokeWidth="0.5"/>
+        <circle cx="19" cy="19" r="3.5" fill="#7c5cfc"/>
+        <circle cx="19" cy="19" r="5.5" fill="none" stroke="rgba(124,92,252,0.35)" strokeWidth="0.8"/>
+        {[0,60,120,180,240,300].map((deg, i) => {
           const rad = (deg * Math.PI) / 180;
-          const x1 = 19 + 5.5 * Math.cos(rad),
-            y1 = 19 + 5.5 * Math.sin(rad);
-          const x2 = 19 + 9.5 * Math.cos(rad),
-            y2 = 19 + 9.5 * Math.sin(rad);
-          return (
-            <line
-              key={i}
-              x1={x1}
-              y1={y1}
-              x2={x2}
-              y2={y2}
-              stroke="#14b8a6"
-              strokeWidth="0.9"
-              opacity="0.7"
-            />
-          );
+          return <line key={i} x1={19 + 5.5 * Math.cos(rad)} y1={19 + 5.5 * Math.sin(rad)} x2={19 + 9.5 * Math.cos(rad)} y2={19 + 9.5 * Math.sin(rad)} stroke="#7c5cfc" strokeWidth="0.9" opacity="0.7"/>;
         })}
       </svg>
       <div>
-        <div
-          style={{
-            fontFamily: "'Syne', sans-serif",
-            fontSize: 20,
-            fontWeight: 800,
-            letterSpacing: "0.04em",
-            color: "#f0fdf4",
-            lineHeight: 1,
-          }}
-        >
-          brain<span style={{ color: "#14b8a6" }}>EX</span>
+        <div style={{ fontFamily: "'Syne',sans-serif", fontSize: 20 * size, fontWeight: 800, letterSpacing: "0.04em", color: "#f0eeff", lineHeight: 1 }}>
+          brain<span style={{ color: "#7c5cfc" }}>EX</span>
         </div>
-        <div
-          style={{
-            fontFamily: "'Space Mono', monospace",
-            fontSize: 8,
-            color: "#2dd4bf",
-            letterSpacing: "0.2em",
-            marginTop: 2,
-          }}
-        >
+        <div style={{ fontFamily: "'Space Mono',monospace", fontSize: 8 * size, color: "#9273ff", letterSpacing: "0.2em", marginTop: 2 }}>
           INTELLIGENCE LAYER
         </div>
       </div>
@@ -192,6 +101,7 @@ function BrainLogo() {
   );
 }
 
+/* ─── Smart Input with floating label ───────────────────────────────────── */
 function SmartInput({ label, type = "text", value, onChange, hint, validate }) {
   const [focused, setFocused] = useState(false);
   const [touched, setTouched] = useState(false);
@@ -204,118 +114,51 @@ function SmartInput({ label, type = "text", value, onChange, hint, validate }) {
       scaleX: focused ? 1 : 0,
       background: showValid
         ? valid
-          ? "linear-gradient(90deg, transparent, #22c55e, transparent)"
-          : "linear-gradient(90deg, transparent, #ef4444, transparent)"
-        : "linear-gradient(90deg, transparent, #14b8a6, transparent)",
+          ? "linear-gradient(90deg,transparent,#22c55e,transparent)"
+          : "linear-gradient(90deg,transparent,#ef4444,transparent)"
+        : "linear-gradient(90deg,transparent,#7c5cfc,transparent)",
       duration: focused ? 0.35 : 0.25,
       ease: "power2.out",
     });
   }, [focused, showValid, valid]);
 
   const borderColor = showValid
-    ? valid
-      ? "rgba(34,197,94,0.7)"
-      : "rgba(239,68,68,0.7)"
-    : focused
-      ? "rgba(20,184,166,0.8)"
-      : "rgba(20,184,166,0.25)";
+    ? valid ? "rgba(34,197,94,0.7)" : "rgba(239,68,68,0.7)"
+    : focused ? "rgba(124,92,252,0.55)" : "rgba(124,92,252,0.12)";
 
   const boxShadow = focused
     ? showValid && !valid
       ? "0 0 0 3px rgba(239,68,68,0.08)"
-      : "0 0 0 3px rgba(20,184,166,0.08), 0 0 16px rgba(20,184,166,0.08)"
+      : "0 0 0 3px rgba(124,92,252,0.08), 0 0 20px rgba(124,92,252,0.07)"
     : "none";
 
   return (
     <div style={{ marginBottom: 18, position: "relative" }}>
-      <label
-        style={{
-          display: "block",
-          fontFamily: "'Space Mono', monospace",
-          fontSize: 9,
-          fontWeight: 700,
-          letterSpacing: "0.15em",
-          color: focused ? "#14b8a6" : "rgba(20,184,166,0.5)",
-          marginBottom: 7,
-          textTransform: "uppercase",
-          transition: "color 0.2s",
-        }}
-      >
+      <label style={{ display: "block", fontFamily: "'Space Mono',monospace", fontSize: 9, fontWeight: 700,
+        letterSpacing: "0.15em", color: focused ? "#7c5cfc" : "rgba(124,92,252,0.45)", marginBottom: 7,
+        textTransform: "uppercase", transition: "color 0.2s" }}>
         {label}
-        {hint && (
-          <span
-            style={{
-              color: "#374151",
-              fontWeight: 400,
-              marginLeft: 8,
-              textTransform: "none",
-              letterSpacing: 0,
-            }}
-          >
-            {hint}
-          </span>
-        )}
+        {hint && <span style={{ color: "#2a2440", fontWeight: 400, marginLeft: 8, textTransform: "none", letterSpacing: 0 }}>{hint}</span>}
       </label>
       <div style={{ position: "relative" }}>
-        <input
-          type={type}
-          value={value}
-          onChange={onChange}
+        <input type={type} value={value} onChange={onChange}
           onFocus={() => setFocused(true)}
-          onBlur={() => {
-            setFocused(false);
-            setTouched(true);
-          }}
-          style={{
-            width: "100%",
-            background: focused
-              ? "rgba(20,184,166,0.04)"
-              : "rgba(255,255,255,0.02)",
-            border: `1.5px solid ${borderColor}`,
-            borderRadius: 10,
-            padding: "12px 42px 12px 16px",
-            color: "#ecfdf5",
-            fontFamily: "'Space Mono', monospace",
-            fontSize: 13,
-            outline: "none",
-            transition: "border-color 0.2s, background 0.2s, box-shadow 0.2s",
-            boxShadow,
-          }}
-        />
-        {showValid && (
-          <span
-            style={{
-              position: "absolute",
-              right: 14,
-              top: "50%",
-              transform: "translateY(-50%)",
-              fontSize: 14,
-              color: valid ? "#22c55e" : "#ef4444",
-            }}
-          >
-            {valid ? "✓" : "✗"}
-          </span>
-        )}
+          onBlur={() => { setFocused(false); setTouched(true); }}
+          style={{ width: "100%", background: focused ? "rgba(124,92,252,0.04)" : "rgba(255,255,255,0.02)",
+            border: `1.5px solid ${borderColor}`, borderRadius: 10,
+            padding: "12px 42px 12px 16px", color: "#ede8ff",
+            fontFamily: "'Space Mono',monospace", fontSize: 13, outline: "none",
+            transition: "border-color 0.2s,background 0.2s,box-shadow 0.2s", boxShadow }}/>
+        {showValid && <span style={{ position: "absolute", right: 14, top: "50%", transform: "translateY(-50%)", fontSize: 14, color: valid ? "#22c55e" : "#ef4444" }}>{valid ? "✓" : "✗"}</span>}
       </div>
-      <div
-        ref={lineRef}
-        style={{
-          position: "absolute",
-          bottom: 0,
-          left: 10,
-          right: 10,
-          height: 1.5,
-          background:
-            "linear-gradient(90deg, transparent, #14b8a6, transparent)",
-          transformOrigin: "center",
-          transform: "scaleX(0)",
-          borderRadius: 2,
-        }}
-      />
+      <div ref={lineRef} style={{ position: "absolute", bottom: 0, left: 10, right: 10, height: 1.5,
+        background: "linear-gradient(90deg,transparent,#7c5cfc,transparent)",
+        transformOrigin: "center", transform: "scaleX(0)", borderRadius: 2 }}/>
     </div>
   );
 }
 
+/* ─── Password Strength ──────────────────────────────────────────────────── */
 function PasswordStrength({ value }) {
   const checks = [
     { label: "8+ characters", pass: value.length >= 8 },
@@ -323,82 +166,28 @@ function PasswordStrength({ value }) {
     { label: "Number", pass: /[0-9]/.test(value) },
     { label: "Special character", pass: /[^a-zA-Z0-9]/.test(value) },
   ];
-  const score = checks.filter((c) => c.pass).length;
+  const score = checks.filter(c => c.pass).length;
   const colors = ["#1f2937", "#ef4444", "#f97316", "#eab308", "#22c55e"];
   const labels = ["", "Weak", "Fair", "Good", "Strong"];
-
   if (!value) return null;
-
   return (
-    <div
-      style={{
-        marginBottom: 18,
-        padding: "14px 16px",
-        background: "rgba(20,184,166,0.04)",
-        border: "1px solid rgba(20,184,166,0.12)",
-        borderRadius: 10,
-      }}
-    >
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          marginBottom: 10,
-        }}
-      >
-        <span
-          style={{
-            fontFamily: "'Space Mono', monospace",
-            fontSize: 9,
-            color: "rgba(20,184,166,0.5)",
-            letterSpacing: "0.12em",
-            textTransform: "uppercase",
-          }}
-        >
-          Password Strength
-        </span>
-        <span
-          style={{
-            fontFamily: "'Syne', sans-serif",
-            fontSize: 12,
-            fontWeight: 700,
-            color: colors[score],
-          }}
-        >
-          {labels[score]}
-        </span>
+    <div style={{ marginBottom: 18, padding: "14px 16px", background: "rgba(124,92,252,0.04)",
+      border: "1px solid rgba(124,92,252,0.12)", borderRadius: 10 }}>
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 10 }}>
+        <span style={{ fontFamily: "'Space Mono',monospace", fontSize: 9, color: "rgba(124,92,252,0.45)", letterSpacing: "0.12em", textTransform: "uppercase" }}>Password Strength</span>
+        <span style={{ fontFamily: "'Syne',sans-serif", fontSize: 12, fontWeight: 700, color: colors[score] }}>{labels[score]}</span>
       </div>
       <div style={{ display: "flex", gap: 4, marginBottom: 12 }}>
-        {[0, 1, 2, 3].map((i) => (
-          <div
-            key={i}
-            style={{
-              flex: 1,
-              height: 3,
-              borderRadius: 2,
-              background: i < score ? colors[score] : "rgba(255,255,255,0.06)",
-              transition: "background 0.3s",
-            }}
-          />
+        {[0,1,2,3].map(i => (
+          <div key={i} style={{ flex: 1, height: 3, borderRadius: 2,
+            background: i < score ? colors[score] : "rgba(255,255,255,0.06)", transition: "background 0.3s" }}/>
         ))}
       </div>
       <div style={{ display: "flex", flexWrap: "wrap", gap: "6px 16px" }}>
-        {checks.map((c) => (
-          <span
-            key={c.label}
-            style={{
-              fontFamily: "'Space Mono', monospace",
-              fontSize: 9,
-              color: c.pass ? "#2dd4bf" : "rgba(20,184,166,0.3)",
-              display: "flex",
-              alignItems: "center",
-              gap: 4,
-              transition: "color 0.3s",
-            }}
-          >
-            <span>{c.pass ? "✓" : "○"}</span>
-            {c.label}
+        {checks.map(c => (
+          <span key={c.label} style={{ fontFamily: "'Space Mono',monospace", fontSize: 9,
+            color: c.pass ? "#9273ff" : "rgba(124,92,252,0.28)", display: "flex", alignItems: "center", gap: 4, transition: "color 0.3s" }}>
+            <span>{c.pass ? "✓" : "○"}</span>{c.label}
           </span>
         ))}
       </div>
@@ -406,151 +195,104 @@ function PasswordStrength({ value }) {
   );
 }
 
+/* ─── Step Indicator ─────────────────────────────────────────────────────── */
 function StepIndicator({ current, total }) {
   return (
-    <div
-      style={{
-        display: "flex",
-        alignItems: "center",
-        gap: 6,
-        marginBottom: 28,
-      }}
-    >
+    <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 28 }}>
       {Array.from({ length: total }).map((_, i) => (
         <div key={i} style={{ display: "flex", alignItems: "center", gap: 6 }}>
-          <div
-            style={{
-              width: i < current ? 24 : 8,
-              height: 8,
-              borderRadius: 4,
-              background:
-                i < current
-                  ? "linear-gradient(90deg, #14b8a6, #2dd4bf)"
-                  : i === current
-                    ? "rgba(20,184,166,0.3)"
-                    : "rgba(255,255,255,0.05)",
-              border: i === current ? "1px solid rgba(20,184,166,0.4)" : "none",
-              transition: "width 0.4s, background 0.3s",
-            }}
-          />
-          {i < total - 1 && (
-            <div
-              style={{
-                width: 16,
-                height: 1,
-                background:
-                  i < current
-                    ? "rgba(20,184,166,0.4)"
-                    : "rgba(255,255,255,0.05)",
-              }}
-            />
-          )}
+          <div style={{ width: i < current ? 24 : 8, height: 8, borderRadius: 4,
+            background: i < current ? "linear-gradient(90deg,#5b3fd4,#7c5cfc)"
+              : i === current ? "rgba(124,92,252,0.3)" : "rgba(255,255,255,0.05)",
+            border: i === current ? "1px solid rgba(124,92,252,0.45)" : "none",
+            transition: "width 0.4s,background 0.3s" }}/>
+          {i < total - 1 && <div style={{ width: 16, height: 1, background: i < current ? "rgba(124,92,252,0.45)" : "rgba(255,255,255,0.05)" }}/>}
         </div>
       ))}
-      <span
-        style={{
-          fontFamily: "'Space Mono', monospace",
-          fontSize: 9,
-          color: "rgba(20,184,166,0.45)",
-          letterSpacing: "0.1em",
-          marginLeft: 4,
-        }}
-      >
+      <span style={{ fontFamily: "'Space Mono',monospace", fontSize: 9, color: "rgba(124,92,252,0.45)", letterSpacing: "0.1em", marginLeft: 4 }}>
         STEP {current + 1}/{total}
       </span>
     </div>
   );
 }
 
+/* ─── Checkbox ───────────────────────────────────────────────────────────── */
 function Checkbox({ checked, onChange, children }) {
   const boxRef = useRef(null);
   const handle = () => {
     onChange(!checked);
-    gsap.fromTo(
-      boxRef.current,
-      { scale: 0.85 },
-      { scale: 1, duration: 0.2, ease: "back.out(3)" },
-    );
+    gsap.fromTo(boxRef.current, { scale: 0.8 }, { scale: 1, duration: 0.25, ease: "back.out(3)" });
   };
   return (
-    <div
-      onClick={handle}
-      style={{
-        display: "flex",
-        alignItems: "flex-start",
-        gap: 12,
-        cursor: "pointer",
-        marginBottom: 18,
-      }}
-    >
-      <div
-        ref={boxRef}
-        style={{
-          width: 18,
-          height: 18,
-          minWidth: 18,
-          borderRadius: 5,
-          border: `1.5px solid ${checked ? "#14b8a6" : "rgba(20,184,166,0.25)"}`,
-          background: checked ? "rgba(20,184,166,0.15)" : "transparent",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          marginTop: 1,
-          transition: "border-color 0.2s, background 0.2s",
-        }}
-      >
-        {checked && <span style={{ color: "#14b8a6", fontSize: 10 }}>✓</span>}
+    <div onClick={handle} style={{ display: "flex", alignItems: "flex-start", gap: 12, cursor: "pointer", marginBottom: 18 }}>
+      <div ref={boxRef} style={{ width: 18, height: 18, minWidth: 18, borderRadius: 5,
+        border: `1.5px solid ${checked ? "#7c5cfc" : "rgba(124,92,252,0.22)"}`,
+        background: checked ? "rgba(124,92,252,0.15)" : "transparent",
+        display: "flex", alignItems: "center", justifyContent: "center", marginTop: 1,
+        transition: "border-color 0.2s,background 0.2s" }}>
+        {checked && <span style={{ color: "#9273ff", fontSize: 10 }}>✓</span>}
       </div>
-      <span
-        style={{
-          fontFamily: "'Space Mono', monospace",
-          fontSize: 11,
-          color: "#4b5563",
-          lineHeight: 1.7,
-        }}
-      >
-        {children}
-      </span>
+      <span style={{ fontFamily: "'Space Mono',monospace", fontSize: 11, color: "#4b5569", lineHeight: 1.7 }}>{children}</span>
     </div>
   );
 }
 
+/* ─── Submit Button ──────────────────────────────────────────────────────── */
 function SubmitBtn({ children, disabled, handleForm }) {
   const ref = useRef(null);
+  const rippleRef = useRef(null);
+  const handleClick = (e) => {
+    if (disabled) return;
+    const rect = ref.current.getBoundingClientRect();
+    const x = e.clientX - rect.left, y = e.clientY - rect.top;
+    gsap.fromTo(rippleRef.current,
+      { left: x, top: y, width: 0, height: 0, opacity: 0.35, x: 0, y: 0 },
+      { width: 350, height: 350, x: -175, y: -175, opacity: 0, duration: 0.6, ease: "power2.out" });
+    handleForm?.();
+  };
   return (
-    <button
-      onClick={handleForm}
-      ref={ref}
-      disabled={disabled}
-      onMouseEnter={() =>
-        !disabled && gsap.to(ref.current, { scale: 1.02, duration: 0.2 })
-      }
+    <button ref={ref} onClick={handleClick} disabled={disabled}
+      onMouseEnter={() => !disabled && gsap.to(ref.current, { scale: 1.02, duration: 0.2 })}
       onMouseLeave={() => gsap.to(ref.current, { scale: 1, duration: 0.2 })}
-      style={{
-        width: "100%",
-        padding: "15px 0",
-        position: "relative",
-        overflow: "hidden",
-        background: disabled
-          ? "rgba(255,255,255,0.04)"
-          : "linear-gradient(135deg, #0d9488 0%, #14b8a6 45%, #2dd4bf 100%)",
+      style={{ width: "100%", padding: "15px 0", position: "relative", overflow: "hidden",
+        background: disabled ? "rgba(255,255,255,0.04)" : "linear-gradient(135deg,#5b3fd4 0%,#7c5cfc 45%,#9273ff 100%)",
         border: disabled ? "1px solid rgba(255,255,255,0.06)" : "none",
-        borderRadius: 12,
-        cursor: disabled ? "not-allowed" : "pointer",
-        fontFamily: "'Syne', sans-serif",
-        fontSize: 14,
-        fontWeight: 700,
-        letterSpacing: "0.12em",
-        color: disabled ? "#1f2937" : "#021a16",
-        boxShadow: disabled ? "none" : "0 8px 32px rgba(20,184,166,0.4)",
-        transition: "background 0.3s, box-shadow 0.3s",
-      }}
-    >
-      {children}
+        borderRadius: 12, cursor: disabled ? "not-allowed" : "pointer",
+        fontFamily: "'Syne',sans-serif", fontSize: 14, fontWeight: 700, letterSpacing: "0.12em",
+        color: disabled ? "#3d3a55" : "#fff",
+        boxShadow: disabled ? "none" : "0 8px 32px rgba(124,92,252,0.5)",
+        transition: "background 0.3s,box-shadow 0.3s" }}>
+      <div ref={rippleRef} style={{ position: "absolute", borderRadius: "50%", background: "rgba(255,255,255,0.25)", pointerEvents: "none" }}/>
+      <span style={{ position: "relative", zIndex: 1 }}>{children}</span>
     </button>
   );
 }
 
+/* ─── GlitchText ─────────────────────────────────────────────────────────── */
+function GlitchText({ text, style = {} }) {
+  const ref = useRef(null);
+  useEffect(() => {
+    let timeout;
+    const glitch = () => {
+      gsap.to(ref.current, { x: -3, skewX: 3, opacity: 0.8, duration: 0.05, yoyo: true, repeat: 3, ease: "none",
+        onComplete: () => gsap.set(ref.current, { x: 0, skewX: 0, opacity: 1 }) });
+      timeout = setTimeout(glitch, 3000 + Math.random() * 4000);
+    };
+    timeout = setTimeout(glitch, 2500);
+    return () => clearTimeout(timeout);
+  }, []);
+  return <span ref={ref} style={style}>{text}</span>;
+}
+
+/* ─── ScanLine ───────────────────────────────────────────────────────────── */
+function ScanLine() {
+  return (
+    <div style={{ position: "absolute", inset: 0, pointerEvents: "none", overflow: "hidden", borderRadius: 24,
+      background: "repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.022) 2px,rgba(0,0,0,0.022) 4px)" }}/>
+  );
+}
+
+/* ─── MAIN REGISTER PAGE ─────────────────────────────────────────────────── */
 export default function RegisterPage({ onNavigateToLogin }) {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -562,585 +304,222 @@ export default function RegisterPage({ onNavigateToLogin }) {
   const { handleRegister, loading } = useAuth();
   const navigate = useNavigate();
 
-  const payload = {
-    email,
-    username,
-    password,
-  };
-
   const handleForm = async () => {
-    const response = await handleRegister(payload);
-    if (response.success) {
-      navigate("/login");
-    }
+    const response = await handleRegister({ email, username, password });
+    if (response.success) navigate("/login");
   };
 
+  const leftRef  = useRef(null);
   const rightRef = useRef(null);
-  const cardRef = useRef(null);
-  const headRef = useRef(null);
-  const formRef = useRef(null);
+  const cardRef  = useRef(null);
+  const headRef  = useRef(null);
+  const formRef  = useRef(null);
+  const benefitsRef = useRef(null);
 
-  const canSubmit =
-    username && email && password.length >= 8 && confirm === password && agreed;
-  const filledFields = [username, email, password, confirm].filter(
-    Boolean,
-  ).length;
+  const canSubmit = username && email && password.length >= 8 && confirm === password && agreed;
+  const filledFields = [username, email, password, confirm].filter(Boolean).length;
   const progress = filledFields / 4;
 
   useEffect(() => {
     const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
-    tl.fromTo(
-      rightRef.current,
-      { opacity: 0, x: 60 },
-      { opacity: 1, x: 0, duration: 1 },
-      0,
-    )
-      .fromTo(
-        cardRef.current,
-        { opacity: 0, y: 30, scale: 0.97 },
-        { opacity: 1, y: 0, scale: 1, duration: 0.9 },
-        0.2,
-      )
-      .fromTo(
-        headRef.current.children,
-        { opacity: 0, y: 18 },
-        { opacity: 1, y: 0, stagger: 0.07, duration: 0.6 },
-        0.4,
-      )
-      .fromTo(
-        formRef.current.children,
-        { opacity: 0, y: 14 },
-        { opacity: 1, y: 0, stagger: 0.05, duration: 0.5 },
-        0.6,
-      );
+    tl.fromTo(leftRef.current,  { opacity: 0, x: -60 }, { opacity: 1, x: 0, duration: 1 }, 0)
+      .fromTo(rightRef.current, { opacity: 0, x: 60 },  { opacity: 1, x: 0, duration: 1 }, 0.1)
+      .fromTo(cardRef.current,  { opacity: 0, y: 30, scale: 0.96 }, { opacity: 1, y: 0, scale: 1, duration: 0.9 }, 0.25)
+      .fromTo(headRef.current.children,  { opacity: 0, y: 20 }, { opacity: 1, y: 0, stagger: 0.07, duration: 0.6 }, 0.5)
+      .fromTo(formRef.current.children,  { opacity: 0, y: 14 }, { opacity: 1, y: 0, stagger: 0.05, duration: 0.5 }, 0.7)
+      .fromTo(benefitsRef.current.children, { opacity: 0, x: -20 }, { opacity: 1, x: 0, stagger: 0.09, duration: 0.6 }, 0.7);
 
-    gsap.to(".reg-orb-1", {
-      y: -25,
-      x: 15,
-      duration: 5,
-      ease: "sine.inOut",
-      yoyo: true,
-      repeat: -1,
-    });
-    gsap.to(".reg-orb-2", {
-      y: 18,
-      duration: 4,
-      ease: "sine.inOut",
-      yoyo: true,
-      repeat: -1,
-      delay: 1.5,
-    });
+    gsap.to(".reg-orb-1", { y: -28, x: 16, duration: 5.5, ease: "sine.inOut", yoyo: true, repeat: -1 });
+    gsap.to(".reg-orb-2", { y: 20, x: -12, duration: 4.5, ease: "sine.inOut", yoyo: true, repeat: -1, delay: 1.5 });
+    gsap.to(".reg-orb-3", { y: -14, duration: 3.8, ease: "sine.inOut", yoyo: true, repeat: -1, delay: 0.8 });
   }, []);
 
   useEffect(() => {
     setStep(Math.min(Math.floor(progress * 3), 2));
   }, [progress]);
 
+  if (loading) return <PerplexityLoader/>;
+
   return (
     <>
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Space+Mono:wght@400;700&display=swap');
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-        body { background: #020c09; }
-        input::placeholder { color: rgba(20,184,166,0.2); font-family: 'Space Mono', monospace; }
-        input:-webkit-autofill { -webkit-box-shadow: 0 0 0 100px #051a14 inset !important; -webkit-text-fill-color: #ecfdf5 !important; }
+        body { background: #0a0812; }
+        input::placeholder { color: transparent; }
+        input:-webkit-autofill { -webkit-box-shadow: 0 0 0 100px #0d0b1c inset !important; -webkit-text-fill-color: #ede8ff !important; }
         ::-webkit-scrollbar { width: 0; }
-        .link-hover { transition: color 0.2s; }
-        .link-hover:hover { color: #14b8a6 !important; }
+        .link-hover { transition: color 0.2s; } .link-hover:hover { color: #7c5cfc !important; }
+        @keyframes pulse-ring { 0%,100%{transform:scale(0.9);opacity:0.5} 50%{transform:scale(1.1);opacity:1} }
       `}</style>
 
-      {loading ? (
-        <PerplexityLoader />
-      ) : (
-        <div
-          style={{
-            display: "flex",
-            minHeight: "100vh",
-            background: "#020c09",
-            overflow: "hidden",
-            position: "relative",
-          }}
-        >
-          {/* Ambient */}
-          <div
-            className="reg-orb-1"
-            style={{
-              position: "fixed",
-              top: "5%",
-              right: "5%",
-              width: 600,
-              height: 600,
-              borderRadius: "50%",
-              background:
-                "radial-gradient(circle, rgba(20,184,166,0.10) 0%, transparent 70%)",
-              filter: "blur(50px)",
-              pointerEvents: "none",
-              zIndex: 0,
-            }}
-          />
-          <div
-            className="reg-orb-2"
-            style={{
-              position: "fixed",
-              bottom: "0%",
-              left: "15%",
-              width: 500,
-              height: 500,
-              borderRadius: "50%",
-              background:
-                "radial-gradient(circle, rgba(6,182,212,0.07) 0%, transparent 70%)",
-              filter: "blur(60px)",
-              pointerEvents: "none",
-              zIndex: 0,
-            }}
-          />
+      <div style={{ display: "flex", minHeight: "100vh", background: "#0a0812", overflow: "hidden", position: "relative" }}>
 
-          {/* ══ LEFT HELIX ══ */}
-          <div
-            style={{
-              width: 420,
-              minWidth: 420,
-              position: "relative",
-              overflow: "hidden",
-              borderRight: "1px solid rgba(20,184,166,0.07)",
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "space-between",
-              padding: "52px 44px",
-            }}
-          >
-            <HelixCanvas />
-            <div
-              style={{
-                position: "absolute",
-                inset: 0,
-                background:
-                  "linear-gradient(135deg, rgba(2,12,9,0.6) 0%, rgba(2,12,9,0.2) 100%)",
-                pointerEvents: "none",
-                zIndex: 1,
-              }}
-            />
+        {/* Ambient orbs */}
+        <div className="reg-orb-1" style={{ position:"fixed",top:"8%",left:"8%",width:550,height:550,borderRadius:"50%",background:"radial-gradient(circle,rgba(124,92,252,0.12),transparent 70%)",filter:"blur(50px)",pointerEvents:"none",zIndex:0 }}/>
+        <div className="reg-orb-2" style={{ position:"fixed",bottom:"5%",right:"4%",width:600,height:600,borderRadius:"50%",background:"radial-gradient(circle,rgba(91,63,212,0.08),transparent 70%)",filter:"blur(60px)",pointerEvents:"none",zIndex:0 }}/>
+        <div className="reg-orb-3" style={{ position:"fixed",top:"55%",left:"42%",width:320,height:320,borderRadius:"50%",background:"radial-gradient(circle,rgba(146,115,255,0.07),transparent 70%)",filter:"blur(45px)",pointerEvents:"none",zIndex:0 }}/>
 
-            {/* Logo */}
-            <div style={{ position: "relative", zIndex: 2 }}>
-              <BrainLogo />
+        {/* ══ LEFT PANEL ══ */}
+        <div ref={leftRef} style={{ flex:1, position:"relative", display:"flex", flexDirection:"column",
+          justifyContent:"space-between", padding:"52px 56px", overflow:"hidden",
+          borderRight:"1px solid rgba(124,92,252,0.09)" }}>
+          <NeuralCanvas/>
+          <GridOverlay/>
+          {/* Right edge accent */}
+          <div style={{ position:"absolute",top:0,right:0,width:1,height:"100%",
+            background:"linear-gradient(180deg,transparent,rgba(124,92,252,0.38) 40%,rgba(124,92,252,0.38) 60%,transparent)",zIndex:2 }}/>
+
+          {/* Logo */}
+          <div style={{ position:"relative",zIndex:3 }}><BrainLogo/></div>
+
+          {/* Center copy */}
+          <div style={{ position:"relative",zIndex:3,maxWidth:420 }}>
+            <div style={{ fontFamily:"'Space Mono',monospace",fontSize:11,color:"#7c5cfc",letterSpacing:"0.2em",marginBottom:16 }}>
+              // JOIN THE NETWORK
             </div>
-
-            {/* Center copy */}
-            <div style={{ position: "relative", zIndex: 2 }}>
-              <div
-                style={{
-                  fontFamily: "'Space Mono', monospace",
-                  fontSize: 10,
-                  color: "#14b8a6",
-                  letterSpacing: "0.18em",
-                  marginBottom: 14,
-                }}
-              >
-                // JOIN THE NETWORK
-              </div>
-              <h2
-                style={{
-                  fontFamily: "'Syne', sans-serif",
-                  fontSize: 42,
-                  fontWeight: 800,
-                  color: "#f0fdf4",
-                  lineHeight: 1.1,
-                  marginBottom: 20,
-                }}
-              >
-                Your brain,
-                <br />
-                <span
-                  style={{
-                    background: "linear-gradient(90deg, #14b8a6, #67e8f9)",
-                    WebkitBackgroundClip: "text",
-                    WebkitTextFillColor: "transparent",
-                  }}
-                >
-                  amplified.
-                </span>
-              </h2>
-              <p
-                style={{
-                  fontFamily: "'Space Mono', monospace",
-                  fontSize: 12,
-                  color: "#4b5563",
-                  lineHeight: 1.9,
-                  marginBottom: 36,
-                }}
-              >
-                Join 2.4M+ researchers, students, and professionals who use
-                brainEX to search smarter and think deeper.
-              </p>
-
-              {/* Benefits */}
-              <div
-                style={{ display: "flex", flexDirection: "column", gap: 14 }}
-              >
-                {[
-                  ["∞", "Unlimited AI-powered queries"],
-                  ["⚡", "Real-time web synthesis"],
-                  ["◈", "Personalized knowledge graph"],
-                  ["🔒", "Privacy-first architecture"],
-                ].map(([icon, text]) => (
-                  <div
-                    key={text}
-                    style={{ display: "flex", alignItems: "center", gap: 14 }}
-                  >
-                    <div
-                      style={{
-                        width: 32,
-                        height: 32,
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        background: "rgba(20,184,166,0.07)",
-                        border: "1px solid rgba(20,184,166,0.15)",
-                        borderRadius: 8,
-                        color: "#14b8a6",
-                        fontSize: 14,
-                        flexShrink: 0,
-                      }}
-                    >
-                      {icon}
-                    </div>
-                    <span
-                      style={{
-                        fontFamily: "'Space Mono', monospace",
-                        fontSize: 12,
-                        color: "#4b5563",
-                      }}
-                    >
-                      {text}
-                    </span>
-                  </div>
-                ))}
-              </div>
+            <h1 style={{ fontFamily:"'Syne',sans-serif",fontSize:52,fontWeight:800,lineHeight:1.05,color:"#f0eeff",marginBottom:20 }}>
+              Your brain,<br/>
+              <span style={{ background:"linear-gradient(90deg,#7c5cfc,#9273ff,#c4b5fd)",WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent" }}>
+                amplified.
+              </span>
+            </h1>
+            <p style={{ fontFamily:"'Space Mono',monospace",fontSize:13,color:"#3d3a55",lineHeight:1.8,marginBottom:40 }}>
+              Join 2.4M+ researchers, students, and professionals who use brainEX to search smarter and think deeper.
+            </p>
+            {/* Stats */}
+            <div style={{ display:"flex",gap:36,marginBottom:44 }}>
+              {[["2.4B+","Sources indexed"],["<200ms","Response time"],["99.9%","Uptime SLA"]].map(([val,lbl])=>(
+                <div key={lbl}>
+                  <div style={{ fontFamily:"'Syne',sans-serif",fontSize:26,fontWeight:800,color:"#7c5cfc",lineHeight:1 }}>{val}</div>
+                  <div style={{ fontFamily:"'Space Mono',monospace",fontSize:10,color:"#3d3a55",marginTop:4,letterSpacing:"0.08em" }}>{lbl}</div>
+                </div>
+              ))}
             </div>
-
-            {/* Bottom spacer — testimonial removed */}
-            <div style={{ position: "relative", zIndex: 2, height: 28 }} />
           </div>
 
-          {/* ══ RIGHT FORM ══ */}
-          <div
-            ref={rightRef}
-            style={{
-              flex: 1,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              padding: "32px 52px",
-              position: "relative",
-              zIndex: 2,
-              overflowY: "auto",
-            }}
-          >
-            <div
-              ref={cardRef}
-              style={{
-                width: "100%",
-                maxWidth: 520,
-                background: "rgba(5,20,15,0.82)",
-                backdropFilter: "blur(40px)",
-                borderRadius: 24,
-                border: "1px solid rgba(20,184,166,0.12)",
-                padding: "44px 44px",
-                position: "relative",
-                overflow: "hidden",
-                boxShadow:
-                  "0 32px 80px rgba(0,0,0,0.5), inset 0 1px 0 rgba(20,184,166,0.07)",
-              }}
-            >
-              {/* Corner accents */}
-              {[
-                ["top", "left"],
-                ["top", "right"],
-                ["bottom", "left"],
-                ["bottom", "right"],
-              ].map(([v, h]) => (
-                <div
-                  key={v + h}
-                  style={{
-                    position: "absolute",
-                    [v]: 0,
-                    [h]: 0,
-                    width: 28,
-                    height: 28,
-                    borderTop:
-                      v === "top" ? "1.5px solid rgba(20,184,166,0.4)" : "none",
-                    borderBottom:
-                      v === "bottom"
-                        ? "1.5px solid rgba(20,184,166,0.4)"
-                        : "none",
-                    borderLeft:
-                      h === "left"
-                        ? "1.5px solid rgba(20,184,166,0.4)"
-                        : "none",
-                    borderRight:
-                      h === "right"
-                        ? "1.5px solid rgba(20,184,166,0.4)"
-                        : "none",
-                  }}
-                />
-              ))}
+          {/* Benefits */}
+          <div ref={benefitsRef} style={{ position:"relative",zIndex:3,display:"flex",flexDirection:"column",gap:12 }}>
+            {[["∞","Unlimited AI-powered queries"],["⚡","Real-time web synthesis"],["◈","Personalized knowledge graph"],["🔒","Privacy-first architecture"]].map(([icon,text])=>(
+              <div key={text} style={{ display:"flex",alignItems:"center",gap:14 }}>
+                <div style={{ width:32,height:32,display:"flex",alignItems:"center",justifyContent:"center",
+                  background:"rgba(124,92,252,0.07)",border:"1px solid rgba(124,92,252,0.18)",borderRadius:8,
+                  color:"#9273ff",fontSize:14,flexShrink:0 }}>{icon}</div>
+                <span style={{ fontFamily:"'Space Mono',monospace",fontSize:12,color:"#4b5569" }}>{text}</span>
+              </div>
+            ))}
+          </div>
+        </div>
 
-              {/* Top glow line */}
-              <div
-                style={{
-                  position: "absolute",
-                  top: -1,
-                  left: "20%",
-                  right: "20%",
-                  height: 1,
-                  background:
-                    "linear-gradient(90deg, transparent, #14b8a6, transparent)",
-                }}
-              />
+        {/* ══ RIGHT FORM ══ */}
+        <div ref={rightRef} style={{ width:520,minWidth:520,display:"flex",alignItems:"center",justifyContent:"center",
+          padding:"36px 52px",position:"relative",zIndex:2,overflowY:"auto" }}>
+          <div ref={cardRef} style={{ width:"100%",
+            background:"rgba(12,9,24,0.85)", backdropFilter:"blur(40px)", borderRadius:24,
+            border:"1px solid rgba(124,92,252,0.13)", padding:"44px 42px",
+            position:"relative",overflow:"hidden",
+            boxShadow:"0 32px 80px rgba(0,0,0,0.5),0 0 0 1px rgba(124,92,252,0.06),inset 0 1px 0 rgba(124,92,252,0.09)" }}>
+            <ScanLine/>
 
-              {/* Progress bar */}
-              <div
-                style={{
-                  position: "absolute",
-                  top: 0,
-                  left: 0,
-                  height: 3,
-                  width: `${progress * 100}%`,
-                  background: "linear-gradient(90deg, #0d9488, #2dd4bf)",
-                  borderRadius: "24px 0 0 0",
-                  transition: "width 0.4s ease",
-                  boxShadow: "0 0 12px rgba(20,184,166,0.5)",
-                }}
-              />
+            {/* Corner accents */}
+            {[["top","left"],["top","right"],["bottom","left"],["bottom","right"]].map(([v,h])=>(
+              <div key={v+h} style={{ position:"absolute",[v]:0,[h]:0,width:28,height:28,
+                borderTop:    v==="top"    ?"1.5px solid rgba(124,92,252,0.45)":"none",
+                borderBottom: v==="bottom" ?"1.5px solid rgba(124,92,252,0.45)":"none",
+                borderLeft:   h==="left"   ?"1.5px solid rgba(124,92,252,0.45)":"none",
+                borderRight:  h==="right"  ?"1.5px solid rgba(124,92,252,0.45)":"none" }}/>
+            ))}
 
-              {/* Scanlines */}
-              <div
-                style={{
-                  position: "absolute",
-                  inset: 0,
-                  pointerEvents: "none",
-                  borderRadius: 24,
-                  background:
-                    "repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.02) 2px, rgba(0,0,0,0.02) 4px)",
-                }}
-              />
+            {/* Top glow */}
+            <div style={{ position:"absolute",top:-1,left:"15%",right:"15%",height:1,
+              background:"linear-gradient(90deg,transparent,#7c5cfc,transparent)" }}/>
 
-              {/* Header */}
-              <div ref={headRef} style={{ marginBottom: 28 }}>
-                <StepIndicator current={step} total={3} />
-                <div
-                  style={{
-                    fontFamily: "'Space Mono', monospace",
-                    fontSize: 10,
-                    color: "#14b8a6",
-                    letterSpacing: "0.18em",
-                    marginBottom: 8,
-                  }}
-                >
-                  CREATE ACCOUNT
-                </div>
-                <h2
-                  style={{
-                    fontFamily: "'Syne', sans-serif",
-                    fontSize: 30,
-                    fontWeight: 800,
-                    color: "#ecfdf5",
-                    lineHeight: 1.1,
-                    marginBottom: 6,
-                  }}
-                >
-                  Start exploring for free
-                </h2>
-                <p
-                  style={{
-                    fontFamily: "'Space Mono', monospace",
-                    fontSize: 11,
-                    color: "rgba(20,184,166,0.4)",
-                    lineHeight: 1.6,
-                  }}
-                >
-                  Set up your brainEX account in under 60 seconds
-                </p>
+            {/* Progress bar */}
+            <div style={{ position:"absolute",top:0,left:0,height:3,width:`${progress*100}%`,
+              background:"linear-gradient(90deg,#5b3fd4,#9273ff)", borderRadius:"24px 0 0 0",
+              transition:"width 0.4s ease",boxShadow:"0 0 14px rgba(124,92,252,0.55)" }}/>
+
+            {/* Header */}
+            <div ref={headRef} style={{ marginBottom:28 }}>
+              <StepIndicator current={step} total={3}/>
+              <div style={{ fontFamily:"'Space Mono',monospace",fontSize:10,color:"#7c5cfc",letterSpacing:"0.18em",marginBottom:10 }}>
+                CREATE ACCOUNT
+              </div>
+              <h2 style={{ fontFamily:"'Syne',sans-serif",fontSize:30,fontWeight:800,color:"#ede8ff",lineHeight:1.1,marginBottom:6 }}>
+                Start exploring with{" "}<GlitchText text="brainEX" style={{color:"#7c5cfc"}}/>
+              </h2>
+              <p style={{ fontFamily:"'Space Mono',monospace",fontSize:11,color:"rgba(124,92,252,0.4)",lineHeight:1.6 }}>
+                Set up your account in under 60 seconds
+              </p>
+            </div>
+
+            {/* Form */}
+            <div ref={formRef}>
+              <SmartInput label="Username" hint="@handle" value={username}
+                onChange={e=>setUsername(e.target.value.replace(/[^a-z0-9_]/g,""))}
+                validate={v=>v.length>=3&&/^[a-z0-9_]+$/.test(v)}/>
+              <SmartInput label="Email Address" type="email" value={email} onChange={e=>setEmail(e.target.value)}
+                validate={v=>/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)}/>
+              <SmartInput label="Password" type="password" value={password} onChange={e=>setPassword(e.target.value)}
+                validate={v=>v.length>=8&&/[A-Z]/.test(v)&&/[0-9]/.test(v)}/>
+              <PasswordStrength value={password}/>
+              <SmartInput label="Confirm Password" type="password" value={confirm} onChange={e=>setConfirm(e.target.value)}
+                validate={v=>v===password&&v.length>0}/>
+
+              <Checkbox checked={agreed} onChange={setAgreed}>
+                I agree to the{" "}
+                <span className="link-hover" style={{color:"#7c5cfc",cursor:"pointer"}}>Terms of Service</span>{" "}and{" "}
+                <span className="link-hover" style={{color:"#7c5cfc",cursor:"pointer"}}>Privacy Policy</span>
+              </Checkbox>
+              <Checkbox checked={updates} onChange={setUpdates}>
+                <span style={{color:"rgba(124,92,252,0.35)"}}>Send me product updates and research insights (optional)</span>
+              </Checkbox>
+
+              <SubmitBtn handleForm={handleForm} disabled={!canSubmit}>
+                {canSubmit?"LAUNCH MY ACCOUNT →":"COMPLETE ALL FIELDS"}
+              </SubmitBtn>
+
+              {/* Divider */}
+              <div style={{ display:"flex",alignItems:"center",gap:12,margin:"20px 0" }}>
+                <div style={{ flex:1,height:1,background:"linear-gradient(90deg,transparent,rgba(124,92,252,0.18))" }}/>
+                <span style={{ fontFamily:"'Space Mono',monospace",fontSize:9,color:"rgba(124,92,252,0.3)",letterSpacing:"0.12em" }}>OR SIGN UP WITH</span>
+                <div style={{ flex:1,height:1,background:"linear-gradient(90deg,rgba(124,92,252,0.18),transparent)" }}/>
               </div>
 
-              {/* Form */}
-              <div ref={formRef}>
-                <SmartInput
-                  label="Username"
-                  hint="@handle"
-                  value={username}
-                  onChange={(e) =>
-                    setUsername(e.target.value.replace(/[^a-z0-9_]/g, ""))
-                  }
-                  validate={(v) => v.length >= 3 && /^[a-z0-9_]+$/.test(v)}
-                />
+              {/* Socials */}
+              <div style={{ display:"flex",gap:10,marginBottom:20 }}>
+                {[["G","Google"],["⌘","Apple"],["𝕏","Twitter"]].map(([icon,label])=>(
+                  <button key={label} style={{ flex:1,padding:"10px 0",display:"flex",alignItems:"center",justifyContent:"center",gap:6,
+                    background:"rgba(255,255,255,0.02)",border:"1px solid rgba(124,92,252,0.15)",borderRadius:10,cursor:"pointer",
+                    color:"rgba(124,92,252,0.45)",fontFamily:"'Space Mono',monospace",fontSize:10,transition:"all 0.2s" }}
+                    onMouseOver={e=>{ e.currentTarget.style.borderColor="rgba(124,92,252,0.5)"; e.currentTarget.style.color="#c4b5fd"; }}
+                    onMouseOut={e=>{ e.currentTarget.style.borderColor="rgba(124,92,252,0.15)"; e.currentTarget.style.color="rgba(124,92,252,0.45)"; }}>
+                    <span style={{fontSize:14}}>{icon}</span>{label}
+                  </button>
+                ))}
+              </div>
 
-                <SmartInput
-                  label="Email Address"
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  validate={(v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)}
-                />
+              {/* Login link */}
+              <div style={{textAlign:"center"}}>
+                <span style={{ fontFamily:"'Space Mono',monospace",fontSize:12,color:"rgba(124,92,252,0.35)" }}>
+                  Already have an account?{" "}
+                  <span onClick={()=>navigate("/login")} className="link-hover"
+                    style={{ color:"#7c5cfc",cursor:"pointer",fontWeight:700,transition:"color 0.2s" }}>Sign in →</span>
+                </span>
+              </div>
 
-                <SmartInput
-                  label="Password"
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  validate={(v) =>
-                    v.length >= 8 && /[A-Z]/.test(v) && /[0-9]/.test(v)
-                  }
-                />
-
-                <PasswordStrength value={password} />
-
-                <SmartInput
-                  label="Confirm Password"
-                  type="password"
-                  value={confirm}
-                  onChange={(e) => setConfirm(e.target.value)}
-                  validate={(v) => v === password && v.length > 0}
-                />
-
-                <Checkbox checked={agreed} onChange={setAgreed}>
-                  I agree to the{" "}
-                  <span
-                    className="link-hover"
-                    style={{ color: "#14b8a6", cursor: "pointer" }}
-                  >
-                    Terms of Service
-                  </span>{" "}
-                  and{" "}
-                  <span
-                    className="link-hover"
-                    style={{ color: "#14b8a6", cursor: "pointer" }}
-                  >
-                    Privacy Policy
-                  </span>
-                </Checkbox>
-
-                <Checkbox checked={updates} onChange={setUpdates}>
-                  <span style={{ color: "rgba(20,184,166,0.35)" }}>
-                    Send me product updates and research insights (optional)
-                  </span>
-                </Checkbox>
-
-                <SubmitBtn handleForm={handleForm} disabled={!canSubmit}>
-                  {canSubmit ? "LAUNCH MY ACCOUNT →" : "COMPLETE ALL FIELDS"}
-                </SubmitBtn>
-
-                {/* Divider */}
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 12,
-                    margin: "20px 0",
-                  }}
-                >
-                  <div
-                    style={{
-                      flex: 1,
-                      height: 1,
-                      background:
-                        "linear-gradient(90deg, transparent, rgba(20,184,166,0.12))",
-                    }}
-                  />
-                  <span
-                    style={{
-                      fontFamily: "'Space Mono', monospace",
-                      fontSize: 9,
-                      color: "rgba(20,184,166,0.3)",
-                      letterSpacing: "0.12em",
-                    }}
-                  >
-                    OR SIGN UP WITH
-                  </span>
-                  <div
-                    style={{
-                      flex: 1,
-                      height: 1,
-                      background:
-                        "linear-gradient(90deg, rgba(20,184,166,0.12), transparent)",
-                    }}
-                  />
-                </div>
-
-                {/* Socials */}
-                <div style={{ display: "flex", gap: 10, marginBottom: 20 }}>
-                  {[
-                    ["G", "Google"],
-                    ["⌘", "Apple"],
-                    ["𝕏", "Twitter"],
-                  ].map(([icon, label]) => (
-                    <button
-                      key={label}
-                      style={{
-                        flex: 1,
-                        padding: "10px 0",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        gap: 6,
-                        background: "rgba(255,255,255,0.02)",
-                        border: "1px solid rgba(20,184,166,0.2)",
-                        borderRadius: 10,
-                        cursor: "pointer",
-                        color: "rgba(20,184,166,0.5)",
-                        fontFamily: "'Space Mono', monospace",
-                        fontSize: 10,
-                        transition: "border-color 0.2s, color 0.2s",
-                      }}
-                      onMouseOver={(e) => {
-                        e.currentTarget.style.borderColor =
-                          "rgba(20,184,166,0.55)";
-                        e.currentTarget.style.color = "#d1fae5";
-                      }}
-                      onMouseOut={(e) => {
-                        e.currentTarget.style.borderColor =
-                          "rgba(20,184,166,0.2)";
-                        e.currentTarget.style.color = "rgba(20,184,166,0.5)";
-                      }}
-                    >
-                      <span style={{ fontSize: 14 }}>{icon}</span>
-                      {label}
-                    </button>
-                  ))}
-                </div>
-
-                {/* Login link */}
-                <div style={{ textAlign: "center" }}>
-                  <span
-                    style={{
-                      fontFamily: "'Space Mono', monospace",
-                      fontSize: 12,
-                      color: "rgba(20,184,166,0.35)",
-                    }}
-                  >
-                    Already have an account?{" "}
-                    <span
-                      onClick={()=>{
-                        navigate('/login')
-                      }}
-                      className="link-hover"
-                      style={{
-                        color: "#14b8a6",
-                        cursor: "pointer",
-                        fontWeight: 700,
-                        transition: "color 0.2s",
-                      }}
-                    >
-                      Sign in →
-                    </span>
-                  </span>
-                </div>
+              {/* Security badge */}
+              <div style={{ display:"flex",alignItems:"center",justifyContent:"center",gap:8,marginTop:24,
+                padding:"8px 16px",background:"rgba(124,92,252,0.04)",border:"1px solid rgba(124,92,252,0.09)",borderRadius:8 }}>
+                <span style={{color:"#7c5cfc",fontSize:12}}>🔒</span>
+                <span style={{ fontFamily:"'Space Mono',monospace",fontSize:9,color:"#2a2440",letterSpacing:"0.1em" }}>
+                  END-TO-END ENCRYPTED · SOC 2 COMPLIANT
+                </span>
               </div>
             </div>
           </div>
         </div>
-      )}
+      </div>
     </>
   );
 }

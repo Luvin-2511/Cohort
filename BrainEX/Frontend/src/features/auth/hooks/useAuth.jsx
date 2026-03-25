@@ -1,5 +1,5 @@
 import React from 'react'
-import { getMe, login, register } from '../services/auth.api'
+import { getMe, login, logout, register } from '../services/auth.api'
 import { useDispatch, useSelector } from 'react-redux';
 import { setLoading, setUser } from '../slices/auth.slice';
 
@@ -46,11 +46,25 @@ const useAuth = () => {
             dispatch(setLoading(false))
         }
     }
+
+    const handleLogout =async () => {
+        dispatch(setLoading(true))
+        try {
+            const response = await logout()
+            dispatch(setUser(null))
+            return response
+        } catch (error) {
+            console.log(error)
+        }finally{
+            dispatch(setLoading(false))
+        }
+    }
     
   return {
     handleLogin,
     handleRegister,
     handleGetMe,
+    handleLogout,
     user,
     loading
   }
