@@ -1,13 +1,18 @@
 import { useRef } from "react";
 import { gsap } from "https://cdn.skypack.dev/gsap";
-import { DotsIc } from "./icons";
+import { DotsIc } from "./Icons";
+import { useDispatch } from "react-redux";
+import { setChatId } from "../slices/chat.slice";
 
 export default function ChatRow({ label, onMenu, handleMessagesOfChat }) {
   const btnRef = useRef(null);
   const rowRef = useRef(null);
+  const dispatch = useDispatch()
+  
 
   const openMessage = async () => {
     await handleMessagesOfChat(label._id);
+    dispatch(setChatId(label._id))
   };
 
   return (

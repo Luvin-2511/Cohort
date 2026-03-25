@@ -1,5 +1,5 @@
-import { Ic } from "./icons";
-import { PROFILE_MENU } from "./constants";
+import { Ic } from "./Icons";
+import { PROFILE_MENU } from "./Constants";
 
 export default function ProfileDropdown({ pRect, user, onClose, onLogout }) {
   if (!pRect) return null;

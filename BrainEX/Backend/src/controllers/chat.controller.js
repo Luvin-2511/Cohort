@@ -9,43 +9,44 @@ import { generateAiResponse, generateAiTitle } from "../services/ai.service.js";
  * @param {import('express').Response} res
  */
 export async function responseGenerateController(req, res) {
-  const { message,chat:chatId } = req.body;
-  const {id} = req.user
-  let title = null , chat = null
-  if(!chatId){
-    title = await generateAiTitle(message)
+  const { message, chat: chatId } = req.body;
+  const { id } = req.user;
+  let title = null,
+    chat = null;
+  if (!chatId) {
+    title = await generateAiTitle(message);
     chat = await chatModel.create({
-      user:id,
-      title:title,
-    })
+      user: id,
+      title: title,
+    });
   }
   const userMessage = await messageModel.create({
-    role:'user',
-    content:message,
-    chat:chatId||chat._id
-  })
-  
+    role: "user",
+    content: message,
+    chat: chatId || chat._id,
+  });
+
   const messages = await messageModel.find({
-    chat:chatId||chat._id
-  })
-  const aiResponse = await generateAiResponse(messages)
-  
+    chat: chatId || chat._id,
+  });
+  const aiResponse = await generateAiResponse(messages);
+
   const aiMessage = await messageModel.create({
-    role:'ai',
-    content:aiResponse,
-    chat:chatId||chat._id
-  })
+    role: "ai",
+    content: aiResponse,
+    chat: chatId || chat._id,
+  });
 
   return res.status(201).json({
-    success:true,
-    message:"Response generated !",
+    success: true,
+    message: "Response generated !",
     userMessage,
-    aiResponse,
-  })
+    aiMessage,
+  });
 }
 
 /**
- * @route POST api/chat/fetch-chats
+ * @route GET api/chat/fetch-chats
  * @description Fetches all chat of a particular user
  * @param {import('express').Request} req
  * @param {import('express').Response} res
@@ -71,38 +72,93 @@ export async function fetchAllChats(req, res) {
 }
 
 /**
- * @route POST api/chat/chatId:/messages
+ * @route GET api/chat/:chatId/messages
  * @description Fetches all messages of a particular chat using chatId
  * @param {import('express').Request} req
  * @param {import('express').Response} res
  */
 export async function fetchMessagesOfChat(req, res) {
-  const {chatId} = req.params;
-  if(!chatId){
+  const { chatId } = req.params;
+  if (!chatId) {
     return res.status(400).json({
-      success:false,
-      message:"Chat Id is required !"
-    })
+      success: false,
+      message: "Chat Id is required !",
+    });
   }
-  const {id} = req.user;
+  const { id } = req.user;
   const isValidChat = await chatModel.findOne({
-    user:id,
-    _id:chatId,
-  })
+    user: id,
+    _id: chatId,
+  });
 
-  if(!isValidChat){
+  if (!isValidChat) {
     return res.status(403).json({
-      success:false,
-      message:"Chat not found or access denied"
-    })
+      success: false,
+      message: "Chat not found or access denied",
+    });
   }
   const messages = await messageModel.find({
-    chat:chatId
-  })
+    chat: chatId,
+  });
 
   return res.status(200).json({
-    success:true,
-    message:"Messages feteched successfully !",
-    messages
-  })
+    success: true,
+    message: "Messages feteched successfully !",
+    messages,
+  });
+}
+
+/**
+ * @route DELETE api/chat/:chatId/delete
+ * @description Deletes a chat
+ * @param {import('express').Request} req
+ * @param {import('express').Response} res
+ */
+export async function deleteChatController(req, res) {
+  const { chatId } = req.params;
+  if (!chatId) {
+    return res.status(400).json({
+      success: false,
+      message: "Chat id is required !",
+    });
+  }
+  const chat = await chatModel.findByIdAndDelete(chatId);
+  const message = await messageModel.deleteMany({
+    chat: chatId,
+  });
+  return res.status(200).json({
+    success: true,
+    message: "Chat deleted successfully !",
+  });
+}
+
+/**
+ * @route PATCH api/chat/:chatId/updateTitle
+ * @description Updates the title of a chat
+ * @param {import('express').Request} req
+ * @param {import('express').Response} res
+ */
+export async function updateTitleController(req, res) {
+  const { chatId } = req.params;
+  const { title } = req.body;
+  if (!chatId) {
+    return res.status(400).json({
+      success: false,
+      message: "Chat id is required !",
+    });
+  }
+  const updatedTitle = await chatModel.findOneAndUpdate(
+    {
+      _id: chatId,
+    },
+    {
+      title: title,
+    },
+    { new: true },
+  );
+  return res.status(200).json({
+    success: true,
+    message: "Title Updated",
+    updatedTitle,
+  });
 }

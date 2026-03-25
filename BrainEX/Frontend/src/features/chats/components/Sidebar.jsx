@@ -1,9 +1,9 @@
 import { useRef } from "react";
-import { Ic, LayoutIc, StarLogo } from "./icons";
-import { NAV_TOP, NAV_BOTTOM } from "./constants";
+import { Ic, LayoutIc, StarLogo } from "./Icons";
+import { NAV_TOP, NAV_BOTTOM } from "./Constants";
 import ChatRow from "./ChatRow";
 
-export default function Sidebar({ sidebar, toggleSidebar, chats, openMenu, handleMessagesOfChat, user, profile, setProfile, setChatMenu }) {
+export default function Sidebar({ sidebar, toggleSidebar, chats, openMenu, handleMessagesOfChat, user, setProfile, setChatMenu }) {
   const profileRef = useRef(null);
 
   return (
@@ -133,7 +133,7 @@ export default function Sidebar({ sidebar, toggleSidebar, chats, openMenu, handl
                   height: 30,
                   borderRadius: "50%",
                   flexShrink: 0,
-                  background: "linear-gradient(135deg,#7c5cfc,#4a2fbd)",
+                  background: "linear-gradient(135deg,#1c5cfc,#4a2fbd)",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
@@ -142,7 +142,7 @@ export default function Sidebar({ sidebar, toggleSidebar, chats, openMenu, handl
                   color: "#fff",
                 }}
               >
-                S
+                {user.username[0].toUpperCase()}
               </div>
               <div style={{ flex: 1, minWidth: 0, textAlign: "left" }}>
                 <div

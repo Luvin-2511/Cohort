@@ -24,11 +24,16 @@ export default function Ai() {
   const pillRef = useRef(null);
 
   const { user, handleLogout } = useAuth();
-  const { chats, handleFetchChats, handleMessagesOfChat, messages } = useChat();
+  const {
+    chats,
+    handleFetchChats,
+    handleMessagesOfChat,
+    handleResponse,
+    messages,
+  } = useChat();
   const navigate = useNavigate();
 
   const dark = theme === "dark";
-
 
   useEffect(() => {
     handleFetchChats();
@@ -40,19 +45,40 @@ export default function Ai() {
 
   useEffect(() => {
     const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
-    tl.fromTo(pillRef.current,      { opacity: 0, y: 10 },              { opacity: 1, y: 0, duration: 0.5 }, 0.3)
-      .fromTo(greetRef.current,     { opacity: 0, y: 30, skewY: 1 },    { opacity: 1, y: 0, skewY: 0, duration: 0.7 }, 0.5)
-      .fromTo(inputCardRef.current, { opacity: 0, y: 24, scale: 0.97 }, { opacity: 1, y: 0, scale: 1, duration: 0.7 }, 0.75);
+    tl.fromTo(
+      pillRef.current,
+      { opacity: 0, y: 10 },
+      { opacity: 1, y: 0, duration: 0.5 },
+      0.3,
+    )
+      .fromTo(
+        greetRef.current,
+        { opacity: 0, y: 30, skewY: 1 },
+        { opacity: 1, y: 0, skewY: 0, duration: 0.7 },
+        0.5,
+      )
+      .fromTo(
+        inputCardRef.current,
+        { opacity: 0, y: 24, scale: 0.97 },
+        { opacity: 1, y: 0, scale: 1, duration: 0.7 },
+        0.75,
+      );
   }, []);
 
   const toggleTheme = useCallback(() => {
     const next = theme === "dark" ? "light" : "dark";
-    if (!document.startViewTransition) { setTheme(next); return; }
+    if (!document.startViewTransition) {
+      setTheme(next);
+      return;
+    }
     document.startViewTransition(() => setTheme(next));
   }, [theme]);
 
   const toggleSidebar = useCallback(() => {
-    if (!document.startViewTransition) { setSidebar((v) => !v); return; }
+    if (!document.startViewTransition) {
+      setSidebar((v) => !v);
+      return;
+    }
     document.startViewTransition(() => setSidebar((v) => !v));
   }, []);
 
@@ -97,10 +123,30 @@ export default function Ai() {
           setChatMenu={setChatMenu}
         />
 
-        <main className="main-area">
-
-          <div style={{ display: "flex", alignItems: "center", padding: "12px 16px 8px", gap: 8 }}>
-            <button className="icon-btn" onClick={toggleSidebar} title="Toggle sidebar">
+        <main
+          className="main-area"
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            height: "100vh",
+            overflow: "hidden",
+          }}
+        >
+          {/* Top bar */}
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              padding: "12px 16px 8px",
+              gap: 8,
+              flexShrink: 0,
+            }}
+          >
+            <button
+              className="icon-btn"
+              onClick={toggleSidebar}
+              title="Toggle sidebar"
+            >
               <LayoutIc />
             </button>
             {!sidebar && (
@@ -109,7 +155,11 @@ export default function Ai() {
               </button>
             )}
             <div style={{ flex: 1 }} />
-            <button className="theme-btn" onClick={toggleTheme} title={dark ? "Switch to light" : "Switch to dark"}>
+            <button
+              className="theme-btn"
+              onClick={toggleTheme}
+              title={dark ? "Switch to light" : "Switch to dark"}
+            >
               {dark ? <SunIc /> : <MoonIc />}
             </button>
             <button className="icon-btn">
@@ -121,51 +171,117 @@ export default function Ai() {
             </button>
           </div>
 
+          {/* Scrollable content area */}
           <div
             style={{
               flex: 1,
+              overflowY: "auto",
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
-              justifyContent: "center",
-              padding: "0 24px 80px",
-              gap: 32,
+              justifyContent: messages.length > 0 ? "flex-start" : "center",
+              padding: "0 24px",
               position: "relative",
               zIndex: 1,
             }}
           >
-            <div ref={pillRef}>
-              <button className="upgrade-pill">
-                Free plan
-                <span style={{ width: 1, height: 12, background: "var(--border-2)" }} />
-                <span style={{ color: "var(--accent)", fontWeight: 500 }}>Upgrade</span>
-              </button>
-            </div>
-
             {messages.length > 0 ? (
-              <div className="message-container">
-                {messages.map((msg, i) => <div key={i}>Message</div>)}
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: 12,
+                  width: "100%",
+                  maxWidth: 960,
+                  paddingTop: 24,
+                  paddingBottom: 24,
+                }}
+                className="message-container"
+              >
+                {messages.map((msg) => {
+                  const isUser = msg.role === "user";
+                  return (
+                    <div
+                      key={msg._id}
+                      style={{
+                        width: "100%",
+                        display: "flex",
+                        justifyContent: isUser ? "flex-end" : "flex-start",
+                      }}
+                    >
+                      <div
+                        style={{
+                          maxWidth: "70%",
+                          padding: "10px 14px",
+                          borderRadius: 16,
+                          fontSize: 13.5,
+                          lineHeight: 1.5,
+                          background: isUser
+                            ? "var(--accent)"
+                            : "var(--card-bg)",
+                          color: isUser ? "#fff" : "var(--text-primary)",
+                          boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
+                          border: isUser ? "none" : "1px solid var(--border)",
+                        }}
+                      >
+                        {msg.content}
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
             ) : (
-              <div ref={greetRef} style={{ display: "flex", alignItems: "center", gap: 16 }}>
-                <StarHero />
-                <h1
-                  className="font-serif"
-                  style={{
-                    fontSize: "clamp(26px,4vw,44px)",
-                    fontWeight: 400,
-                    letterSpacing: "-0.02em",
-                    color: "var(--text-primary)",
-                    lineHeight: 1,
-                    margin: 0,
-                  }}
+              <>
+                <div ref={pillRef}>
+                  <button className="upgrade-pill">
+                    Free plan
+                    <span
+                      style={{
+                        width: 1,
+                        height: 12,
+                        background: "var(--border-2)",
+                      }}
+                    />
+                    <span style={{ color: "var(--accent)", fontWeight: 500 }}>
+                      Upgrade
+                    </span>
+                  </button>
+                </div>
+                <div
+                  ref={greetRef}
+                  style={{ display: "flex", alignItems: "center", gap: 16 }}
                 >
-                  Back at it, {user.username}
-                </h1>
-              </div>
+                  <StarHero />
+                  <h1
+                    className="font-serif"
+                    style={{
+                      fontSize: "clamp(26px,4vw,44px)",
+                      fontWeight: 400,
+                      letterSpacing: "-0.02em",
+                      color: "var(--text-primary)",
+                      lineHeight: 1,
+                      margin: 0,
+                      transition: "all 0.5s ease",
+                    }}
+                  >
+                    Back at it, {user.username}
+                  </h1>
+                </div>
+              </>
             )}
+          </div>
 
+          {/* InputCard pinned at bottom, outside scroll */}
+          <div
+            style={{
+              flexShrink: 0,
+              padding: "12px 24px 20px",
+              display: "flex",
+              justifyContent: "center",
+            }}
+          >
             <InputCard
+              handleResponse={handleResponse}
               input={input}
               setInput={setInput}
               dark={dark}
@@ -190,7 +306,6 @@ export default function Ai() {
             onLogout={handleLogoutButton}
           />
         )}
-
       </div>
     </>
   );

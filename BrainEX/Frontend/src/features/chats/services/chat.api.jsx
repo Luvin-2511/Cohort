@@ -34,3 +34,23 @@ export async function fetchMessageOfChat(chatId){
     }
 }
 
+export async function deleteChat(chatId){
+    try {
+        const response = await api.delete(`/api/chat/${chatId}/delete`)
+        return response.data
+    }catch(err){
+        console.log(err)
+    }
+}
+
+export async function getResponse(message,chatId){
+    try {
+        const response = await api.post('/api/chat/',{
+            message:message,
+            chat:chatId
+        })
+        return response.data
+    }catch(err){
+        console.log(err)
+    }
+}

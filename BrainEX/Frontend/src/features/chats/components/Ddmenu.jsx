@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Ic } from "./icons";
+import { Ic } from "./Icons";
 
 export default function DdMenu({ items, style, onClose }) {
   useEffect(() => {

@@ -1,12 +1,13 @@
 import { useRef, useEffect } from "react";
 import { gsap } from "https://cdn.skypack.dev/gsap";
-import { Ic } from "./icons";
+import { Ic } from "./Icons";
+import useChat from "../hooks/useChat";
 
-export default function InputCard({ input, setInput, dark, inputCardRef }) {
+export default function InputCard({ input, setInput, dark, inputCardRef,handleResponse }) {
   const taRef = useRef(null);
   const sendRef = useRef(null);
+  const { messages,chatId } = useChat();
 
-  // Auto-resize textarea
   useEffect(() => {
     const ta = taRef.current;
     if (!ta) return;
@@ -14,7 +15,6 @@ export default function InputCard({ input, setInput, dark, inputCardRef }) {
     ta.style.height = Math.min(ta.scrollHeight, 160) + "px";
   }, [input]);
 
-  // Send button glow on input
   useEffect(() => {
     if (!sendRef.current) return;
     gsap.to(sendRef.current, {
@@ -25,8 +25,21 @@ export default function InputCard({ input, setInput, dark, inputCardRef }) {
     });
   }, [input]);
 
+  const handleSubmit = async () => {
+    await handleResponse(input,chatId)
+    setInput("")
+  }
+
   return (
-    <div ref={inputCardRef} style={{ width: "100%", maxWidth: 620 }}>
+    <div
+      ref={inputCardRef}
+      style={{
+        width: "100%",
+        maxWidth: messages.length > 0 ? 990 : 590,
+        transition: "all 0.5s ease",
+        transform: messages.length > 0 ? "" : "",
+      }}
+    >
       <div className="input-card">
         {/* Top shimmer line */}
         <div
@@ -89,14 +102,19 @@ export default function InputCard({ input, setInput, dark, inputCardRef }) {
           <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
             <button
               className="nav-btn"
-              style={{ width: "auto", padding: "5px 10px", fontSize: 12.5, borderRadius: 8 }}
+              style={{
+                width: "auto",
+                padding: "5px 10px",
+                fontSize: 12.5,
+                borderRadius: 8,
+              }}
             >
-              Sonnet 4.6 <Ic d="M6 9l6 6 6-6" size={11} sw={2} />
+              BrainEx 1.0 <Ic d="M6 9l6 6 6-6" size={11} sw={2} />
             </button>
             <button
               ref={sendRef}
               className="send-btn"
-              onClick={() => setInput("")}
+              onClick={handleSubmit}
             >
               <Ic d="M12 19V5M5 12l7-7 7 7" size={13} sw={2.2} />
             </button>
