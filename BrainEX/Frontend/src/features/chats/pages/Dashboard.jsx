@@ -29,7 +29,7 @@ export default function Ai() {
 
   const dark = theme === "dark";
 
-  // ── Init ──────────────────────────────────────────────────────────────────
+
   useEffect(() => {
     handleFetchChats();
   }, []);
@@ -45,7 +45,6 @@ export default function Ai() {
       .fromTo(inputCardRef.current, { opacity: 0, y: 24, scale: 0.97 }, { opacity: 1, y: 0, scale: 1, duration: 0.7 }, 0.75);
   }, []);
 
-  // ── Handlers ──────────────────────────────────────────────────────────────
   const toggleTheme = useCallback(() => {
     const next = theme === "dark" ? "light" : "dark";
     if (!document.startViewTransition) { setTheme(next); return; }
@@ -71,7 +70,6 @@ export default function Ai() {
     if (response.success) navigate("/home");
   };
 
-  // ── Global click-outside handler ──────────────────────────────────────────
   useEffect(() => {
     const h = (e) => {
       if (!e.target.closest("[data-prof]")) setProfile(false);
@@ -83,13 +81,10 @@ export default function Ai() {
 
   const pRect = profileRef.current?.getBoundingClientRect();
 
-  // ── Render ────────────────────────────────────────────────────────────────
   return (
     <>
       <style>{THEME_STYLES}</style>
       <div className="app-root" data-theme={theme}>
-
-        {/* ── SIDEBAR ─────────────────────────────────────────────────────── */}
         <Sidebar
           sidebar={sidebar}
           toggleSidebar={toggleSidebar}
@@ -102,10 +97,8 @@ export default function Ai() {
           setChatMenu={setChatMenu}
         />
 
-        {/* ── MAIN ────────────────────────────────────────────────────────── */}
         <main className="main-area">
 
-          {/* Topbar */}
           <div style={{ display: "flex", alignItems: "center", padding: "12px 16px 8px", gap: 8 }}>
             <button className="icon-btn" onClick={toggleSidebar} title="Toggle sidebar">
               <LayoutIc />
@@ -128,7 +121,6 @@ export default function Ai() {
             </button>
           </div>
 
-          {/* Center content */}
           <div
             style={{
               flex: 1,
@@ -142,7 +134,6 @@ export default function Ai() {
               zIndex: 1,
             }}
           >
-            {/* Upgrade pill */}
             <div ref={pillRef}>
               <button className="upgrade-pill">
                 Free plan
@@ -151,7 +142,6 @@ export default function Ai() {
               </button>
             </div>
 
-            {/* Greeting / messages */}
             {messages.length > 0 ? (
               <div className="message-container">
                 {messages.map((msg, i) => <div key={i}>Message</div>)}
@@ -175,7 +165,6 @@ export default function Ai() {
               </div>
             )}
 
-            {/* Input */}
             <InputCard
               input={input}
               setInput={setInput}
@@ -185,7 +174,6 @@ export default function Ai() {
           </div>
         </main>
 
-        {/* ── CHAT CONTEXT MENU ───────────────────────────────────────────── */}
         {chatMenu && (
           <DdMenu
             items={CHAT_MENU}
@@ -194,7 +182,6 @@ export default function Ai() {
           />
         )}
 
-        {/* ── PROFILE DROPDOWN ────────────────────────────────────────────── */}
         {profile && pRect && (
           <ProfileDropdown
             pRect={pRect}

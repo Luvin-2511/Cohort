@@ -11,7 +11,7 @@ export function initializeSocket(){
         withCredentials:true
     })
 
-    socket.on("connection",()=>{
+    socket.on("connect",()=>{
         console.log("Connection Established !")
     })
 }

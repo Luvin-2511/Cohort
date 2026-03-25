@@ -7,7 +7,7 @@ export default function ChatRow({ label, onMenu, handleMessagesOfChat }) {
   const rowRef = useRef(null);
 
   const openMessage = async () => {
-    await handleMessagesOfChat({ chatId: label._id });
+    await handleMessagesOfChat(label._id);
   };
 
   return (
