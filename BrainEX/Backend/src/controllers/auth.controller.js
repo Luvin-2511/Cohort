@@ -10,45 +10,46 @@ import { sendMail } from "../services/email.service.js";
  * @param {import('express').Request} req
  * @param {import('express').Response} res
  */
-export async function registerController(req, res) {
-  const { username, email, password } = req.body;
-  if (!username || !email || !password) {
-    return res.status(401).json({
-      success: false,
-      message: "Fill all field correctly !",
+export async function registerController(req, res, next) {
+  try {
+    const { username, email, password } = req.body;
+    if (!username || !email || !password) {
+      return next({
+        status: 401,
+        message: "Fill all field correctly !",
+      });
+    }
+    const isUserAlreadyExists = await userModel.findOne({
+      $or: [{ email: email }, { username: username }],
     });
-  }
-  const isUserAlreadyExists = await userModel.findOne({
-    $or: [{ email: email }, { username: username }],
-  });
 
-  if (isUserAlreadyExists) {
-    return res.status(409).json({
-      success: false,
-      message: "User already exists !",
+    if (isUserAlreadyExists) {
+      return next({
+        status: 409,
+        message: "User already exists !",
+      });
+    }
+
+    const hashPassword = await bcrypt.hash(password, 10);
+
+    const user = await userModel.create({
+      email: email,
+      username: username,
+      password: hashPassword,
+      verified: false,
     });
-  }
 
-  const hashPassword = await bcrypt.hash(password, 10);
+    const token = jwt.sign(
+      {
+        email: user.email,
+      },
+      process.env.JWT_SECRET,
+    );
 
-  const user = await userModel.create({
-    email: email,
-    username: username,
-    password: hashPassword,
-    verified: false,
-  });
-
-  const token = jwt.sign(
-    {
-      email:user.email
-    },
-    process.env.JWT_SECRET,
-  );
-
-  const mailOptions = {
-    to: email,
-    subject: "Welcome to BrainEX 🚀",
-    html: `
+    const mailOptions = {
+      to: email,
+      subject: "Welcome to BrainEX 🚀",
+      html: `
   <div style="font-family: Arial, sans-serif; background-color: #f4f6f8; padding: 20px;">
     
     <table align="center" width="600" style="background: #ffffff; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
@@ -99,16 +100,19 @@ export async function registerController(req, res) {
     </table>
   </div>
   `,
-    text: `Welcome to BrainEX! We're super excited to have you join us. Explore, learn, and build amazing things with us. Click the link below to activate your account: http://localhost:3000/activate`,
-  };
+      text: `Welcome to BrainEX! We're super excited to have you join us. Explore, learn, and build amazing things with us. Click the link below to activate your account: http://localhost:3000/activate`,
+    };
 
-  const mailSent = await sendMail(mailOptions);
+    const mailSent = await sendMail(mailOptions);
 
-  return res.status(200).json({
-    success: true,
-    message: "User registered successfully !",
-    mailSent,
-  });
+    return res.status(200).json({
+      success: true,
+      message: "User registered successfully !",
+      mailSent,
+    });
+  } catch (error) {
+    next(error);
+  }
 }
 
 /**
@@ -117,50 +121,54 @@ export async function registerController(req, res) {
  * @param {import('express').Request} req
  * @param {import('express').Response} res
  */
-export async function loginController(req, res) {
-  const { email, password } = req.body;
-  if (!email || !password) {
-    return res.status(401).json({
-      success: false,
-      message: "Fill all fields correctly !",
+export async function loginController(req, res, next) {
+  try {
+    const { email, password } = req.body;
+    if (!email || !password) {
+      return next({
+        status: 401,
+        message: "Fill all fields correctly !",
+      });
+    }
+
+    const user = await userModel
+      .findOne({
+        email: email,
+      })
+      .select("+password");
+
+    if (!user) {
+      return next({
+        status: 404,
+        message: "Incorrect email or password !",
+      });
+    }
+
+    const isValidPassword = await bcrypt.compare(password, user.password);
+    if (!isValidPassword) {
+      return next({
+        status: 400,
+        message: "Incorrect email or password",
+      });
+    }
+
+    const token = jwt.sign(
+      {
+        id: user._id,
+        username: user.username,
+      },
+      process.env.JWT_SECRET,
+    );
+
+    res.cookie("token", token);
+
+    return res.status(201).json({
+      success: true,
+      message: "User logged in successfully !",
     });
+  } catch (err) {
+    next(err);
   }
-
-  const user = await userModel
-    .findOne({
-      email: email,
-    })
-    .select("+password");
-
-  if (!user) {
-    return res.status(404).json({
-      success: false,
-      message: "Incorrect email or password !",
-    });
-  }
-
-  const isValidPassword = await bcrypt.compare(password, user.password);
-  if (!isValidPassword) {
-    return res.status(400).json({
-      success: false,
-      message: "Incorrect email or password",
-    });
-  }
-
-  const token = jwt.sign(
-    {
-      id: user._id,
-      username: user.username,
-    },
-    process.env.JWT_SECRET,
-  );
-
-  res.cookie("token", token);
-
-  return res.status(201).json({
-    success: true,
-    message: "User logged in successfully !",
-  });
 }
 
 /**
@@ -169,16 +177,20 @@ export async function loginController(req, res) {
  * @param {import('express').Request} req
  * @param {import('express').Response} res
  */
-export async function logoutController(req, res) {
-  const { token } = req.cookies;
-  await blackListModel.create({
-    token: token,
-  });
-  res.clearCookie("token");
-  return res.status(201).json({
-    success: true,
-    message: "User logout Successfully !",
-  });
+export async function logoutController(req, res, next) {
+  try {
+    const { token } = req.cookies;
+    await blackListModel.create({
+      token: token,
+    });
+    res.clearCookie("token");
+    return res.status(201).json({
+      success: true,
+      message: "User logout Successfully !",
+    });
+  } catch (err) {
+    next(err);
+  }
 }
 
 /**
@@ -187,20 +199,24 @@ export async function logoutController(req, res) {
  * @param {import('express').Request} req
  * @param {import('express').Response} res
  */
-export async function getMeController(req, res) {
-  const { id } = req.user;
-  if (!id) {
-    return res.status(404).json({
-      success: false,
-      message: "Id not found !",
+export async function getMeController(req, res, next) {
+  try {
+    const { id } = req.user;
+    if (!id) {
+      return next({
+        status: 404,
+        message: "Id not found !",
+      });
+    }
+    const user = await userModel.findById(id);
+    return res.status(200).json({
+      success: true,
+      message: "User fetched successfully !",
+      user,
     });
+  } catch (err) {
+    next(err);
   }
-  const user = await userModel.findById(id);
-  return res.status(200).json({
-    success: true,
-    message: "User fetched successfully !",
-    user,
-  });
 }
 
 /**
@@ -209,35 +225,35 @@ export async function getMeController(req, res) {
  * @param {import('express').Request} req
  * @param {import('express').Response} res
  */
-export async function emailVerify(req, res) {
+export async function emailVerify(req, res, next) {
   const { token } = req.query;
-  if(!token){
-    return res.status(404).json({
-      success:false,
-      message:"Token is required to activate account"
-    })
+  if (!token) {
+    return next({
+      status: 404,
+      message: "Token is required to activate account",
+    });
   }
 
   try {
-    const decoded = jwt.verify(token,process.env.JWT_SECRET)
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
     const user = await userModel.findOne({
-      email:decoded.email
-    })
-    if(!user){
-      return res.status(404).json({
-        success:false,
-        message:"Invalid User or token !"
-      })
+      email: decoded.email,
+    });
+    if (!user) {
+      return next({
+        status: 404,
+        message: "Invalid User or token !",
+      });
     }
 
-    if(user.verified){
-      return res.status(400).json({
-        success:false,
-        message:"User already verified"
-      })
+    if (user.verified) {
+      return next({
+        status: 400,
+        message: "User already verified",
+      });
     }
-    user.verified = true
-    await user.save()
+    user.verified = true;
+    await user.save();
 
     const html = `
 <div style="font-family: Arial, sans-serif; background-color: #f4f6f8; padding: 40px;">
@@ -268,13 +284,11 @@ export async function emailVerify(req, res) {
 </div>
 `;
 
-res.send(html)
-
-1  }catch(err){
-    return res.status(400).json({
-      success:false,
-      message:"Error occured"
-    })
+    res.send(html);
+  } catch (err) {
+    return next({
+      status: 400,
+      message: "Error occured",
+    });
   }
 }
-

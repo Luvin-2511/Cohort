@@ -17,15 +17,15 @@ app.use(
     credentials: true,
   }),
 );
-app.use(errorMiddleware);
 
 /**
  * Routes
- */
+*/
 import authRouter from "./routes/auth.route.js";
 import chatRouter from "./routes/chat.route.js";
 
 app.use("/api/auth", authRouter);
 app.use("/api/chat",chatRouter)
+app.use(errorMiddleware);
 
 export default app;
