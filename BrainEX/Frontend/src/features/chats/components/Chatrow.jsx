@@ -3,40 +3,28 @@ import { gsap } from "https://cdn.skypack.dev/gsap";
 import { DotsIc } from "./Icons";
 import { useDispatch } from "react-redux";
 import { setChatId } from "../slices/chat.slice";
+import useChat from "../hooks/useChat";
 
 export default function ChatRow({ label, onMenu, handleMessagesOfChat }) {
   const btnRef = useRef(null);
   const rowRef = useRef(null);
-  const dispatch = useDispatch()
-  
+  const dispatch = useDispatch();
+  const {chatId} =useChat()
 
   const openMessage = async () => {
+    dispatch(setChatId(label._id));
     await handleMessagesOfChat(label._id);
-    dispatch(setChatId(label._id))
   };
 
   return (
     <div
+      onClick={openMessage}
       ref={rowRef}
-      className="chat-row"
+      className={`chat-row ${chatId === label._id ? 'active' : ''}`}
       onMouseEnter={() => gsap.to(rowRef.current, { x: 2, duration: 0.15 })}
       onMouseLeave={() => gsap.to(rowRef.current, { x: 0, duration: 0.15 })}
     >
-      <span
-        onClick={openMessage}
-        style={{
-          fontSize: 13,
-          color: "var(--text-muted)",
-          overflow: "hidden",
-          textOverflow: "ellipsis",
-          whiteSpace: "nowrap",
-          flex: 1,
-          lineHeight: 1.35,
-          transition: "color 0.1s",
-        }}
-        onMouseEnter={(e) => (e.currentTarget.style.color = "var(--text-primary)")}
-        onMouseLeave={(e) => (e.currentTarget.style.color = "var(--text-muted)")}
-      >
+      <span className={`chat-row-title ${chatId === label._id ? 'active' : ''}`}>
         {label.title}
       </span>
       <button
@@ -44,7 +32,7 @@ export default function ChatRow({ label, onMenu, handleMessagesOfChat }) {
         className="dots-btn"
         onClick={(e) => {
           e.stopPropagation();
-          onMenu(e, btnRef);
+          onMenu(e, btnRef,label._id);
         }}
       >
         <DotsIc />

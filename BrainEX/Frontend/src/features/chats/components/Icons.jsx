@@ -77,7 +77,7 @@ export const StarLogo = ({ size = 18 }) => (
     height={size}
     viewBox="0 0 44 44"
     fill="none"
-    style={{ color: "var(--accent)" }}
+    className="icon-accent"
   >
     <polygon
       points="22,3 38,12 38,32 22,41 6,32 6,12"
@@ -106,8 +106,7 @@ export const StarHero = () => (
     height="46"
     viewBox="0 0 44 44"
     fill="none"
-    className="asterisk-spin"
-    style={{ color: "var(--accent)" }}
+    className="asterisk-spin icon-accent"
   >
     <polygon
       points="22,3 38,12 38,32 22,41 6,32 6,12"
