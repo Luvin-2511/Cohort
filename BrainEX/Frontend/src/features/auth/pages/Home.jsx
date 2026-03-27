@@ -167,8 +167,11 @@ function TypewriterText({ phrases }) {
 function FloatingCard({ text, src, x, y, delay }) {
   const ref=useRef(null);
   useEffect(()=>{
-    gsap.fromTo(ref.current,{opacity:0,scale:0.7,y:20},{opacity:1,scale:1,y:0,duration:1,delay,ease:"back.out(2)"});
-    gsap.to(ref.current,{y:-16,duration:3+Math.random()*2,ease:"sine.inOut",yoyo:true,repeat:-1,delay:delay+0.5});
+    let ctx = gsap.context(() => {
+      gsap.fromTo(ref.current,{opacity:0,scale:0.7,y:20},{opacity:1,scale:1,y:0,duration:1,delay,ease:"back.out(2)"});
+      gsap.to(ref.current,{y:-16,duration:3+Math.random()*2,ease:"sine.inOut",yoyo:true,repeat:-1,delay:delay+0.5});
+    });
+    return () => ctx.revert();
   },[]);
   return (
     <div ref={ref} style={{ position:"absolute", left:x, top:y, zIndex:3,
@@ -187,10 +190,13 @@ function FloatingCard({ text, src, x, y, delay }) {
 function FeatureCard({ icon, title, desc, accent, index }) {
   const ref=useRef(null);
   useEffect(()=>{
-    gsap.fromTo(ref.current,
-      {opacity:0,y:60,rotateX:15},
-      {opacity:1,y:0,rotateX:0,duration:0.9,delay:index*0.08,ease:"power3.out",
-       scrollTrigger:{trigger:ref.current,start:"top 88%"}});
+    let ctx = gsap.context(() => {
+      gsap.fromTo(ref.current,
+        {opacity:0,y:60,rotateX:15},
+        {opacity:1,y:0,rotateX:0,duration:0.9,delay:index*0.08,ease:"power3.out",
+         scrollTrigger:{trigger:ref.current,start:"top 88%"}});
+    });
+    return () => ctx.revert();
   },[]);
   return (
     <div ref={ref} style={{ padding:"30px", background:"rgba(12,9,24,0.7)",
@@ -212,8 +218,11 @@ function FeatureCard({ icon, title, desc, accent, index }) {
 function Stat({ value, label, index }) {
   const ref=useRef(null);
   useEffect(()=>{
-    gsap.fromTo(ref.current,{opacity:0,y:30},{opacity:1,y:0,duration:0.8,delay:index*0.12,ease:"power3.out",
-      scrollTrigger:{trigger:ref.current,start:"top 88%"}});
+    let ctx = gsap.context(() => {
+      gsap.fromTo(ref.current,{opacity:0,y:30},{opacity:1,y:0,duration:0.8,delay:index*0.12,ease:"power3.out",
+        scrollTrigger:{trigger:ref.current,start:"top 88%"}});
+    });
+    return () => ctx.revert();
   },[]);
   return (
     <div ref={ref} style={{textAlign:"center"}}>
@@ -227,8 +236,11 @@ function Stat({ value, label, index }) {
 function DemoAnswer() {
   const ref=useRef(null);
   useEffect(()=>{
-    gsap.fromTo(ref.current,{opacity:0,y:40,scale:0.96},{opacity:1,y:0,scale:1,duration:1.1,ease:"power3.out",
-      scrollTrigger:{trigger:ref.current,start:"top 80%"}});
+    let ctx = gsap.context(() => {
+      gsap.fromTo(ref.current,{opacity:0,y:40,scale:0.96},{opacity:1,y:0,scale:1,duration:1.1,ease:"power3.out",
+        scrollTrigger:{trigger:ref.current,start:"top 80%"}});
+    });
+    return () => ctx.revert();
   },[]);
   return (
     <div ref={ref} style={{ background:"rgba(12,9,24,0.88)", backdropFilter:"blur(30px)",
@@ -273,8 +285,11 @@ function DemoAnswer() {
 function PricingCard({ plan, price, features, highlighted, index }) {
   const ref=useRef(null);
   useEffect(()=>{
-    gsap.fromTo(ref.current,{opacity:0,y:60},{opacity:1,y:0,duration:0.9,delay:index*0.1,ease:"power3.out",
-      scrollTrigger:{trigger:ref.current,start:"top 88%"}});
+    let ctx = gsap.context(() => {
+      gsap.fromTo(ref.current,{opacity:0,y:60},{opacity:1,y:0,duration:0.9,delay:index*0.1,ease:"power3.out",
+        scrollTrigger:{trigger:ref.current,start:"top 88%"}});
+    });
+    return () => ctx.revert();
   },[]);
   return (
     <div ref={ref} style={{ padding:"34px 28px",
@@ -316,8 +331,11 @@ function PricingCard({ plan, price, features, highlighted, index }) {
 function Step({ num, title, desc, icon, align, index }) {
   const ref=useRef(null);
   useEffect(()=>{
-    gsap.fromTo(ref.current,{opacity:0,x:align==="left"?-60:60},{opacity:1,x:0,duration:0.9,delay:index*0.1,ease:"power3.out",
-      scrollTrigger:{trigger:ref.current,start:"top 88%"}});
+    let ctx = gsap.context(() => {
+      gsap.fromTo(ref.current,{opacity:0,x:align==="left"?-60:60},{opacity:1,x:0,duration:0.9,delay:index*0.1,ease:"power3.out",
+        scrollTrigger:{trigger:ref.current,start:"top 88%"}});
+    });
+    return () => ctx.revert();
   },[]);
   return (
     <div ref={ref} style={{ display:"flex",gap:32,marginBottom:64,flexDirection:align==="right"?"row-reverse":"row" }}>
@@ -339,8 +357,11 @@ function Step({ num, title, desc, icon, align, index }) {
 function CTASection({ onNavigateToRegister }) {
   const ref=useRef(null);
   useEffect(()=>{
-    gsap.fromTo(ref.current.children,{opacity:0,y:50},{opacity:1,y:0,stagger:0.1,duration:0.9,ease:"power3.out",
-      scrollTrigger:{trigger:ref.current,start:"top 80%"}});
+    let ctx = gsap.context(() => {
+      gsap.fromTo(ref.current.children,{opacity:0,y:50},{opacity:1,y:0,stagger:0.1,duration:0.9,ease:"power3.out",
+        scrollTrigger:{trigger:ref.current,start:"top 80%"}});
+    });
+    return () => ctx.revert();
   },[]);
   return (
     <div ref={ref} style={{position:"relative",zIndex:2}}>
@@ -407,10 +428,13 @@ function Marquee({ items }) {
 function BentoGrid() {
   const ref = useRef(null);
   useEffect(()=>{
-    const cards = ref.current.querySelectorAll(".bento-card");
-    gsap.fromTo(cards, {opacity:0,y:50,scale:0.93},
-      {opacity:1,y:0,scale:1,duration:0.8,stagger:0.07,ease:"power3.out",
-       scrollTrigger:{trigger:ref.current,start:"top 85%"}});
+    let ctx = gsap.context(() => {
+      const cards = ref.current.querySelectorAll(".bento-card");
+      gsap.fromTo(cards, {opacity:0,y:50,scale:0.93},
+        {opacity:1,y:0,scale:1,duration:0.8,stagger:0.07,ease:"power3.out",
+         scrollTrigger:{trigger:ref.current,start:"top 85%"}});
+    });
+    return () => ctx.revert();
   },[]);
 
   return (
@@ -476,10 +500,13 @@ function BentoGrid() {
 function ParallaxSection({ children }) {
   const ref = useRef(null);
   useEffect(()=>{
-    gsap.to(ref.current, {
-      yPercent: -15, ease:"none",
-      scrollTrigger:{ trigger:ref.current, start:"top bottom", end:"bottom top", scrub:true }
+    let ctx = gsap.context(() => {
+      gsap.to(ref.current, {
+        yPercent: -15, ease:"none",
+        scrollTrigger:{ trigger:ref.current, start:"top bottom", end:"bottom top", scrub:true }
+      });
     });
+    return () => ctx.revert();
   },[]);
   return <div ref={ref}>{children}</div>;
 }
@@ -505,34 +532,36 @@ export function HomePage({ onNavigateToLogin, onNavigateToRegister }) {
   },[]);
 
   useEffect(()=>{
-    // Navbar
-    gsap.fromTo(navRef.current,{opacity:0,y:-30},{opacity:1,y:0,duration:0.9,ease:"power3.out"});
+    let ctx = gsap.context(() => {
+      // Navbar
+      gsap.fromTo(navRef.current,{opacity:0,y:-30},{opacity:1,y:0,duration:0.9,ease:"power3.out"});
 
-    // Hero sequence
-    const tl = gsap.timeline({defaults:{ease:"power3.out"}});
-    tl.fromTo(badgeRef.current,{opacity:0,y:20},{opacity:1,y:0,duration:0.7},0.4)
-      .fromTo(h1Ref.current.children,{opacity:0,y:80,skewY:4},{opacity:1,y:0,skewY:0,stagger:0.1,duration:1.1},0.6)
-      .fromTo(subRef.current,{opacity:0,y:24},{opacity:1,y:0,duration:0.8},1.1)
-      .fromTo(searchRef.current,{opacity:0,y:30,scale:0.96},{opacity:1,y:0,scale:1,duration:0.9},1.3)
-      .fromTo(tagsRef.current?.children||[],{opacity:0,y:14},{opacity:1,y:0,stagger:0.05,duration:0.5},1.6);
+      // Hero sequence
+      const tl = gsap.timeline({defaults:{ease:"power3.out"}});
+      tl.fromTo(badgeRef.current,{opacity:0,y:20},{opacity:1,y:0,duration:0.7},0.4)
+        .fromTo(h1Ref.current.children,{opacity:0,y:80,skewY:4},{opacity:1,y:0,skewY:0,stagger:0.1,duration:1.1},0.6)
+        .fromTo(subRef.current,{opacity:0,y:24},{opacity:1,y:0,duration:0.8},1.1)
+        .fromTo(searchRef.current,{opacity:0,y:30,scale:0.96},{opacity:1,y:0,scale:1,duration:0.9},1.3)
+        .fromTo(tagsRef.current?.children||[],{opacity:0,y:14},{opacity:1,y:0,stagger:0.05,duration:0.5},1.6);
 
-    // Ambient orb animations
-    gsap.to(".hp-orb-1",{y:-35,x:18,duration:6,ease:"sine.inOut",yoyo:true,repeat:-1});
-    gsap.to(".hp-orb-2",{y:22,x:-14,duration:7.5,ease:"sine.inOut",yoyo:true,repeat:-1,delay:2});
-    gsap.to(".hp-orb-3",{y:-16,duration:5,ease:"sine.inOut",yoyo:true,repeat:-1,delay:1});
+      // Ambient orb animations
+      gsap.to(".hp-orb-1",{y:-35,x:18,duration:6,ease:"sine.inOut",yoyo:true,repeat:-1});
+      gsap.to(".hp-orb-2",{y:22,x:-14,duration:7.5,ease:"sine.inOut",yoyo:true,repeat:-1,delay:2});
+      gsap.to(".hp-orb-3",{y:-16,duration:5,ease:"sine.inOut",yoyo:true,repeat:-1,delay:1});
 
-    // Scroll-triggered section reveals
-    gsap.utils.toArray(".section-title").forEach((el,i)=>{
-      gsap.fromTo(el,{opacity:0,y:40},{opacity:1,y:0,duration:0.8,ease:"power3.out",
-        scrollTrigger:{trigger:el,start:"top 88%"}});
+      // Scroll-triggered section reveals
+      gsap.utils.toArray(".section-title").forEach((el,i)=>{
+        gsap.fromTo(el,{opacity:0,y:40},{opacity:1,y:0,duration:0.8,ease:"power3.out",
+          scrollTrigger:{trigger:el,start:"top 88%"}});
+      });
+
+      // Horizontal rule lines that animate in
+      gsap.utils.toArray(".hr-line").forEach(el=>{
+        gsap.fromTo(el,{scaleX:0},{scaleX:1,duration:1.2,ease:"power3.inOut",
+          scrollTrigger:{trigger:el,start:"top 90%"}});
+      });
     });
-
-    // Horizontal rule lines that animate in
-    gsap.utils.toArray(".hr-line").forEach(el=>{
-      gsap.fromTo(el,{scaleX:0},{scaleX:1,duration:1.2,ease:"power3.inOut",
-        scrollTrigger:{trigger:el,start:"top 90%"}});
-    });
-
+    return () => ctx.revert();
   },[]);
 
   const navigate = useNavigate()

@@ -8,6 +8,7 @@ import Private from "./features/shared/components/Private";
 import { PerplexityLoader } from "./features/shared/components/Loader";
 import Ai from "./features/chats/pages/Dashboard";
 import ErrorHandler from "./features/shared/components/ErrorHandler";
+import NotFound from "./features/shared/pages/Notfound";
 
 const AppRoutes = () => {
   return (
@@ -44,6 +45,12 @@ const AppRoutes = () => {
             <Private>
               <Ai />
             </Private>
+          }
+        />
+        <Route
+          path="*"
+          element={
+            <NotFound />
           }
         />
       </Routes>

@@ -110,16 +110,19 @@ function SmartInput({ label, type = "text", value, onChange, hint, validate }) {
   const showValid = touched && value && valid !== null;
 
   useEffect(() => {
-    gsap.to(lineRef.current, {
-      scaleX: focused ? 1 : 0,
-      background: showValid
-        ? valid
-          ? "linear-gradient(90deg,transparent,#22c55e,transparent)"
-          : "linear-gradient(90deg,transparent,#ef4444,transparent)"
-        : "linear-gradient(90deg,transparent,#7c5cfc,transparent)",
-      duration: focused ? 0.35 : 0.25,
-      ease: "power2.out",
+    let ctx = gsap.context(() => {
+      gsap.to(lineRef.current, {
+        scaleX: focused ? 1 : 0,
+        background: showValid
+          ? valid
+            ? "linear-gradient(90deg,transparent,#22c55e,transparent)"
+            : "linear-gradient(90deg,transparent,#ef4444,transparent)"
+          : "linear-gradient(90deg,transparent,#7c5cfc,transparent)",
+        duration: focused ? 0.35 : 0.25,
+        ease: "power2.out",
+      });
     });
+    return () => ctx.revert();
   }, [focused, showValid, valid]);
 
   const borderColor = showValid
@@ -273,13 +276,16 @@ function GlitchText({ text, style = {} }) {
   const ref = useRef(null);
   useEffect(() => {
     let timeout;
+    let ctx = gsap.context(() => {});
     const glitch = () => {
-      gsap.to(ref.current, { x: -3, skewX: 3, opacity: 0.8, duration: 0.05, yoyo: true, repeat: 3, ease: "none",
-        onComplete: () => gsap.set(ref.current, { x: 0, skewX: 0, opacity: 1 }) });
+      ctx.add(() => {
+        gsap.to(ref.current, { x: -3, skewX: 3, opacity: 0.8, duration: 0.05, yoyo: true, repeat: 3, ease: "none",
+          onComplete: () => gsap.set(ref.current, { x: 0, skewX: 0, opacity: 1 }) });
+      });
       timeout = setTimeout(glitch, 3000 + Math.random() * 4000);
     };
     timeout = setTimeout(glitch, 2500);
-    return () => clearTimeout(timeout);
+    return () => { clearTimeout(timeout); ctx.revert(); };
   }, []);
   return <span ref={ref} style={style}>{text}</span>;
 }
@@ -321,17 +327,20 @@ export default function RegisterPage({ onNavigateToLogin }) {
   const progress = filledFields / 4;
 
   useEffect(() => {
-    const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
-    tl.fromTo(leftRef.current,  { opacity: 0, x: -60 }, { opacity: 1, x: 0, duration: 1 }, 0)
-      .fromTo(rightRef.current, { opacity: 0, x: 60 },  { opacity: 1, x: 0, duration: 1 }, 0.1)
-      .fromTo(cardRef.current,  { opacity: 0, y: 30, scale: 0.96 }, { opacity: 1, y: 0, scale: 1, duration: 0.9 }, 0.25)
-      .fromTo(headRef.current.children,  { opacity: 0, y: 20 }, { opacity: 1, y: 0, stagger: 0.07, duration: 0.6 }, 0.5)
-      .fromTo(formRef.current.children,  { opacity: 0, y: 14 }, { opacity: 1, y: 0, stagger: 0.05, duration: 0.5 }, 0.7)
-      .fromTo(benefitsRef.current.children, { opacity: 0, x: -20 }, { opacity: 1, x: 0, stagger: 0.09, duration: 0.6 }, 0.7);
+    let ctx = gsap.context(() => {
+      const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+      tl.fromTo(leftRef.current,  { opacity: 0, x: -60 }, { opacity: 1, x: 0, duration: 1 }, 0)
+        .fromTo(rightRef.current, { opacity: 0, x: 60 },  { opacity: 1, x: 0, duration: 1 }, 0.1)
+        .fromTo(cardRef.current,  { opacity: 0, y: 30, scale: 0.96 }, { opacity: 1, y: 0, scale: 1, duration: 0.9 }, 0.25)
+        .fromTo(headRef.current.children,  { opacity: 0, y: 20 }, { opacity: 1, y: 0, stagger: 0.07, duration: 0.6 }, 0.5)
+        .fromTo(formRef.current.children,  { opacity: 0, y: 14 }, { opacity: 1, y: 0, stagger: 0.05, duration: 0.5 }, 0.7)
+        .fromTo(benefitsRef.current.children, { opacity: 0, x: -20 }, { opacity: 1, x: 0, stagger: 0.09, duration: 0.6 }, 0.7);
 
-    gsap.to(".reg-orb-1", { y: -28, x: 16, duration: 5.5, ease: "sine.inOut", yoyo: true, repeat: -1 });
-    gsap.to(".reg-orb-2", { y: 20, x: -12, duration: 4.5, ease: "sine.inOut", yoyo: true, repeat: -1, delay: 1.5 });
-    gsap.to(".reg-orb-3", { y: -14, duration: 3.8, ease: "sine.inOut", yoyo: true, repeat: -1, delay: 0.8 });
+      gsap.to(".reg-orb-1", { y: -28, x: 16, duration: 5.5, ease: "sine.inOut", yoyo: true, repeat: -1 });
+      gsap.to(".reg-orb-2", { y: 20, x: -12, duration: 4.5, ease: "sine.inOut", yoyo: true, repeat: -1, delay: 1.5 });
+      gsap.to(".reg-orb-3", { y: -14, duration: 3.8, ease: "sine.inOut", yoyo: true, repeat: -1, delay: 0.8 });
+    });
+    return () => ctx.revert();
   }, []);
 
   useEffect(() => {

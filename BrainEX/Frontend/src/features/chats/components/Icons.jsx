@@ -1,20 +1,30 @@
-export const Ic = ({ d, size = 15, sw = 1.75, fill = "none", style = {} }) => (
-  <svg
-    width={size}
-    height={size}
-    viewBox="0 0 24 24"
-    fill={fill}
-    stroke="currentColor"
-    strokeWidth={sw}
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    style={style}
-  >
-    {[].concat(d).map((p, i) => (
-      <path key={i} d={p} />
-    ))}
-  </svg>
-);
+export const Ic = ({
+  d,
+  size = 15,
+  sw = 1.75,
+  fill = "none",
+  style = {},
+  loading,
+}) =>
+  !loading ? (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill={fill}
+      stroke="currentColor"
+      strokeWidth={sw}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      style={style}
+    >
+      {[].concat(d).map((p, i) => (
+        <path key={i} d={p} />
+      ))}
+    </svg>
+  ) : (
+    <div className="loader-send"></div>
+  );
 
 export const LayoutIc = ({ size = 14 }) => (
   <svg

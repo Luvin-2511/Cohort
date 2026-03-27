@@ -125,13 +125,16 @@ function FloatingInput({ label, type = "text", value, onChange, icon: Icon }) {
   const labelRef = useRef(null);
 
   useEffect(() => {
-    if (focused) {
-      gsap.to(lineRef.current, { scaleX: 1, duration: 0.35, ease: "power2.out" });
-      gsap.to(labelRef.current, { color: "#7c5cfc", y: -2, duration: 0.2 });
-    } else {
-      gsap.to(lineRef.current, { scaleX: 0, duration: 0.3, ease: "power2.in" });
-      gsap.to(labelRef.current, { color: "#4b5569", y: 0, duration: 0.2 });
-    }
+    let ctx = gsap.context(() => {
+      if (focused) {
+        gsap.to(lineRef.current, { scaleX: 1, duration: 0.35, ease: "power2.out" });
+        gsap.to(labelRef.current, { color: "#7c5cfc", y: -2, duration: 0.2 });
+      } else {
+        gsap.to(lineRef.current, { scaleX: 0, duration: 0.3, ease: "power2.in" });
+        gsap.to(labelRef.current, { color: "#4b5569", y: 0, duration: 0.2 });
+      }
+    });
+    return () => ctx.revert();
   }, [focused]);
 
   const active = focused || value;
@@ -195,13 +198,16 @@ function GlitchText({ text, style = {} }) {
   useEffect(() => {
     const el = ref.current;
     let timeout;
+    let ctx = gsap.context(() => {});
     const glitch = () => {
-      gsap.to(el, { x: -3, skewX: 3, opacity: 0.8, duration: 0.05, yoyo: true, repeat: 3, ease: "none",
-        onComplete: () => gsap.set(el, { x: 0, skewX: 0, opacity: 1 }) });
+      ctx.add(() => {
+        gsap.to(el, { x: -3, skewX: 3, opacity: 0.8, duration: 0.05, yoyo: true, repeat: 3, ease: "none",
+          onComplete: () => gsap.set(el, { x: 0, skewX: 0, opacity: 1 }) });
+      });
       timeout = setTimeout(glitch, 3000 + Math.random() * 4000);
     };
     timeout = setTimeout(glitch, 2000);
-    return () => clearTimeout(timeout);
+    return () => { clearTimeout(timeout); ctx.revert(); };
   }, []);
   return <span ref={ref} style={style}>{text}</span>;
 }
@@ -308,18 +314,21 @@ export default function LoginPage({ onNavigateToRegister }) {
   const featuresRef = useRef(null);
 
   useEffect(() => {
-    const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
-    tl.fromTo(leftRef.current,      { opacity: 0, x: -60 },             { opacity: 1, x: 0, duration: 1 }, 0)
-      .fromTo(logoRef.current,      { opacity: 0, y: -20 },             { opacity: 1, y: 0, duration: 0.7 }, 0.3)
-      .fromTo(taglineRef.current,   { opacity: 0, y: 20 },              { opacity: 1, y: 0, duration: 0.8 }, 0.5)
-      .fromTo(featuresRef.current.children, { opacity: 0, x: -20 },     { opacity: 1, x: 0, stagger: 0.1, duration: 0.6 }, 0.7)
-      .fromTo(cardRef.current,      { opacity: 0, x: 60, scale: 0.95 }, { opacity: 1, x: 0, scale: 1, duration: 0.9 }, 0.2)
-      .fromTo(headRef.current.children, { opacity: 0, y: 20 },          { opacity: 1, y: 0, stagger: 0.08, duration: 0.6 }, 0.5)
-      .fromTo(formRef.current.children, { opacity: 0, y: 16 },          { opacity: 1, y: 0, stagger: 0.07, duration: 0.5 }, 0.7);
+    let ctx = gsap.context(() => {
+      const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+      tl.fromTo(leftRef.current,      { opacity: 0, x: -60 },             { opacity: 1, x: 0, duration: 1 }, 0)
+        .fromTo(logoRef.current,      { opacity: 0, y: -20 },             { opacity: 1, y: 0, duration: 0.7 }, 0.3)
+        .fromTo(taglineRef.current,   { opacity: 0, y: 20 },              { opacity: 1, y: 0, duration: 0.8 }, 0.5)
+        .fromTo(featuresRef.current.children, { opacity: 0, x: -20 },     { opacity: 1, x: 0, stagger: 0.1, duration: 0.6 }, 0.7)
+        .fromTo(cardRef.current,      { opacity: 0, x: 60, scale: 0.95 }, { opacity: 1, x: 0, scale: 1, duration: 0.9 }, 0.2)
+        .fromTo(headRef.current.children, { opacity: 0, y: 20 },          { opacity: 1, y: 0, stagger: 0.08, duration: 0.6 }, 0.5)
+        .fromTo(formRef.current.children, { opacity: 0, y: 16 },          { opacity: 1, y: 0, stagger: 0.07, duration: 0.5 }, 0.7);
 
-    gsap.to(".orb-1", { y: -20,       duration: 4,   ease: "sine.inOut", yoyo: true, repeat: -1 });
-    gsap.to(".orb-2", { y: 15, x: -10, duration: 5.5, ease: "sine.inOut", yoyo: true, repeat: -1, delay: 1 });
-    gsap.to(".orb-3", { y: -12, x: 8,  duration: 3.5, ease: "sine.inOut", yoyo: true, repeat: -1, delay: 2 });
+      gsap.to(".orb-1", { y: -20,       duration: 4,   ease: "sine.inOut", yoyo: true, repeat: -1 });
+      gsap.to(".orb-2", { y: 15, x: -10, duration: 5.5, ease: "sine.inOut", yoyo: true, repeat: -1, delay: 1 });
+      gsap.to(".orb-3", { y: -12, x: 8,  duration: 3.5, ease: "sine.inOut", yoyo: true, repeat: -1, delay: 2 });
+    });
+    return () => ctx.revert();
   }, []);
 
   return (

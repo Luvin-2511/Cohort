@@ -5,9 +5,11 @@ const chatSlice = createSlice({
   initialState: {
     loading: false,
     chats: [],
-    messages:[],
-    chatId:null,
-    error:false,
+    messages: [],
+    chatId: null,
+    error: false,
+    prompts: null,
+    isFetchingChats: false,
   },
   reducers: {
     setLoading: (state, action) => {
@@ -19,17 +21,39 @@ const chatSlice = createSlice({
     setMessages: (state, action) => {
       state.messages = action.payload;
     },
-    addMessage:(state,action)=>{
-      state.messages.push(action.payload)
+    addMessage: (state, action) => {
+      state.messages.push(action.payload);
     },
-    setChatId:(state,action)=>{
-      state.chatId = action.payload
+    setChatId: (state, action) => {
+      state.chatId = action.payload;
     },
-    setError:(state,action)=>{
-      state.error = action.payload
-    }
+    setFetchingChats: (state, action) => {
+      state.isFetchingChats = action.payload;
+    },
+    setError: (state, action) => {
+      state.error = action.payload;
+    },
+    setPrompts: (state, action) => {
+      state.prompts = action.payload;
+    },
+    appendToLastMessage: (state, action) => {
+      const last = state.messages[state.messages.length - 1];
+      if (last && last.role === "ai") {
+        last.content += action.payload;
+      }
+    },
   },
 });
 
-export const { setLoading, setChats, setMessages, setChatId, addMessage,setError } = chatSlice.actions;
+export const {
+  setPrompts,
+  setLoading,
+  setChats,
+  setMessages,
+  setChatId,
+  addMessage,
+  setError,
+  setFetchingChats,
+  appendToLastMessage
+} = chatSlice.actions;
 export default chatSlice.reducer;

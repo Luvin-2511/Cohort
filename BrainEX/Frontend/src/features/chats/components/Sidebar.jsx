@@ -4,21 +4,23 @@ import { NAV_TOP, NAV_BOTTOM } from "./Constants";
 import ChatRow from "./ChatRow";
 import { useDispatch } from "react-redux";
 import { setChatId, setMessages } from "../slices/chat.slice";
-import SearchModal from "./SearchModel";
+import SearchModal from "./SearchModal";
+import useAuth from "../../auth/hooks/useAuth";
+import useChat from "../hooks/useChat";
 
 export default function Sidebar({
   sidebar,
   toggleSidebar,
-  chats,
   openMenu,
-  handleMessagesOfChat,
-  user,
   setProfile,
   setChatMenu,
+  profileRef
 }) {
-  const profileRef = useRef(null);
   const dispatch = useDispatch();
   const [search, setSearch] = useState(false);
+  
+  const { user } = useAuth();
+  const { chats, handleMessagesOfChat } = useChat();
 
   return (
     <aside className={`sidebar${sidebar ? "" : " closed"}`}>

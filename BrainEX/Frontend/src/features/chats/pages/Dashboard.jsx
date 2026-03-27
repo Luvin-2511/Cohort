@@ -13,7 +13,10 @@ import InputCard from "../components/InputCard";
 import TypingLoader from "../components/TypingLoader";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-
+import SettingsModal from "../components/SettingModal";
+import useUser from "../../user/hooks/useUser";
+import { useDispatch } from "react-redux";
+import { setChatId, setMessages } from "../slices/chat.slice";
 
 export default function Ai() {
   const [theme, setTheme] = useState("dark");
@@ -21,6 +24,7 @@ export default function Ai() {
   const [input, setInput] = useState("");
   const [chatMenu, setChatMenu] = useState(null);
   const [profile, setProfile] = useState(false);
+  const [settings, setSettings] = useState(false);
 
   const profileRef = useRef(null);
   const greetRef = useRef(null);
@@ -30,49 +34,55 @@ export default function Ai() {
 
   const { user, handleLogout } = useAuth();
   const {
-    chats,
     handleFetchChats,
-    handleMessagesOfChat,
     handleResponse,
+    isFetchingChats,
+    handleRandomPrompt,
     messages,
     loading,
   } = useChat();
+  const { fontSize } = useUser();
   const navigate = useNavigate();
+  const dispatch = useDispatch()
 
   const dark = theme === "dark";
 
   useEffect(() => {
     handleFetchChats();
+    handleRandomPrompt(5);
   }, []);
 
-  useEffect(()=>{
-    bottomRef.current?.scrollIntoView({behavior:"smooth"})
-  },[messages])
+  useEffect(() => {
+    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
 
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
   }, [theme]);
 
   useEffect(() => {
-    const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
-    tl.fromTo(
-      pillRef.current,
-      { opacity: 0, y: 10 },
-      { opacity: 1, y: 0, duration: 0.5 },
-      0.3,
-    )
-      .fromTo(
-        greetRef.current,
-        { opacity: 0, y: 30, skewY: 1 },
-        { opacity: 1, y: 0, skewY: 0, duration: 0.7 },
-        0.5,
+    let ctx = gsap.context(() => {
+      const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+      tl.fromTo(
+        pillRef.current,
+        { opacity: 0, y: 10 },
+        { opacity: 1, y: 0, duration: 0.5 },
+        0.3,
       )
-      .fromTo(
-        inputCardRef.current,
-        { opacity: 0, y: 24, scale: 0.97 },
-        { opacity: 1, y: 0, scale: 1, duration: 0.7 },
-        0.75,
-      );
+        .fromTo(
+          greetRef.current,
+          { opacity: 0, y: 30, skewY: 1 },
+          { opacity: 1, y: 0, skewY: 0, duration: 0.7 },
+          0.5,
+        )
+        .fromTo(
+          inputCardRef.current,
+          { opacity: 0, y: 24, scale: 0.97 },
+          { opacity: 1, y: 0, scale: 1, duration: 0.7 },
+          0.75,
+        );
+    });
+    return () => ctx.revert();
   }, []);
 
   const toggleTheme = useCallback(() => {
@@ -119,16 +129,12 @@ export default function Ai() {
 
   return (
     <>
-
       <div className="app-root" data-theme={theme}>
         <Sidebar
+          profileRef={profileRef}
           sidebar={sidebar}
           toggleSidebar={toggleSidebar}
-          chats={chats}
           openMenu={openMenu}
-          handleMessagesOfChat={handleMessagesOfChat}
-          user={user}
-          profile={profile}
           setProfile={setProfile}
           setChatMenu={setChatMenu}
         />
@@ -144,7 +150,14 @@ export default function Ai() {
               <LayoutIc />
             </button>
             {!sidebar && (
-              <button className="icon-btn" title="New chat">
+              <button
+                onClick={() => {
+                  dispatch(setMessages([]));
+                  dispatch(setChatId(null));
+                }}
+                className="icon-btn"
+                title="New chat"
+              >
                 <Ic d="M12 5v14M5 12h14" size={14} sw={1.8} />
               </button>
             )}
@@ -166,7 +179,9 @@ export default function Ai() {
           </div>
 
           {/* Scrollable content area */}
-          <div className={`content-area ${messages.length > 0 ? 'has-messages' : 'empty'}`}>
+          <div
+            className={`content-area ${messages.length > 0 ? "has-messages" : "empty"}`}
+          >
             {messages.length > 0 ? (
               <div className="message-container">
                 {messages.map((msg) => {
@@ -174,11 +189,35 @@ export default function Ai() {
                   return (
                     <div
                       key={msg._id}
-                      className={`message-wrapper ${isUser ? 'user' : 'ai'}`}
+                      style={{
+                        fontSize:
+                          fontSize === "Medium"
+                            ? "1rem"
+                            : fontSize === "Small"
+                              ? "0.7rem"
+                              : "1rem",
+                      }}
+                      className={`message-wrapper ${isUser ? "user" : "ai"}`}
                     >
-                      <div className={`message-bubble ${isUser ? 'user' : 'ai'}`}>
                       <div ref={bottomRef}></div>
-                        {isUser?msg.content:<ReactMarkdown remarkPlugins={remarkGfm}>{msg.content}</ReactMarkdown>}
+                      <div
+                        style={{
+                          fontSize:
+                            fontSize === "Medium"
+                              ? "1rem"
+                              : fontSize === "Small"
+                                ? "0.7rem"
+                                : "1.3rem",
+                        }}
+                        className={`message-bubble ${isUser ? "user" : "ai"}`}
+                      >
+                        {isUser ? (
+                          msg.content
+                        ) : (
+                          <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                            {msg.content}
+                          </ReactMarkdown>
+                        )}
                       </div>
                     </div>
                   );
@@ -191,9 +230,7 @@ export default function Ai() {
                   <button className="upgrade-pill">
                     Free plan
                     <span className="upgrade-divider" />
-                    <span className="upgrade-text">
-                      Upgrade
-                    </span>
+                    <span className="upgrade-text">Upgrade</span>
                   </button>
                 </div>
                 <div ref={greetRef} className="greet-container">
@@ -233,6 +270,15 @@ export default function Ai() {
             user={user}
             onClose={() => setProfile(false)}
             onLogout={handleLogoutButton}
+            onSettings={() => setSettings(true)}
+          />
+        )}
+        {settings && (
+          <SettingsModal
+            onClose={() => setSettings(false)}
+            theme={theme}
+            toggleTheme={toggleTheme}
+            user={user}
           />
         )}
       </div>

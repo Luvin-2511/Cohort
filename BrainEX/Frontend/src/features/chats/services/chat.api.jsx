@@ -14,6 +14,8 @@ export function initializeSocket() {
   socket.on("connect", () => {
     console.log("Connection Established !");
   });
+  
+  return socket;
 }
 
 export async function fetchChats() {
@@ -48,6 +50,17 @@ export async function getResponse(message, chatId) {
     const response = await api.post("/api/chat/", {
       message: message,
       chat: chatId,
+    });
+    return response.data;
+  } catch (err) {
+    throw err;
+  }
+}
+
+export async function getRandomPrompt(number) {
+  try {
+    const response = await api.post("/api/chat/random-prompt", {
+      number: number,
     });
     return response.data;
   } catch (err) {
