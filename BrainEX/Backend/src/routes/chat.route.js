@@ -5,7 +5,8 @@ import {
   fetchAllChats,
   fetchMessagesOfChat,
   deleteChatController,
-  updateTitleController
+  updateTitleController,
+  generatePromptController
 } from "../controllers/chat.controller.js";
 const chatRouter = Router();
 
@@ -14,5 +15,6 @@ chatRouter.delete("/:chatId/delete", authUserMiddleware, deleteChatController);
 chatRouter.get("/fetch-chats", authUserMiddleware, fetchAllChats);
 chatRouter.get("/:chatId/messages", authUserMiddleware, fetchMessagesOfChat);
 chatRouter.patch("/:chatId/updateTitle", authUserMiddleware, updateTitleController);
+chatRouter.post("/random-prompt", authUserMiddleware, generatePromptController);
 
 export default chatRouter;

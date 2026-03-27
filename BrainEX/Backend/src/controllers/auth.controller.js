@@ -44,6 +44,7 @@ export async function registerController(req, res, next) {
         email: user.email,
       },
       process.env.JWT_SECRET,
+      { expiresIn: "1d" },
     );
 
     const mailOptions = {

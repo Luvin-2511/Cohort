@@ -1,4 +1,8 @@
-import { AIMessage, HumanMessage, SystemMessage } from "@langchain/core/messages";
+import {
+  AIMessage,
+  HumanMessage,
+  SystemMessage,
+} from "@langchain/core/messages";
 import { ChatGoogleGenerativeAI } from "@langchain/google-genai";
 import { ChatMistralAI } from "@langchain/mistralai";
 
@@ -13,13 +17,15 @@ const mistralModel = new ChatMistralAI({
 });
 
 export async function generateAiResponse(messages) {
-  const response = await geminiModel.invoke(messages.map((message)=>{
-    if(message.role == "ai"){
-        return new AIMessage(message.content)
-    }else{
-        return new HumanMessage(message.content)
-    }
-  }));
+  const response = await geminiModel.invoke(
+    messages.map((message) => {
+      if (message.role == "ai") {
+        return new AIMessage(message.content);
+      } else {
+        return new HumanMessage(message.content);
+      }
+    }),
+  );
   return response.text;
 }
 
@@ -31,4 +37,13 @@ export async function generateAiTitle(message) {
     new HumanMessage(`Conversation: ${message}`),
   ]);
   return response.text;
+}
+
+export async function generateRandomPrompt(n) {
+  if (isNaN(n) || n <= 0) throw new Error("Invalid number of prompts");
+  const response = await mistralModel.invoke([
+    new HumanMessage(`Generate random ${n} promts that the user can search just provide the prompts without numbering nothing else`),
+  ]);
+
+  return response.content.split('\n')
 }
