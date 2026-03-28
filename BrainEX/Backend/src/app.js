@@ -5,6 +5,7 @@ import { errorMiddleware } from "./middlewares/error.middleware.js";
 import cors from "cors";
 import { rateLimit } from 'express-rate-limit'
 
+
 const app = express();
 
 /**

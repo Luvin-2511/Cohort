@@ -7,7 +7,7 @@ import { ChatGoogleGenerativeAI } from "@langchain/google-genai";
 import { ChatMistralAI } from "@langchain/mistralai";
 
 const geminiModel = new ChatGoogleGenerativeAI({
-  model: "gemini-2.5-flash",
+  model: "gemini-2.0-flash-lite",
   apiKey: process.env.GEMINI_API_KEY,
 });
 
@@ -46,4 +46,27 @@ export async function generateRandomPrompt(n) {
   ]);
 
   return response.content.split('\n')
+}
+
+export async function* generateAiResponseStream(messages) {
+  const stream = await geminiModel.stream(
+    messages.map((message) => {
+      if (message.role === "ai") {
+        return new AIMessage(message.content);
+      } else {
+        return new HumanMessage(message.content);
+      }
+    })
+  );
+
+  for await (const chunk of stream) {
+    const token =
+      typeof chunk.content === "string"
+        ? chunk.content
+        : chunk.content?.[0]?.text || "";
+
+    if (!token) continue;
+
+    yield token;
+  }
 }

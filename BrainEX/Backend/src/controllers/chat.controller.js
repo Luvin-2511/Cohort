@@ -5,6 +5,7 @@ import {
   generateAiTitle,
   generateRandomPrompt,
 } from "../services/ai.service.js";
+import { generateAiResponseStream } from "../services/ai.service.js";
 import { getIO } from "../sockets/server.socket.js";
 
 /**
@@ -15,9 +16,8 @@ import { getIO } from "../sockets/server.socket.js";
  */
 export async function responseGenerateController(req, res, next) {
   try {
-    const { message, chat: chatId } = req.body;
+    const { message, chat: chatId, socketId } = req.body;
     const { id } = req.user;
-    const io = getIO()
     let title = null,
       chat = null;
     if (!chatId) {
@@ -33,24 +33,29 @@ export async function responseGenerateController(req, res, next) {
       chat: chatId || chat._id,
     });
 
-    
     const messages = await messageModel
-    .find({
-      chat: chatId || chat._id,
-    })
-    .sort({ createdAt: 1 })
-    .limit(5);
-    const aiResponse = await generateAiResponse(messages);
-    const roomId = chatId || chat._id.toString()
+      .find({
+        chat: chatId || chat._id,
+      })
+      .sort({ createdAt: 1 })
+      .limit(5);
 
-    for(let char of aiResponse){
-      io.to(roomId).emit("ai typing",char)
-      await new Promise(r=>setTimeout(r, 15))
+    const io = getIO();
+
+    let fullResponse = "";
+    let buffer = "";
+    let lastEmit = Date.now();
+
+    for await (const token of generateAiResponseStream(messages)) {
+      fullResponse += token;
+      io.to(socketId).emit("ai-typing", token);
     }
+
+    io.to(socketId).emit("ai-done");
 
     const aiMessage = await messageModel.create({
       role: "ai",
-      content: aiResponse,
+      content: fullResponse,
       chat: chatId || chat._id,
     });
 
