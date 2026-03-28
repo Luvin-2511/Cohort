@@ -5,7 +5,6 @@ import {
   fetchMessageOfChat,
   getRandomPrompt,
   getResponse,
-  initializeSocket,
 } from "../services/chat.api";
 import {
   addMessage,
@@ -16,7 +15,6 @@ import {
   setError,
   setFetchingChats,
   setPrompts,
-  appendToLastMessage
 } from "../slices/chat.slice";
 import { useCallback } from "react";
 import { toast } from "react-toastify";
@@ -87,18 +85,13 @@ const useChat = () => {
         }),
       );
     }
-    const socket = initializeSocket()
-    socket.emit("join chat",chatId)
-    socket.on("ai typing",(char)=>{
-      dispatch(appendToLastMessage(char))
-    })
     dispatch(setLoading(true));
     try {
       const response = await getResponse(message, chatId);
-      socket.off("ai typing");
       if (!chatId && response.chat) {
         dispatch(setChatId(response.chat));
       }
+      dispatch(addMessage(response.aiMessage));
       await handleFetchChats();
     } catch (err) {
       dispatch(
@@ -123,7 +116,6 @@ const useChat = () => {
   }
 
   return {
-    initializeSocket,
     handleFetchChats,
     handleMessagesOfChat,
     handleDeleteChat,

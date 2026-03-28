@@ -12,11 +12,14 @@ import ProfileDropdown from "../components/Profiledropdown";
 import InputCard from "../components/InputCard";
 import TypingLoader from "../components/TypingLoader";
 import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
 import SettingsModal from "../components/SettingModal";
 import useUser from "../../user/hooks/useUser";
 import { useDispatch } from "react-redux";
 import { setChatId, setMessages } from "../slices/chat.slice";
+import { socket } from "../services/chat.api";
+import { useSelector } from "react-redux";
+import StreamBubble from "../components/StreamBubble";
+import remarkGfm from "remark-gfm";
 
 export default function Ai() {
   const [theme, setTheme] = useState("dark");
@@ -42,8 +45,32 @@ export default function Ai() {
     loading,
   } = useChat();
   const { fontSize } = useUser();
+
+  const chatId = useSelector((state) => state.chat.chatId);
+
+  useEffect(() => {
+    if (!chatId) return;
+    socket.emit("join-chat", chatId);
+  }, [chatId]);
+
   const navigate = useNavigate();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
+  const [streamText, setStreamText] = useState("");
+
+  useEffect(() => {
+    socket.on("ai-typing", (token) => {
+      setStreamText((prev) => prev + token);
+    });
+
+    socket.on("ai-done", () => {
+      setStreamText("");
+    });
+
+    return () => {
+      socket.off("ai-typing");
+      socket.off("ai-done");
+    };
+  }, []);
 
   const dark = theme === "dark";
 
@@ -54,7 +81,7 @@ export default function Ai() {
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages]);
+  }, [messages, streamText]);
 
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
@@ -197,8 +224,8 @@ export default function Ai() {
                               ? "0.7rem"
                               : "1rem",
                       }}
-                      className={`message-wrapper ${isUser ? "user" : "ai"}`}
-                    >
+                      className={`message-wrapper ${isUser ? "user" : "ai"} animate-in`}
+                      >
                       <div ref={bottomRef}></div>
                       <div
                         style={{
@@ -222,6 +249,11 @@ export default function Ai() {
                     </div>
                   );
                 })}
+                {streamText && (
+                  <div className="message-wrapper ai">
+                    <StreamBubble text={streamText} />
+                  </div>
+                )}
                 {loading && <TypingLoader />}
               </div>
             ) : (
@@ -243,10 +275,12 @@ export default function Ai() {
             )}
           </div>
 
-          {/* InputCard pinned at bottom, outside scroll */}
           <div className="input-container">
             <InputCard
-              handleResponse={handleResponse}
+              handleResponse={async (...args) => {
+                setStreamText("");
+                await handleResponse(...args);
+              }}
               input={input}
               setInput={setInput}
               dark={dark}
