@@ -1,0 +1,55 @@
+
+export const products = [
+  {
+    id: 'macbook-pro-2019',
+    name: 'MacBook Pro 2019',
+    description: '15-inch, Core i9, 16GB RAM, 512GB SSD. Minor scratches on lid.',
+    listPrice: 1200,
+    minPrice: 720,
+    targetPrice: 950,
+    personality: 'stubborn',
+    maxRounds: 10,
+  },
+  {
+    id: 'vintage-leather-jacket',
+    name: 'Vintage Leather Jacket',
+    description: '1980s brown bomber jacket, barely worn, genuine cowhide.',
+    listPrice: 450,
+    minPrice: 160,
+    targetPrice: 320,
+    personality: 'emotional',
+    maxRounds: 10,
+  },
+  {
+    id: 'sony-a7iii',
+    name: 'Sony A7III Camera',
+    description: 'Full-frame mirrorless, 24MP, with 28-70mm kit lens. 2000 shutter count.',
+    listPrice: 1800,
+    minPrice: 1100,
+    targetPrice: 1500,
+    personality: 'stubborn',
+    maxRounds: 10,
+  },
+  {
+    id: 'gaming-pc',
+    name: 'Gaming PC Build',
+    description: 'RTX 3080, Ryzen 7 5800X, 32GB DDR4, 1TB NVMe. Built 2021.',
+    listPrice: 2200,
+    minPrice: 1400,
+    targetPrice: 1900,
+    personality: 'flexible',
+    maxRounds: 10,
+  },
+  {
+    id: 'rolex-homage',
+    name: 'Rolex Submariner Homage',
+    description: 'High-quality homage watch, sapphire crystal, automatic movement.',
+    listPrice: 800,
+    minPrice: 300,
+    targetPrice: 600,
+    personality: 'emotional',
+    maxRounds: 10,
+  },
+]
+
+export const getProductById = (id) => products.find(p => p.id === id)

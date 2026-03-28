@@ -1,0 +1,832 @@
+@import url("https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=DM+Mono:wght@300;400;500&family=Press+Start+2P&display=swap");
+
+/* ═══ VARIABLES (match site) ═══ */
+:root {
+  --bg:   #060404;
+  --bg2:  #0c0806;
+  --fg:   #f5f0e8;
+  --acc:  #f5a623;
+  --acc2: #e8324a;
+  --acc3: #f5d423;
+  --acc4: #c87a1a;
+  --ease: cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  cursor: none;
+}
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: "DM Mono", monospace;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+/* ═══ CURSOR (matches site) ═══ */
+#cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 14px;
+  height: 14px;
+  background: var(--acc);
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  mix-blend-mode: difference;
+  clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+  transition: width 0.3s var(--ease), height 0.3s var(--ease), clip-path 0.3s var(--ease);
+}
+
+#cursor.big {
+  width: 68px;
+  height: 68px;
+  background: transparent;
+  clip-path: none;
+  border: 1.5px solid var(--acc);
+  border-radius: 50%;
+}
+
+#cursor.big::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 6px;
+  height: 6px;
+  background: var(--acc);
+  border-radius: 50%;
+}
+
+/* ═══ NOISE + SCANLINES (matches site) ═══ */
+.noise {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9997;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.scanlines {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9996;
+  opacity: 0.45;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 3px,
+    rgba(0, 0, 0, 0.14) 3px,
+    rgba(0, 0, 0, 0.14) 4px
+  );
+}
+
+/* ═══ NAV (matches site nav exactly) ═══ */
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 2.5rem 4rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 200;
+  transition: padding 0.6s var(--ease), background 0.5s;
+}
+
+.nav.sc {
+  top: 1rem;
+  padding: 0.75rem 2rem;
+  width: auto;
+  min-width: 480px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(10, 6, 4, 0.93);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(245, 166, 35, 0.2);
+  border-radius: 4px;
+}
+
+.nav-logo {
+  font-family: "Syncopate", sans-serif;
+  font-weight: 700;
+  font-size: 1.5rem;
+  letter-spacing: -0.02em;
+  color: #fff;
+  text-decoration: none;
+}
+
+.nav-back {
+  font-family: "DM Mono", monospace;
+  font-size: 0.78rem;
+  font-weight: 500;
+  text-decoration: none;
+  color: rgba(245, 240, 232, 0.45);
+  letter-spacing: 0.12em;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: color 0.2s;
+  padding: 8px;
+}
+
+.nav-back:hover { color: var(--acc); }
+.nav-back::before { content: "←"; }
+
+/* ═══ PAGE LAYOUT ═══ */
+.auth-page {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  position: relative;
+}
+
+/* ═══ LEFT — PIXEL ART BATTLE SIDE ═══ */
+.auth-left {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 8vh 5vw;
+  border-right: 1px solid rgba(245, 166, 35, 0.07);
+  overflow: hidden;
+}
+
+/* Grid lines matching arena-bg */
+.auth-left::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to bottom, #100818 0%, #180c28 35%, #0a0810 60%, #060406 100%),
+    repeating-linear-gradient(90deg, rgba(245,166,35,0.02) 0, rgba(245,166,35,0.02) 1px, transparent 1px, transparent 52px),
+    repeating-linear-gradient(0deg,  rgba(245,166,35,0.02) 0, rgba(245,166,35,0.02) 1px, transparent 1px, transparent 52px);
+  z-index: 0;
+}
+
+.auth-left-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+  width: 100%;
+  max-width: 400px;
+}
+
+/* ═══ GBA BATTLE FRAME ═══ */
+.gba-frame {
+  width: 100%;
+  max-width: 380px;
+  background: rgba(4, 2, 2, 0.97);
+  border: 2px solid rgba(245, 166, 35, 0.55);
+  box-shadow:
+    6px 6px 0 rgba(245, 166, 35, 0.12),
+    0 0 60px rgba(245, 166, 35, 0.07),
+    inset 0 0 40px rgba(0, 0, 0, 0.8);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Corner accent squares — matches .battle-frame::before / ::after */
+.gba-frame::before,
+.gba-frame::after {
+  content: "";
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  background: var(--acc);
+  z-index: 10;
+}
+.gba-frame::before { top: -2px; left: -2px; }
+.gba-frame::after  { bottom: -2px; right: -2px; }
+
+/* ═══ ARENA (inside frame) ═══ */
+.mini-arena {
+  position: relative;
+  height: 200px;
+  overflow: hidden;
+}
+
+.mini-arena-bg {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, #100818 0%, #180c28 40%, #0a0810 65%, #060406 100%);
+}
+
+.mini-arena-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(90deg, rgba(245,166,35,0.02) 0, rgba(245,166,35,0.02) 1px, transparent 1px, transparent 52px),
+    repeating-linear-gradient(0deg,  rgba(245,166,35,0.02) 0, rgba(245,166,35,0.02) 1px, transparent 1px, transparent 52px);
+}
+
+.mini-hor {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(245,166,35,0.18), transparent);
+}
+
+/* Platform ovals */
+.plat-e {
+  position: absolute;
+  top: 96px;
+  right: 48px;
+  width: 96px;
+  height: 12px;
+  background: radial-gradient(ellipse, rgba(245,166,35,0.2) 40%, transparent 80%);
+  border-radius: 50%;
+  filter: blur(3px);
+  z-index: 3;
+}
+
+.plat-p {
+  position: absolute;
+  bottom: 76px;
+  left: 38px;
+  width: 96px;
+  height: 12px;
+  background: radial-gradient(ellipse, rgba(245,166,35,0.14) 40%, transparent 80%);
+  border-radius: 50%;
+  filter: blur(3px);
+  z-index: 3;
+}
+
+/* HUD boxes */
+.hud-box {
+  position: absolute;
+  background: rgba(0,0,0,0.86);
+  border: 1.5px solid rgba(245,166,35,0.4);
+  padding: 9px 12px;
+  z-index: 5;
+}
+
+.hud-e { top: 12px;    left: 12px;  min-width: 148px; }
+.hud-p { bottom: 12px; right: 12px; min-width: 136px; }
+
+.hud-name {
+  font-family: "Press Start 2P";
+  font-size: 7px;
+  letter-spacing: 0.08em;
+  color: var(--fg);
+  margin-bottom: 6px;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.hud-lv { color: var(--acc); }
+
+.hud-track {
+  height: 7px;
+  background: rgba(0,0,0,0.6);
+  border: 1px solid rgba(255,255,255,0.1);
+  overflow: hidden;
+  margin-bottom: 3px;
+}
+
+.hud-fill {
+  height: 100%;
+  background: var(--acc);
+  box-shadow: 0 0 5px var(--acc);
+  animation: hpdrain 8s ease-in-out infinite;
+}
+
+.hud-fill.full {
+  width: 78%;
+  animation: none;
+}
+
+.hud-lbl {
+  font-family: "Press Start 2P";
+  font-size: 6px;
+  color: rgba(245,240,232,0.35);
+  text-align: right;
+}
+
+/* Sprites — pixel art via CSS */
+.sprite-merchant {
+  position: absolute;
+  top: 14px;
+  right: 42px;
+  z-index: 4;
+  animation: fen 2.4s ease-in-out infinite;
+  filter: drop-shadow(0 0 14px rgba(245,166,35,0.65));
+  image-rendering: pixelated;
+  line-height: 0;
+}
+
+.sprite-player {
+  position: absolute;
+  bottom: 18px;
+  left: 36px;
+  z-index: 4;
+  animation: fpn 2s ease-in-out infinite 0.4s;
+  filter: drop-shadow(0 0 10px rgba(245,166,35,0.4));
+  image-rendering: pixelated;
+  line-height: 0;
+}
+
+.sp-row { display: flex; }
+.sp { display: inline-block; image-rendering: pixelated; width: 6px; height: 6px; }
+
+/* Flash attack overlay */
+.atk-flash {
+  position: absolute;
+  inset: 0;
+  z-index: 6;
+  pointer-events: none;
+  background: rgba(245,166,35,0);
+  animation: af 5s ease-in-out infinite 2s;
+}
+
+/* ═══ BATTLE DIALOG (below arena) ═══ */
+.battle-msg {
+  padding: 14px 16px 12px;
+  background: rgba(3,2,2,0.98);
+  border-top: 2px solid rgba(245,166,35,0.22);
+  min-height: 72px;
+  position: relative;
+}
+
+.btag {
+  font-family: "Press Start 2P";
+  font-size: 6px;
+  letter-spacing: 0.22em;
+  color: rgba(245,166,35,0.5);
+  margin-bottom: 8px;
+}
+
+.btext {
+  font-family: "DM Mono", monospace;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--fg);
+  min-height: 38px;
+}
+
+.bcur {
+  display: inline-block;
+  width: 8px;
+  height: 14px;
+  background: var(--fg);
+  margin-left: 2px;
+  vertical-align: middle;
+  animation: blink 0.75s step-end infinite;
+}
+
+.barr {
+  position: absolute;
+  bottom: 10px;
+  right: 12px;
+  font-family: "Press Start 2P";
+  font-size: 8px;
+  color: var(--acc);
+  animation: blink 0.75s step-end infinite;
+}
+
+/* ═══ MOVE GRID (below dialog) ═══ */
+.move-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-top: 1px solid rgba(245,166,35,0.12);
+}
+
+.mbtn {
+  font-family: "Press Start 2P";
+  font-size: 7px;
+  padding: 10px 11px;
+  background: transparent;
+  color: rgba(245,240,232,0.35);
+  border: none;
+  text-align: left;
+  letter-spacing: 0.06em;
+  border-right: 1px solid rgba(245,166,35,0.1);
+  border-bottom: 1px solid rgba(245,166,35,0.1);
+  transition: all 0.12s;
+}
+
+.mbtn:nth-child(even)      { border-right: none; }
+.mbtn:nth-last-child(-n+2) { border-bottom: none; }
+
+.mbtn:hover,
+.mbtn.act {
+  color: var(--acc);
+  background: rgba(245,166,35,0.06);
+  text-shadow: 0 0 8px rgba(245,166,35,0.5);
+}
+
+.mbtn.act::before {
+  content: "▶";
+  margin-right: 5px;
+  color: var(--acc2);
+}
+
+.mtype {
+  display: block;
+  font-size: 5px;
+  color: rgba(245,240,232,0.2);
+  margin-top: 3px;
+}
+
+/* ═══ LEFT TAGLINE ═══ */
+.left-tagline {
+  text-align: center;
+}
+
+.left-tagline-ey {
+  font-family: "DM Mono", monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.28em;
+  color: var(--acc);
+  opacity: 0.8;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.left-tagline-ey::before {
+  content: "//";
+  color: rgba(245,166,35,0.4);
+}
+
+.left-tagline-title {
+  font-family: "Syncopate", sans-serif;
+  font-size: clamp(18px, 2.4vw, 28px);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--fg);
+  mix-blend-mode: color-dodge;
+  line-height: 1.1;
+}
+
+.left-tagline-acc {
+  color: var(--acc);
+  -webkit-text-stroke: 0;
+  text-shadow: 0 0 30px rgba(245,166,35,0.5);
+}
+
+/* ═══ RIGHT — FORM SIDE ═══ */
+.auth-right {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 10vh 6vw 10vh 4vw;
+  position: relative;
+  overflow: hidden;
+}
+
+.auth-right::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 30% 50%, rgba(245,166,35,0.04) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+/* ═══ FORM CARD (GBA dialog box style) ═══ */
+.form-card {
+  width: 100%;
+  max-width: 440px;
+  position: relative;
+  opacity: 0;
+  transform: translateY(28px);
+  animation: formReveal 0.7s 0.2s var(--ease) forwards;
+}
+
+/* Corner accents — same as battle-frame */
+.form-card::before,
+.form-card::after {
+  content: "";
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  background: var(--acc);
+  z-index: 10;
+}
+.form-card::before { top: -2px;    left: -2px;  }
+.form-card::after  { bottom: -2px; right: -2px; }
+
+.form-inner {
+  background: rgba(6, 4, 2, 0.97);
+  border: 2px solid rgba(245, 166, 35, 0.5);
+  box-shadow: 6px 6px 0 rgba(245,166,35,0.1), 0 0 50px rgba(245,166,35,0.06);
+  padding: 36px 34px 30px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Top bar — like .btag */
+.form-topbar {
+  font-family: "Press Start 2P";
+  font-size: 6.5px;
+  letter-spacing: 0.22em;
+  color: rgba(245,166,35,0.5);
+  margin-bottom: 20px;
+}
+
+/* Heading */
+.form-heading {
+  font-family: "Syncopate", sans-serif;
+  font-size: clamp(20px, 3vw, 32px);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  color: var(--fg);
+  margin-bottom: 6px;
+}
+
+.form-heading .acc { color: var(--acc); -webkit-text-stroke: 0; }
+
+.form-sub {
+  font-family: "DM Mono", monospace;
+  font-size: 0.78rem;
+  color: rgba(245,240,232,0.38);
+  font-weight: 300;
+  margin-bottom: 28px;
+  line-height: 1.6;
+}
+
+/* ═══ FIELD ═══ */
+.field {
+  margin-bottom: 18px;
+}
+
+.field-label {
+  font-family: "Press Start 2P";
+  font-size: 7px;
+  letter-spacing: 0.14em;
+  color: rgba(245,166,35,0.7);
+  margin-bottom: 9px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.field-label::before {
+  content: "//";
+  color: rgba(245,166,35,0.3);
+  font-size: 6px;
+}
+
+.field-input {
+  width: 100%;
+  background: rgba(0,0,0,0.55);
+  border: 1.5px solid rgba(245,166,35,0.18);
+  color: var(--fg);
+  font-family: "DM Mono", monospace;
+  font-size: 14px;
+  font-weight: 400;
+  padding: 13px 16px;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+  letter-spacing: 0.04em;
+  caret-color: var(--acc);
+}
+
+.field-input::placeholder {
+  color: rgba(245,240,232,0.2);
+  font-weight: 300;
+}
+
+.field-input:focus {
+  border-color: rgba(245,166,35,0.7);
+  background: rgba(0,0,0,0.7);
+  box-shadow: 0 0 0 1px rgba(245,166,35,0.15), 0 0 20px rgba(245,166,35,0.06);
+}
+
+.field-input.error {
+  border-color: rgba(232, 50, 74, 0.7);
+  box-shadow: 0 0 0 1px rgba(232,50,74,0.15);
+}
+
+.field-error {
+  font-family: "Press Start 2P";
+  font-size: 6.5px;
+  color: var(--acc2);
+  margin-top: 7px;
+  letter-spacing: 0.06em;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.field-error::before { content: "!"; }
+
+/* ═══ SUBMIT BUTTON (matches .btn-main) ═══ */
+.submit-btn {
+  font-family: "Syncopate", sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  padding: 1rem 2rem;
+  background: var(--acc);
+  color: #000;
+  border: none;
+  text-transform: uppercase;
+  position: relative;
+  overflow: hidden;
+  clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+  box-shadow: 0 0 28px rgba(245,166,35,0.35), 4px 4px 0 rgba(245,166,35,0.14);
+  width: 100%;
+  margin-top: 8px;
+  transition: transform 0.15s, box-shadow 0.2s;
+}
+
+.submit-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: #fff;
+  transform: translateX(-101%);
+  transition: transform 0.35s cubic-bezier(0.7,0,0.3,1);
+  z-index: 1;
+}
+
+.submit-btn span { position: relative; z-index: 2; }
+
+.submit-btn:hover::before { transform: translateX(0); }
+.submit-btn:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 rgba(245,166,35,0.28), 0 0 40px rgba(245,166,35,0.3);
+}
+
+.submit-btn:active {
+  transform: translate(1px,1px);
+  box-shadow: 2px 2px 0 rgba(245,166,35,0.2);
+}
+
+.submit-btn:disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* ═══ DIVIDER ═══ */
+.form-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 22px 0;
+}
+
+.form-divider::before,
+.form-divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: rgba(245,166,35,0.1);
+}
+
+.form-divider span {
+  font-family: "Press Start 2P";
+  font-size: 6px;
+  color: rgba(245,240,232,0.25);
+  letter-spacing: 0.1em;
+}
+
+/* ═══ SWITCH LINK ═══ */
+.switch-link {
+  font-family: "DM Mono", monospace;
+  font-size: 0.75rem;
+  color: rgba(245,240,232,0.35);
+  text-align: center;
+  font-weight: 300;
+}
+
+.switch-link a,
+.switch-link button {
+  color: var(--acc);
+  background: none;
+  border: none;
+  font-family: "DM Mono", monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color 0.2s, text-shadow 0.2s;
+}
+
+.switch-link a:hover,
+.switch-link button:hover {
+  color: var(--acc3);
+  text-shadow: 0 0 12px rgba(245,166,35,0.4);
+}
+
+/* ═══ LOADING SPINNER ═══ */
+.spinner {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(0,0,0,0.3);
+  border-top-color: #000;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  margin-right: 8px;
+  vertical-align: middle;
+}
+
+/* ═══ TICKER (matches site) ═══ */
+.auth-ticker {
+  position: fixed;
+  bottom: 0;
+  left: -5%;
+  width: 110%;
+  background: var(--acc);
+  color: #000;
+  transform: rotate(-0.6deg);
+  padding: 7px 0;
+  border-top: 3px solid #000;
+  overflow: hidden;
+  z-index: 100;
+}
+
+.ticker-in {
+  display: flex;
+  white-space: nowrap;
+  animation: ts 16s linear infinite;
+}
+
+.ticker-txt {
+  font-family: "Syncopate", sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  padding-right: 3rem;
+}
+
+/* ═══ KEYFRAMES ═══ */
+@keyframes blink {
+  0%, 50%   { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+@keyframes ts {
+  to { transform: translateX(-50%); }
+}
+
+@keyframes fen {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-7px); }
+}
+
+@keyframes fpn {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-5px); }
+}
+
+@keyframes hpdrain {
+  0%,  26% { width: 70%; background: #f5a623; box-shadow: 0 0 5px #f5a623; }
+  42%, 58% { width: 32%; background: #f5d423; box-shadow: 0 0 5px #f5d423; }
+  70%, 82% { width: 9%;  background: #e8324a; box-shadow: 0 0 6px #e8324a; }
+  96%,100% { width: 70%; background: #f5a623; box-shadow: 0 0 5px #f5a623; }
+}
+
+@keyframes af {
+  0%, 87%, 100% { background: rgba(245,166,35,0); }
+  89%            { background: rgba(245,166,35,0.18); }
+  91%            { background: rgba(245,166,35,0); }
+  93%            { background: rgba(245,166,35,0.08); }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes formReveal {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ═══ RESPONSIVE ═══ */
+@media (max-width: 900px) {
+  .auth-page { grid-template-columns: 1fr; }
+  .auth-left  { display: none; }
+  .auth-right { padding: 14vh 6vw 12vh; justify-content: center; }
+  .form-card  { max-width: 100%; }
+}
+
+@media (max-width: 640px) {
+  .nav { padding: 1.5rem; }
+  .nav.sc { min-width: 300px; }
+  .form-inner { padding: 28px 22px 24px; }
+}
