@@ -5,7 +5,7 @@ const userSlice = createSlice({
     initialState:{
         loading:false,
         errors:false,
-        fontSize:"medium"
+        fontSize:"Medium"
     },
     reducers:{
         setLoading:(state,action)=>{

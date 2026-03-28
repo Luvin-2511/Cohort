@@ -735,7 +735,47 @@ textarea {
   border-radius: 19px;
   font-size: 15px;
   line-height: 1.5;
-  transition: all 0.5s ease;
+  transition: all 0.5s linear;
+}
+.stream-text::after {
+  content: "▍";
+  display: inline-block;
+  color: var(--accent);
+  animation: blink 0.7s step-end infinite;
+  margin-left: 1px;
+}
+
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+.stream-bubble {
+  transition: none;
+  animation: none !important;
+}
+
+.stream-bubble * {
+  animation: none !important;
+}
+
+.stream-bubble p,
+.stream-bubble li,
+.stream-bubble code {
+  animation: tokenFade 0.15s ease both;
+}
+
+@keyframes tokenFade {
+  from { opacity: 0.4; }
+  to   { opacity: 1; }
+}
+
+.message-bubble.animate-in {
   animation: slidingBubble 0.2s 1 linear;
 }
 

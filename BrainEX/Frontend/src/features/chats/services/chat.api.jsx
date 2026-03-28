@@ -1,22 +1,15 @@
-import { io } from "socket.io-client";
 import axios from "axios";
+import { io } from "socket.io-client";
 
 const api = axios.create({
   baseURL: "http://localhost:3000",
   withCredentials: true,
 });
 
-export function initializeSocket() {
-  const socket = io("http://localhost:3000", {
-    withCredentials: true,
-  });
 
-  socket.on("connect", () => {
-    console.log("Connection Established !");
-  });
-  
-  return socket;
-}
+export const socket = io("http://localhost:3000", {
+  withCredentials: true,
+});
 
 export async function fetchChats() {
   try {
@@ -50,6 +43,7 @@ export async function getResponse(message, chatId) {
     const response = await api.post("/api/chat/", {
       message: message,
       chat: chatId,
+      socketId: socket.id,
     });
     return response.data;
   } catch (err) {

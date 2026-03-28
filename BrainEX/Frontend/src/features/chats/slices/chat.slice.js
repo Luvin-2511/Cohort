@@ -36,12 +36,6 @@ const chatSlice = createSlice({
     setPrompts: (state, action) => {
       state.prompts = action.payload;
     },
-    appendToLastMessage: (state, action) => {
-      const last = state.messages[state.messages.length - 1];
-      if (last && last.role === "ai") {
-        last.content += action.payload;
-      }
-    },
   },
 });
 
@@ -54,6 +48,5 @@ export const {
   addMessage,
   setError,
   setFetchingChats,
-  appendToLastMessage
 } = chatSlice.actions;
 export default chatSlice.reducer;
