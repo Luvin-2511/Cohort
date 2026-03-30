@@ -24,7 +24,8 @@ export const rawProducts = [
   {
     id: "neon-pro-2019",
     name: "Neon Pro 2019",
-    description: "15-inch, Core i9, 16GB RAM, 512GB SSD. Minor scratches on lid.",
+    description:
+      "15-inch, Core i9, 16GB RAM, 512GB SSD. Minor scratches on lid.",
     listPrice: 1200,
     personality: "stubborn",
     maxRounds: 10,
@@ -42,7 +43,8 @@ export const rawProducts = [
   {
     id: "neon-a7iii",
     name: "Neon A7III Camera",
-    description: "Full-frame mirrorless, 24MP, with 28-70mm kit lens. 2000 shutter count.",
+    description:
+      "Full-frame mirrorless, 24MP, with 28-70mm kit lens. 2000 shutter count.",
     listPrice: 1800,
     personality: "stubborn",
     maxRounds: 10,
@@ -71,7 +73,7 @@ export const rawProducts = [
 /* derive game values from listPrice */
 const buildProduct = (raw) => ({
   ...raw,
-  minPrice: Math.round(raw.listPrice * 0.5),     // AI kabhi isse neeche nahi jaayega
+  minPrice: Math.round(raw.listPrice * 0.5), // AI kabhi isse neeche nahi jaayega
   targetPrice: Math.round(raw.listPrice * 0.65), // itna neeche aane par victory
 });
 
@@ -97,7 +99,15 @@ const PERSONALITIES = {
   },
 };
 
-const SPARK_COLORS = ["#f0a500", "#fff", "#ff6b00", "#ffd700", "#ff4444", "#ffaa00", "#00e676"];
+const SPARK_COLORS = [
+  "#f0a500",
+  "#fff",
+  "#ff6b00",
+  "#ffd700",
+  "#ff4444",
+  "#ffaa00",
+  "#00e676",
+];
 const fmt = (n) => `$${Number(n).toLocaleString()}`;
 
 function hpCls(pct) {
@@ -124,7 +134,10 @@ function Cursor() {
       rx: window.innerWidth / 2,
       ry: window.innerHeight / 2,
     };
-    const mv = (e) => { pos.current.mx = e.clientX; pos.current.my = e.clientY; };
+    const mv = (e) => {
+      pos.current.mx = e.clientX;
+      pos.current.my = e.clientY;
+    };
     const md = () => setClk(true);
     const mu = () => setClk(false);
     window.addEventListener("mousemove", mv);
@@ -137,8 +150,10 @@ function Cursor() {
       p.cy += (p.my - p.cy) * 0.14;
       p.rx += (p.mx - p.rx) * 0.07;
       p.ry += (p.my - p.ry) * 0.07;
-      if (dot.current) dot.current.style.transform = `translate(${p.cx}px,${p.cy}px) translate(-50%,-50%)`;
-      if (ring.current) ring.current.style.transform = `translate(${p.rx}px,${p.ry}px) translate(-50%,-50%)`;
+      if (dot.current)
+        dot.current.style.transform = `translate(${p.cx}px,${p.cy}px) translate(-50%,-50%)`;
+      if (ring.current)
+        ring.current.style.transform = `translate(${p.rx}px,${p.ry}px) translate(-50%,-50%)`;
       raf = requestAnimationFrame(tick);
     };
     raf = requestAnimationFrame(tick);
@@ -166,7 +181,11 @@ function Cursor() {
   return (
     <>
       <div ref={ring} className={`c-ring${big ? " big" : ""}`} aria-hidden />
-      <div ref={dot} className={`c-dot${big ? " big" : ""}${clk ? " clk" : ""}`} aria-hidden />
+      <div
+        ref={dot}
+        className={`c-dot${big ? " big" : ""}${clk ? " clk" : ""}`}
+        aria-hidden
+      />
     </>
   );
 }
@@ -234,9 +253,11 @@ function FighterImage({ src, alt, className, style }) {
 /* ═══ MAIN COMPONENT ═══ */
 export default function BattleArena() {
   const { productId } = useParams();
-  const rawProduct = rawProducts.find((p) => p.id === productId) || rawProducts[0];
+  const rawProduct =
+    rawProducts.find((p) => p.id === productId) || rawProducts[0];
   const product = buildProduct(rawProduct);
-  const personality = PERSONALITIES[product.personality] || PERSONALITIES.stubborn;
+  const personality =
+    PERSONALITIES[product.personality] || PERSONALITIES.stubborn;
 
   const [price, setPrice] = useState(product.listPrice);
   const [sellerHp, setSellerHp] = useState(100);
@@ -252,7 +273,11 @@ export default function BattleArena() {
   const [splash, setSplash] = useState("show");
   const [sparks, setSparks] = useState([]);
   const [flashes, setFlashes] = useState([]);
-  const [turnLabel, setTurnLabel] = useState({ text: "", show: false, color: "#fff" });
+  const [turnLabel, setTurnLabel] = useState({
+    text: "",
+    show: false,
+    color: "#fff",
+  });
 
   const sparkId = useRef(0);
   const flashId = useRef(0);
@@ -359,7 +384,10 @@ export default function BattleArena() {
     const aiPrice = response.response.offeredPrice;
 
     // Clamp aiPrice — never below minPrice, never above current price
-    const clampedPrice = Math.max(product.minPrice, Math.min(priceBeforeAi, aiPrice));
+    const clampedPrice = Math.max(
+      product.minPrice,
+      Math.min(priceBeforeAi, aiPrice),
+    );
 
     // Show seller response
     await showTurn("🤖 SELLER RESPONDS", personality.color);
@@ -467,8 +495,7 @@ export default function BattleArena() {
       }, 800);
     }, 1400);
   };
-
-  const canInput = phase === "IDLE" || phase === "FINAL";
+  const canInput = (phase === "IDLE" || phase === "FINAL") && !loading;
   const canAccept = phase === "IDLE" || phase === "FINAL";
   const savings = product.listPrice - price;
   const savingsPct = Math.round((savings / product.listPrice) * 100);
@@ -518,7 +545,9 @@ export default function BattleArena() {
             </div>
             <div className="hp-nums">
               <span className="hp-val rd">{sellerHp}/100</span>
-              <span style={{ color: personality.color }}>{personality.label}</span>
+              <span style={{ color: personality.color }}>
+                {personality.label}
+              </span>
             </div>
           </div>
         </div>
@@ -531,28 +560,49 @@ export default function BattleArena() {
           <div className="plat buyer" />
 
           <div className="fighter buyer">
-            <img src={playerImg} alt="Negotiator" className="fighter-img buyer-fighter-img" draggable={false} />
+            <img
+              src={playerImg}
+              alt="Negotiator"
+              className="fighter-img buyer-fighter-img"
+              draggable={false}
+            />
             <div className="fighter-label">NEGOTIATOR</div>
           </div>
 
           <div className={`fighter seller${sellerHp <= 0 ? " dead" : ""}`}>
-            <FighterImage src={personality.sellerImage} alt={personality.label} className="seller-fighter-img" />
+            <FighterImage
+              src={personality.sellerImage}
+              alt={personality.label}
+              className="seller-fighter-img"
+            />
             <div className="fighter-label">SELLER · {personality.label}</div>
           </div>
 
           <div className="price-box">
-            <FighterImage src={product.image} alt={product.name} className="product-preview-img" />
+            <FighterImage
+              src={product.image}
+              alt={product.name}
+              className="product-preview-img"
+            />
             <div className="price-tag-label">CURRENT PRICE</div>
             <span className={`current-price ${priceAnim}`}>{fmt(price)}</span>
             <div className="original-price">{fmt(product.listPrice)}</div>
             {savings > 0 && (
-              <span className="savings-tag">SAVED {fmt(savings)} ({savingsPct}% OFF)</span>
+              <span className="savings-tag">
+                SAVED {fmt(savings)} ({savingsPct}% OFF)
+              </span>
             )}
             <div className="product-desc-label">{product.description}</div>
           </div>
 
           {turnLabel.show && (
-            <div className="turn-label show" style={{ color: turnLabel.color, textShadow: `0 0 30px ${turnLabel.color}` }}>
+            <div
+              className="turn-label show"
+              style={{
+                color: turnLabel.color,
+                textShadow: `0 0 30px ${turnLabel.color}`,
+              }}
+            >
               {turnLabel.text}
             </div>
           )}
@@ -560,12 +610,18 @@ export default function BattleArena() {
           <Sparks list={sparks} />
 
           {flashes.map((f) => (
-            <div key={f.id} className="s-flash" style={{ background: f.color }} />
+            <div
+              key={f.id}
+              className="s-flash"
+              style={{ background: f.color }}
+            />
           ))}
 
           {phase === "END" && (
             <div className="end-screen">
-              <div className={`end-title ${endType === "won" || endType === "deal" ? "v" : "d"}`}>
+              <div
+                className={`end-title ${endType === "won" || endType === "deal" ? "v" : "d"}`}
+              >
                 {endType === "won" && "⚡ VICTORY"}
                 {endType === "deal" && "✅ DEAL CLOSED"}
                 {endType === "abandoned" && "👋 YOU WALKED"}
@@ -580,8 +636,12 @@ export default function BattleArena() {
               {endType === "abandoned" && (
                 <div className="end-sub">SOMETIMES WALKING AWAY IS THE WIN</div>
               )}
-              <div className="end-turns">ROUNDS USED: {round} / {product.maxRounds}</div>
-              <button className="end-btn cmag" onClick={restart}><span>▶ PLAY AGAIN</span></button>
+              <div className="end-turns">
+                ROUNDS USED: {round} / {product.maxRounds}
+              </div>
+              <button className="end-btn cmag" onClick={restart}>
+                <span>▶ PLAY AGAIN</span>
+              </button>
             </div>
           )}
         </div>
@@ -592,16 +652,28 @@ export default function BattleArena() {
             <div className="dial-text">
               {shown}
               {typing && <span className="dial-cur">█</span>}
-              {!typing && phase === "IDLE" && <span className="dial-arr">▼</span>}
+              {!typing && phase === "IDLE" && (
+                <span className="dial-arr">▼</span>
+              )}
             </div>
             <div className="deal-actions">
-              <button className="btn-deal btn-accept cmag" disabled={!canAccept} onClick={acceptDeal}>
+              <button
+                className="btn-deal btn-accept cmag"
+                disabled={!canAccept}
+                onClick={acceptDeal}
+              >
                 <span>✅ ACCEPT DEAL</span>
               </button>
-              <button className="btn-deal btn-abandon cmag" disabled={!canAccept} onClick={abandon}>
+              <button
+                className="btn-deal btn-abandon cmag"
+                disabled={!canAccept}
+                onClick={abandon}
+              >
                 <span>❌ WALK AWAY</span>
               </button>
-              {!canAccept && <span className="btn-hint">WAITING FOR SELLER</span>}
+              {!canAccept && (
+                <span className="btn-hint">WAITING FOR SELLER</span>
+              )}
             </div>
           </div>
 
@@ -620,22 +692,36 @@ export default function BattleArena() {
                     send();
                   }
                 }}
-                disabled={!canInput}
+                disabled={!canInput || loading}
                 placeholder={
-                  phase === "BUSY" ? "PROCESSING..." :
-                  phase === "INTRO" ? "INITIALIZING..." :
-                  phase === "END" ? "BATTLE OVER" :
-                  phase === "FINAL" ? "FINAL ROUND — LAST CHANCE..." :
-                  "Make your offer or argument... (ENTER to send)"
+                  loading
+                    ? "WAITING FOR SELLER RESPONSE..."
+                    : phase === "BUSY"
+                      ? "PROCESSING..."
+                      : phase === "INTRO"
+                        ? "INITIALIZING..."
+                        : phase === "END"
+                          ? "BATTLE OVER"
+                          : phase === "FINAL"
+                            ? "FINAL ROUND — LAST CHANCE..."
+                            : "Make your offer or argument... (ENTER to send)"
                 }
                 maxLength={500}
               />
               <div className="char-count">{input.length}/500</div>
             </div>
             <div className="btn-row">
-              <button className="clear-btn cmag" onClick={() => setInput("")}>CLEAR</button>
-              <button className="send-btn cmag" onClick={send} disabled={!canInput || !input.trim()}>
-                <span>{phase === "BUSY" ? "···" : "SEND OFFER"}</span>
+              <button className="clear-btn cmag" onClick={() => setInput("")}>
+                CLEAR
+              </button>
+              <button
+                className="send-btn cmag"
+                onClick={send}
+                disabled={!canInput || !input.trim()}
+              >
+                <span>
+                  {phase === "BUSY" || loading ? "···" : "SEND OFFER"}
+                </span>
               </button>
             </div>
           </div>
@@ -646,14 +732,28 @@ export default function BattleArena() {
           <div className={`vs-splash${splash === "fade" ? " fade" : ""}`}>
             <div className="vs-content">
               <div className="vs-char p1">
-                <img src={playerImg1} alt="Negotiator" className="fighter-img vs-player-img" draggable={false} />
+                <img
+                  src={playerImg1}
+                  alt="Negotiator"
+                  className="fighter-img vs-player-img"
+                  draggable={false}
+                />
                 <div className="vs-name buyer">NEGOTIATOR</div>
               </div>
               <div className="vs-text">VS</div>
               <div className="vs-char p2">
-                <FighterImage src={personality.sellerImage} alt={personality.label} className="vs-seller-img" />
+                <FighterImage
+                  src={personality.sellerImage}
+                  alt={personality.label}
+                  className="vs-seller-img"
+                />
                 <div className="vs-name seller">{product.name}</div>
-                <div className="vs-personality" style={{ color: personality.color }}>{personality.label}</div>
+                <div
+                  className="vs-personality"
+                  style={{ color: personality.color }}
+                >
+                  {personality.label}
+                </div>
               </div>
             </div>
           </div>
