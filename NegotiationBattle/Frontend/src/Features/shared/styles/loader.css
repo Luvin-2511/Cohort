@@ -1,0 +1,203 @@
+/* ── Loader Root ── */
+.loader-root {
+  width: 100%;
+  height: 100%;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background: radial-gradient(ellipse at center, #1a1a1a 0%, #000 100%);
+  position: relative;
+  overflow: hidden;
+  font-family: 'Courier New', monospace;
+}
+
+/* ── Ambient vignette pulse ── */
+.loader-root::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, transparent 30%, rgba(0,0,0,0.6) 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ── Gooey SVG filter container ── */
+.goo-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* The SVG filter is applied here so all blobs merge */
+  filter: url(#gooey);
+  z-index: 2;
+}
+
+/* ── Individual blob ── */
+.blob {
+  width: 2rem;
+  height: 2rem;
+  background: rgba(230, 230, 230, 0.9);
+  border-radius: 50%;
+  position: absolute;
+  left: calc(50% - 1rem);
+  top: calc(50% - 1rem);
+  box-shadow: 0 0 1rem rgba(255, 255, 255, 0.25);
+  will-change: transform;
+}
+
+/* ── Blob color tints (the "extra") ── */
+.blob-0 { background: rgba(255, 160, 100, 0.92); animation: animate-to-0 1.8s ease-in-out infinite; }
+.blob-1 { background: rgba(255, 200, 120, 0.92); animation: animate-to-1 1.8s ease-in-out infinite; }
+.blob-2 { background: rgba(230, 230, 230, 0.92); animation: animate-to-2 1.8s ease-in-out infinite; }
+.blob-3 { background: rgba(230, 230, 230, 0.92); animation: animate-to-3 1.8s ease-in-out infinite; }
+.blob-4 { background: rgba(255, 200, 120, 0.92); animation: animate-to-4 1.8s ease-in-out infinite; }
+.blob-5 { background: rgba(255, 160, 100, 0.92); animation: animate-to-5 1.8s ease-in-out infinite; }
+
+/* ── Blob keyframes ── */
+@keyframes animate-to-2 {
+  25%, 75% { transform: translateX(-1.5rem) scale(0.75); }
+  95%       { transform: translateX(0rem) scale(1); }
+}
+
+@keyframes animate-to-3 {
+  25%, 75% { transform: translateX(1.5rem) scale(0.75); }
+  95%       { transform: translateX(0rem) scale(1); }
+}
+
+@keyframes animate-to-1 {
+  25%       { transform: translateX(-1.5rem) scale(0.75); }
+  50%, 75%  { transform: translateX(-4.5rem) scale(0.6); }
+  95%       { transform: translateX(0rem) scale(1); }
+}
+
+@keyframes animate-to-4 {
+  25%       { transform: translateX(1.5rem) scale(0.75); }
+  50%, 75%  { transform: translateX(4.5rem) scale(0.6); }
+  95%       { transform: translateX(0rem) scale(1); }
+}
+
+@keyframes animate-to-0 {
+  25%  { transform: translateX(-1.5rem) scale(0.75); }
+  50%  { transform: translateX(-4.5rem) scale(0.6); }
+  75%  { transform: translateX(-7.5rem) scale(0.5); }
+  95%  { transform: translateX(0rem) scale(1); }
+}
+
+@keyframes animate-to-5 {
+  25%  { transform: translateX(1.5rem) scale(0.75); }
+  50%  { transform: translateX(4.5rem) scale(0.6); }
+  75%  { transform: translateX(7.5rem) scale(0.5); }
+  95%  { transform: translateX(0rem) scale(1); }
+}
+
+/* ── Gooey canvas placeholder (SVG hidden, only filter used) ── */
+.goo-svg {
+  position: absolute;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+/* ── Goo stage sizing ── */
+.goo-stage {
+  position: relative;
+  width: 18rem;
+  height: 4rem;
+}
+
+/* ── Reflection shadow under blobs ── */
+.blob-reflection {
+  position: absolute;
+  bottom: -1.2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 6rem;
+  height: 0.4rem;
+  background: radial-gradient(ellipse at center, rgba(255,180,80,0.35) 0%, transparent 70%);
+  filter: blur(4px);
+  border-radius: 50%;
+  animation: shadowPulse 1.8s ease-in-out infinite;
+  z-index: 1;
+}
+
+@keyframes shadowPulse {
+  0%, 100% { opacity: 0.5; transform: translateX(-50%) scaleX(1); }
+  47%       { opacity: 1;   transform: translateX(-50%) scaleX(1.8); }
+  95%       { opacity: 0.5; transform: translateX(-50%) scaleX(1); }
+}
+
+/* ── Loading label ── */
+.loader-label {
+  margin-top: 3.5rem;
+  font-size: 0.7rem;
+  letter-spacing: 0.45em;
+  text-transform: uppercase;
+  color: rgba(255, 200, 120, 0.7);
+  z-index: 2;
+  animation: labelFade 1.8s ease-in-out infinite;
+  user-select: none;
+}
+
+@keyframes labelFade {
+  0%, 100% { opacity: 0.4; }
+  50%       { opacity: 1; }
+}
+
+/* ── Dot-dot-dot after label ── */
+.loader-dots span {
+  display: inline-block;
+  animation: dotBounce 1.2s ease-in-out infinite;
+  color: rgba(255, 200, 120, 0.7);
+}
+.loader-dots span:nth-child(2) { animation-delay: 0.2s; }
+.loader-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes dotBounce {
+  0%, 80%, 100% { opacity: 0.2; transform: translateY(0); }
+  40%           { opacity: 1;   transform: translateY(-3px); }
+}
+
+/* ── Orbiting ring (extra flair) ── */
+.orbit-ring {
+  position: absolute;
+  width: 5rem;
+  height: 5rem;
+  border: 1px solid rgba(255, 180, 80, 0.15);
+  border-top-color: rgba(255, 180, 80, 0.5);
+  border-radius: 50%;
+  animation: orbitSpin 2.4s linear infinite;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.orbit-ring-2 {
+  width: 7rem;
+  height: 7rem;
+  border-color: rgba(255, 180, 80, 0.07);
+  border-right-color: rgba(255, 180, 80, 0.3);
+  animation: orbitSpin 3.6s linear infinite reverse;
+}
+
+@keyframes orbitSpin {
+  to { transform: rotate(360deg); }
+}
+
+/* ── Floating particles ── */
+.particle {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  border-radius: 50%;
+  background: rgba(255, 200, 120, 0.6);
+  pointer-events: none;
+  animation: particleDrift linear infinite;
+}
+
+@keyframes particleDrift {
+  0%   { transform: translateY(0)   scale(1);   opacity: 0; }
+  10%  { opacity: 1; }
+  90%  { opacity: 0.6; }
+  100% { transform: translateY(-120px) scale(0); opacity: 0; }
+}
