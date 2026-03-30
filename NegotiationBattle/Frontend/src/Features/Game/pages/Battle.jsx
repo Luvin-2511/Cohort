@@ -500,7 +500,13 @@ export default function BattleArena() {
   const savings = product.listPrice - price;
   const savingsPct = Math.round((savings / product.listPrice) * 100);
   const { user } = useAuth();
-  const playerImg = user?.character === "male" ? ImgMale : ImgFemale;
+  const [playerImg, setPlayerImg] = useState(ImgMale);
+
+  useEffect(() => {
+    if (user?.character) {
+      setPlayerImg(user.character === "male" ? ImgMale : ImgFemale);
+    }
+  }, [user]);
 
   return (
     <>
@@ -560,12 +566,14 @@ export default function BattleArena() {
           <div className="plat buyer" />
 
           <div className="fighter buyer">
-            <img
-              src={playerImg}
-              alt="Negotiator"
-              className="fighter-img buyer-fighter-img"
-              draggable={false}
-            />
+            {playerImg && (
+              <img
+                src={playerImg}
+                alt="Negotiator"
+                className="fighter-img buyer-fighter-img"
+                draggable={false}
+              />
+            )}
             <div className="fighter-label">NEGOTIATOR</div>
           </div>
 
