@@ -48,7 +48,11 @@ export async function registerController(req, res, next) {
       },
     );
 
-    res.cookie("token", token);
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "None",
+    });
 
     const safeUser = user.toObject();
     delete safeUser.password;
@@ -113,7 +117,11 @@ export async function loginController(req, res, next) {
       },
     );
 
-    res.cookie("token", token);
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "None",
+    });
 
     const safeUser = user.toObject();
     delete safeUser.password;
@@ -187,36 +195,36 @@ export async function logoutController(req, res, next) {
  * @param {import('express').Response} res
  * @param {import('express').Next} next
  */
-export async function characterSelectController(req, res,next) {
-  const {character} = req.body
-  if(!character){
+export async function characterSelectController(req, res, next) {
+  const { character } = req.body;
+  if (!character) {
     return next({
-      status:400,
+      status: 400,
       message: "Character Not Chosen",
-    })
+    });
   }
-  const {id} = req.user
-  const user = await userModel.findById( id );
+  const { id } = req.user;
+  const user = await userModel.findById(id);
   if (!user) {
     return next({
-      status:404,
+      status: 404,
       message: "User not found !",
-    })
+    });
   }
 
-  if(user.character !==null){
+  if (user.character !== null) {
     return next({
-      status:400,
-      message:"Cannot select character again"
-    })
+      status: 400,
+      message: "Cannot select character again",
+    });
   }
 
   user.character = character;
-  await user.save()
+  await user.save();
 
   return res.status(200).json({
-    success:true,
+    success: true,
     message: "Character selected successfully",
-    user
-  })
+    user,
+  });
 }
