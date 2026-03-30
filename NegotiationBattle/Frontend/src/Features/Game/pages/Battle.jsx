@@ -337,7 +337,7 @@ export default function BattleArena() {
   }, [phase]);
 
   /* ── SEND ── */
-  const { handleAiResponse, allMsg } = useGame();
+  const { handleAiResponse, allMsg, loading } = useGame();
 
   const send = useCallback(async () => {
     const msg = input.trim();
