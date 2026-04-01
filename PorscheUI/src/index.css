@@ -1,8 +1,14 @@
 @import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Bungee&display=swap');
 
 
 ::-webkit-scrollbar {
   display: none;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
 }
 
 @font-face {
@@ -35,4 +41,76 @@
 }
 .text-line-2 {
   animation: move-right 17s linear forwards infinite;
+}
+
+#demand-text {
+  animation: text-animation 0.5s linear infinite forwards;
+}
+#demand-text:hover {
+  transform: scaleY(10px);
+}
+
+@keyframes text-animation {
+  from {
+    font-style: italic;
+    color: red;
+  } to {
+    font-style: normal;
+  }
+}
+
+#icon-box::before {
+  content:"";
+  height:100%;
+  width: 0%;
+  position: absolute;
+  inset: 0;
+  left: 50%;
+  z-index: -1;
+  background: rgba(255, 0, 0, 0.208);
+  transition: all 0.5s ease;
+  border-radius: 50%;
+}
+
+#icon-box:hover::before {
+  width: 100%;
+  border-radius: 0px;
+  left: 0;
+}
+
+.pages {
+  min-height: 100%;
+}
+#main-three-part {
+  height: 100vh;
+  width: 100%;
+  position:relative;
+  z-index: 20;
+  background: #0c0c0c;
+}
+
+#canvas {
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+#porsche-text {
+  animation: porsche-anim 1s ease infinite alternate;
+}
+#porsche-text-two {
+  animation: porsche-anim 1s ease infinite alternate;
+}
+
+@keyframes porsche-anim {
+  from {
+    letter-spacing: 2vw;
+  }to {
+    letter-spacing: 0;
+  }
+}
+
+.flip {
+  transform: rotateX(180deg);
 }
