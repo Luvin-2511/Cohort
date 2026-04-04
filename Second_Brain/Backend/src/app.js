@@ -2,6 +2,7 @@ import express from 'express'
 import authRouter from './routes/auth.route'
 import cookieParser from 'cookie-parser'
 import cors from 'cors'
+import { errorHandler } from './middlewares/error.middleware'
 const app = express()
 
 /**
@@ -16,5 +17,6 @@ app.use(cors())
  */
 app.use('/api/auth',authRouter)
 
+app.use(errorHandler)
 
 export default app

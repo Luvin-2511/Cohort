@@ -1,0 +1,119 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+
+.loader-page {
+    height: 100vh;
+    width: 100%;
+    display: grid;
+    grid-template-rows: repeat(var(--row),1fr);
+    grid-template-columns: repeat(var(--col),1fr);
+}
+
+.box{
+    position: relative;
+    overflow: hidden;
+    background: #219ebc;
+}
+
+.box::after {
+    content:"";
+    position: absolute;
+    inset: 0;
+    width: 0;
+    left: 50%;
+    transition: all 0.1s ease;
+    background: #8ecae6;
+    transform-origin: center;
+    border-radius: 50%;
+    animation:boxAnimation 0.6s linear;
+    animation-delay: calc(var(--sequence) * 0.05s);
+}
+
+.box:hover::after {
+    width: 100%;
+    left: 0;
+    border-radius: 0;
+}
+
+.loader-timer {
+    position: absolute;
+    pointer-events: none;
+    right: 10%;
+    bottom: 5%;
+    font-size: 15rem;
+    font-family: "Bebas Neue";
+    color: transparent;
+    background: #8ecae6;
+    background-clip: text;
+    -webkit-background-clip: text;
+    z-index: 2;
+}
+
+.loader-timer-behind {
+    position: absolute;
+    pointer-events: none;
+    right: 10%;
+    bottom: 5%;
+    font-size: 15rem;
+    font-family: "Bebas Neue";
+    color: transparent;
+    background: #8ecae6;
+    background-clip: text;
+    -webkit-background-clip: text;
+    z-index: 1;
+
+}
+
+@keyframes boxAnimation {
+    0%{
+        width: 0%;
+        left: 50%;
+        border-radius: 0;
+        transform-origin: bottom;
+    }50%{
+        left: 0;
+        width: 100%;
+        border-radius: 50%;
+    }
+    100% {
+        left: 0;
+        width: 0%;
+    }
+}
+
+@keyframes timerAnimation{
+    0% {
+        transform: translate(-20%,10%);
+        background: linear-gradient(to bottom,#ff00ff, #00ffff);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+    }
+    15% {
+        background: linear-gradient(to bottom, #39ff14 ,#ffd200 );
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        transform: translate(20%,-10%);
+    }
+    30% {
+        color: transparent;
+        background: linear-gradient(to bottom,#ff00ff , #00ffff );
+        transform: translate(-20%,-10%);
+        -webkit-background-clip: text;
+        background-clip: text;
+    }
+    45%{
+        background: linear-gradient(to bottom, #39ff14 ,#ff4500 );
+        transform: translate(20%,10%);
+        color: transparent;
+        background-clip: text;
+        -webkit-background-clip: text;
+    }
+    100% {
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        background:#8ecae6;
+        transform: rotate(360deg) scale(45);
+    }
+}

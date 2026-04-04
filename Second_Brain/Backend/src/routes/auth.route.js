@@ -1,8 +1,12 @@
 import {Router} from 'express'
-import { registerController } from '../controllers/auth.controller'
+import { getMeController, loginController, logoutController, registerController } from '../controllers/auth.controller'
+import { authMiddleware } from '../middlewares/auth.middleware'
 
 const authRouter = Router()
 
-authRouter.get("/", registerController)
+authRouter.post("/register", registerController)
+authRouter.post("/login", loginController)
+authRouter.post("/logout",authMiddleware,logoutController)
+authRouter.post("/get-me",authMiddleware,getMeController)
 
 export default authRouter
