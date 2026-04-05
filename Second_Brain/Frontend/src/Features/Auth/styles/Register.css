@@ -1,0 +1,338 @@
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Instrument+Serif:ital@0;1&family=Geist+Mono:wght@300;400;500&display=swap");
+
+
+.register-page {
+  min-height: 100vh;
+  display: flex;
+  background: var(--ink, #0a0a09);
+  color: var(--cream, #f0ebe1);
+  font-family: "Geist Mono", monospace;
+  overflow: hidden;
+}
+
+/* Custom cursor */
+#cursor-reg {
+  position: fixed;
+  width: 10px; height: 10px;
+  background: var(--cream, #f0ebe1);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  mix-blend-mode: exclusion;
+  transform: translate(-50%, -50%);
+  transition: width .28s cubic-bezier(0.19,1,0.22,1),
+              height .28s cubic-bezier(0.19,1,0.22,1);
+}
+#cursor-reg.hovering { width: 60px; height: 60px; }
+
+/* ── LEFT VISUAL PANEL ── */
+.reg-visual {
+  flex: 1;
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  padding: 3rem;
+  overflow: hidden;
+  border-right: 1px solid rgba(240,235,225,0.07);
+  min-height: 100vh;
+}
+
+/* Sage tinted glow (vs rust on login) */
+.reg-visual::before {
+  content: "";
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse at 40% 35%, rgba(61,90,76,0.12) 0%, transparent 60%),
+    radial-gradient(ellipse at 65% 75%, rgba(200,68,26,0.07) 0%, transparent 50%);
+  pointer-events: none; z-index: 1;
+}
+
+/* Grid overlay */
+.reg-visual::after {
+  content: "";
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(240,235,225,0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(240,235,225,0.02) 1px, transparent 1px);
+  background-size: 48px 48px;
+  pointer-events: none; z-index: 1;
+}
+
+.reg-canvas-wrap {
+  position: absolute; inset: 0; z-index: 0;
+}
+.reg-canvas-wrap canvas {
+  width: 100% !important; height: 100% !important;
+}
+
+.reg-visual-copy {
+  position: relative; z-index: 2; max-width: 420px;
+}
+
+.rv-eyebrow {
+  font-size: 0.55rem; letter-spacing: 0.22em;
+  text-transform: uppercase; color: #3D5A4C;
+  margin-bottom: 1.4rem;
+  display: flex; align-items: center; gap: 0.8rem;
+}
+.rv-eyebrow::before {
+  content: ""; width: 28px; height: 1px; background: #3D5A4C;
+}
+
+.rv-title {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: clamp(3rem, 5.5vw, 6rem);
+  line-height: 0.88; letter-spacing: -0.01em;
+  color: var(--cream, #f0ebe1); margin-bottom: 1.4rem;
+}
+.rv-title em {
+  font-family: "Instrument Serif", serif;
+  font-style: italic; color: #3D5A4C;
+}
+
+.rv-desc {
+  font-size: 0.7rem; line-height: 1.9;
+  color: var(--dust, #b8b0a4);
+  margin-bottom: 2.2rem; max-width: 340px;
+}
+
+.rv-features {
+  display: flex; flex-direction: column; gap: 0.75rem;
+}
+.rv-feature {
+  display: flex; align-items: center; gap: 0.85rem;
+  font-size: 0.66rem; letter-spacing: 0.06em;
+  color: var(--dust, #b8b0a4);
+}
+.rv-feature-dot {
+  width: 5px; height: 5px; border-radius: 50%;
+  background: #3D5A4C; flex-shrink: 0;
+}
+
+.reg-back {
+  position: absolute; top: 2.5rem; left: 3rem; z-index: 10;
+  font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--dust, #b8b0a4); text-decoration: none;
+  transition: color .2s; cursor: none;
+}
+.reg-back:hover { color: var(--cream, #f0ebe1); }
+
+/* ── RIGHT FORM PANEL ── */
+.reg-form-panel {
+  width: 500px; flex-shrink: 0;
+  background: var(--ink, #0a0a09);
+  display: flex; align-items: center; justify-content: center;
+  padding: 5rem 4rem;
+  position: relative; min-height: 100vh; overflow-y: auto;
+}
+
+/* Sage accent line (vs rust on login) */
+.reg-form-panel::before {
+  content: "";
+  position: absolute; top: 0; left: 0;
+  width: 2px; height: 100%;
+  background: linear-gradient(to bottom, transparent, #3D5A4C, transparent);
+  opacity: 0.55;
+}
+
+.reg-form-inner { width: 100%; max-width: 360px; }
+
+.reg-form-top {
+  display: flex; align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2rem; opacity: 0;
+}
+.rf-logo {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 1.3rem; letter-spacing: 0.06em;
+}
+.rf-step-label {
+  font-size: 0.55rem; letter-spacing: 0.16em;
+  color: var(--dust, #b8b0a4);
+}
+
+/* Step progress bar */
+.step-bar {
+  display: flex; gap: 4px; margin-bottom: 2.5rem;
+}
+.step-seg {
+  flex: 1; height: 2px;
+  background: rgba(240,235,225,0.1);
+  transition: background .4s, transform .3s;
+  transform-origin: left;
+}
+.step-seg.active  { background: #3D5A4C; }
+.step-seg.done    { background: rgba(61,90,76,0.5); }
+
+.reg-title {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: clamp(3rem, 5.5vw, 4.8rem);
+  letter-spacing: -0.01em; line-height: 0.88;
+  color: var(--cream, #f0ebe1);
+  margin-bottom: 0.7rem; opacity: 0;
+}
+
+.reg-sub {
+  font-size: 0.65rem; line-height: 1.65;
+  color: var(--dust, #b8b0a4);
+  margin-bottom: 0.6rem; opacity: 0;
+}
+
+.reg-signin {
+  font-size: 0.62rem; color: var(--dust, #b8b0a4);
+  margin-bottom: 2rem; opacity: 0;
+}
+.reg-link {
+  color: #3D5A4C; text-decoration: none;
+  transition: opacity .2s; cursor: none;
+}
+.reg-link:hover { opacity: 0.7; }
+
+/* Form layout */
+.reg-form { display: flex; flex-direction: column; gap: 0; }
+
+.lf-group { margin-bottom: 1.8rem; opacity: 0; }
+
+.rf-row {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem;
+}
+
+.rf-group { margin-bottom: 1.8rem; }
+
+.rf-label {
+  display: block; font-size: 0.56rem;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--dust, #b8b0a4); margin-bottom: 0.75rem;
+}
+
+.rf-input-wrap { position: relative; padding-bottom: 2px; }
+.rf-input {
+  width: 100%; padding: 0.75rem 0;
+  background: transparent; border: none; outline: none;
+  font-family: "Geist Mono", monospace;
+  font-size: 0.85rem; color: var(--cream, #f0ebe1);
+  letter-spacing: 0.04em; -webkit-appearance: none;
+}
+.rf-input::placeholder { color: rgba(184,176,164,0.3); }
+.rf-line {
+  position: absolute; bottom: 0; left: 0;
+  width: 100%; height: 1px;
+  background: rgba(240,235,225,0.1);
+  transition: background .25s;
+}
+.rf-input-wrap:focus-within .rf-line { background: #3D5A4C; }
+.rf-input-wrap.has-error .rf-line   { background: #ff6b6b; }
+
+.rf-error {
+  display: block; font-size: 0.58rem;
+  letter-spacing: 0.06em; color: #ff6b6b;
+  margin-top: 0.5rem;
+}
+
+/* Strength bar */
+.strength-wrap {
+  display: flex; align-items: center; gap: 0.8rem; margin-top: 0.6rem;
+}
+.strength-bar {
+  display: flex; gap: 3px; flex: 1;
+}
+.strength-seg {
+  height: 2px; flex: 1; border-radius: 1px;
+  transition: background .35s;
+}
+.strength-label {
+  font-size: 0.58rem; letter-spacing: 0.08em;
+  font-weight: 500; min-width: 44px;
+  text-align: right; transition: color .3s;
+}
+
+/* Shared button styles from Login */
+.lf-eye {
+  position: absolute; right: 0; top: 50%;
+  transform: translateY(-50%);
+  background: none; border: none;
+  font-size: 0.75rem;
+  color: var(--dust, #b8b0a4);
+  cursor: none; padding: 4px; transition: color .2s; line-height: 1;
+}
+.lf-eye:hover { color: var(--cream, #f0ebe1); }
+
+.lf-spinner {
+  width: 18px; height: 18px;
+  border: 2px solid rgba(240,235,225,0.2);
+  border-top-color: var(--cream, #f0ebe1);
+  border-radius: 50%;
+  animation: spin .7s linear infinite;
+  display: inline-block; margin: 0 auto;
+  position: relative; z-index: 1;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Next / Submit button (sage themed) */
+.rf-next {
+  width: 100%; padding: 1rem 1.4rem;
+  background: var(--cream, #f0ebe1);
+  color: var(--ink, #0a0a09);
+  border: none;
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 1.1rem; letter-spacing: 0.08em;
+  display: flex; align-items: center; justify-content: space-between;
+  cursor: none; position: relative; overflow: hidden;
+  transition: color .4s; margin-top: 0.4rem;
+  opacity: 0;
+}
+.rf-next::before {
+  content: ""; position: absolute; inset: 0;
+  background: #3D5A4C;
+  transform: scaleX(0); transform-origin: left;
+  transition: transform .5s cubic-bezier(0.19,1,0.22,1);
+  z-index: 0;
+}
+.rf-next:hover::before { transform: scaleX(1); }
+.rf-next:hover { color: var(--cream, #f0ebe1); }
+.rf-next span { position: relative; z-index: 1; }
+.rf-next:disabled { opacity: 0.6; }
+
+.lf-arrow {
+  font-size: 1.3rem; position: relative; z-index: 1;
+  transition: transform .3s cubic-bezier(0.34,1.56,0.64,1);
+}
+.rf-next:hover .lf-arrow { transform: translateX(5px); }
+
+/* Back button row */
+.rf-btn-row {
+  display: flex; gap: 0.75rem; align-items: stretch;
+  margin-top: 0.4rem;
+}
+.rf-back-btn {
+  padding: 1rem 1.2rem;
+  background: transparent;
+  border: 1px solid rgba(240,235,225,0.12);
+  color: var(--dust, #b8b0a4);
+  font-family: "Geist Mono", monospace;
+  font-size: 0.6rem; letter-spacing: 0.14em;
+  text-transform: uppercase; cursor: none;
+  transition: border-color .25s, color .25s;
+  white-space: nowrap;
+}
+.rf-back-btn:hover {
+  border-color: rgba(240,235,225,0.25);
+  color: var(--cream, #f0ebe1);
+}
+
+.rf-terms {
+  font-size: 0.6rem; letter-spacing: 0.04em;
+  color: rgba(184,176,164,0.4); line-height: 1.7;
+  margin-bottom: 1.2rem;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  .reg-visual { display: none; }
+  .reg-form-panel {
+    width: 100%; padding: 3rem 1.5rem;
+    align-items: flex-start; padding-top: 4rem;
+  }
+  .reg-form-panel::before { display: none; }
+  .rf-row { grid-template-columns: 1fr; }
+}
