@@ -46,7 +46,12 @@ export async function registerController(req, res, next) {
       },
     );
 
-    res.cookie("token", token);
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
+      maxAge: 7 * 24 * 60 * 60 * 1000
+    });
 
     res.status(200).json({
       success: true,
@@ -103,7 +108,12 @@ export async function loginController(req, res, next) {
       { expiresIn: "7d" },
     );
 
-    res.cookie("token", token);
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
+      maxAge: 7 * 24 * 60 * 60 * 1000
+    });
     return res.status(201).json({
       success: true,
       message: "User logged in successfully !",
@@ -122,7 +132,11 @@ export async function loginController(req, res, next) {
  */
 export async function logoutController(req, res, next) {
   try {
-    res.clearCookie("token");
+    res.clearCookie("token", {
+      httpOnly: true,
+      secure: true,
+      sameSite: "none"
+    });
     return res.status(200).json({
       success: true,
       message: "User logout successfully !",
