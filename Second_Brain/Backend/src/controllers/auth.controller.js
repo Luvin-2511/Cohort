@@ -66,15 +66,17 @@ export async function registerController(req, res, next) {
  */
 export async function loginController(req, res, next) {
   try {
-    const { username, password } = req.body;
-    if (!username || !password) {
+    const { username, email, password } = req.body;
+    const identifier = username || email;
+
+    if (!identifier || !password) {
       return next({
         status: 400,
         message: "All fields are required !",
       });
     }
     const user = await userModel.findOne({
-      username,
+      $or: [{ username: identifier }, { email: identifier }],
     });
 
     if (!user) {

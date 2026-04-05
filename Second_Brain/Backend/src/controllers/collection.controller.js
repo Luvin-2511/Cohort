@@ -1,4 +1,5 @@
 import collectionModel from "../models/collection.model.js";
+import mongoose from "mongoose";
 
 /**
  * @route POST api/collection/create
@@ -62,9 +63,27 @@ export async function getCollectionController(req, res, next) {
         })
     }
 
-    const collections = await collectionModel.find({
-        userId:id
-    })
+    const collections = await collectionModel.aggregate([
+      { $match: { userId: new mongoose.Types.ObjectId(id) } },
+      {
+        $lookup: {
+          from: "items",
+          localField: "_id",
+          foreignField: "collectionId",
+          as: "items",
+        },
+      },
+      {
+        $addFields: {
+          itemCount: { $size: "$items" },
+        },
+      },
+      {
+        $project: {
+          items: 0,
+        },
+      },
+    ]);
 
     return res.status(200).json({
         success:true,

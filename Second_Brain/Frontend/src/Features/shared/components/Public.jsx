@@ -8,11 +8,11 @@ const Public = ({ children }) => {
   const user = useSelector((state) => state.auth.user);
 
   if(loading){
-    <Loader />
+    return <Loader />;
   }
 
   if(!loading && user){
-    return <Navigate to='/home' />
+    return <Navigate to='/dashboard' />
   }
 
   return children;

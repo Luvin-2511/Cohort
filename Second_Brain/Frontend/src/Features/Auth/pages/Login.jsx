@@ -1,85 +1,14 @@
-import { useEffect, useRef, useState, useMemo, Suspense } from "react";
-import { Canvas, useFrame } from "@react-three/fiber";
-import { MeshTransmissionMaterial, Float, Environment } from "@react-three/drei";
-import * as THREE from "three";
+import { useEffect, useRef, useState, Suspense } from "react";
 import gsap from "gsap";
 import { SplitText } from "gsap/SplitText";
 import { Link, useNavigate } from "react-router-dom";
 import "../styles/Login.css";
 import useAuth from "../hooks/useAuth";
+import StarsBackground from "../../shared/components/StarsBackground";
 
 gsap.registerPlugin(SplitText);
 
-function AuthOrb() {
-  const meshRef = useRef();
-  const geo = useMemo(() => new THREE.IcosahedronGeometry(1.15, 4), []);
 
-  useEffect(() => {
-    if (meshRef.current) {
-      const pos = meshRef.current.geometry.attributes.position;
-      meshRef.current.geometry.userData.original = new Float32Array(pos.array);
-    }
-  }, []);
-
-  useFrame((state) => {
-    if (!meshRef.current) return;
-    const t = state.clock.elapsedTime;
-    meshRef.current.rotation.y = t * 0.12;
-    meshRef.current.rotation.x = Math.sin(t * 0.18) * 0.25;
-
-    const breathe = 1 + Math.sin(t * 0.6) * 0.035;
-    meshRef.current.scale.setScalar(breathe);
-
-    const pos = meshRef.current.geometry.attributes.position;
-    const orig = meshRef.current.geometry.userData.original;
-    if (orig) {
-      for (let i = 0; i < pos.count; i++) {
-        const ox = orig[i * 3], oy = orig[i * 3 + 1], oz = orig[i * 3 + 2];
-        const w = Math.sin(ox * 2.5 + t * 0.8) * Math.cos(oy * 2 + t * 0.6) * 0.07;
-        pos.setXYZ(i, ox + w, oy + w * 0.7, oz + w * 0.5);
-      }
-      pos.needsUpdate = true;
-    }
-  });
-
-  return (
-    <Float speed={1.1} rotationIntensity={0.12} floatIntensity={0.6}>
-      <mesh ref={meshRef} geometry={geo}>
-        <MeshTransmissionMaterial
-          backside
-          samples={8}
-          thickness={0.45}
-          chromaticAberration={0.09}
-          anisotropy={0.2}
-          distortion={0.3}
-          distortionScale={0.55}
-          temporalDistortion={0.1}
-          iridescence={1.3}
-          iridescenceIOR={1.45}
-          iridescenceThicknessRange={[0, 1400]}
-          roughness={0}
-          color="#C8441A"
-          attenuationColor="#3D5A4C"
-          attenuationDistance={0.4}
-          transparent
-          opacity={0.85}
-        />
-      </mesh>
-    </Float>
-  );
-}
-
-function AuthScene() {
-  return (
-    <>
-      <Environment preset="city" />
-      <ambientLight intensity={0.3} />
-      <directionalLight position={[4, 4, 4]}   intensity={1.3} color="#C8441A" />
-      <directionalLight position={[-3, -2, -3]} intensity={0.5} color="#3D5A4C" />
-      <AuthOrb />
-    </>
-  );
-}
 
 export default function Login() {
   const navigate = useNavigate();
@@ -142,26 +71,26 @@ export default function Login() {
   const handleSubmit = async (ev) => {
     ev.preventDefault();
     const e = validate();
-    const response = await handleLogin(email,password)
     if (Object.keys(e).length) {
       setErrors(e);
       gsap.to(formRef.current, {
         x: [0, -10, 10, -8, 8, -4, 4, 0],
         duration: 0.5, ease: "none",
       });
-      if(response.success){
-        navigate('/home')
-      }
       return;
     }
-    await new Promise((r) => setTimeout(r, 1300));
+    
+    const response = await handleLogin(email, password);
+    if (response && response.success) {
+      await new Promise((r) => setTimeout(r, 800));
 
-    gsap.to([canvasRef.current, formRef.current], {
-      opacity: 0, y: -30,
-      duration: 0.5, ease: "power3.in",
-      stagger: 0.06,
-      onComplete: () => navigate("/"),
-    });
+      gsap.to([canvasRef.current, formRef.current], {
+        opacity: 0, y: -30,
+        duration: 0.5, ease: "power3.in",
+        stagger: 0.06,
+        onComplete: () => navigate("/dashboard"),
+      });
+    }
   };
 
   return (
@@ -171,15 +100,7 @@ export default function Login() {
       {/* ── LEFT: 3D CANVAS PANEL ── */}
       <div className="login-visual" ref={canvasRef}>
         <div className="login-canvas-wrap">
-          <Canvas
-            camera={{ position: [0, 0, 3.5], fov: 42 }}
-            gl={{ alpha: true, antialias: true }}
-            dpr={[1, 1.5]}
-          >
-            <Suspense fallback={null}>
-              <AuthScene />
-            </Suspense>
-          </Canvas>
+          <StarsBackground />
         </div>
 
         <div className="login-visual-copy">

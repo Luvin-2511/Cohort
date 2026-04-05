@@ -14,6 +14,7 @@ import {
   searchItems,
   getResurfacedItems,
   getRelatedItems,
+  deleteItem,
 } from "../services/item.api";
 
 const useItem = () => {
@@ -96,6 +97,21 @@ const useItem = () => {
     }
   };
 
+  const handleDeleteItem = async (itemId) => {
+    dispatch(setLoading(true));
+    try {
+      const response = await deleteItem(itemId);
+      toast.success(response.message || "Item deleted!");
+      return response;
+    } catch (err) {
+      const errorMessage = err?.response?.data?.message || "Failed to delete item";
+      dispatch(setError(errorMessage));
+      toast.error(errorMessage);
+    } finally {
+      dispatch(setLoading(false));
+    }
+  };
+
   return {
     loading,
     error,
@@ -108,6 +124,7 @@ const useItem = () => {
     handleSearchItems,
     handleGetResurfacedItems,
     handleGetRelatedItems,
+    handleDeleteItem,
   };
 };
 

@@ -6,6 +6,10 @@ import Register from "./Features/Auth/pages/Register";
 import Public from "../src/Features/shared/components/Public";
 import Protected from "../src/Features/shared/components/Protected";
 import Dashboard from "./Features/Item/pages/Dashboard";
+import LibraryPage from "./Features/Item/pages/Library";
+import SemanticSearchPage from "./Features/Item/pages/SemanticSearch";
+import CollectionsPage from "./Features/Item/pages/Collections";
+import ItemDetail from "./Features/Item/pages/ItemDetail";
 
 const AppRoutes = () => {
   return (
@@ -38,9 +42,41 @@ const AppRoutes = () => {
         <Route
           path="/dashboard"
           element={
-            <>
+            <Protected>
               <Dashboard />
-            </>
+            </Protected>
+          }
+        />
+        <Route
+          path="/library"
+          element={
+            <Protected>
+              <LibraryPage />
+            </Protected>
+          }
+        />
+        <Route
+          path="/search"
+          element={
+            <Protected>
+              <SemanticSearchPage />
+            </Protected>
+          }
+        />
+        <Route
+          path="/collections"
+          element={
+            <Protected>
+              <CollectionsPage />
+            </Protected>
+          }
+        />
+        <Route
+          path="/item/:id"
+          element={
+            <Protected>
+              <ItemDetail />
+            </Protected>
           }
         />
       </Routes>

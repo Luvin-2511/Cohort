@@ -37,6 +37,11 @@ const itemSchema = new mongoose.Schema(
         type: String,
       },
     ],
+    aiInsights: [
+      {
+        type: String,
+      },
+    ],
     embedding: [Number],
     collectionId: {
       type: mongoose.Schema.Types.ObjectId,

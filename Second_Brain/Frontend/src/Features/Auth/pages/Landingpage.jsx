@@ -1,171 +1,12 @@
-import { useEffect, useRef, useMemo, useState, Suspense } from "react";
-import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import {
-  MeshTransmissionMaterial,
-  Float,
-  Environment,
-  Points,
-  PointMaterial,
-} from "@react-three/drei";
-import * as THREE from "three";
+import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { SplitText } from "gsap/SplitText";
 import { Link } from "react-router-dom";
 import "../styles/Landingpage.css";
+import StarsBackground from "../../shared/components/StarsBackground";
 
 gsap.registerPlugin(ScrollTrigger, SplitText);
-
-/* ─────────────────────────────────────────
-   THREE.JS COMPONENTS
-───────────────────────────────────────── */
-
-function MorphOrb() {
-  const meshRef = useRef();
-  const { viewport, mouse } = useThree();
-
-  const geoA = useMemo(() => new THREE.IcosahedronGeometry(1.4, 5), []);
-
-  useEffect(() => {
-    if (meshRef.current) {
-      const pos = meshRef.current.geometry.attributes.position;
-      meshRef.current.geometry.userData.original = new Float32Array(pos.array);
-    }
-  }, []);
-
-  useFrame((state) => {
-    if (!meshRef.current) return;
-    const t = state.clock.elapsedTime;
-
-    // Organic rotation + mouse tracking
-    meshRef.current.rotation.x = Math.sin(t * 0.15) * 0.3 + mouse.y * 0.08;
-    meshRef.current.rotation.y = t * 0.08 + mouse.x * 0.06;
-    meshRef.current.rotation.z = Math.cos(t * 0.12) * 0.15;
-
-    // Breathe
-    const breathe = 1 + Math.sin(t * 0.5) * 0.045;
-    meshRef.current.scale.setScalar(breathe);
-
-    // Vertex distortion
-    const pos = meshRef.current.geometry.attributes.position;
-    const orig = meshRef.current.geometry.userData.original;
-    if (orig) {
-      for (let i = 0; i < pos.count; i++) {
-        const ox = orig[i * 3], oy = orig[i * 3 + 1], oz = orig[i * 3 + 2];
-        const wave =
-          Math.sin(ox * 2.2 + t * 0.7) *
-          Math.cos(oy * 1.8 + t * 0.5) *
-          0.09;
-        pos.setXYZ(i, ox + wave, oy + wave * 0.7, oz + wave * 0.5);
-      }
-      pos.needsUpdate = true;
-      meshRef.current.geometry.computeVertexNormals();
-    }
-  });
-
-  return (
-    <Float speed={0.9} rotationIntensity={0.15} floatIntensity={0.5}>
-      <mesh ref={meshRef} geometry={geoA}>
-        <MeshTransmissionMaterial
-          backside
-          samples={10}
-          thickness={0.5}
-          chromaticAberration={0.1}
-          anisotropy={0.25}
-          distortion={0.35}
-          distortionScale={0.6}
-          temporalDistortion={0.12}
-          iridescence={1.4}
-          iridescenceIOR={1.5}
-          iridescenceThicknessRange={[0, 1600]}
-          roughness={0.0}
-          color="#C8441A"
-          attenuationColor="#3D5A4C"
-          attenuationDistance={0.35}
-          transparent
-          opacity={0.88}
-        />
-      </mesh>
-    </Float>
-  );
-}
-
-function OrbParticles() {
-  const ref = useRef();
-  const count = 160;
-
-  const positions = useMemo(() => {
-    const arr = new Float32Array(count * 3);
-    for (let i = 0; i < count; i++) {
-      const phi = Math.acos(2 * Math.random() - 1);
-      const theta = Math.random() * Math.PI * 2;
-      const r = 1.9 + Math.random() * 1.4;
-      arr[i * 3]     = r * Math.sin(phi) * Math.cos(theta);
-      arr[i * 3 + 1] = r * Math.sin(phi) * Math.sin(theta);
-      arr[i * 3 + 2] = r * Math.cos(phi);
-    }
-    return arr;
-  }, []);
-
-  const velocities = useMemo(
-    () =>
-      Array.from({ length: count }, () => ({
-        phi: Math.random() * Math.PI * 2,
-        theta: Math.random() * Math.PI * 2,
-        speed: 0.01 + Math.random() * 0.015,
-      })),
-    []
-  );
-
-  useFrame((s) => {
-    if (!ref.current) return;
-    ref.current.rotation.y = s.clock.elapsedTime * 0.04;
-    ref.current.rotation.x = Math.sin(s.clock.elapsedTime * 0.035) * 0.18;
-  });
-
-  return (
-    <Points ref={ref} positions={positions} stride={3}>
-      <PointMaterial
-        color="#F0EBE1"
-        size={0.026}
-        transparent
-        opacity={0.55}
-        sizeAttenuation
-        depthWrite={false}
-      />
-    </Points>
-  );
-}
-
-function RingAccent() {
-  const ref = useRef();
-  useFrame((s) => {
-    if (!ref.current) return;
-    ref.current.rotation.x = s.clock.elapsedTime * 0.09;
-    ref.current.rotation.z = s.clock.elapsedTime * 0.06;
-  });
-  return (
-    <mesh ref={ref}>
-      <torusGeometry args={[2.6, 0.006, 8, 160]} />
-      <meshBasicMaterial color="#C8441A" transparent opacity={0.18} />
-    </mesh>
-  );
-}
-
-function Scene() {
-  return (
-    <>
-      <Environment preset="city" />
-      <ambientLight intensity={0.25} />
-      <directionalLight position={[5, 5, 5]}  intensity={1.4} color="#C8441A" />
-      <directionalLight position={[-4, -3, -4]} intensity={0.6} color="#3D5A4C" />
-      <pointLight position={[2, -2, 3]} intensity={0.8} color="#F0EBE1" />
-      <MorphOrb />
-      <OrbParticles />
-      <RingAccent />
-    </>
-  );
-}
 
 /* ─────────────────────────────────────────
    KNOWLEDGE GRAPH CANVAS  (2D canvas)
@@ -181,14 +22,14 @@ function GraphCanvas() {
     let W, H, t  = 0;
 
     const nodeConfigs = [
-      { lx: 0.5,  ly: 0.46, r: 22, label: "AI Core",  color: "#C8441A", pulse: true },
+      { lx: 0.5,  ly: 0.46, r: 22, label: "AI Core",  color: "#c7f300", pulse: true },
       { lx: 0.22, ly: 0.2,  r: 13, label: "Articles", color: "#F0EBE1" },
       { lx: 0.78, ly: 0.19, r: 11, label: "Tweets",   color: "#B8B0A4" },
       { lx: 0.14, ly: 0.62, r: 15, label: "PDFs",     color: "#F0EBE1" },
       { lx: 0.84, ly: 0.65, r: 12, label: "Videos",   color: "#B8B0A4" },
-      { lx: 0.47, ly: 0.84, r: 10, label: "Images",   color: "#3D5A4C" },
+      { lx: 0.47, ly: 0.84, r: 10, label: "Images",   color: "#C8441A" },
       { lx: 0.89, ly: 0.4,  r: 9,  label: "Notes",    color: "#B8B0A4" },
-      { lx: 0.09, ly: 0.38, r: 10, label: "Links",    color: "#3D5A4C" },
+      { lx: 0.09, ly: 0.38, r: 10, label: "Links",    color: "#C8441A" },
       { lx: 0.35, ly: 0.13, r: 8,  label: "Audio",    color: "#B8B0A4" },
       { lx: 0.68, ly: 0.86, r: 8,  label: "Threads",  color: "#F0EBE1" },
     ];
@@ -229,7 +70,7 @@ function GraphCanvas() {
         ctx.beginPath();
         ctx.moveTo(na.x, na.y);
         ctx.quadraticCurveTo(cpx, cpy, nb.x, nb.y);
-        ctx.strokeStyle = `rgba(200,68,26,${alpha})`;
+        ctx.strokeStyle = `rgba(199,243,0,${alpha})`;
         ctx.lineWidth = 0.8;
         ctx.stroke();
 
@@ -241,7 +82,7 @@ function GraphCanvas() {
 
         ctx.beginPath();
         ctx.arc(bx, by, 2, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(200,68,26,0.85)`;
+        ctx.fillStyle = `rgba(199,243,0,0.85)`;
         ctx.fill();
       });
 
@@ -283,7 +124,7 @@ function GraphCanvas() {
           [pulse, pulse2].forEach((p, pi) => {
             ctx.beginPath();
             ctx.arc(n.x, n.y, n.r + p * 32 + pi * 12, 0, Math.PI * 2);
-            ctx.strokeStyle = `rgba(200,68,26,${0.35 - p * 0.32})`;
+            ctx.strokeStyle = `rgba(199,243,0,${0.35 - p * 0.32})`;
             ctx.lineWidth = 0.8;
             ctx.stroke();
           });
@@ -540,16 +381,11 @@ export default function LandingPage() {
           position: "fixed", inset: 0, zIndex: 0, pointerEvents: "none",
         }}
       >
-        <Canvas
-          camera={{ position: [0, 0, 4.5], fov: 44 }}
-          gl={{ alpha: true, antialias: true, toneMapping: THREE.ACESFilmicToneMapping, toneMappingExposure: 1.1 }}
-          dpr={[1, 1.5]}
-        >
-          <Suspense fallback={null}>
-            <Scene />
-          </Suspense>
-        </Canvas>
+        <StarsBackground />
       </div>
+
+      <div className="tn-glow tn-glow--top" style={{ position: "absolute" }} />
+      <div className="tn-glow tn-glow--bot" style={{ position: "absolute" }} />
 
       {/* ── NAV ── */}
       <nav>

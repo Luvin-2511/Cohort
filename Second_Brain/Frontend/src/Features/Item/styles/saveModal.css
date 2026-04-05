@@ -16,14 +16,13 @@
   transition: border-color 0.25s;
 }
 .sm-card.dragging {
-  border-color: var(--rust, #c8441a);
-  box-shadow: 0 0 0 2px rgba(200, 68, 26, 0.15);
+  border-color: var(--acid);
+  box-shadow: 0 0 0 2px rgba(var(--acid-rgb), 0.15);
 }
 
 .sm-header {
   display: flex; align-items: center;
   justify-content: space-between; margin-bottom: 1.5rem;
-  opacity: 0;
 }
 .sm-title {
   font-family: "Bebas Neue", sans-serif;
@@ -36,51 +35,51 @@
   cursor: pointer; padding: 4px;
   transition: color 0.2s;
 }
-.sm-close:hover { color: var(--cream, #f0ebe1); }
+.sm-close:hover { color: #f87171; } /* Tailwind Red-400 */
 
 .sm-drop-hint {
   text-align: center; padding: 1rem;
   border: 1px dashed rgba(240, 235, 225, 0.12);
   border-radius: 6px; margin-bottom: 1.2rem;
-  font-family: "Geist Mono", monospace;
+  font-family: "Outfit", sans-serif;
   font-size: 0.62rem; letter-spacing: 0.1em;
-  color: var(--dust, #b8b0a4); opacity: 0;
+  color: var(--dust, #b8b0a4);
 }
 
-.sm-input-wrap { margin-bottom: 1.2rem; opacity: 0; }
+.sm-input-wrap { margin-bottom: 1.2rem; }
 .sm-input {
   width: 100%; padding: 10px 14px;
   background: rgba(240, 235, 225, 0.04);
   border: 1px solid rgba(240, 235, 225, 0.1);
   border-radius: 6px;
-  font-family: "Geist Mono", monospace;
+  font-family: "Outfit", sans-serif;
   font-size: 0.82rem; color: var(--cream, #f0ebe1);
   outline: none; transition: border-color 0.2s, background 0.2s;
 }
 .sm-input:focus {
-  border-color: var(--rust, #c8441a);
-  background: rgba(200, 68, 26, 0.04);
+  border-color: var(--acid);
+  background: rgba(var(--acid-rgb), 0.04);
 }
 .sm-input::placeholder { color: rgba(184,176,164,0.4); }
 
 .sm-types {
   display: flex; gap: 6px; flex-wrap: wrap;
-  margin-bottom: 1.2rem; opacity: 0;
+  margin-bottom: 1.2rem;
 }
 .sm-type-btn {
   display: flex; align-items: center; gap: 5px;
   padding: 5px 10px; border-radius: 100px;
   border: 1px solid rgba(240, 235, 225, 0.1);
   background: transparent; color: var(--dust, #b8b0a4);
-  font-family: "Geist Mono", monospace;
+  font-family: "Outfit", sans-serif;
   font-size: 0.58rem; letter-spacing: 0.08em;
   cursor: pointer; transition: all 0.2s;
 }
 .sm-type-btn:hover { border-color: rgba(240,235,225,0.25); color: var(--cream,#f0ebe1); }
 .sm-type-btn.active {
-  background: rgba(200, 68, 26, 0.15);
-  border-color: rgba(200, 68, 26, 0.4);
-  color: var(--cream, #f0ebe1);
+  background: rgba(var(--acid-rgb), 0.15);
+  border-color: rgba(var(--acid-rgb), 0.4);
+  color: var(--acid);
 }
 
 .sm-note {
@@ -88,33 +87,32 @@
   background: rgba(240,235,225,0.03);
   border: 1px solid rgba(240,235,225,0.08);
   border-radius: 6px; resize: none;
-  font-family: "Geist Mono", monospace;
+  font-family: "Outfit", sans-serif;
   font-size: 0.75rem; color: var(--cream, #f0ebe1);
   outline: none; margin-bottom: 1.2rem;
   transition: border-color 0.2s;
-  opacity: 0;
 }
-.sm-note:focus { border-color: rgba(240,235,225,0.18); }
+.sm-note:focus { border-color: rgba(var(--acid-rgb), 0.18); }
 .sm-note::placeholder { color: rgba(184,176,164,0.3); }
 
 .sm-save-btn {
   width: 100%; padding: 12px;
-  background: var(--cream, #f0ebe1); color: var(--ink, #0a0a09);
-  border: none; border-radius: 6px;
+  background: rgba(var(--acid-rgb), 0.1); color: var(--acid);
+  border: 1px solid rgba(var(--acid-rgb), 0.2); border-radius: 6px;
   font-family: "Bebas Neue", sans-serif;
   font-size: 1.1rem; letter-spacing: 0.1em;
   display: flex; align-items: center; justify-content: space-between;
   cursor: pointer; position: relative; overflow: hidden;
-  transition: color 0.4s; opacity: 0;
+  transition: all 0.4s;
 }
 .sm-save-btn::before {
   content: ""; position: absolute; inset: 0;
-  background: var(--rust, #c8441a);
+  background: var(--acid);
   transform: scaleX(0); transform-origin: left;
   transition: transform 0.5s cubic-bezier(0.19,1,0.22,1);
 }
 .sm-save-btn:hover::before { transform: scaleX(1); }
-.sm-save-btn:hover { color: var(--cream,#f0ebe1); }
+.sm-save-btn:hover { color: var(--on-acid); border-color: var(--acid); }
 .sm-save-btn span { position: relative; z-index: 1; }
 .sm-save-btn.loading { justify-content: center; gap: 10px; opacity: 0.75; }
 .sm-spinner {
@@ -128,15 +126,15 @@
 
 .sm-shortcut {
   text-align: center; margin-top: 1rem;
-  font-family: "Geist Mono", monospace;
+  font-family: "Outfit", sans-serif;
   font-size: 0.56rem; letter-spacing: 0.1em;
-  color: rgba(184,176,164,0.35); opacity: 0;
+  color: rgba(184,176,164,0.35);
 }
 kbd {
   background: rgba(240,235,225,0.08);
   border: 1px solid rgba(240,235,225,0.12);
   border-radius: 3px; padding: 1px 5px;
-  font-family: "Geist Mono", monospace; font-size: 0.56rem;
+  font-family: "Outfit", sans-serif; font-size: 0.56rem;
 }
 
 /* Success state */
@@ -157,6 +155,178 @@ kbd {
   color: var(--cream, #f0ebe1); margin-bottom: 0.5rem;
 }
 .sm-success-sub {
-  font-family: "Geist Mono", monospace;
+  font-family: "Outfit", sans-serif;
   font-size: 0.7rem; color: var(--dust, #b8b0a4);
+}
+
+/* ── Tabs ─────────────────────────────────────────────────── */
+.sm-tabs {
+  display: flex;
+  gap: 0;
+  margin-bottom: 1.4rem;
+  border: 1px solid rgba(240, 235, 225, 0.08);
+  border-radius: 6px;
+  overflow: hidden;
+}
+.sm-tab {
+  flex: 1;
+  padding: 0.6rem 1rem;
+  background: transparent;
+  border: none;
+  font-family: "Outfit", sans-serif;
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  color: rgba(240, 235, 225, 0.35);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+}
+.sm-tab:first-child {
+  border-right: 1px solid rgba(240, 235, 225, 0.08);
+}
+.sm-tab:hover {
+  color: rgba(240, 235, 225, 0.7);
+  background: rgba(240, 235, 225, 0.03);
+}
+.sm-tab.active {
+  background: rgba(var(--acid-rgb), 0.1);
+  color: var(--acid);
+}
+
+/* ── File Type Selector ───────────────────────────────────── */
+.sm-file-types {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+.sm-file-type-btn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.7rem 0.5rem;
+  border: 1px solid rgba(240, 235, 225, 0.08);
+  border-radius: 8px;
+  background: transparent;
+  color: rgba(240, 235, 225, 0.4);
+  font-family: "Outfit", sans-serif;
+  font-size: 0.58rem;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.sm-file-type-btn:hover {
+  border-color: rgba(240, 235, 225, 0.2);
+  color: rgba(240, 235, 225, 0.7);
+}
+.sm-file-type-btn.active {
+  border-color: rgba(var(--acid-rgb), 0.4);
+  background: rgba(var(--acid-rgb), 0.08);
+  color: var(--acid);
+}
+.sm-ft-icon {
+  font-size: 1.3rem;
+  line-height: 1;
+}
+
+/* ── Dropzone ─────────────────────────────────────────────── */
+.sm-dropzone {
+  border: 1px dashed rgba(240, 235, 225, 0.15);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  min-height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.sm-dropzone:hover,
+.sm-dropzone.dragging {
+  border-color: rgba(var(--acid-rgb), 0.4);
+  background: rgba(var(--acid-rgb), 0.04);
+}
+.sm-dropzone.has-file {
+  border-style: solid;
+  border-color: rgba(var(--acid-rgb), 0.25);
+  background: rgba(var(--acid-rgb), 0.04);
+}
+.sm-dropzone-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  text-align: center;
+}
+.sm-dropzone-icon {
+  font-size: 2rem;
+  line-height: 1;
+  margin-bottom: 0.2rem;
+}
+.sm-dropzone-label {
+  font-family: "Outfit", sans-serif;
+  font-size: 0.72rem;
+  color: rgba(240, 235, 225, 0.5);
+}
+.sm-dropzone-label u { color: var(--acid); text-decoration-color: var(--acid); }
+.sm-dropzone-sub {
+  font-family: "Outfit", sans-serif;
+  font-size: 0.56rem;
+  letter-spacing: 0.1em;
+  color: rgba(240, 235, 225, 0.2);
+  text-transform: uppercase;
+}
+
+/* ── File Info (after selection) ─────────────────────────── */
+.sm-file-info {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  width: 100%;
+}
+.sm-file-icon {
+  font-size: 1.6rem;
+  flex-shrink: 0;
+}
+.sm-file-meta {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  min-width: 0;
+}
+.sm-file-name {
+  font-family: "Outfit", sans-serif;
+  font-size: 0.75rem;
+  color: var(--cream, #f0ebe1);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.sm-file-size {
+  font-family: "Outfit", sans-serif;
+  font-size: 0.58rem;
+  letter-spacing: 0.08em;
+  color: rgba(240, 235, 225, 0.3);
+  text-transform: uppercase;
+}
+.sm-file-remove {
+  background: none;
+  border: 1px solid rgba(240, 235, 225, 0.1);
+  border-radius: 4px;
+  color: rgba(240, 235, 225, 0.35);
+  font-size: 0.65rem;
+  padding: 3px 7px;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: all 0.2s;
+}
+.sm-file-remove:hover {
+  border-color: #f87171;
+  color: #f87171;
 }

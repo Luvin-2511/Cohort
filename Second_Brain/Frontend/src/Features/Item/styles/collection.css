@@ -1,0 +1,361 @@
+/* ── Collections Page ─────────────────────────────────────── */
+.col-page {
+  min-height: 100vh;
+  background: var(--surface);
+  color: var(--cream);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow-x: hidden;
+}
+
+.col-main {
+  flex: 1;
+  padding: 2rem 2.5rem 5rem;
+  margin-top: 5.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+  width: 100%;
+}
+
+/* ── Header ───────────────────────────────────────────────── */
+.col-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.col-header__left {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.col-title {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: clamp(2.8rem, 5vw, 4rem);
+  letter-spacing: 0.02em;
+  color: var(--cream);
+  line-height: 1;
+}
+
+.col-subtitle {
+  font-family: "Outfit", sans-serif;
+  font-size: 0.8rem;
+  color: rgba(184, 176, 164, 0.45);
+  letter-spacing: 0.02em;
+}
+
+.col-header__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--acid);
+  color: var(--on-acid);
+  font-family: "Outfit", sans-serif;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  padding: 0.75rem 1.25rem;
+  border-radius: 100px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 0 30px rgba(var(--acid-rgb), 0.15);
+  transition: all 0.25s ease;
+  margin-top: 6px;
+}
+
+.col-header__btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 30px rgba(var(--acid-rgb), 0.25);
+  opacity: 0.9;
+}
+
+.col-btn-icon {
+  font-size: 1.1rem;
+  font-weight: normal;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+/* ── Grid ─────────────────────────────────────────────────── */
+.col-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+/* ── Card ─────────────────────────────────────────────────── */
+.col-card {
+  background: rgba(18, 18, 18, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 16px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.col-card:hover {
+  background: var(--surface-ch);
+  border-color: rgba(var(--acid-rgb), 0.14);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+}
+
+.col-card__icon-wrap {
+  width: 42px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 10px;
+}
+
+.col-card__icon {
+  font-size: 1.6rem;
+}
+
+.col-card__body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.col-card__title {
+  font-family: "Outfit", sans-serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--cream);
+  letter-spacing: 0.02em;
+}
+
+.col-card__count {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: "Outfit", sans-serif;
+  font-size: 0.72rem;
+  color: rgba(184, 176, 164, 0.4);
+}
+
+.col-card__count-icon {
+  font-size: 0.8rem;
+  opacity: 0.7;
+}
+
+/* ── Loading State ────────────────────────────────────────── */
+.col-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 5rem;
+  font-family: "Outfit", sans-serif;
+  font-size: 0.8rem;
+  color: rgba(184, 176, 164, 0.4);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.col-spinner {
+  width: 24px;
+  height: 24px;
+  border: 2px solid rgba(var(--acid-rgb), 0.12);
+  border-top-color: var(--acid);
+  border-radius: 50%;
+  animation: colSpin 0.75s linear infinite;
+}
+
+@keyframes colSpin {
+  to { transform: rotate(360deg); }
+}
+
+/* ── Empty State ──────────────────────────────────────────── */
+.col-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 6rem 2rem;
+  text-align: center;
+  background: rgba(12, 12, 12, 0.5);
+  border: 1px dashed rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.col-empty-icon {
+  font-size: 3.5rem;
+  margin-bottom: 0.5rem;
+  opacity: 0.3;
+}
+
+.col-empty-title {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 2.2rem;
+  letter-spacing: 0.06em;
+  color: var(--cream);
+}
+
+.col-empty-sub {
+  font-family: "Outfit", sans-serif;
+  font-size: 0.85rem;
+  color: rgba(184, 176, 164, 0.4);
+  margin-bottom: 1rem;
+}
+
+.col-empty-btn {
+  background: rgba(var(--acid-rgb), 0.1);
+  border: 1px solid rgba(var(--acid-rgb), 0.2);
+  color: var(--acid);
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-family: "Outfit", sans-serif;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.col-empty-btn:hover {
+  background: rgba(var(--acid-rgb), 0.2);
+  border-color: rgba(var(--acid-rgb), 0.4);
+}
+
+/* ── Modal ────────────────────────────────────────────────── */
+.cc-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(8, 8, 8, 0.85);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.cc-modal {
+  background: #111;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 16px;
+  width: 100%;
+  max-width: 420px;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+}
+
+.cc-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.cc-modal-header h2 {
+  font-family: "Outfit", sans-serif;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--cream);
+  letter-spacing: 0.01em;
+}
+
+.cc-btn-close {
+  background: none;
+  border: none;
+  color: rgba(184, 176, 164, 0.3);
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: color 0.2s;
+  padding: 4px;
+}
+
+.cc-btn-close:hover {
+  color: var(--cream);
+}
+
+.cc-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.cc-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.cc-field label {
+  font-family: "Outfit", sans-serif;
+  font-size: 0.75rem;
+  color: rgba(184, 176, 164, 0.5);
+  letter-spacing: 0.04em;
+}
+
+.cc-field input {
+  background: #1a1a1a;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  padding: 0.9rem 1rem;
+  color: var(--cream);
+  font-family: "Outfit", sans-serif;
+  font-size: 0.95rem;
+  transition: all 0.2s;
+}
+
+.cc-field input:focus {
+  outline: none;
+  border-color: rgba(var(--acid-rgb), 0.45);
+  box-shadow: 0 0 0 3px rgba(var(--acid-rgb), 0.08);
+}
+
+.cc-field input::placeholder {
+  color: rgba(184, 176, 164, 0.2);
+}
+
+.cc-btn-submit {
+  background: var(--acid);
+  color: var(--on-acid);
+  border: none;
+  padding: 0.9rem;
+  border-radius: 8px;
+  font-family: "Outfit", sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.cc-btn-submit:hover:not(:disabled) {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.cc-btn-submit:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.3);
+}
+
+/* ── Responsive ───────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .col-main { padding: 1.5rem 1.25rem 4rem; }
+  .col-grid { grid-template-columns: 1fr; }
+  .col-card { padding: 1.25rem; }
+}

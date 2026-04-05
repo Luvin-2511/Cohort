@@ -1,0 +1,35 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html,
+body,
+#root {
+  height: 100%;
+  width: 100%;
+}
+
+main {
+  height: 100%;
+  width: 100%;
+  background: black;
+  position: relative;
+
+  .image {
+    position: absolute;
+    height: 100px;
+    width: 100px;
+    transform: translate(-50%,-50%);
+    transition: all 0.3s ease;
+    animation:imageGravity 2s linear forwards
+  }
+}
+
+@keyframes imageGravity {
+  from {
+    
+  }to {
+    transform: translateY(1000px);
+  }
+}

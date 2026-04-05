@@ -1,23 +1,48 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import gsap from "gsap";
+import { toast } from "react-toastify";
+import { saveItem, saveFile } from "../services/item.api";
+import useCollection from "../hooks/useCollection";
 import "../styles/saveModal.css";
 
-const TYPE_ICONS = {
-  article: "📄", tweet: "𝕏", pdf: "📑",
-  video: "▶", image: "🖼", note: "📝",
+const ACCEPT_MAP = {
+  image: "image/*",
+  video: "video/mp4,video/webm,video/mov",
+  pdf: "application/pdf",
 };
 
-export default function SaveModal({ open, onClose }) {
-  const wrapRef    = useRef();
-  const cardRef    = useRef();
-  const inputRef   = useRef();
-  const [url, setUrl]     = useState("");
-  const [type, setType]   = useState("article");
-  const [dragging, setDragging] = useState(false);
-  const [saving, setSaving]     = useState(false);
-  const [saved,  setSaved]      = useState(false);
+const FILE_TYPE_ICONS = { image: "🖼", video: "▶", pdf: "📑" };
+const FILE_TYPE_LABELS = { image: "Image", video: "Video", pdf: "PDF" };
 
+export default function SaveModal({ open, onClose }) {
+  const wrapRef  = useRef();
+  const cardRef  = useRef();
+  const inputRef = useRef();
+  const fileRef  = useRef();
+
+  // Tabs: "url" | "file"
+  const [tab, setTab]         = useState("url");
+  const [url, setUrl]         = useState("");
+  const [fileType, setFileType] = useState("image");
+  const [file, setFile]       = useState(null);
+  const [fileTitle, setFileTitle] = useState("");
+  const [collectionId, setCollectionId] = useState("");
+  const [dragging, setDragging] = useState(false);
+  const [saving, setSaving]   = useState(false);
+  const [saved, setSaved]     = useState(false);
+
+  const { collections, handleGetCollections, loading: loadingCollections } = useCollection();
+
+  /* ── Fetch Collections ── */
   useEffect(() => {
+    if (open) {
+      handleGetCollections();
+    }
+  }, [open, handleGetCollections]);
+
+  /* ── Animation ── */
+  useEffect(() => {
+    if (!cardRef.current) return;
     if (open) {
       gsap.set(wrapRef.current, { display: "flex" });
       const tl = gsap.timeline();
@@ -37,29 +62,73 @@ export default function SaveModal({ open, onClose }) {
       });
       tl.to(cardRef.current, { y: 30, scale: 0.96, opacity: 0, duration: 0.35, ease: "power3.in" });
       tl.to(wrapRef.current, { opacity: 0, duration: 0.2 }, "-=0.1");
-      setUrl(""); setSaved(false); setSaving(false);
+      reset();
     }
   }, [open]);
 
-  const handleSave = async () => {
+  const reset = () => {
+    setUrl(""); setFile(null); setFileTitle(""); setCollectionId("");
+    setSaved(false); setSaving(false); setTab("url");
+  };
+
+  /* ── URL Save ── */
+  const handleSaveUrl = async () => {
     if (!url.trim()) {
       gsap.to(inputRef.current, { x: [0,-8,8,-6,6,-3,0], duration: 0.4, ease: "none" });
       return;
     }
     setSaving(true);
-    await new Promise((r) => setTimeout(r, 1400));
-    setSaving(false); setSaved(true);
-    gsap.fromTo(cardRef.current.querySelector(".sm-success"),
-      { scale: 0.8, opacity: 0 },
-      { scale: 1, opacity: 1, duration: 0.5, ease: "back.out(1.8)" }
-    );
-    setTimeout(() => onClose(), 1800);
+    try {
+      const res = await saveItem(url.trim(), collectionId);
+      if (res.success) {
+        setSaving(false); setSaved(true);
+        gsap.fromTo(cardRef.current.querySelector(".sm-success"),
+          { scale: 0.8, opacity: 0 },
+          { scale: 1, opacity: 1, duration: 0.5, ease: "back.out(1.8)" }
+        );
+        setTimeout(() => onClose(), 1800);
+      }
+    } catch (err) {
+      setSaving(false);
+      toast.error(err?.response?.data?.message || "Failed to save");
+    }
   };
 
-  const onDrop = (e) => {
+  /* ── File Save ── */
+  const handleSaveFile = async () => {
+    if (!file) return;
+    setSaving(true);
+    try {
+      const res = await saveFile(file, fileTitle, collectionId);
+      if (res.success) {
+        setSaving(false); setSaved(true);
+        gsap.fromTo(cardRef.current.querySelector(".sm-success"),
+          { scale: 0.8, opacity: 0 },
+          { scale: 1, opacity: 1, duration: 0.5, ease: "back.out(1.8)" }
+        );
+        setTimeout(() => onClose(), 1800);
+      }
+    } catch (err) {
+      setSaving(false);
+      toast.error(err?.response?.data?.message || "Failed to upload file");
+    }
+  };
+
+  /* ── Drag & Drop for file tab ── */
+  const onDrop = useCallback((e) => {
     e.preventDefault(); setDragging(false);
+    if (tab === "file") {
+      const dropped = e.dataTransfer.files?.[0];
+      if (dropped) setFile(dropped);
+      return;
+    }
     const text = e.dataTransfer.getData("text/plain") || e.dataTransfer.getData("text/uri-list");
     if (text) setUrl(text);
+  }, [tab]);
+
+  const formatBytes = (bytes) => {
+    if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
+    return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
   };
 
   return (
@@ -73,61 +142,167 @@ export default function SaveModal({ open, onClose }) {
       >
         {!saved ? (
           <>
+            {/* Header */}
             <div className="sm-header sm-anim">
               <div className="sm-title">SAVE TO BRAIN</div>
               <button className="sm-close" onClick={onClose}>✕</button>
             </div>
 
-            {/* Drop zone hint */}
-            <div className="sm-drop-hint sm-anim">
-              <span>Drop a URL anywhere · or paste below</span>
+            {/* Tabs */}
+            <div className="sm-tabs sm-anim">
+              <button
+                className={`sm-tab ${tab === "url" ? "active" : ""}`}
+                onClick={() => setTab("url")}
+              >
+                🔗 URL / Link
+              </button>
+              <button
+                className={`sm-tab ${tab === "file" ? "active" : ""}`}
+                onClick={() => setTab("file")}
+              >
+                📁 Upload File
+              </button>
             </div>
 
-            {/* URL Input */}
-            <div className="sm-input-wrap sm-anim">
-              <input
-                ref={inputRef}
-                type="url"
-                className="sm-input"
-                placeholder="https://..."
-                value={url}
-                onChange={(e) => setUrl(e.target.value)}
-                onKeyDown={(e) => e.key === "Enter" && handleSave()}
-              />
-            </div>
-
-            {/* Type selector */}
-            <div className="sm-types sm-anim">
-              {Object.entries(TYPE_ICONS).map(([t, icon]) => (
+            {/* ── URL TAB ── */}
+            {tab === "url" && (
+              <>
+                <div className="sm-drop-hint sm-anim">
+                  <span>Drop a URL anywhere · or paste below</span>
+                </div>
+                <div className="sm-input-wrap sm-anim">
+                  <input
+                    ref={inputRef}
+                    type="url"
+                    className="sm-input"
+                    placeholder="https://..."
+                    value={url}
+                    onChange={(e) => setUrl(e.target.value)}
+                    onKeyDown={(e) => e.key === "Enter" && handleSaveUrl()}
+                  />
+                </div>
+                <div className="sm-input-wrap sm-anim">
+                  <select
+                    className="sm-input"
+                    value={collectionId}
+                    onChange={(e) => setCollectionId(e.target.value)}
+                  >
+                    <option value="">Save to Collection (Optional)</option>
+                    {collections.map((col) => (
+                      <option key={col._id} value={col._id}>
+                        {col.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
                 <button
-                  key={t}
-                  className={`sm-type-btn ${type === t ? "active" : ""}`}
-                  onClick={() => setType(t)}
+                  className={`sm-save-btn sm-anim ${saving ? "loading" : ""}`}
+                  onClick={handleSaveUrl}
+                  disabled={saving}
                 >
-                  <span>{icon}</span>
-                  <span>{t}</span>
+                  {saving ? (
+                    <><span className="sm-spinner" /><span>Saving to brain…</span></>
+                  ) : (
+                    <><span>+</span><span>SAVE TO BRAIN</span><span>→</span></>
+                  )}
                 </button>
-              ))}
-            </div>
+              </>
+            )}
 
-            {/* Note */}
-            <textarea className="sm-note sm-anim" placeholder="Add a note… (optional)" rows={2} />
+            {/* ── FILE TAB ── */}
+            {tab === "file" && (
+              <>
+                {/* File type selector */}
+                <div className="sm-file-types sm-anim">
+                  {Object.entries(FILE_TYPE_ICONS).map(([t, icon]) => (
+                    <button
+                      key={t}
+                      className={`sm-file-type-btn ${fileType === t ? "active" : ""}`}
+                      onClick={() => { setFileType(t); setFile(null); }}
+                    >
+                      <span className="sm-ft-icon">{icon}</span>
+                      <span>{FILE_TYPE_LABELS[t]}</span>
+                    </button>
+                  ))}
+                </div>
 
-            {/* Save button */}
-            <button
-              className={`sm-save-btn sm-anim ${saving ? "loading" : ""}`}
-              onClick={handleSave}
-              disabled={saving}
-            >
-              {saving ? (
-                <><span className="sm-spinner" /><span>Saving to brain…</span></>
-              ) : (
-                <><span>+</span><span>SAVE TO BRAIN</span><span>→</span></>
-              )}
-            </button>
+                {/* Drop zone / file picker */}
+                <div
+                  className={`sm-dropzone sm-anim ${dragging ? "dragging" : ""} ${file ? "has-file" : ""}`}
+                  onClick={() => fileRef.current?.click()}
+                >
+                  <input
+                    ref={fileRef}
+                    type="file"
+                    accept={ACCEPT_MAP[fileType]}
+                    style={{ display: "none" }}
+                    onChange={(e) => setFile(e.target.files?.[0] || null)}
+                  />
+                  {file ? (
+                    <div className="sm-file-info">
+                      <span className="sm-file-icon">{FILE_TYPE_ICONS[fileType]}</span>
+                      <div className="sm-file-meta">
+                        <span className="sm-file-name">{file.name}</span>
+                        <span className="sm-file-size">{formatBytes(file.size)}</span>
+                      </div>
+                      <button
+                        className="sm-file-remove"
+                        onClick={(e) => { e.stopPropagation(); setFile(null); }}
+                      >✕</button>
+                    </div>
+                  ) : (
+                    <div className="sm-dropzone-inner">
+                      <span className="sm-dropzone-icon">{FILE_TYPE_ICONS[fileType]}</span>
+                      <span className="sm-dropzone-label">
+                        Drop {FILE_TYPE_LABELS[fileType].toLowerCase()} here or <u>click to browse</u>
+                      </span>
+                      <span className="sm-dropzone-sub">Max 50 MB</span>
+                    </div>
+                  )}
+                </div>
+
+                {/* Optional custom title */}
+                <div className="sm-input-wrap sm-anim">
+                  <input
+                    type="text"
+                    className="sm-input"
+                    placeholder="Title (optional — auto-detected from filename)"
+                    value={fileTitle}
+                    onChange={(e) => setFileTitle(e.target.value)}
+                  />
+                </div>
+
+                <div className="sm-input-wrap sm-anim">
+                  <select
+                    className="sm-input"
+                    value={collectionId}
+                    onChange={(e) => setCollectionId(e.target.value)}
+                  >
+                    <option value="">Save to Collection (Optional)</option>
+                    {collections.map((col) => (
+                      <option key={col._id} value={col._id}>
+                        {col.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                <button
+                  className={`sm-save-btn sm-anim ${saving ? "loading" : ""}`}
+                  onClick={handleSaveFile}
+                  disabled={saving || !file}
+                >
+                  {saving ? (
+                    <><span className="sm-spinner" /><span>Uploading…</span></>
+                  ) : (
+                    <><span>↑</span><span>UPLOAD & SAVE</span><span>→</span></>
+                  )}
+                </button>
+              </>
+            )}
 
             <div className="sm-shortcut sm-anim">
-              Press <kbd>⌘S</kbd> anywhere to quick-save
+              Press <kbd>⌘S</kbd> anywhere to quick-save a URL
             </div>
           </>
         ) : (

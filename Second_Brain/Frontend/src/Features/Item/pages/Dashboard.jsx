@@ -1,197 +1,243 @@
 import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import Navbar, { HackerText, MagneticButton } from "../components/Navbar";
+import Navbar from "../components/Navbar";
+import SaveModal from "../components/SaveModal";
+import useItem from "../hooks/useItem";
+import useAuth from "../../Auth/hooks/useAuth";
 import "../styles/dashboard.css";
+import "../styles/saveModal.css";
 
 gsap.registerPlugin(ScrollTrigger);
 
-/* ── Dummy Data ──────────────────────────────────────────── */
-const METRICS = [
-  { label: "TOTAL SAVED",   value: "4,822", sub: "+12% FROM LAST CYCLE", icon: "◈", accent: true  },
-  { label: "AI PROCESSED",  value: "1,209", sub: "98.4% ACCURACY",       icon: "⚡", accent: false },
-  { label: "FAVORITES",     value: "428",   sub: "PRIORITY NODES",       icon: "★", accent: false },
-  { label: "TAGS",          value: "84",    sub: "ACTIVE TAXONOMIES",    icon: "⌘", accent: false },
-];
+/* ── HackerText Hook ─────────────────────────────────────── */
+export const useHackerText = (originalText, isActive = false) => {
+  const [displayText, setDisplayText] = useState(originalText);
+  const intervalRef = useRef(null);
+  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*";
 
-const ARCHIVES = [
-  {
-    type: "VIDEO SOURCE",
-    typeColor: "primary",
-    title: "The Future of Decentralized Intelligence",
-    time: "Saved 2h ago · 14:02 duration",
-  },
-  {
-    type: "ACADEMIC ARTICLE",
-    typeColor: "white",
-    title: "Neural Plasticity in Hybrid AI Systems",
-    time: "Saved 5h ago · 4.2k words",
-  },
-  {
-    type: "DATA STREAM",
-    typeColor: "gray",
-    title: "Global Market Sentiment Index",
-    time: "Saved 1d ago · Live Feed",
-  },
-];
+  const scramble = () => {
+    let iterations = 0;
+    const maxIterations = 18;
+    const original = originalText.toUpperCase();
+    if (intervalRef.current) clearInterval(intervalRef.current);
+    intervalRef.current = setInterval(() => {
+      setDisplayText(() => {
+        if (iterations >= maxIterations) {
+          clearInterval(intervalRef.current);
+          return original;
+        }
+        const t = original
+          .split("")
+          .map((char, i) =>
+            char === " "
+              ? " "
+              : i < iterations
+                ? original[i]
+                : chars[Math.floor(Math.random() * chars.length)]
+          )
+          .join("");
+        iterations += 1 / 3;
+        return t;
+      });
+    }, 28);
+  };
 
-const ACTIVITY = [
-  { time: "14:02", label: "Node 'Quantum_Cognition' linked", type: "link"   },
-  { time: "12:44", label: "3 articles processed by AI",     type: "ai"     },
-  { time: "11:30", label: "New cluster formed: BIOTECH",    type: "cluster" },
-  { time: "09:15", label: "Sync completed: 847 nodes",      type: "sync"   },
-  { time: "08:00", label: "Daily digest generated",         type: "digest" },
-];
+  useEffect(() => {
+    if (isActive) scramble();
+    else {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+      setDisplayText(originalText.toUpperCase());
+    }
+    return () => clearInterval(intervalRef.current);
+  }, [isActive, originalText]);
 
-const NODES = [
-  { id: 1, label: "CYBERNETICS", cx: 150, cy: 80,  r: 40, r2: 20, color: "#c7f300" },
-  { id: 2, label: "QUANTUM",     cx: 310, cy: 155, r: 30, r2: 15, color: "#c7f300" },
-  { id: 3, label: "SYSTEM",      cx: 460, cy: 220, r: 50, r2: 25, color: "#ffffff" },
-  { id: 4, label: "BIOTECH",     cx: 200, cy: 230, r: 28, r2: 14, color: "#c8441a" },
-  { id: 5, label: "AI/ML",       cx: 420, cy: 75,  r: 35, r2: 18, color: "#c7f300" },
-];
+  return displayText;
+};
 
-const LINKS = [
-  [0, 1], [1, 2], [0, 3], [1, 4], [3, 2], [4, 2],
-];
+/* ── HackerText Component ────────────────────────────────── */
+export const HackerText = ({
+  text,
+  className = "",
+  as: Tag = "span",
+  autoLoop = false,
+  delay = 3000,
+}) => {
+  const [active, setActive] = useState(false);
+  const timerRef = useRef(null);
+  const display = useHackerText(text, active);
+
+  useEffect(() => {
+    if (!autoLoop) return;
+    const start = () => {
+      setActive(true);
+      setTimeout(() => setActive(false), 900);
+    };
+    start();
+    timerRef.current = setInterval(start, delay);
+    return () => clearInterval(timerRef.current);
+  }, [autoLoop, delay]);
+
+  return (
+    <Tag
+      className={`hacker-text ${className}`}
+      onMouseEnter={() => !autoLoop && setActive(true)}
+      onMouseLeave={() => !autoLoop && setActive(false)}
+    >
+      {display}
+    </Tag>
+  );
+};
+
+/* ── Content Type Icons ──────────────────────────────────── */
+const TYPE_ICONS = {
+  Article: "🔗",
+  YouTube: "▶",
+  Tweet: "𝕏",
+  Note: "📄",
+  Image: "🖼",
+};
+
+const CONTENT_TYPES = ["Article", "YouTube", "Tweet", "Note", "Image"];
+
+/* (SaveModal is imported from components/SaveModal.jsx) */
+
+/* ── Item Card ───────────────────────────────────────────── */
+const ItemCard = ({ item }) => {
+  const navigate = useNavigate();
+
+  const isYouTube =
+    item.url &&
+    (item.url.includes("youtube.com") || item.url.includes("youtu.be"));
+
+  const getYoutubeThumbnail = (url) => {
+    try {
+      const u = new URL(url);
+      const id =
+        u.searchParams.get("v") ||
+        (u.hostname === "youtu.be" ? u.pathname.slice(1) : null);
+      return id ? `https://img.youtube.com/vi/${id}/hqdefault.jpg` : null;
+    } catch {
+      return null;
+    }
+  };
+
+  const thumbnail = isYouTube ? getYoutubeThumbnail(item.url) : null;
+  const tags = item.tags?.slice(0, 3) || [];
+  const extra = (item.tags?.length || 0) - 3;
+
+  return (
+    <motion.div
+      className="item-card"
+      whileHover={{ y: -4 }}
+      transition={{ type: "spring", stiffness: 320, damping: 22 }}
+      onClick={() => navigate(`/item/${item._id}`)}
+      style={{ cursor: "pointer" }}
+    >
+      {/* Thumbnail */}
+      <div className="item-card__thumb">
+        {thumbnail ? (
+          <img src={thumbnail} alt={item.title || "thumbnail"} loading="lazy" />
+        ) : (
+          <div className="item-card__thumb-placeholder">
+            <span>{isYouTube ? "▶" : "🔗"}</span>
+          </div>
+        )}
+        {/* Type badges */}
+        <div className="item-card__badges">
+          {isYouTube && <span className="item-badge item-badge--yt">YouTube</span>}
+          {item.aiProcessed && <span className="item-badge item-badge--ai">⚡ AI READY</span>}
+        </div>
+      </div>
+
+      {/* Content */}
+      <div className="item-card__body">
+        <h3 className="item-card__title">{item.title || item.url}</h3>
+        {item.summary && (
+          <p className="item-card__summary">{item.summary}</p>
+        )}
+        {tags.length > 0 && (
+          <div className="item-card__tags">
+            {tags.map((tag, i) => (
+              <span key={i} className="item-tag">#{tag}</span>
+            ))}
+            {extra > 0 && <span className="item-tag item-tag--more">+{extra}</span>}
+          </div>
+        )}
+      </div>
+    </motion.div>
+  );
+};
+
+/* ── Stat Card ───────────────────────────────────────────── */
+const StatCard = ({ icon, value, label, accentColor }) => (
+  <motion.div
+    className="stat-card"
+    whileHover={{ y: -4 }}
+    transition={{ type: "spring", stiffness: 320, damping: 22 }}
+  >
+    <div className="stat-card__top">
+      <span className="stat-card__icon" style={{ color: accentColor }}>{icon}</span>
+      <span className="stat-card__dot" style={{ background: accentColor }} />
+    </div>
+    <div className="stat-card__value">{value}</div>
+    <div className="stat-card__label">{label}</div>
+  </motion.div>
+);
 
 /* ── Animation Variants ──────────────────────────────────── */
 const containerVar = {
   hidden: {},
-  visible: { transition: { staggerChildren: 0.07, delayChildren: 0.15 } },
+  visible: { transition: { staggerChildren: 0.07, delayChildren: 0.1 } },
 };
 
-const cardVar = {
-  hidden: { y: 32, opacity: 0, scale: 0.97 },
-  visible: {
-    y: 0, opacity: 1, scale: 1,
-    transition: { type: "spring", stiffness: 320, damping: 26 },
-  },
-  hover: {
-    y: -7,
-    transition: { type: "spring", stiffness: 380, damping: 22 },
-  },
-};
-
-const slideUp = {
+const fadeUp = {
   hidden: { y: 24, opacity: 0 },
-  visible: (i = 0) => ({
+  visible: {
     y: 0, opacity: 1,
-    transition: { delay: i * 0.07, duration: 0.55, ease: [0.16, 1, 0.3, 1] },
-  }),
-};
-
-/* ── Ticker ──────────────────────────────────────────────── */
-const Ticker = ({ items }) => (
-  <div className="ticker-wrap">
-    <motion.div
-      className="ticker-track"
-      animate={{ x: ["0%", "-50%"] }}
-      transition={{ duration: 22, repeat: Infinity, ease: "linear" }}
-    >
-      {[...items, ...items].map((item, i) => (
-        <span key={i} className="ticker-item">
-          {item} <span className="ticker-dot">◆</span>
-        </span>
-      ))}
-    </motion.div>
-  </div>
-);
-
-/* ── Neural SVG ──────────────────────────────────────────── */
-const NeuralMap = () => {
-  const svgRef = useRef(null);
-
-  useEffect(() => {
-    const lines = svgRef.current?.querySelectorAll(".n-line");
-    if (!lines) return;
-    gsap.fromTo(lines,
-      { strokeDashoffset: 300 },
-      { strokeDashoffset: 0, duration: 1.8, stagger: 0.2, ease: "power2.inOut" }
-    );
-    gsap.to(".pulse-ring", {
-      scale: 1.15, opacity: 0.5,
-      duration: 1.6, repeat: -1, yoyo: true, ease: "sine.inOut", stagger: 0.3,
-    });
-    gsap.to(".n-particle", {
-      y: -28, x: "random(-18, 18)", opacity: 0,
-      duration: "random(2,4)", repeat: -1, yoyo: true,
-      ease: "sine.inOut", stagger: 0.12,
-    });
-  }, []);
-
-  return (
-    <div className="neural-wrap" ref={svgRef}>
-      <svg className="neural-svg" viewBox="0 0 600 300" preserveAspectRatio="xMidYMid meet">
-        {LINKS.map(([a, b], i) => {
-          const A = NODES[a], B = NODES[b];
-          return (
-            <line
-              key={i}
-              className="n-line"
-              x1={A.cx} y1={A.cy} x2={B.cx} y2={B.cy}
-              stroke={A.color === B.color ? A.color : "#ffffff"}
-              strokeWidth="1"
-              strokeOpacity="0.4"
-              strokeDasharray="300"
-              strokeDashoffset="300"
-            />
-          );
-        })}
-        {NODES.map((n) => (
-          <g key={n.id}>
-            <circle className="pulse-ring" cx={n.cx} cy={n.cy} r={n.r}
-              fill="none" stroke={n.color} strokeWidth="1" opacity="0.3" />
-            <circle cx={n.cx} cy={n.cy} r={n.r2}
-              fill={n.color} fillOpacity="0.12" stroke={n.color} strokeWidth="1.5" />
-            <text x={n.cx} y={n.cy + 4} textAnchor="middle"
-              fill={n.color} fontSize="8" fontWeight="700" letterSpacing="0.08em">
-              {n.label}
-            </text>
-          </g>
-        ))}
-      </svg>
-
-      <div className="particles-container">
-        {Array.from({ length: 14 }).map((_, i) => (
-          <div
-            key={i}
-            className="n-particle"
-            style={{
-              left: `${10 + Math.random() * 80}%`,
-              top: `${10 + Math.random() * 80}%`,
-              animationDelay: `${Math.random() * 2}s`,
-            }}
-          />
-        ))}
-      </div>
-    </div>
-  );
+    transition: { duration: 0.55, ease: [0.16, 1, 0.3, 1] },
+  },
 };
 
 /* ── Main Dashboard ──────────────────────────────────────── */
-const ThoughtNetDashboard = () => {
-  const [activePage, setActivePage]     = useState("dashboard");
-  const [hoveredCard, setHoveredCard]   = useState(null);
-  const [hoveredArchive, setHoveredArchive] = useState(null);
+const MemexDashboard = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const mainRef = useRef(null);
+
+  const { items, loading, handleGetItems, handleSaveItem } = useItem();
+  const { user } = useAuth();
+
+  useEffect(() => {
+    handleGetItems();
+  }, []);
 
   // GSAP entrance
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.from(".hero-line", { width: 0, duration: 1.2, ease: "power4.out", delay: 0.5 });
-      ScrollTrigger.batch(".scroll-reveal", {
-        onEnter: (els) =>
-          gsap.fromTo(els,
-            { y: 30, opacity: 0 },
-            { y: 0, opacity: 1, stagger: 0.08, duration: 0.7, ease: "power3.out" }
-          ),
-        once: true,
-      });
+      gsap.from(".db-hero-line", { width: 0, duration: 1.4, ease: "power4.out", delay: 0.6 });
     }, mainRef);
     return () => ctx.revert();
   }, []);
+
+  // Refresh items whenever the modal closes (covers both URL and file saves)
+  const handleModalClose = () => {
+    setIsModalOpen(false);
+    handleGetItems();
+  };
+
+  // Compute stats
+  const totalSaved = items?.length || 0;
+  const aiProcessed = items?.filter((i) => i.aiProcessed)?.length || 0;
+  const favorites = items?.filter((i) => i.isFavorite)?.length || 0;
+  const uniqueTags = [...new Set(items?.flatMap((i) => i.tags || []))].length || 0;
+
+  const recentItems = [...(items || [])].reverse().slice(0, 6);
+
+  const hour = new Date().getHours();
+  const greeting =
+    hour < 12 ? "Good Morning" : hour < 17 ? "Good Afternoon" : "Good Evening";
 
   return (
     <div className="tn-container" ref={mainRef}>
@@ -199,206 +245,123 @@ const ThoughtNetDashboard = () => {
       <div className="tn-glow tn-glow--top" />
       <div className="tn-glow tn-glow--bot" />
 
-      <Navbar
-        activePage={activePage}
-        setActivePage={setActivePage}
-        onSave={() => alert("Saved to ThoughtNet!")}
-        userName="THOUGHTNET"
-      />
+      <Navbar />
 
-      <main className="tn-main">
+      <main className="tn-main db-main">
         {/* ── Hero ── */}
-        <section className="hero-section">
-          <motion.h1
-            className="hero-title"
-            initial={{ y: 40, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-          >
-            <HackerText text="YOUR SECOND" as="span" autoLoop delay={4000} />
-            <br />
-            <HackerText text="BRAIN" as="span" className="hero-title--accent" autoLoop delay={5000} />
-          </motion.h1>
-
-          <motion.div
-            className="hero-meta"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.4, duration: 0.7 }}
-          >
-            <div className="hero-line" />
-            <span className="hero-badge">◆ SYNCHRONIZED &amp; OPERATIONAL</span>
-          </motion.div>
-        </section>
-
-        {/* ── Ticker ── */}
-        <Ticker
-          items={[
-            "NEURAL MAP ACTIVE", "4,822 NODES INDEXED", "AI PROCESSING",
-            "98.4% ACCURACY", "LIVE SYNC", "3 NEW CLUSTERS",
-          ]}
-        />
-
-        {/* ── Bento Grid ── */}
-        <motion.div
-          className="bento-grid"
+        <motion.section
+          className="db-hero"
           variants={containerVar}
           initial="hidden"
           animate="visible"
         >
-          {/* Metric Cards */}
-          {METRICS.map((m, idx) => (
-            <motion.div
-              key={m.label}
-              className={`metric-card ${hoveredCard === idx ? "metric-card--hovered" : ""}`}
-              variants={cardVar}
-              whileHover="hover"
-              onHoverStart={() => setHoveredCard(idx)}
-              onHoverEnd={() => setHoveredCard(null)}
-            >
-              <div className="metric-card__top">
-                <span className={`metric-icon ${m.accent ? "metric-icon--accent" : ""}`}>
-                  {m.icon}
-                </span>
-                <span className="metric-label">{m.label}</span>
-              </div>
-              <div className="metric-value">
-                <HackerText text={m.value} />
-              </div>
-              <div className={`metric-sub ${m.accent ? "metric-sub--accent" : ""}`}>
-                {m.sub}
-              </div>
-              {hoveredCard === idx && (
-                <motion.div
-                  className="metric-card__shine"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                />
-              )}
-            </motion.div>
-          ))}
+          <motion.p className="db-greeting" variants={fadeUp}>
+            ⏰ {greeting.toUpperCase()}{user?.name ? `, ${user.name.toUpperCase()}` : ""}
+          </motion.p>
 
-          {/* Neural Map Card */}
-          <motion.div className="clusters-card" variants={cardVar} whileHover="hover">
-            <div className="clusters-header">
-              <h3 className="clusters-title">
-                <HackerText text="ACTIVE CLUSTERS" />
-              </h3>
-              <div className="clusters-badges">
-                <span className="badge badge--primary">NEURAL_MAP_V2</span>
-                <span className="badge badge--dim">● LIVE</span>
-              </div>
-            </div>
+          <motion.h1 className="db-hero-title" variants={fadeUp}>
+            Your Second
+            <br />
+            <span className="db-hero-accent">Brain.</span>
+          </motion.h1>
 
-            <NeuralMap />
-
-            <div className="clusters-footer">
-              <p className="sync-msg">
-                Synchronizing node 'Global_Econ' with remote repo · 800ms latency detected
-              </p>
-              <MagneticButton className="mag-btn--ghost">
-                EXPAND VIEW
-              </MagneticButton>
-            </div>
+          <motion.div className="db-hero-meta" variants={fadeUp}>
+            <div className="db-hero-line" />
+            <p className="db-hero-sub">Everything you know, connected.</p>
+            <span className="db-ai-badge">
+              <span className="db-ai-dot" />
+              AI online
+            </span>
           </motion.div>
+        </motion.section>
 
-          {/* Archives Card */}
-          <motion.div className="archives-card" variants={cardVar} whileHover="hover">
-            <div className="archives-header">
-              <h3 className="archives-title">
-                <HackerText text="RECENT ARCHIVES" />
-              </h3>
-              <MagneticButton className="mag-btn--white" style={{ fontSize: "0.65rem", padding: "0.4rem 1rem" }}>
-                + ADD NEW
-              </MagneticButton>
-            </div>
-
-            <div className="archives-list">
-              {ARCHIVES.map((a, idx) => (
-                <motion.div
-                  key={idx}
-                  className={`archive-item ${hoveredArchive === idx ? "archive-item--hovered" : ""}`}
-                  onHoverStart={() => setHoveredArchive(idx)}
-                  onHoverEnd={() => setHoveredArchive(null)}
-                  whileHover={{ x: 6 }}
-                  transition={{ type: "spring", stiffness: 400 }}
-                >
-                  <div className="archive-item__top">
-                    <span className={`archive-badge archive-badge--${a.typeColor}`}>
-                      {a.type}
-                    </span>
-                    <span className="archive-more">···</span>
-                  </div>
-                  <h4 className="archive-title">{a.title}</h4>
-                  <p className="archive-time">{a.time}</p>
-                </motion.div>
-              ))}
-            </div>
+        {/* ── Stats Row ── */}
+        <motion.div
+          className="db-stats"
+          variants={containerVar}
+          initial="hidden"
+          animate="visible"
+        >
+          <motion.div variants={fadeUp}>
+            <StatCard icon="◈" value={totalSaved} label="TOTAL SAVED" accentColor="var(--acid)" />
           </motion.div>
-
-          {/* Activity Feed */}
-          <motion.div className="activity-card scroll-reveal" variants={cardVar}>
-            <h3 className="panel-title">
-              <HackerText text="ACTIVITY LOG" />
-            </h3>
-            <div className="activity-list">
-              {ACTIVITY.map((a, i) => (
-                <motion.div
-                  key={i}
-                  className="activity-item"
-                  custom={i}
-                  variants={slideUp}
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true }}
-                  whileHover={{ x: 6 }}
-                  transition={{ type: "spring", stiffness: 400 }}
-                >
-                  <span className="activity-time">{a.time}</span>
-                  <span className={`activity-dot activity-dot--${a.type}`} />
-                  <span className="activity-label">{a.label}</span>
-                </motion.div>
-              ))}
-            </div>
+          <motion.div variants={fadeUp}>
+            <StatCard icon="⚡" value={aiProcessed} label="AI PROCESSED" accentColor="#4ecdc4" />
           </motion.div>
-
-          {/* Quick Capture Card */}
-          <motion.div className="capture-card scroll-reveal" variants={cardVar}>
-            <h3 className="panel-title">
-              <HackerText text="QUICK CAPTURE" />
-            </h3>
-            <div className="capture-body">
-              <div className="capture-input-wrap">
-                <span className="capture-prefix">&gt;_</span>
-                <span className="capture-placeholder">Paste URL, idea, or text…</span>
-                <span className="capture-cursor" />
-              </div>
-              <div className="capture-tags">
-                {["#ai", "#research", "#design", "#business"].map((t) => (
-                  <motion.span
-                    key={t}
-                    className="capture-tag"
-                    whileHover={{ scale: 1.08, backgroundColor: "rgba(199,243,0,0.15)" }}
-                  >
-                    {t}
-                  </motion.span>
-                ))}
-              </div>
-              <MagneticButton style={{ width: "100%", justifyContent: "center" }}>
-                CAPTURE NODE
-              </MagneticButton>
-            </div>
+          <motion.div variants={fadeUp}>
+            <StatCard icon="♥" value={favorites} label="FAVORITES" accentColor="var(--rust)" />
+          </motion.div>
+          <motion.div variants={fadeUp}>
+            <StatCard icon="⌘" value={uniqueTags} label="UNIQUE TAGS" accentColor="#a78bfa" />
           </motion.div>
         </motion.div>
 
-        {/* ── Decorative BG text ── */}
-        <div className="bg-deco" aria-hidden="true">
-          <span>THOUGHTNET</span>
-        </div>
+        {/* ── Recently Saved ── */}
+        <section className="db-section">
+          <div className="db-section-header">
+            <div>
+              <h2 className="db-section-title">Recently Saved</h2>
+              <p className="db-section-count">{totalSaved} items</p>
+            </div>
+            <button className="db-view-all">
+              View all <span className="db-arrow">→</span>
+            </button>
+          </div>
+
+          {loading ? (
+            <div className="db-loading">
+              <div className="db-spinner" />
+              <span>Loading your brain...</span>
+            </div>
+          ) : recentItems.length === 0 ? (
+            <div className="db-empty">
+              <div className="db-empty-icon">🧠</div>
+              <p className="db-empty-title">Your second brain is empty</p>
+              <p className="db-empty-sub">Save your first piece of content to get started</p>
+              <button className="db-empty-btn" onClick={() => setIsModalOpen(true)}>
+                + Save Content
+              </button>
+            </div>
+          ) : (
+            <motion.div
+              className="db-grid"
+              variants={containerVar}
+              initial="hidden"
+              animate="visible"
+            >
+              {recentItems.map((item, i) => (
+                <motion.div key={item._id || i} variants={fadeUp}>
+                  <ItemCard item={item} />
+                </motion.div>
+              ))}
+            </motion.div>
+          )}
+        </section>
       </main>
+
+      {/* ── Save Content Button (floating) ── */}
+      <motion.button
+        className="db-fab"
+        onClick={() => setIsModalOpen(true)}
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
+        initial={{ y: 20, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ delay: 0.5, duration: 0.4 }}
+      >
+        + Save Content
+      </motion.button>
+
+      {/* ── Save Modal ── */}
+      <SaveModal
+        open={isModalOpen}
+        onClose={handleModalClose}
+      />
+
+      {/* Decorative BG */}
+      <div className="bg-deco" aria-hidden="true"><span>MEMEX</span></div>
     </div>
   );
 };
 
-export default ThoughtNetDashboard;
+export default MemexDashboard;

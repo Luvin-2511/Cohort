@@ -7,9 +7,9 @@
 .login-page {
   min-height: 100vh;
   display: flex;
-  background: var(--ink, #0a0a09);
+  background: var(--surface, #131313);
   color: var(--cream, #f0ebe1);
-  font-family: var(--f-mono, "Geist Mono", monospace);
+  font-family: var(--f-mono, "Outfit", sans-serif);
   overflow: hidden;
 }
 
@@ -17,7 +17,7 @@
 #cursor-auth {
   position: fixed;
   width: 10px; height: 10px;
-  background: var(--cream, #f0ebe1);
+  background: var(--acid, #c7f300);
   border-radius: 50%;
   pointer-events: none;
   z-index: 9999;
@@ -46,8 +46,8 @@
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(ellipse at 30% 40%, rgba(200,68,26,0.08) 0%, transparent 60%),
-    radial-gradient(ellipse at 70% 80%, rgba(61,90,76,0.06) 0%, transparent 50%);
+    radial-gradient(ellipse at 30% 40%, rgba(199,243,0,0.06) 0%, transparent 60%),
+    radial-gradient(ellipse at 70% 80%, rgba(200,68,26,0.06) 0%, transparent 50%);
   pointer-events: none;
   z-index: 1;
 }
@@ -82,11 +82,11 @@
 }
 
 .lv-eyebrow {
-  font-family: "Geist Mono", monospace;
+  font-family: "Outfit", sans-serif;
   font-size: 0.55rem;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: var(--rust, #c8441a);
+  color: var(--acid, #c7f300);
   margin-bottom: 1.4rem;
   display: flex;
   align-items: center;
@@ -95,7 +95,7 @@
 .lv-eyebrow::before {
   content: "";
   width: 28px; height: 1px;
-  background: var(--rust, #c8441a);
+  background: var(--acid, #c7f300);
 }
 
 .lv-title {
@@ -109,11 +109,11 @@
 .lv-title em {
   font-family: "Instrument Serif", serif;
   font-style: italic;
-  color: var(--rust, #c8441a);
+  color: var(--acid, #c7f300);
 }
 
 .lv-desc {
-  font-family: "Geist Mono", monospace;
+  font-family: "Outfit", sans-serif;
   font-size: 0.7rem;
   line-height: 1.9;
   color: var(--dust, #b8b0a4);
@@ -130,11 +130,11 @@
   font-family: "Bebas Neue", sans-serif;
   font-size: 2.4rem;
   letter-spacing: -0.02em;
-  color: var(--rust, #c8441a);
+  color: var(--acid, #c7f300);
   line-height: 1;
 }
 .lv-stat-l {
-  font-family: "Geist Mono", monospace;
+  font-family: "Outfit", sans-serif;
   font-size: 0.56rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -145,7 +145,7 @@
   position: absolute;
   top: 2.5rem; left: 3rem;
   z-index: 10;
-  font-family: "Geist Mono", monospace;
+  font-family: "Outfit", sans-serif;
   font-size: 0.6rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
@@ -160,7 +160,7 @@
 .login-form-panel {
   width: 480px;
   flex-shrink: 0;
-  background: var(--ink, #0a0a09);
+  background: var(--surface-d, #0e0e0e);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -176,7 +176,7 @@
   position: absolute;
   top: 0; left: 0;
   width: 2px; height: 100%;
-  background: linear-gradient(to bottom, transparent, var(--rust, #c8441a), transparent);
+  background: linear-gradient(to bottom, transparent, var(--acid, #c7f300), transparent);
   opacity: 0.5;
 }
 
@@ -199,7 +199,7 @@
   color: var(--cream, #f0ebe1);
 }
 .lf-step {
-  font-family: "Geist Mono", monospace;
+  font-family: "Outfit", sans-serif;
   font-size: 0.55rem;
   letter-spacing: 0.16em;
   color: var(--dust, #b8b0a4);
@@ -215,7 +215,7 @@
 }
 
 .login-sub {
-  font-family: "Geist Mono", monospace;
+  font-family: "Outfit", sans-serif;
   font-size: 0.65rem;
   color: var(--dust, #b8b0a4);
   line-height: 1.6;
@@ -223,7 +223,7 @@
   opacity: 0;
 }
 .login-link {
-  color: var(--rust, #c8441a);
+  color: var(--acid, #c7f300);
   text-decoration: none;
   transition: opacity .2s;
   cursor: none;
@@ -237,7 +237,7 @@
 
 .lf-label {
   display: block;
-  font-family: "Geist Mono", monospace;
+  font-family: "Outfit", sans-serif;
   font-size: 0.56rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
@@ -253,7 +253,7 @@
 .lf-label-row .lf-label { margin-bottom: 0; }
 
 .lf-forgot {
-  font-family: "Geist Mono", monospace;
+  font-family: "Outfit", sans-serif;
   font-size: 0.56rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -261,7 +261,7 @@
   background: none; border: none; padding: 0;
   cursor: none; transition: color .2s;
 }
-.lf-forgot:hover { color: var(--rust, #c8441a); }
+.lf-forgot:hover { color: var(--acid, #c7f300); }
 
 .lf-input-wrap {
   position: relative;
@@ -273,7 +273,7 @@
   background: transparent;
   border: none;
   outline: none;
-  font-family: "Geist Mono", monospace;
+  font-family: "Outfit", sans-serif;
   font-size: 0.85rem;
   color: var(--cream, #f0ebe1);
   letter-spacing: 0.04em;
@@ -288,14 +288,14 @@
   background: rgba(240,235,225,0.12);
   transition: background .25s;
 }
-.lf-input-wrap:focus-within .lf-input-line { background: var(--rust, #c8441a); }
+.lf-input-wrap:focus-within .lf-input-line { background: var(--acid, #c7f300); }
 .lf-input-wrap.has-error .lf-input-line { background: #ff6b6b; }
 
 .lf-eye {
   position: absolute;
   right: 0; top: 50%; transform: translateY(-50%);
   background: none; border: none;
-  font-family: "Geist Mono", monospace;
+  font-family: "Outfit", sans-serif;
   font-size: 0.75rem;
   color: var(--dust, #b8b0a4);
   cursor: none; padding: 4px;
@@ -305,7 +305,7 @@
 
 .lf-error {
   display: block;
-  font-family: "Geist Mono", monospace;
+  font-family: "Outfit", sans-serif;
   font-size: 0.58rem;
   letter-spacing: 0.08em;
   color: #ff6b6b;
@@ -336,14 +336,14 @@
   content: "";
   position: absolute;
   inset: 0;
-  background: var(--rust, #c8441a);
+  background: var(--acid, #c7f300);
   transform: scaleX(0);
   transform-origin: left;
   transition: transform .5s cubic-bezier(0.19,1,0.22,1);
   z-index: 0;
 }
 .lf-submit:hover::before { transform: scaleX(1); }
-.lf-submit:hover { color: var(--cream, #f0ebe1); }
+.lf-submit:hover { color: var(--on-acid, #171e00); }
 .lf-submit span { position: relative; z-index: 1; }
 .lf-submit:disabled { opacity: 0.6; }
 
@@ -392,7 +392,7 @@
   background: transparent;
   border: 1px solid rgba(240,235,225,0.1);
   color: var(--cream, #f0ebe1);
-  font-family: "Geist Mono", monospace;
+  font-family: "Outfit", sans-serif;
   font-size: 0.68rem;
   letter-spacing: 0.08em;
   display: flex;

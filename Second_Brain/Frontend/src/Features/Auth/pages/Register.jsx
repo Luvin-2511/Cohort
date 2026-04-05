@@ -1,106 +1,14 @@
-import { useEffect, useRef, useState, useMemo, Suspense } from "react";
-import { Canvas, useFrame } from "@react-three/fiber";
-import { MeshTransmissionMaterial, Float, Environment, Points, PointMaterial } from "@react-three/drei";
-import * as THREE from "three";
+import { useEffect, useRef, useState, Suspense } from "react";
 import gsap from "gsap";
 import { SplitText } from "gsap/SplitText";
 import { Link, useNavigate } from "react-router-dom";
 import "../styles/Register.css";
+import StarsBackground from "../../shared/components/StarsBackground";
+import useAuth from "../hooks/useAuth";
 
 gsap.registerPlugin(SplitText);
 
-function RegisterOrb() {
-  const meshRef = useRef();
-  const geo = useMemo(() => new THREE.IcosahedronGeometry(1.1, 4), []);
 
-  useEffect(() => {
-    if (meshRef.current) {
-      const pos = meshRef.current.geometry.attributes.position;
-      meshRef.current.geometry.userData.original = new Float32Array(pos.array);
-    }
-  }, []);
-
-  useFrame((state) => {
-    if (!meshRef.current) return;
-    const t = state.clock.elapsedTime;
-    meshRef.current.rotation.y = -t * 0.1;
-    meshRef.current.rotation.z = Math.sin(t * 0.14) * 0.2;
-
-    const breathe = 1 + Math.sin(t * 0.55) * 0.04;
-    meshRef.current.scale.setScalar(breathe);
-
-    const pos = meshRef.current.geometry.attributes.position;
-    const orig = meshRef.current.geometry.userData.original;
-    if (orig) {
-      for (let i = 0; i < pos.count; i++) {
-        const ox = orig[i * 3], oy = orig[i * 3 + 1], oz = orig[i * 3 + 2];
-        const w = Math.sin(oz * 2.2 + t * 0.7) * Math.cos(ox * 1.8 + t * 0.5) * 0.075;
-        pos.setXYZ(i, ox + w, oy + w * 0.6, oz + w * 0.8);
-      }
-      pos.needsUpdate = true;
-    }
-  });
-
-  return (
-    <Float speed={0.9} rotationIntensity={0.18} floatIntensity={0.7}>
-      <mesh ref={meshRef} geometry={geo}>
-        <MeshTransmissionMaterial
-          backside
-          samples={8}
-          thickness={0.55}
-          chromaticAberration={0.07}
-          anisotropy={0.3}
-          distortion={0.25}
-          distortionScale={0.5}
-          temporalDistortion={0.09}
-          iridescence={1.5}
-          iridescenceIOR={1.6}
-          iridescenceThicknessRange={[0, 1800]}
-          roughness={0}
-          color="#3D5A4C"
-          attenuationColor="#C8441A"
-          attenuationDistance={0.5}
-          transparent
-          opacity={0.82}
-        />
-      </mesh>
-    </Float>
-  );
-}
-
-function RegisterDust() {
-  const ref = useRef();
-  const positions = useMemo(() => {
-    const arr = new Float32Array(80 * 3);
-    for (let i = 0; i < 80; i++) {
-      arr[i * 3]     = (Math.random() - 0.5) * 5;
-      arr[i * 3 + 1] = (Math.random() - 0.5) * 5;
-      arr[i * 3 + 2] = (Math.random() - 0.5) * 3;
-    }
-    return arr;
-  }, []);
-  useFrame((s) => {
-    if (ref.current) ref.current.rotation.y = s.clock.elapsedTime * 0.05;
-  });
-  return (
-    <Points ref={ref} positions={positions} stride={3}>
-      <PointMaterial color="#F0EBE1" size={0.018} transparent opacity={0.35} sizeAttenuation depthWrite={false} />
-    </Points>
-  );
-}
-
-function RegisterScene() {
-  return (
-    <>
-      <Environment preset="city" />
-      <ambientLight intensity={0.25} />
-      <directionalLight position={[3, 5, 4]}   intensity={1.2} color="#3D5A4C" />
-      <directionalLight position={[-4, -2, -3]} intensity={0.7} color="#C8441A" />
-      <RegisterOrb />
-      <RegisterDust />
-    </>
-  );
-}
 
 function getStrength(p) {
   if (!p) return 0;
@@ -111,13 +19,13 @@ function getStrength(p) {
   if (/[^A-Za-z0-9]/.test(p)) s++;
   return s;
 }
-const STRENGTH_COLORS = ["", "#ff6b6b", "#ffb347", "#C8441A", "#3D5A4C"];
+const STRENGTH_COLORS = ["", "#ff6b6b", "#ffb347", "#C8441A", "#c7f300"];
 const STRENGTH_LABELS = ["", "Weak", "Fair", "Good", "Strong"];
 
 
 export default function Register() {
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
+  const { handleRegister, loading } = useAuth();
   const [showPw, setShowPw]   = useState(false);
   const [fields, setFields]   = useState({ username: "", email: "", password: "" });
   const [errors, setErrors]   = useState({});
@@ -207,12 +115,14 @@ export default function Register() {
       });
       return;
     }
-    setLoading(true);
-    await new Promise((r) => setTimeout(r, 1500));
-    gsap.to([canvasRef.current, formRef.current], {
-      opacity: 0, y: -30, duration: 0.5, ease: "power3.in", stagger: 0.06,
-      onComplete: () => navigate("/"),
-    });
+    const response = await handleRegister(fields.username, fields.email, fields.password);
+    if (response && response.success) {
+      await new Promise((r) => setTimeout(r, 800));
+      gsap.to([canvasRef.current, formRef.current], {
+        opacity: 0, y: -30, duration: 0.5, ease: "power3.in", stagger: 0.06,
+        onComplete: () => navigate("/dashboard"),
+      });
+    }
   };
 
   return (
@@ -222,15 +132,7 @@ export default function Register() {
       {/* ── LEFT VISUAL PANEL ── */}
       <div className="reg-visual" ref={canvasRef}>
         <div className="reg-canvas-wrap">
-          <Canvas
-            camera={{ position: [0, 0, 3.5], fov: 42 }}
-            gl={{ alpha: true, antialias: true }}
-            dpr={[1, 1.5]}
-          >
-            <Suspense fallback={null}>
-              <RegisterScene />
-            </Suspense>
-          </Canvas>
+          <StarsBackground />
         </div>
 
         <div className="reg-visual-copy">

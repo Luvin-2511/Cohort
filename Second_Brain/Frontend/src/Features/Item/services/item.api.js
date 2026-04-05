@@ -5,14 +5,30 @@ const api = axios.create({
     withCredentials:true
 })
 
-export async function saveItem(url) {
+export async function saveItem(url, collectionId = null) {
     try {
-        const response = await api.post('/api/item/save-item', { url })
+        const response = await api.post('/api/item/save-item', { url, collectionId })
         return response.data
     } catch (err) {
         throw err
     }
 }
+
+export async function saveFile(file, title = "", collectionId = null) {
+    try {
+        const form = new FormData()
+        form.append("file", file)
+        if (title) form.append("title", title)
+        if (collectionId) form.append("collectionId", collectionId)
+        const response = await api.post('/api/item/save-file', form, {
+            headers: { "Content-Type": "multipart/form-data" }
+        })
+        return response.data
+    } catch (err) {
+        throw err
+    }
+}
+
 
 export async function getItems() {
     try {
@@ -20,6 +36,15 @@ export async function getItems() {
         return response.data
     } catch (err) {
         throw err
+    }
+}
+
+export async function getItemById(itemId) {
+    try {
+        const response = await api.get(`/api/item/${itemId}`);
+        return response.data;
+    } catch (err) {
+        throw err;
     }
 }
 
@@ -49,3 +74,13 @@ export async function getRelatedItems(itemId) {
         throw err
     }
 }
+
+export async function deleteItem(itemId) {
+    try {
+        const response = await api.delete(`/api/item/${itemId}`)
+        return response.data
+    } catch (err) {
+        throw err
+    }
+}
+
