@@ -38,7 +38,6 @@ const GraphPage = () => {
     const width = containerRef.current.clientWidth;
     const height = containerRef.current.clientHeight;
 
-    // Clear previous SVG
     d3.select(containerRef.current).select("svg").remove();
 
     const svg = d3
