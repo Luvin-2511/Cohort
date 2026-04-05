@@ -1,0 +1,127 @@
+.graph-page {
+  min-height: 100vh;
+  background-color: var(--tn-bg);
+  color: var(--text-light);
+  display: flex;
+  flex-direction: column;
+}
+
+.graph-main {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  margin-top: 70px; /* Offset for navbar */
+}
+
+.graph-container {
+  flex: 1;
+  width: 100%;
+  height: calc(100vh - 70px);
+  position: relative;
+  background: var(--surface-1);
+}
+
+.graph-svg {
+  width: 100%;
+  height: 100%;
+  outline: none;
+  cursor: grab;
+}
+
+.graph-svg:active {
+  cursor: grabbing;
+}
+
+.node circle {
+  stroke: var(--surface-1);
+  stroke-width: 2px;
+  transition: r 0.2s, fill 0.2s;
+  cursor: pointer;
+}
+
+.node circle:hover {
+  stroke: #fff;
+  stroke-width: 3px;
+}
+
+.node text {
+  font-size: 10px;
+  font-family: inherit;
+  fill: rgba(255, 255, 255, 0.7);
+  pointer-events: none;
+  font-weight: 500;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+}
+
+.link {
+  stroke: rgba(255, 255, 255, 0.15);
+  stroke-opacity: 0.6;
+  stroke-width: 1.5px;
+}
+
+.graph-overlay {
+  position: absolute;
+  top: 2rem;
+  left: 2rem;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.graph-title {
+  font-size: 2rem;
+  font-weight: 800;
+  margin: 0;
+  background: linear-gradient(to right, #fff, rgba(255, 255, 255, 0.6));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.graph-subtitle {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.9rem;
+  margin-top: 0.2rem;
+}
+
+.graph-loading {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  color: rgba(255,255,255,0.7);
+}
+
+.graph-tooltip {
+  position: absolute;
+  pointer-events: none;
+  background: rgba(10, 10, 10, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 10px 14px;
+  color: #fff;
+  font-size: 0.85rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+  backdrop-filter: blur(8px);
+  z-index: 100;
+  max-width: 250px;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.gt-type {
+  display: inline-block;
+  font-size: 0.65rem;
+  background: var(--acid);
+  color: #000;
+  padding: 2px 6px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  font-weight: 800;
+  margin-bottom: 4px;
+}

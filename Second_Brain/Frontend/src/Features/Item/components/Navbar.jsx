@@ -3,6 +3,7 @@ import { gsap } from "gsap";
 import "../styles/navbar.css";
 import { useNavigate } from "react-router-dom";
 import useAuth from "../../Auth/hooks/useAuth";
+import NotificationPanel from "./NotificationPanel";
 
 const Navbar = () => {
   const [isBigNavVisible, setIsBigVisible] = useState(false);
@@ -181,6 +182,9 @@ const Navbar = () => {
           <span>ALL RIGHTS RESERVED</span>
         </div>
       </div>
+      
+      {/* Floating Notification Panel */}
+      <NotificationPanel />
     </nav>
   );
 };

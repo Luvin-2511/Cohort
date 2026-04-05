@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const api = axios.create({
-    baseURL:'http://localhost:3000',
+    baseURL: import.meta.env.VITE_API_URL || 'http://localhost:3000',
     withCredentials:true
 })
 
@@ -84,3 +84,11 @@ export async function deleteItem(itemId) {
     }
 }
 
+export async function getGraph() {
+    try {
+        const response = await api.get('/api/item/graph')
+        return response.data
+    } catch (err) {
+        throw err
+    }
+}

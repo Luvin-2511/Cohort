@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import useCollection from "../hooks/useCollection";
+import useItem from "../hooks/useItem";
+import { ItemCard } from "./Dashboard";
 import "../styles/collection.css";
 
 /* ── Create Collection Modal ─────────────────────────────── */
@@ -73,10 +76,14 @@ const CreateCollectionModal = ({ isOpen, onClose, onConfirm, loading }) => {
 /* ── Main Collections Page ───────────────────────────────── */
 const CollectionsPage = () => {
   const { collections, loading, handleGetCollections, handleCreateCollection } = useCollection();
+  const { items, handleGetItems, loading: loadingItems } = useItem();
   const [isModalOpen, setModalOpen] = useState(false);
+  const [selectedCol, setSelectedCol] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     handleGetCollections();
+    handleGetItems();
   }, [handleGetCollections]);
 
   const onConfirmCreate = async (name) => {
@@ -124,48 +131,103 @@ const CollectionsPage = () => {
         </motion.header>
 
         {/* ── Content ── */}
-        {loading && collections.length === 0 ? (
-          <div className="col-loading">
-            <span className="col-spinner" />
-            Loading collections...
-          </div>
-        ) : collections.length === 0 ? (
-          <motion.div
-            className="col-empty"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.2 }}
-          >
-            <div className="col-empty-icon">📁</div>
-            <p className="col-empty-title">No collections yet</p>
-            <p className="col-empty-sub">Create a collection to group your items.</p>
-            <button className="col-empty-btn" onClick={() => setModalOpen(true)}>
-              + Create your first collection
-            </button>
-          </motion.div>
-        ) : (
-          <motion.div
-            className="col-grid"
-            variants={containerVar}
-            initial="hidden"
-            animate="visible"
-          >
-            {collections.map((col) => (
-              <motion.div key={col._id} className="col-card" variants={itemVar} whileHover={{ y: -3 }}>
-                <div className="col-card__icon-wrap">
-                  <span className="col-card__icon">📁</span>
+        <AnimatePresence mode="wait">
+          {selectedCol ? (
+            /* ── Folder View (Inside a Collection) ── */
+            <motion.div
+              key="folder-view"
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -20 }}
+              transition={{ duration: 0.3 }}
+            >
+              <button 
+                className="col-back-btn" 
+                onClick={() => setSelectedCol(null)}
+              >
+                ← Back to Collections
+              </button>
+              
+              <div className="col-folder-header">
+                <h2>📁 {selectedCol.name}</h2>
+              </div>
+
+              {loadingItems ? (
+                <div className="col-loading"><span className="col-spinner" /></div>
+              ) : (
+                <div className="col-grid">
+                  {items.filter(i => i.collectionId === selectedCol._id).length === 0 ? (
+                    <p className="col-empty-sub">This collection is empty.</p>
+                  ) : (
+                    items.filter(i => i.collectionId === selectedCol._id).map(item => (
+                      <motion.div key={item._id} variants={{ hidden: { opacity: 0, y: 15 }, visible: { opacity: 1, y: 0 } }} initial="hidden" animate="visible">
+                        <ItemCard item={item} />
+                      </motion.div>
+                    ))
+                  )}
                 </div>
-                <div className="col-card__body">
-                  <h3 className="col-card__title">{col.name}</h3>
-                  <p className="col-card__count">
-                    <span className="col-card__count-icon">🗂</span>
-                    {col.itemCount || 0} item{(col.itemCount || 0) !== 1 ? "s" : ""}
-                  </p>
+              )}
+            </motion.div>
+          ) : (
+            /* ── Main Collections Grid ── */
+            <motion.div
+              key="grid-view"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+            >
+              {loading && collections.length === 0 ? (
+                <div className="col-loading">
+                  <span className="col-spinner" />
+                  Loading collections...
                 </div>
-              </motion.div>
-            ))}
-          </motion.div>
-        )}
+              ) : collections.length === 0 ? (
+                <motion.div
+                  className="col-empty"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.2 }}
+                >
+                  <div className="col-empty-icon">📁</div>
+                  <p className="col-empty-title">No collections yet</p>
+                  <p className="col-empty-sub">Create a collection to group your items.</p>
+                  <button className="col-empty-btn" onClick={() => setModalOpen(true)}>
+                    + Create your first collection
+                  </button>
+                </motion.div>
+              ) : (
+                <motion.div
+                  className="col-grid"
+                  variants={containerVar}
+                  initial="hidden"
+                  animate="visible"
+                >
+                  {collections.map((col) => (
+                    <motion.div 
+                      key={col._id} 
+                      className="col-card" 
+                      variants={itemVar} 
+                      whileHover={{ y: -3 }}
+                      onClick={() => setSelectedCol(col)}
+                      style={{ cursor: "pointer" }}
+                    >
+                      <div className="col-card__icon-wrap">
+                        <span className="col-card__icon">📁</span>
+                      </div>
+                      <div className="col-card__body">
+                        <h3 className="col-card__title">{col.name}</h3>
+                        <p className="col-card__count">
+                          <span className="col-card__count-icon">🗂</span>
+                          {col.itemCount || 0} item{(col.itemCount || 0) !== 1 ? "s" : ""}
+                        </p>
+                      </div>
+                    </motion.div>
+                  ))}
+                </motion.div>
+              )}
+            </motion.div>
+          )}
+        </AnimatePresence>
       </main>
 
       <CreateCollectionModal

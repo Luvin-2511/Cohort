@@ -68,7 +68,7 @@ const GridCard = ({ item, onDelete, onShare }) => {
   const navigate = useNavigate();
   const thumbnail =
     item.thumbnailUrl ||
-    (item.type === "youtube" ? getYoutubeThumbnail(item.url) : null);
+    (item.type === "youtube" ? getYoutubeThumbnail(item.url) : (item.type === "image" ? item.url : null));
   const tags = item.tags?.slice(0, 3) || [];
   const extra = (item.tags?.length || 0) - 3;
 
@@ -79,10 +79,13 @@ const GridCard = ({ item, onDelete, onShare }) => {
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, scale: 0.96 }}
-      whileHover={{ y: -3 }}
+      drag
+      dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
+      dragElastic={0.8}
+      whileDrag={{ scale: 1.05, cursor: "grabbing", zIndex: 10 }}
       transition={{ type: "spring", stiffness: 300, damping: 24 }}
       onClick={() => navigate(`/item/${item._id}`)}
-      style={{ cursor: "pointer" }}
+      style={{ cursor: "grab" }}
     >
       {/* Thumbnail */}
       <div className="lc-card__thumb">
@@ -152,7 +155,7 @@ const ListCard = ({ item, onDelete, onShare }) => {
   const navigate = useNavigate();
   const thumbnail =
     item.thumbnailUrl ||
-    (item.type === "youtube" ? getYoutubeThumbnail(item.url) : null);
+    (item.type === "youtube" ? getYoutubeThumbnail(item.url) : (item.type === "image" ? item.url : null));
   const tags = item.tags?.slice(0, 4) || [];
   const extra = (item.tags?.length || 0) - 4;
 
@@ -163,9 +166,13 @@ const ListCard = ({ item, onDelete, onShare }) => {
       initial={{ opacity: 0, x: -12 }}
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: -12 }}
+      drag
+      dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
+      dragElastic={0.8}
+      whileDrag={{ scale: 1.02, cursor: "grabbing", zIndex: 10 }}
       transition={{ type: "spring", stiffness: 300, damping: 24 }}
       onClick={() => navigate(`/item/${item._id}`)}
-      style={{ cursor: "pointer" }}
+      style={{ cursor: "grab" }}
     >
       {thumbnail && (
         <div className="lc-list-card__thumb">

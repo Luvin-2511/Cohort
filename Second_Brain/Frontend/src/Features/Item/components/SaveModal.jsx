@@ -15,21 +15,21 @@ const FILE_TYPE_ICONS = { image: "🖼", video: "▶", pdf: "📑" };
 const FILE_TYPE_LABELS = { image: "Image", video: "Video", pdf: "PDF" };
 
 export default function SaveModal({ open, onClose }) {
-  const wrapRef  = useRef();
-  const cardRef  = useRef();
+  const wrapRef = useRef();
+  const cardRef = useRef();
   const inputRef = useRef();
-  const fileRef  = useRef();
+  const fileRef = useRef();
 
   // Tabs: "url" | "file"
-  const [tab, setTab]         = useState("url");
-  const [url, setUrl]         = useState("");
+  const [tab, setTab] = useState("url");
+  const [url, setUrl] = useState("");
   const [fileType, setFileType] = useState("image");
-  const [file, setFile]       = useState(null);
+  const [file, setFile] = useState(null);
   const [fileTitle, setFileTitle] = useState("");
   const [collectionId, setCollectionId] = useState("");
   const [dragging, setDragging] = useState(false);
-  const [saving, setSaving]   = useState(false);
-  const [saved, setSaved]     = useState(false);
+  const [saving, setSaving] = useState(false);
+  const [saved, setSaved] = useState(false);
 
   const { collections, handleGetCollections, loading: loadingCollections } = useCollection();
 
@@ -74,7 +74,7 @@ export default function SaveModal({ open, onClose }) {
   /* ── URL Save ── */
   const handleSaveUrl = async () => {
     if (!url.trim()) {
-      gsap.to(inputRef.current, { x: [0,-8,8,-6,6,-3,0], duration: 0.4, ease: "none" });
+      gsap.to(inputRef.current, { x: [0, -8, 8, -6, 6, -3, 0], duration: 0.4, ease: "none" });
       return;
     }
     setSaving(true);

@@ -52,7 +52,7 @@ const ResultCard = ({ item, index, onCardClick }) => {
   const badge = TYPE_BADGE_MAP[item.type] || { label: item.type, cls: "sb--article" };
   const thumbnail =
     item.thumbnailUrl ||
-    (item.type === "youtube" ? getYoutubeThumbnail(item.url) : null);
+    (item.type === "youtube" ? getYoutubeThumbnail(item.url) : (item.type === "image" ? item.url : null));
   const tags = item.tags?.slice(0, 3) || [];
   const extra = (item.tags?.length || 0) - 3;
 

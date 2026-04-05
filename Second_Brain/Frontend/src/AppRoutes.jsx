@@ -10,6 +10,8 @@ import LibraryPage from "./Features/Item/pages/Library";
 import SemanticSearchPage from "./Features/Item/pages/SemanticSearch";
 import CollectionsPage from "./Features/Item/pages/Collections";
 import ItemDetail from "./Features/Item/pages/ItemDetail";
+import Insights from "./Features/Item/pages/Insights";
+import GraphPage from "./Features/Item/pages/Graph";
 
 const AppRoutes = () => {
   return (
@@ -76,6 +78,22 @@ const AppRoutes = () => {
           element={
             <Protected>
               <ItemDetail />
+            </Protected>
+          }
+        />
+        <Route
+          path="/insights"
+          element={
+            <Protected>
+              <Insights />
+            </Protected>
+          }
+        />
+        <Route
+          path="/graph"
+          element={
+            <Protected>
+              <GraphPage />
             </Protected>
           }
         />

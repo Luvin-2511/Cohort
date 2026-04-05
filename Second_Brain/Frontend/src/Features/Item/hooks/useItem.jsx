@@ -12,9 +12,9 @@ import {
   saveItem,
   getItems,
   searchItems,
-  getResurfacedItems,
   getRelatedItems,
   deleteItem,
+  getGraph,
 } from "../services/item.api";
 
 const useItem = () => {
@@ -112,6 +112,19 @@ const useItem = () => {
     }
   };
 
+  const handleGetGraph = async () => {
+    dispatch(setLoading(true));
+    try {
+      const response = await getGraph();
+      return response;
+    } catch (err) {
+      const errorMessage = err?.response?.data?.message || "Internal Server Error";
+      dispatch(setError(errorMessage));
+    } finally {
+      dispatch(setLoading(false));
+    }
+  };
+
   return {
     loading,
     error,
@@ -125,6 +138,7 @@ const useItem = () => {
     handleGetResurfacedItems,
     handleGetRelatedItems,
     handleDeleteItem,
+    handleGetGraph,
   };
 };
 

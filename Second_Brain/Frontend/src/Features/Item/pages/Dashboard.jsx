@@ -6,6 +6,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Navbar from "../components/Navbar";
 import SaveModal from "../components/SaveModal";
 import useItem from "../hooks/useItem";
+import useCollection from "../hooks/useCollection";
 import useAuth from "../../Auth/hooks/useAuth";
 import "../styles/dashboard.css";
 import "../styles/saveModal.css";
@@ -105,7 +106,7 @@ const CONTENT_TYPES = ["Article", "YouTube", "Tweet", "Note", "Image"];
 /* (SaveModal is imported from components/SaveModal.jsx) */
 
 /* ── Item Card ───────────────────────────────────────────── */
-const ItemCard = ({ item }) => {
+export const ItemCard = ({ item }) => {
   const navigate = useNavigate();
 
   const isYouTube =
@@ -124,17 +125,20 @@ const ItemCard = ({ item }) => {
     }
   };
 
-  const thumbnail = isYouTube ? getYoutubeThumbnail(item.url) : null;
+  const thumbnail = item.thumbnailUrl || (isYouTube ? getYoutubeThumbnail(item.url) : (item.type === 'image' ? item.url : null));
   const tags = item.tags?.slice(0, 3) || [];
   const extra = (item.tags?.length || 0) - 3;
 
   return (
     <motion.div
       className="item-card"
-      whileHover={{ y: -4 }}
-      transition={{ type: "spring", stiffness: 320, damping: 22 }}
+      drag
+      dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
+      dragElastic={0.8}
+      whileDrag={{ scale: 1.05, cursor: "grabbing", zIndex: 10 }}
+      transition={{ type: "spring", stiffness: 300, damping: 20 }}
       onClick={() => navigate(`/item/${item._id}`)}
-      style={{ cursor: "pointer" }}
+      style={{ cursor: "grab" }}
     >
       {/* Thumbnail */}
       <div className="item-card__thumb">
@@ -207,10 +211,12 @@ const MemexDashboard = () => {
   const mainRef = useRef(null);
 
   const { items, loading, handleGetItems, handleSaveItem } = useItem();
+  const { collections, handleGetCollections } = useCollection();
   const { user } = useAuth();
 
   useEffect(() => {
     handleGetItems();
+    handleGetCollections();
   }, []);
 
   // GSAP entrance
@@ -229,8 +235,8 @@ const MemexDashboard = () => {
 
   // Compute stats
   const totalSaved = items?.length || 0;
-  const aiProcessed = items?.filter((i) => i.aiProcessed)?.length || 0;
-  const favorites = items?.filter((i) => i.isFavorite)?.length || 0;
+  const readables = items?.filter(i => i.type === 'article' || i.type === 'pdf' || i.type === 'tweet' || i.type === 'note').length || 0;
+  const totalCollections = collections?.length || 0;
   const uniqueTags = [...new Set(items?.flatMap((i) => i.tags || []))].length || 0;
 
   const recentItems = [...(items || [])].reverse().slice(0, 6);
@@ -286,10 +292,10 @@ const MemexDashboard = () => {
             <StatCard icon="◈" value={totalSaved} label="TOTAL SAVED" accentColor="var(--acid)" />
           </motion.div>
           <motion.div variants={fadeUp}>
-            <StatCard icon="⚡" value={aiProcessed} label="AI PROCESSED" accentColor="#4ecdc4" />
+            <StatCard icon="📄" value={readables} label="DOCS & READS" accentColor="#4ecdc4" />
           </motion.div>
           <motion.div variants={fadeUp}>
-            <StatCard icon="♥" value={favorites} label="FAVORITES" accentColor="var(--rust)" />
+            <StatCard icon="📁" value={totalCollections} label="COLLECTIONS" accentColor="var(--rust)" />
           </motion.div>
           <motion.div variants={fadeUp}>
             <StatCard icon="⌘" value={uniqueTags} label="UNIQUE TAGS" accentColor="#a78bfa" />

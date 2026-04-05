@@ -16,11 +16,11 @@ import {
   resurfaceController,
   deleteItemController,
   getSingleItemController,
+  getGraphController
 } from "../controllers/item.controller.js";
 
 const itemRouter = Router();
 
-// Multer — memory storage, max 50 MB, accepts image/video/pdf only
 const upload = multer({
   storage: multer.memoryStorage(),
   limits: { fileSize: 50 * 1024 * 1024 },
@@ -36,6 +36,7 @@ itemRouter.post("/save-file", authMiddleware, upload.single("file"), saveFileCon
 itemRouter.get("/get-item", authMiddleware, getItemController);
 itemRouter.get("/search", authMiddleware, searchItemValidator, validateRequest, searchItemController);
 itemRouter.get("/resurface", authMiddleware, resurfaceController);
+itemRouter.get("/graph", authMiddleware, getGraphController);
 itemRouter.get("/:itemId", authMiddleware, getSingleItemController);
 itemRouter.get("/:itemId/related", authMiddleware, relatedItemValidator, validateRequest, relatedItemController);
 itemRouter.delete("/:itemId", authMiddleware, deleteItemController);

@@ -83,6 +83,42 @@
   line-height: 1;
 }
 
+/* ── Folder Drill-down View ───────────────────────────────── */
+.col-back-btn {
+  background: transparent;
+  border: none;
+  color: rgba(184, 176, 164, 0.6);
+  font-family: "Outfit", sans-serif;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0;
+  margin-bottom: 1.5rem;
+  transition: all 0.2s ease;
+}
+
+.col-back-btn:hover {
+  color: var(--acid);
+  transform: translateX(-4px);
+}
+
+.col-folder-header {
+  margin-bottom: 2.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.col-folder-header h2 {
+  font-family: "Outfit", sans-serif;
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--cream);
+  letter-spacing: 0.01em;
+}
+
 /* ── Grid ─────────────────────────────────────────────────── */
 .col-grid {
   display: grid;

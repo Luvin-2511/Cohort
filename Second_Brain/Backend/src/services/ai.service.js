@@ -7,11 +7,11 @@ const mistralModel = new ChatMistralAI({
 });
 
 const mistralEmbeddings = new MistralAIEmbeddings({
-    model:'mistral-embed'
+  model: 'mistral-embed'
 })
 
 export async function generateTags(content, title) {
-   const shortContent =  content?.slice(0, 1000) || ""
+  const shortContent = content?.slice(0, 1000) || ""
   const prompt = `
     Suggest 3-5 short lowercase tags for this content. Return only a JSON array.
 
@@ -29,10 +29,10 @@ export async function generateTags(content, title) {
   return json ? JSON.parse(json) : [];
 }
 
-export async function generateEmbedding(content,title) {
-    const textToEmbed = [title, content].join(" ").slice(0, 2000)
-    const embeddings = await mistralEmbeddings.embedQuery(textToEmbed)
-    return embeddings
+export async function generateEmbedding(content, title) {
+  const textToEmbed = [title, content].join(" ").slice(0, 2000)
+  const embeddings = await mistralEmbeddings.embedQuery(textToEmbed)
+  return embeddings
 }
 
 export async function generateInsights(content, title, type) {
@@ -49,9 +49,8 @@ export async function generateInsights(content, title, type) {
       new SystemMessage("You are an insightful summarizing assistant. Only output a strict JSON array of strings. Do not include markdown code block syntax formatting or backticks around the json, just the raw json array string."),
       new HumanMessage(prompt),
     ]);
-    
+
     let raw = response.content.trim();
-    // In case the model still outputs markdown backticks, strip them
     if (raw.startsWith('```json')) raw = raw.slice(7);
     if (raw.startsWith('```')) raw = raw.slice(3);
     if (raw.endsWith('```')) raw = raw.slice(0, -3);

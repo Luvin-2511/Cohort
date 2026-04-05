@@ -1,7 +1,15 @@
 import mongoose from "mongoose";
 import itemModel from "../models/item.model.js";
-import { generateTags, generateEmbedding, generateInsights } from "../services/ai.service.js";
-import { detectType, extractContent, uploadFileToImageKit } from "../services/extractor.service.js";
+import {
+  generateTags,
+  generateEmbedding,
+  generateInsights,
+} from "../services/ai.service.js";
+import {
+  detectType,
+  extractContent,
+  uploadFileToImageKit,
+} from "../services/extractor.service.js";
 
 /**
  * @route POST api/item/save-file
@@ -30,15 +38,28 @@ export async function saveFileController(req, res, next) {
       type = "pdf";
       folder = "pdfs";
     } else {
-      return next({ status: 400, message: "Unsupported file type. Only image, video, and PDF allowed." });
+      return next({
+        status: 400,
+        message: "Unsupported file type. Only image, video, and PDF allowed.",
+      });
     }
 
-    const uploaded = await uploadFileToImageKit(file.buffer, file.originalname, mimeType, folder);
+    const uploaded = await uploadFileToImageKit(
+      file.buffer,
+      file.originalname,
+      mimeType,
+      folder,
+    );
 
-    const title = customTitle?.trim() || file.originalname.replace(/\.[^/.]+$/, "").replace(/[-_]/g, " ");
+    const title =
+      customTitle?.trim() ||
+      file.originalname.replace(/\.[^/.]+$/, "").replace(/[-_]/g, " ");
     const content = type === "pdf" ? `PDF: ${file.originalname}` : "";
 
-    const isAlreadyExist = await itemModel.findOne({ userId: id, url: uploaded.url });
+    const isAlreadyExist = await itemModel.findOne({
+      userId: id,
+      url: uploaded.url,
+    });
     if (isAlreadyExist) {
       return next({ status: 409, message: "This file has already been saved" });
     }
@@ -74,8 +95,6 @@ export async function saveFileController(req, res, next) {
   }
 }
 
-
-
 /**
  * @route POST api/item/save-item
  * @description Saves the item that user will provide the url and type off
@@ -86,7 +105,7 @@ export async function saveItemController(req, res, next) {
   try {
     const { id } = req.user;
     const { url, collectionId } = req.body;
-    const type = detectType(url)
+    const type = detectType(url);
     if (!url || !type) {
       return next({
         status: 400,
@@ -194,7 +213,6 @@ export async function getSingleItemController(req, res, next) {
       return next({ status: 404, message: "Item not found" });
     }
 
-    // Increment viewCount for algorithms
     item.viewCount = (item.viewCount || 0) + 1;
     await item.save();
 
@@ -251,43 +269,47 @@ export async function searchItemController(req, res, next) {
           createdAt: 1,
           viewCount: 1,
           aiInsights: 1,
-          score: { $meta: "vectorSearchScore" }
-        }
-      }
+          score: { $meta: "vectorSearchScore" },
+        },
+      },
     ]);
 
     console.log(`[Search] Query: "${q}"`);
-    
-    // HYBRID SEARCH BOOST:
-    // Pure vector search struggles with short, 1-2 word queries (like "game") because Mistral 
-    // considers many things "loosely related" (all videos ~ 0.80 similarity).
-    // We manually boost the score if the query words literally appear in the titles or tags.
+
     const queryLower = q.toLowerCase();
-    const boostedItems = itemsWithScores.map(item => {
-      let boost = 0;
-      const titleLower = (item.title || "").toLowerCase();
-      const contentLower = (item.content || "").toLowerCase();
-      
-      if (titleLower.includes(queryLower)) boost += 0.05;
-      else if (contentLower.includes(queryLower)) boost += 0.02;
-      
-      return { ...item, originalScore: item.score, score: item.score + boost };
-    }).sort((a, b) => b.score - a.score); // Re-sort by boosted score
+    const boostedItems = itemsWithScores
+      .map((item) => {
+        let boost = 0;
+        const titleLower = (item.title || "").toLowerCase();
+        const contentLower = (item.content || "").toLowerCase();
+
+        if (titleLower.includes(queryLower)) boost += 0.05;
+        else if (contentLower.includes(queryLower)) boost += 0.02;
+
+        return {
+          ...item,
+          originalScore: item.score,
+          score: item.score + boost,
+        };
+      })
+      .sort((a, b) => b.score - a.score); // Re-sort by boosted score
 
     boostedItems.forEach((item) => {
-      console.log(`  -> ${item.score.toFixed(3)} (boost: ${item.score > item.originalScore ? "yes" : "no"}) | ${item.title}`);
+      console.log(
+        `  -> ${item.score.toFixed(3)} (boost: ${item.score > item.originalScore ? "yes" : "no"}) | ${item.title}`,
+      );
     });
 
     let matchedItems = [];
     if (boostedItems.length > 0) {
       const topScore = boostedItems[0].score;
-      
-      // Strict thresholding based on the boosted top score
+
       if (topScore >= 0.78) {
-        // 1) Must be highly relevant OR
-        // 2) Must be within a very tight 1.5% margin (0.015) of the absolute best match
         matchedItems = boostedItems.filter((item) => {
-          return item.score >= 0.86 || (item.score >= 0.78 && topScore - item.score <= 0.015);
+          return (
+            item.score >= 0.86 ||
+            (item.score >= 0.78 && topScore - item.score <= 0.015)
+          );
         });
       }
     }
@@ -426,3 +448,68 @@ export async function deleteItemController(req, res, next) {
   }
 }
 
+/**
+ * @route POST api/item/graph
+ * @description Gets all node from user and make it in a graph returning nodes and links
+ * @param {import('express').Request} req
+ * @param {import('express').Response} res
+ */
+export async function getGraphController(req, res,next) {
+  try {
+
+    const { id } = req.user;
+    const items = await itemModel
+    .find({ userId: id })
+    .select("_id title type embedding");
+    
+  const nodes = items.map((item) => {
+    return {
+      id: item._id,
+      title: item.title,
+      type: item.type,
+    };
+  });
+
+  let links = [];
+  let seen = new Set();
+  
+  for (const item of items) {
+    const related = await itemModel.aggregate([
+      {
+        $vectorSearch: {
+          index: "vector_index_1",
+          path: "embedding",
+          queryVector: item.embedding,
+          numCandidates: 50,
+          limit: 3,
+        },
+      },
+      {
+        $match: {
+          userId: new mongoose.Types.ObjectId(id),
+          _id: { $ne: item._id },
+        },
+      },
+    ]);
+    
+    for (const rel of related) {
+      const pairKey = [item._id.toString(), rel._id.toString()]
+      .sort()
+      .join("-");
+      if (!seen.has(pairKey)) {
+        seen.add(pairKey);
+        links.push({ source: item._id, target: rel._id });
+      }
+    }
+  }
+  
+   return res.status(200).json({
+     success: true,
+     nodes,
+     links
+    })
+  }catch(err){
+    next(err)
+  }
+  }
+  
