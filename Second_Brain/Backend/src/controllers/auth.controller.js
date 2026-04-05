@@ -24,7 +24,7 @@ export async function registerController(req, res, next) {
     if (isUserAlreadyExists) {
       return next({
         status: 400,
-        message: `User with ${email === user.email ? email : username} already exists !`,
+        message: `User with this email or username already exists!`,
       });
     }
 
@@ -51,6 +51,7 @@ export async function registerController(req, res, next) {
     res.status(200).json({
       success: true,
       message: "User Registered successfully !",
+      user
     });
   } catch (err) {
     next(err);
@@ -91,10 +92,20 @@ export async function loginController(req, res, next) {
       });
     }
 
+    const token = jwt.sign(
+      {
+        id: user._id,
+        username: user.username,
+      },
+      process.env.JWT_SECRET,
+      { expiresIn: "7d" },
+    );
+
     res.cookie("token", token);
     return res.status(201).json({
       success: true,
       message: "User logged in successfully !",
+      user
     });
   } catch (err) {
     next(err);
@@ -126,25 +137,25 @@ export async function logoutController(req, res, next) {
  * @param {import('express').Response} res
  */
 export async function getMeController(req, res, next) {
-  const {id} = req.user
-  if(!id){
+  const { id } = req.user;
+  if (!id) {
     return next({
-      status:403,
-      message:"Unauthorized User"
-    })
+      status: 403,
+      message: "Unauthorized User",
+    });
   }
 
-  const user = await userModel.findById(id)
-  if(!user){
+  const user = await userModel.findById(id).select("-password");
+  if (!user) {
     return next({
-      status:400,
-      message:"User doesn't exist !"
-    })
+      status: 400,
+      message: "User doesn't exist !",
+    });
   }
 
   return res.status(200).json({
-    success:true,
+    success: true,
     message: "User detail fetched successfully !",
-    user
-  })
+    user,
+  });
 }
