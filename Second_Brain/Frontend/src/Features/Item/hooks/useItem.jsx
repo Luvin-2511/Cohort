@@ -76,7 +76,6 @@ const useItem = () => {
       dispatch(setResurfacedItems(response.items));
       return response;
     } catch (err) {
-      // Fail silently for background resurfacing to avoid aggressive toasts on route change
       console.warn("Could not fetch resurfaced items:", err?.message || err);
     } finally {
       dispatch(setLoading(false));
@@ -118,7 +117,6 @@ const useItem = () => {
       const response = await getGraph();
       return response;
     } catch (err) {
-      // Fail silently for graph to avoid aggressive toasts
       console.warn("Could not fetch graph data:", err?.message || err);
     } finally {
       dispatch(setLoading(false));
