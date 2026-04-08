@@ -1,6 +1,7 @@
 In-browser code editor
 Monaco or CodeMirror with syntax highlighting, autocomplete, and multi-language support.
 core
+Secure code execution
 Sandboxed Docker containers or Judge0 API to run user code safely with time & memory limits.
 core
 Test case engine
