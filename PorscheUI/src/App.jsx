@@ -46,46 +46,95 @@ const App = () => {
   const marqueeRef1 = useRef(null);
   const marqueeRef2 = useRef(null);
   const modelRef = useRef(null);
+  const pagesRef = useRef(null);
+  const canvasRef = useRef(null);
 
-  useGSAP(() => {
-    if (heroContentRef.current) {
-      gsap.fromTo(
-        heroContentRef.current.children,
-        { y: 60, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 1.2,
-          stagger: 0.15,
-          ease: "power4.out",
-          delay: 0.4,
+  useGSAP(
+    () => {
+      if (heroContentRef.current) {
+        gsap.fromTo(
+          heroContentRef.current.children,
+          { y: 60, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 1.2,
+            stagger: 0.15,
+            ease: "power4.out",
+            delay: 0.4,
+          },
+        );
+      }
+
+      if (svgPath.current) {
+        gsap.set(svgPath.current, {
+          strokeDasharray: 9000,
+          strokeDashoffset: 9000,
+        });
+
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: pageOneRef.current,
+            start: "top top",
+            end: "bottom top",
+            scrub: 3,
+            pin: true,
+          },
+        });
+
+        tl.to(pageOneRef.current, {
+          scale: 0.28,
+          duration: 1,
+          borderRadius: "40px",
+        }).to(svgPath.current, { strokeDashoffset: 0, duration: 5 }, 0.5);
+      }
+
+      if (!modelRef.current) return;
+
+      gsap.to(canvasRef.current, {
+        x: 1750,
+        scrollTrigger: {
+          trigger: pagesRef.current,
+          start: "top top",
+          end: "top top",
         },
-      );
-    }
-
-    if (svgPath.current) {
-      gsap.set(svgPath.current, {
-        strokeDasharray: 9000,
-        strokeDashoffset: 9000,
       });
 
-      const tl = gsap.timeline({
+      const tl2 = gsap.timeline({
         scrollTrigger: {
-          trigger: pageOneRef.current,
+          trigger: pagesRef.current,
           start: "top top",
           end: "bottom top",
-          scrub: 3,
-          pin: true,
+          markers: true,
+          scrub: true,
         },
       });
 
-      tl.to(pageOneRef.current, {
-        scale: 0.28,
-        duration: 1,
-        borderRadius: "40px",
-      }).to(svgPath.current, { strokeDashoffset: 0, duration: 5 }, 0.5);
-    }
-  });
+      if (modelRef.current) {
+        tl2.to(modelRef.current.position, { x: 2, y: -1, z: 3 }, "first");
+        tl2.to(modelRef.current.rotation, { x: 0, y: -0.3, z: 0 }, "first");
+
+        tl2.to(modelRef.current.position, { x: 1, y: -1, z: 3 }, "second");
+        tl2.to(modelRef.current.rotation, { x: 0, y: -1.5, z: 0 }, "second");
+
+        tl2.to(modelRef.current.position, { x: 0, y: -1, z: 3 }, "third");
+        tl2.to(modelRef.current.rotation, { x: 0, y: -3.1, z: 0 }, "third");
+
+        tl2.to(modelRef.current.position, { x: -2, y: -1, z: 1 }, "fourth");
+        tl2.to(
+          modelRef.current.rotation,
+          { x: 0.1, y: -3.8, z: 0.05 },
+          "fourth",
+        );
+
+        tl2.to(modelRef.current.position, { x: -1, y: -0.5, z: 1 }, "fifth");
+        tl2.to(modelRef.current.rotation, { x: -0.1, y: -5, z: 0 }, "fifth");
+        tl2.to(modelRef.current.position, { x: -1, y: -1, z: 1 }, "sixth");
+        tl2.to(modelRef.current.rotation, { x: 0, y: -1.2, z: -0.05 }, "sixth");
+      }
+    },
+    { dependencies: [modelRef.current], revertOnUpdate: true },
+  );
 
   const navLinks = ["Model", "Performance", "Design", "Configure"];
   const features = [
@@ -363,14 +412,14 @@ const App = () => {
         </div>
       </div>
 
-      <div className="pages">
-        <div id="main-three-part">
+      <div ref={pagesRef} className="pages">
+        <div ref={canvasRef} id="main-three-part">
           <Canvas id="canvas">
             <Environment preset="sunset" />
-            <Car ref={modelRef} />
+            <Car ref={modelRef} position={[4, -1, 0]} />
           </Canvas>
         </div>
-        <div id="page-3" className="absolute w-full h-full">
+        <div id="page-3" className="absolute w-full h-screen bg-[#0c0c0c] z-41">
           <h2
             id="porsche-text"
             className="absolute text-[20vw] mt-50 text-center w-full text-red-400/50"
@@ -385,12 +434,85 @@ const App = () => {
           </h2>
           <h2
             id="porsche-text"
-            className="flip text-[20vw] mt-90 text-center w-full text-red-400/20"
+            className="flip text-[20vw] mt-100 text-center w-full text-red-400/20"
           >
             PORSCHE 911
           </h2>
         </div>
-        <div id="page-4" className="w-full h-screen"></div>
+        <div
+          id="page-4"
+          className="w-screen relative h-[500vh] bg-[#0c0c0c] z-40"
+        >
+          <div className="p1 relative left-[70%] bg-black/5 px-10 py-20 top-[19%] flex flex-col z-50 items-end gap-3 max-w-sm">
+            <span className="text-[10px] tracking-[0.3em] uppercase text-red-500">
+              02 — Design
+            </span>
+            <h2 className="text-4xl font-black text-stone-100 text-right leading-tight">
+              Rear Wheel <br />
+              <span
+                className="font-thin italic text-stone-400"
+                style={{ fontFamily: "Georgia, serif" }}
+              >
+                Architecture
+              </span>
+            </h2>
+            <div className="w-12 h-px bg-red-600 self-end" />
+            <p className="text-[20px] leading-relaxed text-stone-500 text-right tracking-wide">
+              Every curve behind the rear axle is engineered for downforce. The
+              wide haunches aren't just aesthetic — they house wider tyres for
+              maximum grip at speed.
+            </p>
+            <div className="flex gap-6 mt-2">
+              <div className="flex flex-col items-end">
+                <span className="text-2xl font-black text-stone-100">305</span>
+                <span className="text-[9px] tracking-[0.2em] uppercase text-stone-600">
+                  Rear Tyre Width
+                </span>
+              </div>
+              <div className="flex flex-col items-end">
+                <span className="text-2xl font-black text-stone-100">20"</span>
+                <span className="text-[9px] tracking-[0.2em] uppercase text-stone-600">
+                  Rim Diameter
+                </span>
+              </div>
+            </div>
+          </div>
+          <div className="p2 relative left-10 -translate-y-1/2 flex flex-col items-start gap-4 max-w-lg z-[201]">
+            <span className="text-[11px] tracking-[0.3em] uppercase text-red-500">
+              03 — Front
+            </span>
+            <h2 className="text-7xl font-black text-stone-100 leading-none">
+              FACE OF
+              <br />
+              <span className="text-red-600">FURY</span>
+            </h2>
+            <span
+              className="text-4xl font-thin italic text-stone-400"
+              style={{ fontFamily: "Georgia, serif" }}
+            >
+              Headlight Design
+            </span>
+            <div className="w-16 h-px bg-red-600" />
+            <p className="text-sm leading-relaxed text-stone-500 tracking-wide">
+              Four-point LED daytime running lights — unmistakable at any speed.
+              The front fascia is sculpted to slice air with zero compromise.
+            </p>
+            <div className="flex gap-8 mt-2">
+              <div className="flex flex-col">
+                <span className="text-4xl font-black text-stone-100">4pt</span>
+                <span className="text-[9px] tracking-[0.2em] uppercase text-stone-600">
+                  DRL Signature
+                </span>
+              </div>
+              <div className="flex flex-col">
+                <span className="text-4xl font-black text-stone-100">0.29</span>
+                <span className="text-[9px] tracking-[0.2em] uppercase text-stone-600">
+                  Drag Coefficient
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </main>
   );
