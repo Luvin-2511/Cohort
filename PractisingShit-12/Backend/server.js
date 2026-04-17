@@ -17,9 +17,12 @@ const io = new Server(httpServer, {
   },
 });
 
-io.on("connection", (socket) => {
-  console.log("Connected");
+io.on("connect", (socket) => {
+  console.log("Connected User : "+socket.id);
+  socket.emit('welcome',"Welcome h bhaiyo")
 });
+
+
 
 httpServer.listen(3000, () => {
   console.log(`Server listening at port 3000`);

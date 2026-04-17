@@ -10,7 +10,9 @@ const App = () => {
       console.log("Connected");
     });
     
-    socket.on("");
+    socket.on("welcome",(msg)=>{
+      alert(msg)
+    });
     
     return () => socket.disconnect();
   }, []);
@@ -48,8 +50,8 @@ const App = () => {
   return (
     <>
       <nav>
-        {colors.map((color)=>{
-          return <div onClick={()=>{
+        {colors.map((color,i)=>{
+          return <div key={i} onClick={()=>{
             setCurrentColor(color)
           }} className="circle" style={{
             background:color,
