@@ -20,8 +20,10 @@ const io = new Server(httpServer, {
 io.on("connect", (socket) => {
   console.log("Connected User : "+socket.id);
   socket.emit('welcome',"Welcome h bhaiyo")
+  socket.on("message",(msg)=>{
+   
+  })
 });
-
 
 
 httpServer.listen(3000, () => {

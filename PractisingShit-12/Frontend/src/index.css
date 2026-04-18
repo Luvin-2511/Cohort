@@ -47,6 +47,7 @@ nav {
     border-radius: 50%;
     position: relative;
     cursor: pointer;
+    flex-shrink: 0;
   }
 
   .circle::after {

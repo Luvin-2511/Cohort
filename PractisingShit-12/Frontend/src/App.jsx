@@ -13,6 +13,10 @@ const App = () => {
     socket.on("welcome",(msg)=>{
       alert(msg)
     });
+
+    socket.emit("message","Kya haal h",()=> {
+      console.log("Message sent")
+    })
     
     return () => socket.disconnect();
   }, []);
