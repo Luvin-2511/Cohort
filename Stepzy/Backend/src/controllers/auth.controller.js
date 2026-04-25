@@ -2,6 +2,37 @@ import userModel from "../models/auth.model";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
+async function setTokenSendResponse(user, message) {
+  const token = jwt.sign(
+    {
+      id: user._id,
+    },
+    process.env.JWT_SECRET,
+    {
+      expiresIn: "7d",
+    },
+  );
+
+  res.cookie("token", token,{
+    sameSite: true,
+    httpOnly: true,
+    secure:process.env.NODE_ENV === "production",
+    maxAge:24*1024*1024
+  });
+
+  return res.status(200).json({
+    success: true,
+    message:message,
+    user:{
+      username:user.username,
+      email:user.email,
+      contactNumber:user.contactNumber,
+      role:user.role,
+    }
+  })
+
+}
+
 /**
  * @route POST api/auth/register
  * @description Registers an user
@@ -47,13 +78,12 @@ export async function registerController(req, res, next) {
       },
     );
 
-    res.cookie("token", token,{
-        httpOnly: true,
-        sameSite:"strict",
-        secure:process.env.NODE_DEV==="production",
-        maxAge:24*1024*1024
+    res.cookie("token", token, {
+      httpOnly: true,
+      sameSite: "strict",
+      secure: process.env.NODE_DEV === "production",
+      maxAge: 24 * 1024 * 1024,
     });
-
   } catch (err) {
     next(err);
   }
