@@ -9,7 +9,12 @@ if (!process.env.JWT_SECRET) {
   throw new Error("Jwt secret is not present !");
 }
 
+if (!process.env.GEMINI_API_KEY) {
+  throw new Error("Jwt secret is not present !");
+}
+
 export const CONFIG = {
   MONGO_URI: process.env.MONGO_URI,
   JWT_SECRET: process.env.JWT_SECRET,
+  GEMINI_API: process.env.GEMINI_API_KEY,
 };
