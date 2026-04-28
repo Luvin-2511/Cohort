@@ -1,36 +1,36 @@
 import userModel from "../models/auth.model";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import CONFIG from '../config/config.js'
 
 async function setTokenSendResponse(user, message) {
   const token = jwt.sign(
     {
       id: user._id,
     },
-    process.env.JWT_SECRET,
+    CONFIG.JWT_SECRET,
     {
       expiresIn: "7d",
     },
   );
 
-  res.cookie("token", token,{
+  res.cookie("token", token, {
     sameSite: true,
     httpOnly: true,
-    secure:process.env.NODE_ENV === "production",
-    maxAge:24*1024*1024
+    secure: CONFIG.NODE_ENV === "production",
+    maxAge: 24 * 1024 * 1024,
   });
 
   return res.status(200).json({
     success: true,
-    message:message,
-    user:{
-      username:user.username,
-      email:user.email,
-      contactNumber:user.contactNumber,
-      role:user.role,
-    }
-  })
-
+    message: message,
+    user: {
+      fullname: user.fullname,
+      email: user.email,
+      contactNumber: user.contactNumber,
+      role: user.role,
+    },
+  });
 }
 
 /**
@@ -42,8 +42,8 @@ async function setTokenSendResponse(user, message) {
  */
 export async function registerController(req, res, next) {
   try {
-    const { username, email, contactNumber, password } = req.body;
-    if (!username || !email || !password || !contactNumber) {
+    const { fullname, email, contactNumber, password, role } = req.body;
+    if (!fullname || !email || !password || !contactNumber || !role) {
       return next({
         status: 400,
         message: "Fill all fields correctly",
@@ -51,39 +51,25 @@ export async function registerController(req, res, next) {
     }
 
     const isUserAlreadyExists = await userModel.findOne({
-      $or: [{ email }, { username }],
+      $or: [{ email }, { fullname }],
     });
     if (isUserAlreadyExists) {
       return next({
         status: 409,
-        message: "User already exists with same email or username",
+        message: "User already exists with same email or fullname",
       });
     }
 
     const hashedPassword = await bcrypt.hash(password);
     const user = await userModel.create({
-      username,
+      fullname,
       contactNumber,
       email,
+      role,
       password: hashedPassword,
     });
 
-    const token = jwt.sign(
-      {
-        id: user._id,
-      },
-      process.env.JWT_SECRET,
-      {
-        expiresIn: "1d",
-      },
-    );
-
-    res.cookie("token", token, {
-      httpOnly: true,
-      sameSite: "strict",
-      secure: process.env.NODE_DEV === "production",
-      maxAge: 24 * 1024 * 1024,
-    });
+    setTokenSendResponse(user, "User regitered Successfully !");
   } catch (err) {
     next(err);
   }
@@ -122,28 +108,44 @@ export async function loginController(req, res, next) {
       });
     }
 
-    const token = jwt.sign(
-      {
-        id: user._id,
-      },
-      process.env.JWT_SECRET,
-      {
-        expiresIn: "1d",
-      },
-    );
-
-    res.cookie("token", token, {
-      httpOnly: true,
-      maxAge: 24 * 1024 * 1024,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "strict",
-    });
-
-    res.status(201).json({
-      success: true,
-      message: "User logged in successfully !",
-    });
+    setTokenSendResponse(user, "User logged in successfully !");
   } catch (err) {
+    next(err);
+  }
+}
+
+/**
+ * GOOGLE LOGIN AND SIGNUP CONFIG
+ * @param {*} req 
+ * @param {*} res 
+ * @param {*} next 
+ */
+export function googleCallback(req, res, next) {
+  try {
+    const { id, displayName, emails, photos } = req.user;
+    const email = emails[0].value,
+    const photo = photos[0].value
+    
+    let user = await userModel.findOne({ email });
+    if(!user) {
+      user = userModel.create({
+        fullname: displayName,
+        googleId: id,
+        email: email,
+        profilePic: photo,
+      })
+    }
+
+    const token = jwt.sign({
+      id:user._id,
+    },CONFIG.JWT_SECRET,{
+      expiresIn:'7d'
+    })
+
+    res.cookie("token",token)
+    res.redirect('http://localhost:5173/')
+
+  } catch {
     next(err);
   }
 }

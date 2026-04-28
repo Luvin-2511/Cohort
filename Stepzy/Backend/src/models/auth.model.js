@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema(
   {
-    username: {
+    fullname: {
       type: String,
       required: [true, "Username is required"],
       unique: true,
@@ -14,16 +14,24 @@ const userSchema = new mongoose.Schema(
     },
     password: {
       type: String,
-      required: [true, "Password is required !"],
+      required: function(){
+        return !this.googleId
+      },
     },
     contactNumber: {
       type: Number,
-      required: [true,"Contact Number is required"],
+      required: [false,"Contact Number is required"],
     },
     role: {
         type: String,
         enum: ["seller", "buyer"],
         default:"buyer"
+    },
+    googleId: {
+      type: String,
+    },
+    profilePic: {
+      type: String,
     }
   },
   {
