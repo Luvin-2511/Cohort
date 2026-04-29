@@ -1,9 +1,9 @@
-import userModel from "../models/auth.model";
+import userModel from "../models/auth.model.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import CONFIG from '../config/config.js'
+import { CONFIG } from "../config/config.js";
 
-async function setTokenSendResponse(user, message) {
+async function setTokenSendResponse(user,res, message) {
   const token = jwt.sign(
     {
       id: user._id,
@@ -60,7 +60,7 @@ export async function registerController(req, res, next) {
       });
     }
 
-    const hashedPassword = await bcrypt.hash(password);
+    const hashedPassword = await bcrypt.hash(password,10);
     const user = await userModel.create({
       fullname,
       contactNumber,
@@ -116,36 +116,39 @@ export async function loginController(req, res, next) {
 
 /**
  * GOOGLE LOGIN AND SIGNUP CONFIG
- * @param {*} req 
- * @param {*} res 
- * @param {*} next 
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
  */
-export function googleCallback(req, res, next) {
+export async function googleCallback(req, res, next) {
   try {
     const { id, displayName, emails, photos } = req.user;
-    const email = emails[0].value,
-    const photo = photos[0].value
-    
+    const email = emails[0].value;
+    const photo = photos[0].value;
+
     let user = await userModel.findOne({ email });
-    if(!user) {
-      user = userModel.create({
+    if (!user) {
+      user =await userModel.create({
         fullname: displayName,
         googleId: id,
         email: email,
         profilePic: photo,
-      })
+      });
     }
 
-    const token = jwt.sign({
-      id:user._id,
-    },CONFIG.JWT_SECRET,{
-      expiresIn:'7d'
-    })
+    const token = jwt.sign(
+      {
+        id: user._id,
+      },
+      CONFIG.JWT_SECRET,
+      {
+        expiresIn: "7d",
+      },
+    );
 
-    res.cookie("token",token)
-    res.redirect('http://localhost:5173/')
-
-  } catch {
+    res.cookie("token", token);
+    res.redirect("/");
+  } catch(err) {
     next(err);
   }
 }
