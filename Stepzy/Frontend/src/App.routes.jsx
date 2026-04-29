@@ -1,14 +1,19 @@
-import React from 'react'
-import {BrowserRouter,Routes,Route} from "react-router-dom"
+import React from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import LoginPage from "./Features/Auth/pages/Login";
 
 const AppRoutes = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<>Hello home</>}/>
+        <Route
+          path="/login" 
+          element={
+          <LoginPage />} 
+        />
       </Routes>
     </BrowserRouter>
-  )
-}
+  );
+};
 
-export default AppRoutes
+export default AppRoutes;
