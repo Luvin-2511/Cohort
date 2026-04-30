@@ -17,6 +17,9 @@ if (!process.env.GOOGLE_CLIENT_SECRET) {
   throw new Error("google client secret is not present !");
 }
 
+if (!process.env.NODE_ENV) {
+  throw new Error("NODE_ENV is not present !");
+}
 
 export const CONFIG = {
   MONGO_URI: process.env.MONGO_URI,
