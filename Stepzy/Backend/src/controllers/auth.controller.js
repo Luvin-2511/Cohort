@@ -1,75 +1,42 @@
-import userModel from "../models/auth.model.js";
+import { jsonTokenSaver } from "../helpers/jsonToken";
+import userModel from "../model/user.model";
 import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
-import { CONFIG } from "../config/config.js";
-
-async function setTokenSendResponse(user,res, message) {
-  const token = jwt.sign(
-    {
-      id: user._id,
-    },
-    CONFIG.JWT_SECRET,
-    {
-      expiresIn: "7d",
-    },
-  );
-
-  res.cookie("token", token, {
-    sameSite: true,
-    httpOnly: true,
-    secure: CONFIG.NODE_ENV === "production",
-    maxAge: 24 * 1024 * 1024,
-  });
-
-  return res.status(200).json({
-    success: true,
-    message: message,
-    user: {
-      fullname: user.fullname,
-      email: user.email,
-      contactNumber: user.contactNumber,
-      role: user.role,
-    },
-  });
-}
 
 /**
  * @route POST api/auth/register
- * @description Registers an user
+ * @description Registers a user
  * @param {import('express').Request} req
  * @param {import('express').Response} res
  * @param {import('express').NextFunction} next
  */
 export async function registerController(req, res, next) {
   try {
-    const { fullname, email, contactNumber, password, role } = req.body;
-    if (!fullname || !email || !password || !contactNumber || !role) {
+    const { fullName, email, contactNo, password, role } = req.body;
+    if (!fullName || !email || !password) {
       return next({
         status: 400,
-        message: "Fill all fields correctly",
+        message: "Fill every required detail",
       });
     }
 
-    const isUserAlreadyExists = await userModel.findOne({
-      $or: [{ email }, { fullname }],
-    });
-    if (isUserAlreadyExists) {
+    const userAlreadyExist = await userModel.findOne({ email });
+    if (userAlreadyExist) {
       return next({
-        status: 409,
-        message: "User already exists with same email or fullname",
+        status: 403,
+        message: "User with email already exists",
       });
     }
 
-    const hashedPassword = await bcrypt.hash(password,10);
+    const hashedPassword = await bcrypt.hash(password, 10);
     const user = await userModel.create({
-      fullname,
-      contactNumber,
+      fullName,
       email,
-      role,
+      contactNo,
       password: hashedPassword,
+      role,
     });
 
-    setTokenSendResponse(user, "User regitered Successfully !");
+    jsonTokenSaver(user, res, "Registered in Successfully !");
   } catch (err) {
     next(err);
   }
@@ -77,7 +44,7 @@ export async function registerController(req, res, next) {
 
 /**
  * @route POST api/auth/login
- * @description Logs in an user
+ * @description Logs in a user
  * @param {import('express').Request} req
  * @param {import('express').Response} res
  * @param {import('express').NextFunction} next
@@ -88,67 +55,61 @@ export async function loginController(req, res, next) {
     if (!email || !password) {
       return next({
         status: 400,
-        message: "Fill all fields correctly",
+        message: "Fill all required fields !",
       });
     }
 
     const user = await userModel.findOne({ email });
     if (!user) {
-      return next({
+      res.next({
         status: 400,
-        message: "Invalid email or password",
+        message: "Invalid Email or password !",
       });
     }
 
-    const isValidPassword = await bcrypt.compare(password, user.password);
+    const isValidPassword = bcrypt.compare(password, user.password);
     if (!isValidPassword) {
       return next({
         status: 400,
-        message: "Invalid email or password",
+        message: "Invalid Email or password !",
       });
     }
 
-    setTokenSendResponse(user, "User logged in successfully !");
+    jsonTokenSaver(user, res, "Logged in successfully !");
   } catch (err) {
     next(err);
   }
 }
 
 /**
- * GOOGLE LOGIN AND SIGNUP CONFIG
- * @param {*} req
- * @param {*} res
- * @param {*} next
+ * @route POST api/auth/logout
+ * @description Logs out a user
+ * @param {import('express').Request} req
+ * @param {import('express').Response} res
  */
-export async function googleCallback(req, res, next) {
+export async function logoutController(req, res) {
   try {
-    const { id, displayName, emails, photos } = req.user;
-    const email = emails[0].value;
-    const photo = photos[0].value;
+    res.clearCookie("token");
+    res.status(200).json({
+      success: true,
+      message: "Logged out successfully !",
+    });
+  } catch (err) {
+    next(err);
+  }
+}
 
-    let user = await userModel.findOne({ email });
-    if (!user) {
-      user =await userModel.create({
-        fullname: displayName,
-        googleId: id,
-        email: email,
-        profilePic: photo,
-      });
-    }
-
-    const token = jwt.sign(
-      {
-        id: user._id,
-      },
-      CONFIG.JWT_SECRET,
-      {
-        expiresIn: "7d",
-      },
-    );
-
-    res.cookie("token", token);
-    res.redirect("/");
-  } catch(err) {
+/**
+ * @route POST api/auth/me
+ * @description Gets the current logged in user Info
+ * @param {import('express').Request} req
+ * @param {import('express').Response} res
+ * @param {import('express').NextFunction} next
+ */
+async function getMeController(req, res, next) {
+  try {
+    const user = await userModel.findOne({ email });
+  } catch (err) {
     next(err);
   }
 }
