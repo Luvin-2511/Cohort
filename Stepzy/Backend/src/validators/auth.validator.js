@@ -1,7 +1,7 @@
 import { body, validationResult } from "express-validator";
 
 function validator(req, res, next) {
-  const errors = validationResult.errors;
+  const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({
       success: false,
@@ -25,7 +25,7 @@ export function loginValidator() {
 }
 export function registerValidator() {
   return [
-    body("fullName").isAlpha().withMessage("Name must be a String"),
+    body("fullName").isLength({min:3,max:12}).withMessage("Name must be between length of 3 and 12"),
     body("email").isEmail().withMessage("Invalid Email type").trim(),
     body("password")
       .isStrongPassword()

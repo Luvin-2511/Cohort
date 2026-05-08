@@ -1,4 +1,5 @@
 import jwt from "jsonwebtoken";
+import { CONFIG } from "../config/config.js";
 
 export function jsonTokenSaver(user, res, message) {
   const token = jwt.sign(
@@ -7,7 +8,7 @@ export function jsonTokenSaver(user, res, message) {
     },
     CONFIG.JWT_SECRET,
     {
-      expires_in: "7d",
+      expiresIn: "7d",
     },
   );
 

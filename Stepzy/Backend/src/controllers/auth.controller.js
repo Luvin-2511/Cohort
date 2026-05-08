@@ -1,5 +1,5 @@
-import { jsonTokenSaver } from "../helpers/jsonToken";
-import userModel from "../model/user.model";
+import { jsonTokenSaver } from "../helpers/jsonToken.js";
+import userModel from "../model/user.model.js";
 import bcrypt from "bcryptjs";
 
 /**
@@ -61,7 +61,7 @@ export async function loginController(req, res, next) {
 
     const user = await userModel.findOne({ email });
     if (!user) {
-      res.next({
+      return next({
         status: 400,
         message: "Invalid Email or password !",
       });
@@ -106,9 +106,27 @@ export async function logoutController(req, res) {
  * @param {import('express').Response} res
  * @param {import('express').NextFunction} next
  */
-async function getMeController(req, res, next) {
+export async function getMeController(req, res, next) {
   try {
-    const user = await userModel.findOne({ email });
+    const { id } = req.user;
+    const user = await userModel.findById(id);
+    if (!user) {
+      return next({
+        status: 400,
+        message: "Invalid Token !",
+      });
+    }
+    return res.status(200).json({
+      success: true,
+      message: "User fetched successfully !",
+      user: {
+        id: user._id,
+        fullName: user.fullName,
+        email: user.email,
+        contactNo: user.contactNo,
+        role: user.role,
+      },
+    });
   } catch (err) {
     next(err);
   }
