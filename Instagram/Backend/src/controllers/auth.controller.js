@@ -1,40 +1,44 @@
 const userModel = require("../models/user.model");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const { CONFIG } = require("../config/config");
 
 /**
  * Register User
  */
-async function registerController(req, res) {
-    const {username, email, password} = req.body;
+async function registerController(req, res, next) {
+  try {
+    const { username, email, password } = req.body;
 
     /**
      * If User doesn't enter something it will return
      */
     if (!username || !email || !password) {
-        return res.status(400).json({
-            message: "Please fill all the required fields !",
-        });
+      return next({
+        status: 400,
+        message: "Please fill all the required fields !",
+      });
     }
 
     /**
      * Checks if User already exists and if yes it will return
      */
     const isUserAlreadyExists = await userModel.findOne({
-        $or: [
-            {
-                email: email,
-            },
-            {
-                username: username,
-            },
-        ],
-    })
+      $or: [
+        {
+          email: email,
+        },
+        {
+          username: username,
+        },
+      ],
+    });
 
     if (isUserAlreadyExists) {
-        return res.status(409).json({
-            message: `User already exists with the same ${isUserAlreadyExists.username === username ? "Username" : "Email"}`,
-        });
+      return next({
+        status: 409,
+        message: `User already exists with the same ${isUserAlreadyExists.username === username ? "Username" : "Email"}`,
+      });
     }
 
     /**
@@ -42,21 +46,21 @@ async function registerController(req, res) {
      */
     const hashPassword = await bcrypt.hash(password, 10);
     const user = await userModel.create({
-        username,
-        email,
-        password: hashPassword,
+      username,
+      email,
+      password: hashPassword,
     });
 
     /**
      * Generates token and send it in the cookie
      */
     const token = jwt.sign(
-        {
-            username: username,
-            email: email,
-        },
-        process.env.JWT_SECRET,
-        {expiresIn: "7d"},
+      {
+        username: username,
+        email: email,
+      },
+      CONFIG.JWT_SECRET,
+      { expiresIn: "7d" },
     );
 
     res.cookie("token", token);
@@ -65,44 +69,52 @@ async function registerController(req, res) {
      * Successfully registered User
      */
     res.status(201).json({
-        message: "User registered sucessfully !",
-        user,
+      message: "User registered sucessfully !",
+      user,
     });
+  } catch (err) {
+    next(err);
+  }
 }
 
 /**
  * Login User
  */
-async function loginController(req, res) {
-    const {username, email, password} = req.body;
+async function loginController(req, res, next) {
+  try {
+    const { username, email, password } = req.body;
 
     /**
      * If User doesn't enter something it will return
      */
     if (!password) {
-        return res.status(400).json({
-            message: "Please fill all the field correctly",
-        });
+      return next({
+        status: 400,
+        message: "Please fill all the field correctly",
+      });
     }
 
     /**
      * Finds user based on either username or email and if it doesnt exist it will return
      */
-    const user = await userModel.findOne({
+    const user = await userModel
+      .findOne({
         $or: [
-            {
-                username: username,
-            },
-            {
-                email: email,
-            },
+          {
+            username: username,
+          },
+          {
+            email: email,
+          },
         ],
-    }).select("+password")
+      })
+      .select("+password");
 
     if (!user) {
-        return res.status(404).json({
-            message: "User not registered !",
-        });
+      return next({
+        status: 404,
+        message: "User not registered !",
+      });
     }
 
     /**
@@ -110,23 +122,24 @@ async function loginController(req, res) {
      */
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
-        return res.status(400).json({
-            message: "Incorrect Password !",
-        });
+      return next({
+        status: 400,
+        message: "Incorrect Password !",
+      });
     }
 
     /**
      * Creates token and send it in cookie
      */
     const token = jwt.sign(
-        {
-            id: user._id,
-            username: user.username,
-        },
-        process.env.JWT_SECRET,
-        {
-            expiresIn: "7d",
-        },
+      {
+        id: user._id,
+        username: user.username,
+      },
+      CONFIG.JWT_SECRET,
+      {
+        expiresIn: "7d",
+      },
     );
 
     res.cookie("token", token);
@@ -135,47 +148,57 @@ async function loginController(req, res) {
      * Logged in successfully
      */
     res.status(200).json({
-        message: "Logged in successfully !",
-        user,
+      message: "Logged in successfully !",
+      user,
     });
+  } catch (err) {
+    next(err);
+  }
 }
 
 /**
  * Logout User
  */
-async function logoutController(req, res) {
-    res.clearCookie("token")
+async function logoutController(req, res, next) {
+  try {
+    res.clearCookie("token");
 
     return res.status(200).json({
-        message: "User logout successfully !"
-    })
+      message: "User logout successfully !",
+    });
+  } catch (err) {
+    next(err);
+  }
 }
 
 /**
  * Get current logged-in user Details
  */
-async function getMeController(req, res) {
-    const userId = req.user.id
+async function getMeController(req, res, next) {
+  try {
+    const userId = req.user.id;
     /**
      * Finding user from Db using current user ID fetched from token
      */
-    const user = await userModel.findById(userId)
+    const user = await userModel.findById(userId);
 
     return res.status(200).json({
-        message: "User fetched successfully !",
-        user: {
-            username: user.username,
-            email: user.email,
-            bio:user.bio,
-            profileImg:user.profileImg
-        }
-    })
+      message: "User fetched successfully !",
+      user: {
+        username: user.username,
+        email: user.email,
+        bio: user.bio,
+        profileImg: user.profileImg,
+      },
+    });
+  } catch (err) {
+    next(err);
+  }
 }
 
-
 module.exports = {
-    registerController,
-    loginController,
-    logoutController,
-    getMeController
+  registerController,
+  loginController,
+  logoutController,
+  getMeController,
 };

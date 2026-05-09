@@ -1,10 +1,11 @@
+const { CONFIG } = require("../config/config");
 const followModel = require("../models/follow.model");
 const userModel = require("../models/user.model");
 const ImageKit = require('@imagekit/nodejs')
 const {toFile} = require('@imagekit/nodejs')
 
 const imagekit = new ImageKit({
-    privateKey: process.env.IMAGEKIT_PRIVATE_KEY
+    privateKey: CONFIG.IMAGEKIT_PRIVATE_KEY
 })
 
 /**
