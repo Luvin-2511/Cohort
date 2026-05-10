@@ -1,0 +1,254 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+}
+
+@font-face {
+  font-family: Font1;
+  src: url("./Assets/Fonts/Ethnocentric-Regular.otf");
+}
+
+main {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  background-image: url("./Assets/Images/bg.png");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  overflow: hidden;
+  clip-path: ellipse(80% 100% at 50% -30%);
+
+  .bg-div {
+    position: absolute;
+    background: rgba(0, 0, 0, 0.539);
+    height: 100%;
+    width: 100%;
+    z-index: 0;
+  }
+
+  nav {
+    position: relative;
+    z-index: 10;
+    height: fit-content;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5rem;
+
+    .logo-wrapper {
+      width: 160px;
+
+      .logo {
+        width: 100%;
+        object-fit: cover;
+        object-position: center;
+      }
+    }
+
+    .nav-items {
+      ul {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 3rem;
+
+        li {
+          position: relative;
+          list-style: none;
+          color: white;
+          font-family:
+            Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+
+          span {
+            color: #f8c48a;
+            font-weight: 800;
+          }
+        }
+
+        .selected {
+          position: absolute;
+          height: 3.5rem;
+          width: 4.5rem;
+          top: -200%;
+          left: -40%;
+          background: linear-gradient(to bottom, #7f6e66, transparent);
+        }
+      }
+    }
+
+    .nav-icons {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+
+      .icon-wrapper {
+        padding-inline: 0.45rem;
+        padding-block: 0.4rem;
+        background: white;
+        border-radius: 0.4rem;
+        cursor: pointer;
+        transition: background ease 0.5s;
+
+        i {
+          font-size: 1.5rem;
+          color: #d58c86;
+        }
+      }
+
+      .icon-wrapper:hover {
+        background: rgba(255, 255, 255, 0.811);
+      }
+    }
+  }
+
+  section {
+    position: relative;
+    z-index: 10;
+    padding: 10rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    .text {
+      width: 100%;
+      text-align: center;
+      font-family: Font1;
+      color: white;
+
+      display: flex;
+      flex-direction: column;
+
+      .side-text {
+        padding-left: 7rem;
+        padding-bottom: 1rem;
+        text-align: left;
+      }
+
+      .hero-text {
+        display: flex;
+        gap: 9rem;
+        align-items: center;
+        justify-content: center;
+
+        h1 {
+          font-size: 6rem;
+        }
+      }
+
+      .side-text-2 {
+        padding-right: 7rem;
+        text-align: right;
+      }
+    }
+
+    .monkey-img {
+      position: absolute;
+      top: -10%;
+      left: 27%;
+      width: 50rem;
+
+      img {
+        width: 100%;
+      }
+    }
+
+    .button {
+      background-image: url("./Assets/Images/screen.png");
+      background-position: center;
+      background-size: cover;
+      background-repeat: no-repeat;
+      color: black;
+      width: fit-content;
+      position: relative;
+      z-index: 100;
+      font-size: 1.5rem;
+      font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+      padding: 1rem 4rem;
+      transition: all 0.3s ease;
+      border-radius: 0.4rem;
+      cursor: pointer;
+    }
+
+    .button:hover {
+      opacity: 0.8;
+      
+    }
+    .button:active {
+      scale: 0.9;
+
+    }
+  }
+}
+
+footer {
+  position: absolute;
+  top: 0;
+  z-index: -1;
+  height: 100%;
+  width: 100%;
+  background: #19161e;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+
+  .ender {
+    height: 30rem;
+    width: 100%;
+    color: white;
+    font-family: Font1;
+    display: flex;
+    flex-direction: column;
+
+    .main {
+      margin-top: 15rem;
+      font-size: 2rem;
+      text-align: center;
+    }
+
+    .liner {
+      padding-block: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      .center {
+        height: 10px;
+        width: 10px;
+        background: #f8c48a;
+        transform: rotate(45deg);
+      }
+      .line {
+        height: 1px;
+        width: 30rem;
+        margin-left: 1rem;
+        margin-right: 1rem;
+        background: #f8c48a;
+      }
+    }
+
+    .texter {
+      display: flex;
+      width: 100%;
+      align-items: center;
+      justify-content: center;
+      gap: 5rem;
+
+      .left,.right {
+        width: 25%;
+        font-size: 0.8rem;
+      }
+
+    }
+  }
+}
