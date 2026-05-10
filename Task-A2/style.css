@@ -91,16 +91,17 @@ main {
   gap: 2rem;
   padding: 2rem 3rem;
   flex: 1;
-  margin-left: 7rem;
-  margin-top: 2rem;
+  margin-left: 10rem;
+  margin-top: 5rem;
+
 }
 
 .classification-label {
   position: absolute;
   left: -5rem;
-  top: 20rem;
+  top: 25rem;
   font-family: "Playfair Display", serif;
-  font-size: 3rem;
+  font-size: 4rem;
   font-weight: 600;
   font-style: italic;
   color: #1a2e1a;
@@ -142,14 +143,14 @@ main {
 }
 
 .cls-key {
-  font-size: 1rem;
+  font-size: 1.2rem;
   font-weight: 600;
   color: var(--text);
   margin-bottom: 0.15rem;
 }
 
 .cls-val {
-  font-size: 0.8rem;
+  font-size: 1.1rem;
   font-weight: 400;
   color: #555;
 }
@@ -218,13 +219,13 @@ nav ul li.active {
   flex-direction: column;
   gap: 2rem;
   padding: 2rem 3.5rem 3rem;
-  margin-left: 28%;
-  padding-top:4rem;
+  margin-left: 30%;
+  padding-top:6rem;
 }
 
 .species-name {
   font-family: "Playfair Display", serif;
-  font-size: 3rem;
+  font-size: 4rem;
   font-weight: 400;
   color: white;
   line-height: 1.1;
