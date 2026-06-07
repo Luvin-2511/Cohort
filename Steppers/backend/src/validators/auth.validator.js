@@ -6,6 +6,7 @@ const validator = (req, res, next) => {
   if (!errors.isEmpty()) {
     return res.status(400).json({
       success: false,
+      message: errors.array()[0].msg,
       errors: errors.array(),
     });
   }
@@ -14,10 +15,7 @@ const validator = (req, res, next) => {
 };
 
 export const registerValidator = [
-  body("email")
-    .isEmail()
-    .withMessage("Enter a valid email")
-    .trim(),
+  body("email").isEmail().withMessage("Enter a valid email").trim(),
 
   body("name")
     .isAlpha()
@@ -27,21 +25,22 @@ export const registerValidator = [
     .withMessage("Name should contain minimum 3 and maximum 12 letters"),
 
   body("password")
-    .isStrongPassword()
+    .isStrongPassword({
+      minLength: 5,
+      minLowercase: 3,
+      minUppercase: 1,
+      minNumbers: 1,
+      minSymbols: 1,
+    })
     .withMessage("Enter a strong password"),
 
   validator,
 ];
 
 export const loginValidator = [
-  body("email")
-    .isEmail()
-    .withMessage("Enter a valid email")
-    .trim(),
+  body("email").isEmail().withMessage("Enter a valid email").trim(),
 
-  body("password")
-    .notEmpty()
-    .withMessage("Password is required"),
+  body("password").notEmpty().withMessage("Password is required"),
 
   validator,
 ];
