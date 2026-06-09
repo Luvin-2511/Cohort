@@ -58,20 +58,47 @@ export async function createProductController(req, res, next) {
  */
 export async function getProductController(req, res, next) {
   try {
-    const {id} = req.user
-    const products = await productModel.find({seller:id})
-    if(!products) {
-        return next({
-            status:404,
-            message:"No products has been created by the user !"
-        })
+    const { id } = req.user;
+    const products = await productModel.find({ seller: id });
+    if (!products) {
+      return next({
+        status: 404,
+        message: "No products has been created by the user !",
+      });
     }
 
     res.status(200).json({
-        success: true,
-        message:"Products fetched successfully !",
-        products
-    })
+      success: true,
+      message: "Products fetched successfully !",
+      products,
+    });
+  } catch (err) {
+    next(err);
+  }
+}
+
+/**
+ * @route POST api/auth/products
+ * @description Fetches all products
+ * @param {import('express').Request} req
+ * @param {import('express').Response} res
+ * @param {import('express').Response} next
+ */
+export async function getAllProductsController(req, res, next) {
+  try {
+    const products = await productModel.find();
+    if (!products) {
+      return next({
+        status: 404,
+        message: "No products exist !",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: "Products fetched successfully !",
+      products,
+    });
   } catch (err) {
     next(err);
   }
