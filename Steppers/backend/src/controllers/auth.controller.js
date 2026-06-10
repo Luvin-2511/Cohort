@@ -2,6 +2,7 @@ import userModel from "../model/auth.model.js";
 import bcrypt from "bcryptjs";
 import { generateToken } from "../utils/generateToken.js";
 import { CONFIG } from "../config/config.js";
+import jwt from 'jsonwebtoken'
 
 /**
  * @route POST api/auth/register
@@ -155,7 +156,7 @@ export async function googleCallback(req, res, next) {
   const { id, displayName, emails } = req.user;
   const email = emails[0].value;
 
-  const user = await userModel.findOne({ email: email });
+  let user = await userModel.findOne({ email: email });
 
   if (!user) {
     user = await userModel.create({
@@ -178,5 +179,5 @@ export async function googleCallback(req, res, next) {
 
   res.cookie("token", token);
 
-  res.redirect("http://localhost:5173/");
+  res.redirect("http://localhost:5173/home");
 }
