@@ -21,7 +21,7 @@ export const registerValidator = [
     .isAlpha()
     .withMessage("Name should contain alphabets only")
     .trim()
-    .isLength({ min: 3, max: 12 })
+    .isLength({ min: 3, max: 50 })
     .withMessage("Name should contain minimum 3 and maximum 12 letters"),
 
   body("password")
