@@ -2,7 +2,7 @@ import userModel from "../model/auth.model.js";
 import bcrypt from "bcryptjs";
 import { generateToken } from "../utils/generateToken.js";
 import { CONFIG } from "../config/config.js";
-import jwt from 'jsonwebtoken'
+import jwt from "jsonwebtoken";
 
 /**
  * @route POST api/auth/register
@@ -43,6 +43,12 @@ export async function registerController(req, res, next) {
     res.status(201).json({
       message: "User registered successfully !",
       success: true,
+      user: {
+        name: user.name,
+        email: user.email,
+        contact: user.contact,
+        role: user.role,
+      },
     });
   } catch (error) {
     next(error);
@@ -87,6 +93,12 @@ export async function loginController(req, res, next) {
     res.status(201).json({
       message: "User loggedIn successfully !",
       success: true,
+      user: {
+        name: user.name,
+        email: user.email,
+        contact: user.contact,
+        role: user.role,
+      },
     });
   } catch (error) {
     console.error("LOGIN ERROR:", error);
@@ -168,7 +180,7 @@ export async function googleCallback(req, res, next) {
 
   const token = jwt.sign(
     {
-      id:user._id,
+      id: user._id,
       email: user.email,
     },
     CONFIG.JWT_SECRET,
