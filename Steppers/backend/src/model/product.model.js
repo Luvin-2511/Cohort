@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import priceSchema from "./priceSchema.js";
 
 const productSchema = new mongoose.Schema(
   {
@@ -8,26 +9,20 @@ const productSchema = new mongoose.Schema(
     },
     description: {
       type: String,
-      required: [true, "Title is required !"],
+      required: [true, "Description is required !"],
     },
     seller: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "user",
       required: [true, "Seller id is required !"],
     },
-    quantity:{
-      type:Number,
+    quantity: {
+      type: Number,
+      default: 0,
+      min: 0,
     },
     price: {
-      amount: {
-        type: Number,
-        required: true,
-      },
-      currency: {
-        type: String,
-        enum: ["INR", "JPY", "USD"],
-        default: "INR",
-      },
+      type: priceSchema,
     },
     images: [
       {
@@ -37,11 +32,39 @@ const productSchema = new mongoose.Schema(
         },
       },
     ],
+    attributes: {
+      type: Map,
+      of: String,
+    },
+    variant: [
+      {
+        images: [
+          {
+            url: {
+              type: String,
+              required: true,
+            },
+          },
+        ],
+        quantity: {
+          type: Number,
+          default: 0,
+          min: 0,
+        },
+        price: {
+          type: priceSchema,
+        },
+        attributes: {
+          type: Map,
+          of: String,
+        },
+      },
+    ],
   },
   {
     timestamps: true,
   },
 );
 
-const productModel = mongoose.model("product",productSchema)
-export default productModel
+const productModel = mongoose.model("product", productSchema);
+export default productModel;
