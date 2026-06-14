@@ -157,6 +157,7 @@ export async function getMeController(req, res, next) {
         email: user.email,
         name: user.name,
         contact: user.contact,
+        role: user.role,
       },
     });
   } catch (error) {

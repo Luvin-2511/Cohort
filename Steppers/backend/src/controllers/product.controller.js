@@ -10,10 +10,10 @@ import { uploadFile } from "../services/storage.service.js";
  */
 export async function createProductController(req, res, next) {
   try {
-    const { title, description, price } = req.body;
+    const { title, description, price, quantity } = req.body;
     const { id } = req.user;
 
-    if (!title || !description || !price) {
+    if (!title || !description || !price || !quantity) {
       return next({
         status: 400,
         message: "All fields are required !",
@@ -38,6 +38,7 @@ export async function createProductController(req, res, next) {
       },
       seller: id,
       images,
+      quantity
     });
 
     res.status(201).json({
@@ -51,7 +52,7 @@ export async function createProductController(req, res, next) {
 }
 
 /**
- * @route GET api/product
+ * @route GET api/product/
  * @description Gets all the product created by a seller
  * @param {import('express').Request} req
  * @param {import('express').Response} res
@@ -59,7 +60,7 @@ export async function createProductController(req, res, next) {
 export async function getProductController(req, res, next) {
   try {
     const { id } = req.user;
-    const products = await productModel.find({ seller: id });
+    const products = await productModel.find({ seller: id })
     if (!products) {
       return next({
         status: 404,
@@ -78,7 +79,7 @@ export async function getProductController(req, res, next) {
 }
 
 /**
- * @route POST api/auth/products
+ * @route POST api/product/products
  * @description Fetches all products
  * @param {import('express').Request} req
  * @param {import('express').Response} res
@@ -99,6 +100,39 @@ export async function getAllProductsController(req, res, next) {
       message: "Products fetched successfully !",
       products,
     });
+  } catch (err) {
+    next(err);
+  }
+}
+
+/**
+ * @route POST api/product/:productId
+ * @description Fetches a particular product info
+ * @param {import('express').Request} req
+ * @param {import('express').Response} res
+ */
+export async function fetchProductDetailController(req, res, next) {
+  try {
+    const { productId } = req.params;
+    if (!productId) {
+      return next({
+        status: 404,
+        message: "Product Id missing",
+      });
+    }
+    const productDetail = await productModel.findOne({ _id: productId }).populate('seller')
+    if (!productDetail) {
+      return next({
+        status: 404,
+        message: "Invalid product Id !"
+      })
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: "Fetched Detail",
+      productDetail,
+    })
   } catch (err) {
     next(err);
   }
