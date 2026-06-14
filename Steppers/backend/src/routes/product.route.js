@@ -1,9 +1,13 @@
 import { Router } from "express";
-import { authMiddleware, sellerAuthMiddleware } from "../middlewares/auth.middleware.js";
+import {
+  authMiddleware,
+  sellerAuthMiddleware,
+} from "../middlewares/auth.middleware.js";
 import {
   createProductController,
   getAllProductsController,
   getProductController,
+  fetchProductDetailController,
 } from "../controllers/product.controller.js";
 import multer from "multer";
 
@@ -23,6 +27,7 @@ productRouter.post(
   createProductController,
 );
 productRouter.get("/", sellerAuthMiddleware, getProductController);
-productRouter.get("/products",authMiddleware,getAllProductsController)
+productRouter.get("/products", authMiddleware, getAllProductsController);
+productRouter.get("/:productId", authMiddleware, fetchProductDetailController);
 
 export default productRouter;
