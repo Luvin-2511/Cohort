@@ -8,6 +8,8 @@ import {
   getAllProductsController,
   getProductController,
   fetchProductDetailController,
+  updateProductController,
+  addVariantController,
 } from "../controllers/product.controller.js";
 import multer from "multer";
 
@@ -29,5 +31,12 @@ productRouter.post(
 productRouter.get("/", sellerAuthMiddleware, getProductController);
 productRouter.get("/products", authMiddleware, getAllProductsController);
 productRouter.get("/:productId", authMiddleware, fetchProductDetailController);
+productRouter.put("/:productId", sellerAuthMiddleware, updateProductController);
+productRouter.post(
+  "/:productId/variant",
+  upload.array("images", 5),
+  sellerAuthMiddleware,
+  addVariantController,
+);
 
 export default productRouter;
