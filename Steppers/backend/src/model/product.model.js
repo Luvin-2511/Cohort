@@ -16,13 +16,16 @@ const productSchema = new mongoose.Schema(
       ref: "user",
       required: [true, "Seller id is required !"],
     },
-    quantity: {
+    stock: {
       type: Number,
       default: 0,
       min: 0,
     },
     price: {
       type: priceSchema,
+    },
+    rating: {
+      type: Number,
     },
     images: [
       {
@@ -32,10 +35,6 @@ const productSchema = new mongoose.Schema(
         },
       },
     ],
-    attributes: {
-      type: Map,
-      of: String,
-    },
     variant: [
       {
         images: [
@@ -46,7 +45,7 @@ const productSchema = new mongoose.Schema(
             },
           },
         ],
-        quantity: {
+        stock: {
           type: Number,
           default: 0,
           min: 0,
