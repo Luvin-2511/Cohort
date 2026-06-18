@@ -4,8 +4,9 @@ import "../styles/login.css";
 import { Link, useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import { useSelector } from "react-redux";
+import ShoeModel from "../../shared/components/ShoeModel";
+import InteractiveTags from "../components/InteractiveTags";
 
-/* ── SVG Icons ── */
 const EyeOpen = () => (
   <svg
     width="16"
@@ -171,7 +172,7 @@ export default function Login() {
     e.preventDefault();
     const res = await handleLogin(vals);
     if (res.success) {
-      navigate("/");
+      navigate("/home");
     }
     gsap.to(btnRef.current, {
       scale: 0.96,
@@ -190,16 +191,56 @@ export default function Login() {
 
   return (
     <>
+      <ShoeModel
+        style={{
+          height: "70%",
+          width: "50%",
+          position: "absolute",
+          zIndex: 10,
+          left: "10vw",
+          top: "8vw",
+          pointerEvents: "none",
+        }}
+        color="#FF6B35"
+        rotationDir={1}
+        rotationSpeed={0.005}
+        modelPosition={[0, 0, -600]}
+        modelRotation={[0, 0, Math.PI / 4]}
+      />
+      <svg
+        className="wave-svg"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 1440 320"
+      >
+        <path
+          fill="#060606"
+          fill-opacity="1"
+          d="M0,160L48,170.7C96,181,192,203,288,186.7C384,171,480,117,576,122.7C672,128,768,192,864,218.7C960,245,1056,235,1152,197.3C1248,160,1344,96,1392,64L1440,32L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"
+        ></path>
+      </svg>
+
       <div className="cursor-line" ref={progressRef} />
 
       <div className="login-page">
-        {/* ── Left Visual ── */}
         <aside className="lp-visual">
           <div className="blob blob-1" ref={blob1Ref} />
           <div className="blob blob-2" ref={blob2Ref} />
+          <InteractiveTags />
 
           <div className="ticker-wrap">
             <div className="ticker-inner">
+              {"STEPPERS · NEW DROP · EXCLUSIVE ACCESS · MEMBERS ONLY · FRESH KICKS · "
+                .repeat(4)
+                .split(" · ")
+                .map((t, i) => (
+                  <span key={i}>
+                    {t} <em>·</em>{" "}
+                  </span>
+                ))}
+            </div>
+          </div>
+          <div className="ticker-wrap-2">
+            <div className="ticker-inner-2">
               {"STEPPERS · NEW DROP · EXCLUSIVE ACCESS · MEMBERS ONLY · FRESH KICKS · "
                 .repeat(4)
                 .split(" · ")
