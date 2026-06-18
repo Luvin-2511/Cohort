@@ -1,0 +1,82 @@
+:root[theme="dark"] {
+  --bg: black;
+  --color: white;
+}
+:root[theme="light"] {
+  --bg: white;
+  --color: black;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  width: 100%;
+  background: var(--bg);
+  color: var(--color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.5s ease;
+}
+
+#root {
+  transform-style: preserve-3d;
+}
+
+.changer {
+  padding: 1rem 2rem;
+  font-size: 2rem;
+  border-radius: 0.5rem;
+  width: fit-content;
+  background: var(--color);
+  color: var(--bg);
+  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+  transition: all 0.5s ease;
+  cursor: pointer;
+  view-transition-name: changer;
+}
+
+.changer:hover {
+  padding: 4rem;
+}
+
+::view-transition-group(root) {
+  perspective: 1000px;
+  animation-duration: 1s;
+}
+
+::view-transition-old(root) {
+  animation: slide-out 0.5s ease;
+}
+
+::view-transition-new(root) {
+  animation: slide-in 0.6s ease;
+}
+@keyframes slide-out {
+  from {
+    transform: translateZ(0) rotateY(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateZ(1000px) rotateY(100deg);
+    opacity: 0;
+  }
+}
+
+@keyframes slide-in {
+  from {
+    transform: translateZ(-500px) rotateY(-100deg);
+    opacity: 0;
+  }
+  to {
+    transform: translateZ(0) rotateY(0);
+    opacity: 1;
+  }
+}
