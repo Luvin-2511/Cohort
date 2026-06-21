@@ -10,10 +10,11 @@ import { uploadFile } from "../services/storage.service.js";
  */
 export async function createProductController(req, res, next) {
   try {
-    const { title, description, price, stock } = req.body;
+    const { title, description, price, stock, brand, category, size } =
+      req.body;
     const { id } = req.user;
 
-    if (!title || !description || !price || !stock) {
+    if (!title || !description || !price || !stock || !brand) {
       return next({
         status: 400,
         message: "All fields are required !",
@@ -36,6 +37,9 @@ export async function createProductController(req, res, next) {
         amount: price,
         currency: "INR",
       },
+      brand,
+      category,
+      size,
       seller: id,
       images,
       stock,
@@ -235,5 +239,40 @@ export async function addVariantController(req, res, next) {
     });
   } catch (err) {
     next(err);
+  }
+}
+
+/**
+ * @route DELETE api/product/:productId
+ * @description description
+ * @param {import('express').Request} req
+ * @param {import('express').Response} res
+ * @param {import('express').NextFunction} next
+ */
+export async function deleteProductController(req, res, next) {
+  try {
+    const { productId } = req.params;
+    const { id } = req.user;
+
+    const product = await productModel.findOneAndDelete({
+      seller: id,
+      _id: productId,
+    });
+
+    if (!product) {
+      return next({
+        status: 404,
+        message: "Product doesn't Exist !",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: "Product deleted successfully !",
+      product
+    });
+
+  } catch (error) {
+    next(error);
   }
 }
