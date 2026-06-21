@@ -26,6 +26,26 @@ const productSchema = new mongoose.Schema(
     },
     rating: {
       type: Number,
+      default: 0,
+      min: 0,
+      max: 5,
+    },
+    reviewCount: {
+      type: Number,
+      default: 0,
+    },
+    brand: {
+      type: String,
+      required: true,
+    },
+    category: {
+      type: String,
+      required: true,
+    },
+    size: {
+      type: Number,
+      min: 3,
+      max: 15,
     },
     images: [
       {
