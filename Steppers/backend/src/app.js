@@ -6,8 +6,9 @@ import { errorHandler } from "./middlewares/error.middleware.js";
 import passport from "passport";
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 import { CONFIG } from "./config/config.js";
-import cors from 'cors'
+import cors from "cors";
 import productRouter from "./routes/product.route.js";
+import cartRouter from "./routes/cart.routes.js";
 
 connectToDB();
 
@@ -38,7 +39,8 @@ passport.use(
 );
 
 app.use("/api/auth", authRouter);
-app.use("/api/product",productRouter)
+app.use("/api/product", productRouter);
+app.use("/api/cart", cartRouter);
 
 app.use(errorHandler);
 
