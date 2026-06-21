@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import priceSchema from "./priceSchema.js";
 
 const cartSchema = new mongoose.Schema({
   user: {
@@ -6,19 +7,23 @@ const cartSchema = new mongoose.Schema({
     ref: "user",
     required: true,
   },
-  price: {
-    type: priceSchema,
-    required: true,
-  },
-  quantity: {
-    type: Number,
-    default: 1,
-  },
-  product: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "product",
-    required: true,
-  },
+  items: [
+    {
+      product: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "product",
+        required: true,
+      },
+      quantity: {
+        type: Number,
+        default: 1,
+      },
+      variant: {
+        type: mongoose.Schema.Types.ObjectId,
+        default: null,
+      },
+    },
+  ],
 });
 
 const cartModel = mongoose.model("cart", cartSchema);
