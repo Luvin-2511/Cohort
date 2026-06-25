@@ -118,7 +118,7 @@ export async function logoutController(req, res, next) {
     res.clearCookie("token");
     res.status(201).json({
       success: true,
-      message: "User logged put successfully !",
+      message: "User logged out successfully !",
     });
   } catch (error) {
     next(error);
