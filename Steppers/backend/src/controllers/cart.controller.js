@@ -280,6 +280,7 @@ export async function decreaseCountInCartController(req, res, next) {
             $elemMatch: {
               product: productId,
               variant: variantId ?? null,
+              quantity: { $gt: 1 },
             },
           },
         },
