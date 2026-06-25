@@ -1,4 +1,5 @@
 import productModel from "../model/product.model.js";
+import wishlistModel from "../model/wishlist.mode.js";
 import { uploadFile } from "../services/storage.service.js";
 
 /**
@@ -47,7 +48,7 @@ export async function createProductController(req, res, next) {
 
     res.status(201).json({
       success: true,
-      message: "Product created successfully",
+      message: "Product created successfully !",
       product,
     });
   } catch (error) {
@@ -269,9 +270,150 @@ export async function deleteProductController(req, res, next) {
     return res.status(200).json({
       success: true,
       message: "Product deleted successfully !",
-      product
+      product,
+    });
+  } catch (error) {
+    next(error);
+  }
+}
+
+/**
+ * @route POST api/product/wishlist/:productId
+ * @description Add a product to the wishlist
+ * @param {import('express').Request} req
+ * @param {import('express').Response} res
+ * @param {import('express').NextFunction} next
+ */
+export async function addToWishlistController(req, res, next) {
+  try {
+    const { productId } = req.params;
+    const { id } = req.user;
+
+    if (!productId) {
+      return next({
+        status: 400,
+        message: "Product Id is required !",
+      });
+    }
+
+    const isProductValid = await productModel.findOne({
+      _id: productId,
     });
 
+    if (!isProductValid) {
+      return next({
+        status: 404,
+        message: "Product not found !",
+      });
+    }
+
+    const alreadyInWishlist = await wishlistModel.findOne({
+      product: productId,
+      user: id,
+    });
+
+    if (alreadyInWishlist) {
+      return next({
+        status: 400,
+        message: "Product already in wishlist!",
+      });
+    }
+
+    const wishlist = await wishlistModel.create({
+      product: productId,
+      user: id,
+    });
+
+    return res.status(201).json({
+      success: true,
+      message: "Product added to wishlist !",
+      wishlist,
+    });
+  } catch (error) {
+    next(error);
+  }
+}
+
+/**
+ * @route DELETE api/product/wishlist
+ * @description Removes a product to the wishlist
+ * @param {import('express').Request} req
+ * @param {import('express').Response} res
+ * @param {import('express').NextFunction} next
+ */
+export async function RemoveWishlistController(req, res, next) {
+  try {
+    const { productId } = req.params;
+    const { id } = req.user;
+
+    if (!productId) {
+      return next({
+        status: 400,
+        message: "Product Id is required !",
+      });
+    }
+
+    const isProductValid = await productModel.findOne({
+      _id: productId,
+    });
+
+    if (!isProductValid) {
+      return next({
+        status: 404,
+        message: "Product not found !",
+      });
+    }
+
+    const wishlist = await wishlistModel.findOneAndDelete({
+      product: productId,
+      user: id,
+    });
+
+    if (!wishlist) {
+      return next({
+        status: 400,
+        message: "Product not in wishlist!",
+      });
+    }
+
+    return res.status(201).json({
+      success: true,
+      message: "Product removed from wishlist!",
+      wishlist,
+    });
+  } catch (error) {
+    next(error);
+  }
+}
+
+/**
+ * @route GET api/product/wishlist
+ * @description Fetches wishlist for a user
+ * @param {import('express').Request} req
+ * @param {import('express').Response} res
+ * @param {import('express').NextFunction} next
+ */
+export async function fetchWishlistController(req, res, next) {
+  try {
+    const { id } = req.user;
+    const wishlist = await wishlistModel
+      .find({
+        user: id,
+      })
+      .populate("product");
+
+    if (!wishlist) {
+      return next({
+        status: 400,
+        message: "No product in wishList !",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: "Wishlist fetched successfully !",
+      wishlist,
+    });
   } catch (error) {
     next(error);
   }
