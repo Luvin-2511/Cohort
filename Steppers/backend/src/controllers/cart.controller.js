@@ -12,7 +12,7 @@ import productModel from "../model/product.model.js";
 export async function addProductToCartController(req, res, next) {
   try {
     const { productId } = req.params;
-    const { variantId, quantity } = req.body;
+    const { variantId, quantity, price } = req.body;
     const { id } = req.user;
 
     if (!productId) {
@@ -82,6 +82,7 @@ export async function addProductToCartController(req, res, next) {
         product: productId,
         variant: variantId || null,
         quantity: quantity,
+        price: price
       });
     }
     await cart.save();
@@ -111,12 +112,7 @@ export async function getCartController(req, res, next) {
         user: id,
       })
       .populate("items.product");
-    if (!cart) {
-      return next({
-        status: 400,
-        message: "No current items in cart",
-      });
-    }
+
     return res.status(200).json({
       success: true,
       message: "Cart Fetched successfully !",
@@ -280,7 +276,7 @@ export async function decreaseCountInCartController(req, res, next) {
             $elemMatch: {
               product: productId,
               variant: variantId ?? null,
-              quantity: { $gt: 1 },
+              quantity: { $gt: 0 },
             },
           },
         },
@@ -302,6 +298,18 @@ export async function decreaseCountInCartController(req, res, next) {
       });
     }
 
+    await cartModel.updateOne(
+      {
+        user: id,
+      },
+      {
+        $pull: {
+          items: {
+            quantity: 0,
+          },
+        },
+      },
+    );
     // cart.items.map((item) => {
     //   if (item.product._id == productId && item.variant == variantId) {
     //     if (item.quantity < stock) item.quantity = item.quantity - 1;
