@@ -4,6 +4,7 @@ import Lenis from "lenis";
 import AuthProvider from "./Features/Auth/auth.context";
 import MovieProvider from "./Features/Movies/movie.context";
 import UserProvider from "./Features/User/user.context";
+import { ToastProvider } from "./Features/Shared/toast.context";
 
 const App = () => {
   useEffect(() => {
@@ -26,11 +27,13 @@ const App = () => {
 
   return (
     <AuthProvider>
-      <MovieProvider>
-        <UserProvider>
-          <AppRoutes />
-        </UserProvider>
-      </MovieProvider>
+      <ToastProvider>
+        <MovieProvider>
+          <UserProvider>
+            <AppRoutes />
+          </UserProvider>
+        </MovieProvider>
+      </ToastProvider>
     </AuthProvider>
   );
 };
