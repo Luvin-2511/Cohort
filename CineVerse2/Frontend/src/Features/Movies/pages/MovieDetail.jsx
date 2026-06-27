@@ -10,9 +10,9 @@ import useHistory from "../../User/hooks/useHistory";
 import ToggleButton from "../../Shared/components/ToggleButton";
 
 const IMG_BASE_BACKDROP = "https://image.tmdb.org/t/p/original";
-const IMG_BASE_POSTER   = "https://image.tmdb.org/t/p/w500";
-const IMG_BASE_FACE     = "https://image.tmdb.org/t/p/w185";
-const TMDB_API_KEY      = import.meta.env.VITE_TMDB_API_KEY;
+const IMG_BASE_POSTER = "https://image.tmdb.org/t/p/w500";
+const IMG_BASE_FACE = "https://image.tmdb.org/t/p/w185";
+const TMDB_API_KEY = import.meta.env.VITE_TMDB_API_KEY;
 
 const MovieDetail = () => {
   const {
@@ -24,25 +24,25 @@ const MovieDetail = () => {
     selectedType,
   } = useMovies();
 
-  const { handleFavorite, user }          = useFavorites();
-  const { handleWatchlist, isInWatchlist } = useWatchlist(); 
-  const { handleHistory }                 = useHistory();
+  const { handleFavorite, user } = useFavorites();
+  const { handleWatchlist, isInWatchlist } = useWatchlist();
+  const { handleHistory } = useHistory();
 
-  const [actors, setActors]                     = useState([]);
-  const [similarMovies, setSimilarMovies]       = useState([]);
-  const [modalOpen, setModalOpen]               = useState(false);
-  const [watchModalOpen, setWatchModalOpen]     = useState(false);
-  const [trailer, setTrailer]                   = useState(null);
-  const [activeSource, setActiveSource]         = useState(null);
+  const [actors, setActors] = useState([]);
+  const [similarMovies, setSimilarMovies] = useState([]);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [watchModalOpen, setWatchModalOpen] = useState(false);
+  const [trailer, setTrailer] = useState(null);
+  const [activeSource, setActiveSource] = useState(null);
 
-  const [seasons, setSeasons]                       = useState([]);
-  const [selectedSeason, setSelectedSeason]         = useState(1);
-  const [episodes, setEpisodes]                     = useState([]);
-  const [selectedEpisode, setSelectedEpisode]       = useState(1);
-  const [loadingEpisodes, setLoadingEpisodes]       = useState(false);
+  const [seasons, setSeasons] = useState([]);
+  const [selectedSeason, setSelectedSeason] = useState(1);
+  const [episodes, setEpisodes] = useState([]);
+  const [selectedEpisode, setSelectedEpisode] = useState(1);
+  const [loadingEpisodes, setLoadingEpisodes] = useState(false);
 
   const { movieId } = useParams();
-  const navigate    = useNavigate();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (movieId) {
@@ -76,17 +76,17 @@ const MovieDetail = () => {
   if (!movieDetail || !movieDetail.id) return <MovieDetailSkeleton />;
 
   const isTV = !!movieDetail.first_air_date;
-  const isFav      = user?.favorites?.some((f) => String(f.movieId) === String(movieDetail.id));
-  const inWatchlist = isInWatchlist(movieDetail.id); 
+  const isFav = user?.favorites?.some((f) => String(f.movieId) === String(movieDetail.id));
+  const inWatchlist = isInWatchlist(movieDetail.id);
 
   const movieShape = {
-    id:             movieDetail.id,
-    title:          movieDetail.original_title || movieDetail.name,
-    poster_path:    movieDetail.poster_path,
-    media_type:     isTV ? "tv" : "movie",
-    release_date:   movieDetail.release_date,
+    id: movieDetail.id,
+    title: movieDetail.original_title || movieDetail.name,
+    poster_path: movieDetail.poster_path,
+    media_type: isTV ? "tv" : "movie",
+    release_date: movieDetail.release_date,
     first_air_date: movieDetail.first_air_date,
-    vote_average:   movieDetail.vote_average,
+    vote_average: movieDetail.vote_average,
   };
 
   const handleWatchClick = () => {
@@ -96,33 +96,69 @@ const MovieDetail = () => {
 
   const SOURCES = [
     {
-      id: "2embed", name: "Server 1",
+      id: "vidlink.pro", name: "Server 1",
+      url: isTV
+        ? `https://vidlink.pro/tv/${movieDetail.id}/${selectedSeason}/${selectedEpisode}`
+        : `https://vidlink.pro/movie/${movieDetail.id}`,
+    },
+    {
+      id: "autoembed.co", name: "Server 2",
+      url: isTV
+        ? `https://autoembed.co/tv/tmdb/${movieDetail.id}-${selectedSeason}-${selectedEpisode}`
+        : `https://autoembed.co/movie/tmdb/${movieDetail.id}`,
+    },
+    {
+      id: "2embed", name: "Server 3",
       url: isTV
         ? `https://www.2embed.cc/embedtv/${movieDetail.id}&s=${selectedSeason}&e=${selectedEpisode}`
         : `https://www.2embed.cc/embed/${movieDetail.id}`,
     },
     {
-      id: "vidsrc.to", name: "Server 2",
+      id: "vidsrc.to", name: "Server 4",
       url: isTV
         ? `https://vidsrc.to/embed/tv/${movieDetail.id}/${selectedSeason}/${selectedEpisode}`
         : `https://vidsrc.to/embed/movie/${movieDetail.id}`,
     },
     {
-      id: "vidsrc.me", name: "Server 3",
+      id: "vidsrc.me", name: "Server 5",
       url: isTV
         ? `https://vidsrc.me/embed/tv?tmdb=${movieDetail.id}&season=${selectedSeason}&episode=${selectedEpisode}`
         : `https://vidsrc.me/embed/movie/${movieDetail.id}`,
     },
     {
-      id: "smashystream", name: "Server 4",
+      id: "smashystream", name: "Server 6",
       url: isTV
         ? `https://embed.smashystream.com/playere.php?tmdb=${movieDetail.id}&season=${selectedSeason}&episode=${selectedEpisode}`
         : `https://embed.smashystream.com/playere.php?tmdb=${movieDetail.id}`,
     },
+    {
+      id: "multiembed", name: "Server 7",
+      url: isTV
+        ? `https://multiembed.mov/?video_id=${movieDetail.id}&tmdb=1&s=${selectedSeason}&e=${selectedEpisode}`
+        : `https://multiembed.mov/?video_id=${movieDetail.id}&tmdb=1`,
+    },
+    {
+      id: "vidsrc.cc", name: "Server 8",
+      url: isTV
+        ? `https://vidsrc.cc/v2/embed/tv/${movieDetail.id}/${selectedSeason}/${selectedEpisode}`
+        : `https://vidsrc.cc/v2/embed/movie/${movieDetail.id}`,
+    },
+    {
+      id: "videasy", name: "Server 9",
+      url: isTV
+        ? `https://player.videasy.net/tv/${movieDetail.id}/${selectedSeason}/${selectedEpisode}`
+        : `https://player.videasy.net/movie/${movieDetail.id}`,
+    },
+    {
+      id: "moviesapi", name: "Server 10",
+      url: isTV
+        ? `https://moviesapi.club/tv/${movieDetail.id}-${selectedSeason}-${selectedEpisode}`
+        : `https://moviesapi.club/movie/${movieDetail.id}`,
+    },
   ];
 
 
-  const currentSource      = activeSource
+  const currentSource = activeSource
     ? SOURCES.find((s) => s.id === activeSource.id) || SOURCES[0]
     : SOURCES[0];
   const currentEpisodeData = episodes.find((ep) => ep.episode_number === selectedEpisode);
@@ -142,13 +178,13 @@ const MovieDetail = () => {
             <div className="left-server-links">
               {SOURCES.map((source) => (
                 <div
-                key={source.id}
-                style={{
-                  backgroundColor: currentSource.name === source.name ? "#e8ff00" : "",
-                  color:           currentSource.name === source.name ? "black"   : "",
-                }}
-                onClick={(e) => { e.preventDefault(); setActiveSource(source); }}
-                className="link-tag"
+                  key={source.id}
+                  style={{
+                    backgroundColor: currentSource.name === source.name ? "#e8ff00" : "",
+                    color: currentSource.name === source.name ? "black" : "",
+                  }}
+                  onClick={(e) => { e.preventDefault(); setActiveSource(source); }}
+                  className="link-tag"
                 >
                   {source.name}
                   <div className="small-text">{source.id}</div>
@@ -163,11 +199,11 @@ const MovieDetail = () => {
                 </>
               ) : (
                 <iframe
-                allowFullScreen
-                key={`${currentSource.id}-s${selectedSeason}-e${selectedEpisode}`}
-                src={currentSource.url}
-                allow="autoplay; encrypted-media; fullscreen"
-                style={{ width: "100%", height: "100%", border: "none" }}
+                  allowFullScreen
+                  key={`${currentSource.id}-s${selectedSeason}-e${selectedEpisode}`}
+                  src={currentSource.url}
+                  allow="autoplay; encrypted-media; fullscreen"
+                  style={{ width: "100%", height: "100%", border: "none" }}
                 />
               )}
             </div>
@@ -177,8 +213,10 @@ const MovieDetail = () => {
         <div className="detail__hero-backdrop">
           {movieDetail.backdrop_path ? (
             <img
-            src={`${IMG_BASE_BACKDROP}${movieDetail.backdrop_path}`}
-            alt={movieDetail.original_title || movieDetail.name}
+              fetchPriority="high"
+              loading="eager"
+              src={`${IMG_BASE_BACKDROP}${movieDetail.backdrop_path}`}
+              alt={movieDetail.original_title || movieDetail.name}
             />
           ) : (
             <div style={{ width: "100%", height: "100%", background: "#111" }} />
@@ -336,6 +374,116 @@ const MovieDetail = () => {
           )}
         </section>
 
+        <section className="detail__download-section">
+          <p className="detail__download-section-label">◈ Downloads</p>
+          <h2>EXTERNAL TORRENT LINKS</h2>
+          <div className="detail__download-links">
+            {(!isTV) && (
+              <a
+                href={`https://yts.lu/browse-movies/${(movieDetail.original_title || movieDetail.name).toLowerCase().replace(/\s+/g, '-')}/all/all/0/latest/0/all`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="download-btn yts-btn"
+              >
+                Search on YTS
+              </a>
+            )}
+            <a
+              href={`https://1337x.st/search/${encodeURIComponent(movieDetail.original_title || movieDetail.name)}/1/`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="download-btn x1337-btn"
+            >
+              Search on 1337x
+            </a>
+            <a
+              href={`https://thepiratebay.org/search.php?q=${encodeURIComponent(movieDetail.original_title || movieDetail.name)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="download-btn tpb-btn"
+            >
+              Search on The Pirate Bay
+            </a>
+            <a
+              href={`https://nyaa.si/?f=0&c=0_0&q=${encodeURIComponent(movieDetail.original_title || movieDetail.name)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="download-btn nyaa-btn"
+            >
+              Search on Nyaa (Anime)
+            </a>
+            <a
+              href={`https://tgx.rs/torrents.php?search=${encodeURIComponent(movieDetail.original_title || movieDetail.name)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="download-btn tgx-btn"
+            >
+              Search on TorrentGalaxy
+            </a>
+            {isTV && (
+              <a
+                href={`https://eztvx.to/search/${encodeURIComponent(movieDetail.original_title || movieDetail.name)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="download-btn eztv-btn"
+              >
+                Search on EZTV (TV)
+              </a>
+            )}
+            <a
+              href={`https://www.limetorrents.lol/search/all/${encodeURIComponent(movieDetail.original_title || movieDetail.name)}/`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="download-btn lime-btn"
+            >
+              Search on LimeTorrents
+            </a>
+          </div>
+        </section>
+
+        <section className="detail__stream-section">
+          <p className="detail__stream-section-label">◈ Watch Online</p>
+          <h2>FREE STREAMING SITES</h2>
+          <p className="detail__stream-disclaimer">External sites — open in a new tab. Quality may vary.</p>
+          <div className="detail__stream-links">
+            {[
+              { name: "FMovies", tag: "HD", url: `https://fmoviesz.to/search/${encodeURIComponent(movieDetail.original_title || movieDetail.name)}` },
+              { name: "LookMovie", tag: "HD", url: `https://lookmovie2.to/${isTV ? "shows" : "movies"}/search/?q=${encodeURIComponent(movieDetail.original_title || movieDetail.name)}` },
+              { name: "Primewire", tag: "Multi", url: `https://www.primewire.tf/search?q=${encodeURIComponent(movieDetail.original_title || movieDetail.name)}` },
+              { name: "SFlix", tag: "4K", url: `https://sflix.to/search/${encodeURIComponent(movieDetail.original_title || movieDetail.name)}` },
+              { name: "FlixHQ", tag: "HD", url: `https://flixhq.to/search/${encodeURIComponent(movieDetail.original_title || movieDetail.name)}` },
+              { name: "BFlix", tag: "HD", url: `https://bflix.gg/search?keyword=${encodeURIComponent(movieDetail.original_title || movieDetail.name)}` },
+              { name: "123Movies", tag: "HD", url: `https://ww4.123moviesfree.net/search/?q=${encodeURIComponent(movieDetail.original_title || movieDetail.name)}` },
+              { name: "Soap2Day", tag: "HD", url: `https://soap2day.rs/search?q=${encodeURIComponent(movieDetail.original_title || movieDetail.name)}` },
+              { name: "Putlocker", tag: "HD", url: `https://ww1.putlocker.vip/search?q=${encodeURIComponent(movieDetail.original_title || movieDetail.name)}` },
+              { name: "AZMovies", tag: "HD", url: `https://azmovies.ag/search/${encodeURIComponent(movieDetail.original_title || movieDetail.name)}` },
+              { name: "MovieNinja", tag: "HD", url: `https://movieninja.to/search?keyword=${encodeURIComponent(movieDetail.original_title || movieDetail.name)}` },
+              { name: "WatchSeries", tag: "HD", url: `https://www1.watchseriesfree.co/search/${encodeURIComponent(movieDetail.original_title || movieDetail.name)}` },
+              { name: "ZMovie", tag: "HD", url: `https://zmovie.me/search?keyword=${encodeURIComponent(movieDetail.original_title || movieDetail.name)}` },
+              { name: "SubsMovies", tag: "Sub", url: `https://subsmovies.org/search/${encodeURIComponent(movieDetail.original_title || movieDetail.name)}` },
+              { name: "GoMovies", tag: "HD", url: `https://gomovieshd.video/search/${encodeURIComponent(movieDetail.original_title || movieDetail.name)}` },
+              { name: "HiAnime", tag: "Anime", url: `https://hianime.to/search?keyword=${encodeURIComponent(movieDetail.original_title || movieDetail.name)}` },
+              { name: "Aniwave", tag: "Anime", url: `https://aniwave.to/filter?keyword=${encodeURIComponent(movieDetail.original_title || movieDetail.name)}` },
+              { name: "KissAsian", tag: "Asian", url: `https://kissasian.film/search?keyword=${encodeURIComponent(movieDetail.original_title || movieDetail.name)}` },
+              { name: "Cinezone", tag: "HD", url: `https://www.cinezone.to/search?keyword=${encodeURIComponent(movieDetail.original_title || movieDetail.name)}` },
+              { name: "TheMoviesFlix", tag: "HD", url: `https://themoviesflix.in/?s=${encodeURIComponent(movieDetail.original_title || movieDetail.name)}` },
+              { name: "Cineby", tag: "HD", url: `https://cineby.at/movie/${movieDetail.id}` },
+              { name: "RiveStream", tag: "HD", url: `https://www.rivestream.app/detail?type=movie&id=${movieDetail.id}` },
+            ].map((site) => (
+              <a
+                key={site.name}
+                href={site.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="stream-site-btn"
+              >
+                <span className="stream-site-btn__name">{site.name}</span>
+                <span className="stream-site-btn__tag">{site.tag}</span>
+              </a>
+            ))}
+          </div>
+        </section>
+
         <section className="detail__watch-section">
           <p className="detail__watch-section-label">◈ Streaming</p>
           <h2>WATCH THE {isTV ? "SERIES" : "MOVIE"}</h2>
@@ -389,6 +537,7 @@ const MovieDetail = () => {
                         </div>
                         {ep.still_path && (
                           <img
+                            loading="lazy"
                             className="episode-thumb"
                             src={`https://image.tmdb.org/t/p/w185${ep.still_path}`}
                             alt={ep.name}
@@ -423,7 +572,7 @@ const MovieDetail = () => {
                   <span>Click to stream Full Movie</span>
                 )}
               </div>
-              <img src={`${IMG_BASE_BACKDROP}${movieDetail.backdrop_path}`} alt="" />
+              <img loading="lazy" src={`${IMG_BASE_BACKDROP}${movieDetail.backdrop_path}`} alt="" />
             </div>
           </div>
         </section>
@@ -434,6 +583,7 @@ const MovieDetail = () => {
             {actors.slice(0, 10).map((i) => (
               <div key={i.id} className="detail__cast-card">
                 <img
+                  loading="lazy"
                   src={i.profile_path ? `${IMG_BASE_FACE}${i.profile_path}` : "/fallback-avatar.png"}
                   alt={i.name}
                 />
@@ -454,6 +604,7 @@ const MovieDetail = () => {
                 onClick={() => navigate(`/${i.first_air_date ? "tv" : "movie"}/${i.id}`)}
               >
                 <img
+                  loading="lazy"
                   className="detail__similar-card-img"
                   src={`${IMG_BASE_POSTER}${i.poster_path}`}
                   alt={i.title || i.name}
