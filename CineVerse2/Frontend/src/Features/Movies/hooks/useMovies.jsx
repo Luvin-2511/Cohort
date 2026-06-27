@@ -13,6 +13,7 @@ import {
   getActorsOfMovie,
   getSimilarMovies,
 } from "../services/Movie.api";
+import { useToast } from "../../Shared/toast.context";
 
 const useMovies = () => {
   const {
@@ -35,12 +36,13 @@ const useMovies = () => {
     selectedType,
     setSelectedType,
   } = useContext(MovieContext);
+  const { showToast } = useToast();
 
   useEffect(() => {
     setPage(1);
     setMovies([]);
     fetchMovies(category, 1);
-  }, [category,selectedType]);
+  }, [category, selectedType]);
 
   useEffect(() => {
     if (page === 1) return;
@@ -75,21 +77,29 @@ const useMovies = () => {
         sethasMore(false);
       }
     } catch (err) {
-      console.log(err);
+      showToast("Failed to load movies. Check your connection.", "error");
     } finally {
       setLoading(false);
     }
   };
 
   const handleGenre = async () => {
-    const response = await getGenreList();
-    setGenre(response.genres);
+    try {
+      const response = await getGenreList();
+      setGenre(response.genres);
+    } catch (err) {
+      showToast("Failed to load genres.", "error");
+    }
   };
 
   const handleParticularGenre = async (genreId) => {
-    const response = await getParticularGenre(selectedType, genreId, page);
-    setMovies(response.results);
-    return response.results;
+    try {
+      const response = await getParticularGenre(selectedType, genreId, page);
+      setMovies(response.results);
+      return response.results;
+    } catch (err) {
+      showToast("Failed to load genre movies.", "error");
+    }
   };
 
   const handleMovieDetail = async (movieId) => {
@@ -99,17 +109,22 @@ const useMovies = () => {
       setmovieDetail(response);
       return response;
     } catch (err) {
-      console.log(err);
+      showToast("Failed to load movie details.", "error");
     } finally {
       setLoading(false);
     }
   };
 
   const handleMovieTrailer = async (movieId) => {
-    const response = await getMovieTrailer(selectedType, movieId);
-    return response.results.find(
-      (vid) => vid.type == "Trailer" && vid.site == "YouTube",
-    );
+    try {
+      const response = await getMovieTrailer(selectedType, movieId);
+      return response.results.find(
+        (vid) => vid.type == "Trailer" && vid.site == "YouTube",
+      );
+    } catch (err) {
+      // Silently fail — trailer is optional UI
+      return null;
+    }
   };
 
   const handleSearch = async (search) => {
@@ -118,20 +133,30 @@ const useMovies = () => {
       const response = await searchMovie(selectedType, search);
       setMovies(response.results);
     } catch (err) {
-      console.log(err);
+      showToast("Search failed. Please try again.", "error");
     } finally {
       setLoading(false);
     }
   };
 
   const handleActorsOfMovie = async (movieId) => {
-    const response = await getActorsOfMovie(selectedType, movieId);
-    return response;
+    try {
+      const response = await getActorsOfMovie(selectedType, movieId);
+      return response;
+    } catch (err) {
+      showToast("Failed to load cast information.", "error");
+      return { cast: [] };
+    }
   };
 
   const handleSimilarMovies = async (movieId) => {
-    const response = await getSimilarMovies(selectedType, movieId);
-    return response.results;
+    try {
+      const response = await getSimilarMovies(selectedType, movieId);
+      return response.results;
+    } catch (err) {
+      showToast("Failed to load similar movies.", "error");
+      return [];
+    }
   };
 
   return {
