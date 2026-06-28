@@ -1,6 +1,6 @@
-# Cohort 2.0 Notes & Tasks
+# Cohort Notes & Tasks
 
-This repository contains my notes, assignments, and tasks from the Cohort 2.0 course. It includes resources that helped me follow the curriculum and complete exercises.
+This repository contains my notes, assignments, and tasks for Web development. It includes resources that helped me follow the curriculum and complete exercises.
 
 ---
 
@@ -21,7 +21,7 @@ Notes are organized on daily basis
 ---
 
 ## Assignments
-All assignments and tasks completed during the course are stored here:
+All assignments and tasks completed during my practice are stored here:
 
 
 ---
