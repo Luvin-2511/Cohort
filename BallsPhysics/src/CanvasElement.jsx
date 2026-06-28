@@ -43,7 +43,7 @@ const SphereModel = ({ color, position }) => {
       >
         <mesh ref={meshRef}>
           <sphereGeometry args={[1, 64, 64]} />
-          <meshPhysicalMaterial metalness={0.7} roughness={0.2} color={color} />
+          <meshPhysicalMaterial metalness={0.9} roughness={0.01} color={color} />
         </mesh>
       </RigidBody>
     </>
