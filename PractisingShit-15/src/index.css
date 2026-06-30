@@ -1,0 +1,68 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root,
+main {
+  height: 100%;
+  width: 100%;
+  background: black;
+}
+main {
+  perspective: 1000px;
+}
+
+.card-wrapper {
+  transform-style: preserve-3d;
+  position: absolute;
+  height: 6rem;
+  width: 5rem;
+  padding-bottom: 0.5rem;
+  border-radius: 2px;
+  background: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dot {
+  height: 0.7rem;
+  width: 0.7rem;
+  background: black;
+  border-radius: 50%;
+  margin: auto;
+}
+
+.text {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+h5 {
+  color: rgba(0, 0, 0, 0.783);
+}
+
+.card-wrapper {
+  transform: translateX(-50%) rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+  animation: spinToPosition 3s ease forwards;
+}
+
+@keyframes spinToPosition {
+  0% {
+    transform: translateX(-50%) rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+  }
+  100%{
+    transform: translateY(100vh) rotateX(var(--rx)) rotateY(var(--ry))
+    rotateZ(var(--rz));;
+  }
+}
