@@ -10,6 +10,10 @@ import {
   fetchProductDetailController,
   updateProductController,
   addVariantController,
+  deleteProductController,
+  addToWishlistController,
+  fetchWishlistController,
+  RemoveWishlistController,
 } from "../controllers/product.controller.js";
 import multer from "multer";
 
@@ -30,8 +34,12 @@ productRouter.post(
 );
 productRouter.get("/", sellerAuthMiddleware, getProductController);
 productRouter.get("/products", authMiddleware, getAllProductsController);
+productRouter.get("/wishlist", authMiddleware, fetchWishlistController);
+productRouter.post("/wishlist/:productId", authMiddleware, addToWishlistController);
+productRouter.delete("/wishlist/:productId", authMiddleware,RemoveWishlistController);
 productRouter.get("/:productId", authMiddleware, fetchProductDetailController);
 productRouter.put("/:productId", sellerAuthMiddleware, updateProductController);
+productRouter.delete("/:productId", sellerAuthMiddleware, deleteProductController);
 productRouter.post(
   "/:productId/variant",
   upload.array("images", 5),
