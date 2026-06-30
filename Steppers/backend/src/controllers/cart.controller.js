@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import { stockOfProduct } from "../dao/product.dao.js";
 import cartModel from "../model/cart.model.js";
 import productModel from "../model/product.model.js";
@@ -82,7 +83,7 @@ export async function addProductToCartController(req, res, next) {
         product: productId,
         variant: variantId || null,
         quantity: quantity,
-        price: price
+        price: price,
       });
     }
     await cart.save();
@@ -107,11 +108,56 @@ export async function addProductToCartController(req, res, next) {
 export async function getCartController(req, res, next) {
   try {
     const { id } = req.user;
-    const cart = await cartModel
-      .findOne({
-        user: id,
-      })
-      .populate("items.product");
+    const cart = (await cartModel.aggregate([
+      {
+        $match: {
+          user: new mongoose.Types.ObjectId(id),
+        },
+      },
+      { $unwind: { path: "$items" } },
+      {
+        $lookup: {
+          from: "products",
+          localField: "items.product",
+          foreignField: "_id",
+          as: "items.product",
+        },
+      },
+      { $unwind: { path: "$items.product" } },
+      {
+        $unwind: { path: "$items.product.variant" },
+      },
+      {
+        $match: {
+          $expr: {
+            $eq: ["$items.variant", "$items.product.variant._id"],
+          },
+        },
+      },
+      {
+        $addFields: {
+          itemPrice: {
+            price: {
+              $multiply: [
+                "$items.product.variant.price.amount",
+                "$items.quantity",
+              ],
+            },
+            currency: "$items.product.variant.price.currency",
+          },
+        },
+      },
+      {
+        $group: {
+          _id: "_id",
+          totalPrice: { $sum: "$itemPrice.price" },
+          currency: {
+            $first: "$itemPrice.currency",
+          },
+          items: { $push: "$items" },
+        },
+      },
+    ]))[0];
 
     return res.status(200).json({
       success: true,
