@@ -375,3 +375,14 @@ export async function decreaseCountInCartController(req, res, next) {
     next(error);
   }
 }
+
+/**
+ * @route POST api/cart/payment/create/order
+ * @description Creates order for a user with payment
+ * @param {import('express').Request} req
+ * @param {import('express').Response} res
+ * @param {import('express').NextFunction} next
+ */
+export async function createOrderController(req, res,next) {
+  
+}
