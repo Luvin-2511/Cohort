@@ -6,11 +6,13 @@ import {
   decreaseCountInCartController,
   getCartController,
   increaseCountInCartController,
+  createOrderController,
 } from "../controllers/cart.controller.js";
 
 const cartRouter = Router();
 
 cartRouter.post("/add/:productId", authMiddleware, addProductToCartController);
+cartRouter.post("/payment/create/order", authMiddleware, createOrderController);
 cartRouter.get("/get", authMiddleware, getCartController);
 cartRouter.patch(
   "/:productId",
