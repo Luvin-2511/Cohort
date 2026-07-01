@@ -25,6 +25,14 @@ if (!process.env.IMAGEKIT_PRIVATE_KEY) {
   throw new Error("IMAGEKIT_PRIVATE_KEY is not found in dotenv");
 }
 
+if (!process.env.RAZORPAY_ID) {
+  throw new Error("RAZORPAY_ID is not found in dotenv");
+}
+
+if (!process.env.RAZORPAY_SECRET) {
+  throw new Error("RAZORPAY_SECRET is not found in dotenv");
+}
+
 export const CONFIG = {
   MONGO_URI: process.env.MONGO_URI,
   JWT_SECRET: process.env.JWT_SECRET,
@@ -32,4 +40,6 @@ export const CONFIG = {
   GOOGLE_CLIENT_ID:process.env.GOOGLE_CLIENT_ID,
   GOOGLE_CLIENT_SECRET:process.env.GOOGLE_CLIENT_SECRET,
   IMAGEKIT_PRIVATE_KEY:process.env.IMAGEKIT_PRIVATE_KEY,
+  RAZORPAY_SECRET:process.env.RAZORPAY_SECRET,
+  RAZORPAY_ID:process.env.RAZORPAY_ID,
 };
