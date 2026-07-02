@@ -2,6 +2,11 @@ import mongoose from "mongoose";
 import { stockOfProduct } from "../dao/product.dao.js";
 import cartModel from "../model/cart.model.js";
 import productModel from "../model/product.model.js";
+import { createOrder } from "../services/payment.service.js";
+import { getCartDetails } from "../dao/cart.dao.js";
+import paymentModel from "../model/payment.model.js";
+import { validatePaymentVerification } from "razorpay/dist/utils/razorpay-utils.js";
+import { CONFIG } from "../config/config.js";
 
 /**
  * @route POST api/cart/:productId
@@ -108,56 +113,7 @@ export async function addProductToCartController(req, res, next) {
 export async function getCartController(req, res, next) {
   try {
     const { id } = req.user;
-    const cart = (await cartModel.aggregate([
-      {
-        $match: {
-          user: new mongoose.Types.ObjectId(id),
-        },
-      },
-      { $unwind: { path: "$items" } },
-      {
-        $lookup: {
-          from: "products",
-          localField: "items.product",
-          foreignField: "_id",
-          as: "items.product",
-        },
-      },
-      { $unwind: { path: "$items.product" } },
-      {
-        $unwind: { path: "$items.product.variant" },
-      },
-      {
-        $match: {
-          $expr: {
-            $eq: ["$items.variant", "$items.product.variant._id"],
-          },
-        },
-      },
-      {
-        $addFields: {
-          itemPrice: {
-            price: {
-              $multiply: [
-                "$items.product.variant.price.amount",
-                "$items.quantity",
-              ],
-            },
-            currency: "$items.product.variant.price.currency",
-          },
-        },
-      },
-      {
-        $group: {
-          _id: "_id",
-          totalPrice: { $sum: "$itemPrice.price" },
-          currency: {
-            $first: "$itemPrice.currency",
-          },
-          items: { $push: "$items" },
-        },
-      },
-    ]))[0];
+    let cart = await getCartDetails(id);
 
     return res.status(200).json({
       success: true,
@@ -383,6 +339,162 @@ export async function decreaseCountInCartController(req, res, next) {
  * @param {import('express').Response} res
  * @param {import('express').NextFunction} next
  */
-export async function createOrderController(req, res,next) {
-  
+export async function createOrderController(req, res, next) {
+  let cart = await getCartDetails(req.user.id);
+
+  const order = await createOrder({
+    amount: cart.totalPrice,
+    currency: cart.currency,
+  });
+
+  const payment = await paymentModel.create({
+    user: req.user.id,
+    razorpay: {
+      orderId: order.id,
+    },
+    price: {
+      amount: cart.totalPrice,
+      currency: cart.currency,
+    },
+    orderItems: cart.items.map((item) => ({
+      productId: item.product._id,
+      variantId: item.variant,
+      title: item.product.title,
+      description: item.product.description,
+      size: item.product.size,
+      quantity: item.quantity,
+      images: item.product.variant.images,
+      price: {
+        amount: item.variant.price.amount,
+        currency: item.variant.price.currency,
+      },
+    })),
+  });
+
+  if (!payment) {
+    next({
+      status: 400,
+      message: "Failed to create payment",
+    });
+  }
+
+  return res.status(201).json({
+    success: true,
+    message: "Order Created",
+    order,
+  });
+}
+
+/**
+ * @route POST api/cart/payment/verify/order
+ * @description Verifies whether user payment is done or not
+ * @param {import('express').Request} req
+ * @param {import('express').Response} res
+ * @param {import('express').NextFunction} next
+ */
+export async function verifyOrderController(req, res, next) {
+  const { razorpay_order_id, razorpay_payment_id, razorpay_signature } =
+    req.body;
+
+  const payment = await paymentModel.find({
+    "razorpay.orderId": razorpay_order_id,
+    status: "pending",
+  });
+
+  if (!payment) {
+    return next({
+      status: 404,
+      message: "Payment not found !",
+    });
+  }
+  const isPaymentValid = await validatePaymentVerification(
+    {
+      order_id: razorpay_order_id,
+      payment_id: razorpay_payment_id,
+    },
+    razorpay_signature,
+    CONFIG.RAZORPAY_SECRET,
+  );
+
+  if (!isPaymentValid) {
+    payment.status = "failed";
+    await payment.save();
+
+    return next({
+      status: 400,
+      message: "Payment Verification failed !",
+    });
+  }
+
+  payment.status = "success";
+  payment.razorpay.paymentId = razorpay_payment_id;
+  payment.razorpay.signature = razorpay_signature;
+  await payment.save();
+
+  return res.status(201).json({
+    success: true,
+    message: "Payment successful !",
+  });
+}
+
+/**
+ * @route POST api/cart/order-success?order-id=
+ * @description Shows the order detail so that user can see it
+ * @param {import('express').Request} req
+ * @param {import('express').Response} res
+ * @param {import('express').NextFunction} next
+ */
+export async function orderSuccessDetailController(req, res, next) {
+  const { "order-id": orderId } = req.query;
+  if (!orderId) {
+    next({
+      status: 400,
+      message: "Order Id not found !",
+    });
+  }
+
+  const payment = await paymentModel.findOne({
+    "razorpay.orderId": orderId,
+    status: "success",
+  });
+
+  if (!payment) {
+    next({
+      status: 404,
+      message: "Payment not found !",
+    });
+  }
+
+  return res.status(200).json({
+    success: true,
+    message: "Order detail fetched !",
+    details: {
+      orderItmes: payment.orderItems,
+      price: payment.price,
+    },
+  });
+}
+
+/**
+ * @route POST api/cart/orders
+ * @description Fetches all the user order
+ * @param {import('express').Request} req
+ * @param {import('express').Response} res
+ * @param {import('express').NextFunction} next
+ */
+export async function getAllOrderOfUserController(req, res, next) {
+  const { id } = req.user;
+  const payment = await paymentModel.find({ user: id });
+  if(!payment) {
+    next({
+      status: 400,
+      message:"No Order done !"
+    })
+  }
+
+  return res.status(200).json({
+    success:true,
+    message: "All order fetched",
+    payment
+  })
 }
