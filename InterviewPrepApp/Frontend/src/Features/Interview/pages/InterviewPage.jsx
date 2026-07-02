@@ -11,31 +11,30 @@ import useAuth from "../../Auth/hooks/useAuth";
 ═══════════════════════════════════════════════════════════════════ */
 
 const CSS = `
-@import url('https://api.fontshare.com/v2/css?f[]=clash-display@200,300,400,500,600,700&f[]=cabinet-grotesk@100,200,300,400,500,600,700,800,900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 
 :root {
-  --void:    #060608;
-  --surface: #0c0c10;
-  --lift:    #111116;
-  --raise:   #18181f;
-  --stroke:  rgba(255,255,255,.07);
-  --strokeh: rgba(255,255,255,.14);
-  --fg:      #f0eff5;
-  --muted:   rgba(240,239,245,.38);
-  --dim:     rgba(240,239,245,.16);
-  --ghost:   rgba(240,239,245,.06);
+  --void:    #05050d;
+  --surface: #05050d;
+  --lift:    #0a0a14;
+  --raise:   #0a0a14;
+  --stroke:  rgba(255,255,255,.14);
+  --strokeh: rgba(255,255,255,.35);
+  --fg:      #f5f5fa;
+  --muted:   #9d9bb5;
+  --dim:     #6e6c8a;
+  --ghost:   rgba(255,255,255,.06);
 
-  --acid:    #ff6b35;       /* electric burnt orange — signature accent */
-  --acidh:   #ff7d4a;
-  --acidd:   #e5521c;
-  --red:     #ff4d4d;
-  --blue:    #4d7cff;
-  --purple:  #a855f7;
+  --acid:    #ffffff;       /* minimalist white accent */
+  --acidh:   #cccccc;
+  --acidd:   #aaaaaa;
+  --red:     #ff6b6b;
+  --blue:    #ffffff;
+  --purple:  #ffffff;
 
-  --disp: 'Clash Display', sans-serif;
-  --body: 'Cabinet Grotesk', sans-serif;
-  --mono: 'DM Mono', monospace;
+  --disp:   'Bebas Neue', sans-serif;
+  --body:   'Inter', sans-serif;
+  --mono:   'Inter', sans-serif;
   --accent: 'Bebas Neue', sans-serif;
   --ease:   cubic-bezier(.4,0,.2,1);
   --spring: cubic-bezier(.34,1.56,.64,1);
@@ -59,7 +58,7 @@ body, #root {
   position: fixed; z-index: 9999; pointer-events: none;
   width: 300px; height: 300px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(255,107,53,.06) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(255,255,255,.06) 0%, transparent 70%);
   transform: translate(-50%, -50%);
   transition: opacity .3s var(--ease);
 }
@@ -93,9 +92,9 @@ body, #root {
 .ip-bar {
   position: sticky; top: 0; z-index: 50;
   display: flex; align-items: center; justify-content: space-between;
-  height: 58px; padding: 0 40px;
+  height: 62px; padding: 0 40px;
   border-bottom: 1px solid var(--stroke);
-  background: rgba(6,6,8,.75);
+  background: rgba(6,6,8,.85);
   backdrop-filter: blur(24px) saturate(160%);
 }
 
@@ -121,7 +120,7 @@ body, #root {
 
 .ip-bar__wordmark {
   font-family: var(--disp);
-  font-size: 17px; font-weight: 600; letter-spacing: -.02em;
+  font-size: 19px; font-weight: 600; letter-spacing: -.02em;
   color: var(--fg);
 }
 
@@ -131,7 +130,7 @@ body, #root {
 
 .ip-bar__crumb {
   display: flex; align-items: center; gap: 8px;
-  font-family: var(--mono); font-size: 10px; letter-spacing: .12em;
+  font-family: var(--mono); font-size: 11px; letter-spacing: .12em;
   text-transform: uppercase; color: var(--dim);
 }
 
@@ -139,7 +138,7 @@ body, #root {
   cursor: pointer; transition: color .2s;
 }
 .ip-bar__crumb-link:hover { color: var(--fg); }
-.ip-bar__crumb-sep { opacity: .3; }
+.ip-bar__crumb-sep { opacity: .4; }
 .ip-bar__crumb-active { color: var(--acid); }
 
 .ip-bar__right {
@@ -147,21 +146,21 @@ body, #root {
 }
 
 .ip-bar__name {
-  font-family: var(--mono); font-size: 11px; color: var(--muted); letter-spacing: .08em;
+  font-family: var(--mono); font-size: 12px; color: var(--muted); letter-spacing: .08em;
 }
 
 .ip-bar__avatar {
-  width: 30px; height: 30px;
+  width: 32px; height: 32px;
   background: var(--acid); color: var(--void);
   border: none; cursor: pointer;
-  font-family: var(--disp); font-size: 13px; font-weight: 700;
+  font-family: var(--disp); font-size: 14px; font-weight: 700;
   display: flex; align-items: center; justify-content: center;
   border-radius: 50%;
   transition: transform .2s var(--spring), box-shadow .2s;
 }
 .ip-bar__avatar:hover {
   transform: scale(1.1);
-  box-shadow: 0 0 20px rgba(255,107,53,.35);
+  box-shadow: 0 0 20px rgba(255,255,255,.35);
 }
 
 /* dropdown */
@@ -197,12 +196,12 @@ body, #root {
 }
 
 .ip-menu__name {
-  font-family: var(--disp); font-size: 13px; font-weight: 600;
+  font-family: var(--disp); font-size: 14px; font-weight: 600;
   color: var(--fg); letter-spacing: -.01em;
 }
 
 .ip-menu__email {
-  font-family: var(--mono); font-size: 10px; color: var(--muted); letter-spacing: .04em; margin-top: 1px;
+  font-family: var(--mono); font-size: 11px; color: var(--muted); letter-spacing: .04em; margin-top: 1px;
 }
 
 .ip-menu__divider { height: 1px; background: var(--stroke); margin: 0 10px; }
@@ -211,18 +210,18 @@ body, #root {
 
 .ip-menu__item {
   display: flex; align-items: center; gap: 9px;
-  padding: 8px 10px; border: none; background: transparent;
-  color: var(--muted); font-family: var(--body); font-size: 12px; font-weight: 400;
+  padding: 9px 10px; border: none; background: transparent;
+  color: var(--muted); font-family: var(--body); font-size: 13px; font-weight: 400;
   cursor: pointer; text-align: left; width: 100%;
   transition: all .15s var(--ease); border-radius: 3px;
 }
 
-.ip-menu__item svg { flex-shrink: 0; opacity: .4; transition: opacity .15s; }
+.ip-menu__item svg { flex-shrink: 0; opacity: .6; transition: opacity .15s; }
 .ip-menu__item:hover { background: var(--ghost); color: var(--fg); }
 .ip-menu__item:hover svg { opacity: 1; }
-.ip-menu__item--danger { color: rgba(255,77,77,.7); }
+.ip-menu__item--danger { color: rgba(255,107,107,.85); }
 .ip-menu__item--danger svg { color: var(--red); }
-.ip-menu__item--danger:hover { background: rgba(255,77,77,.06); color: var(--red); }
+.ip-menu__item--danger:hover { background: rgba(255,77,77,.08); color: var(--red); }
 
 /* ── MARQUEE ────────────────────────────────────────── */
 .ip-marquee-wrap {
@@ -231,7 +230,7 @@ body, #root {
   border-bottom: 1px solid var(--stroke);
   background: var(--surface);
   overflow: hidden;
-  height: 36px; display: flex; align-items: center;
+  height: 38px; display: flex; align-items: center;
 }
 
 .ip-marquee {
@@ -243,7 +242,7 @@ body, #root {
 .ip-marquee__item {
   display: flex; align-items: center; gap: 16px;
   padding: 0 32px;
-  font-family: var(--mono); font-size: 10px; letter-spacing: .18em;
+  font-family: var(--mono); font-size: 11px; letter-spacing: .16em;
   text-transform: uppercase; color: var(--dim);
   flex-shrink: 0;
 }
@@ -274,18 +273,19 @@ body, #root {
 .ip-hero__kicker {
   display: flex; align-items: center; gap: 12px;
   margin-bottom: 24px;
+  flex-wrap: wrap;
 }
 
 .ip-hero__kicker-tag {
-  font-family: var(--mono); font-size: 9px; letter-spacing: .22em;
+  font-family: var(--mono); font-size: 10px; letter-spacing: .2em;
   text-transform: uppercase; color: var(--void);
-  background: var(--acid); padding: 4px 10px;
-  font-weight: 500;
+  background: var(--acid); padding: 5px 11px;
+  font-weight: 600;
 }
 
 .ip-hero__kicker-text {
-  font-family: var(--mono); font-size: 10px; letter-spacing: .14em;
-  text-transform: uppercase; color: var(--dim);
+  font-family: var(--mono); font-size: 11px; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--muted);
 }
 
 .ip-hero__h1 {
@@ -298,7 +298,7 @@ body, #root {
 /* huge outlined text */
 .ip-hero__h1-outline {
   display: block;
-  -webkit-text-stroke: 1.5px rgba(240,239,245,.22);
+  -webkit-text-stroke: 1.5px rgba(240,239,245,.3);
   color: transparent;
   font-size: clamp(56px, 7vw, 100px);
   letter-spacing: -.05em; line-height: .88;
@@ -315,8 +315,8 @@ body, #root {
 }
 
 .ip-hero__sub {
-  font-size: 14px; font-weight: 300; color: var(--muted);
-  line-height: 1.8; max-width: 480px;
+  font-size: 16px; font-weight: 400; color: var(--muted);
+  line-height: 1.75; max-width: 480px;
   font-family: var(--body);
 }
 
@@ -358,8 +358,8 @@ body, #root {
 }
 
 .ip-hero__counter-label {
-  font-family: var(--mono); font-size: 9px; text-transform: uppercase;
-  letter-spacing: .18em; color: var(--dim); margin-top: 4px;
+  font-family: var(--mono); font-size: 10px; text-transform: uppercase;
+  letter-spacing: .16em; color: var(--muted); margin-top: 4px;
 }
 
 /* ── 3-COLUMN LAYOUT ────────────────────────────────── */
@@ -381,7 +381,7 @@ body, #root {
 }
 
 .ip-col:focus-within {
-  background: rgba(255,107,53,.015);
+  background: rgba(255,255,255,.02);
 }
 
 .ip-col__head {
@@ -391,34 +391,35 @@ body, #root {
 }
 
 .ip-col__num {
-  font-family: var(--mono); font-size: 9px; letter-spacing: .18em;
-  color: var(--acid); padding: 3px 7px;
-  border: 1px solid rgba(255,107,53,.2);
-  background: rgba(255,107,53,.06);
+  font-family: var(--mono); font-size: 12px; letter-spacing: .12em;
+  color: var(--acid); padding: 4px 10px;
+  border: 1px solid rgba(255,255,255,.25);
+  background: rgba(255,255,255,.08);
   margin-top: 3px; flex-shrink: 0;
+  font-weight: 600;
 }
 
 .ip-col__title {
-  font-family: var(--disp); font-size: 15px; font-weight: 600;
-  letter-spacing: -.02em; color: var(--fg); line-height: 1.1;
+  font-family: var(--disp); font-size: 32px; font-weight: 500;
+  letter-spacing: .02em; color: var(--fg); line-height: 1.1;
 }
 
 .ip-col__sub {
-  font-size: 11px; font-weight: 400; color: var(--dim); margin-top: 2px;
-  font-family: var(--mono); letter-spacing: .06em;
+  font-size: 14px; font-weight: 400; color: var(--muted); margin-top: 3px;
+  font-family: var(--mono); letter-spacing: .03em;
 }
 
 .ip-col__tag {
   margin-left: auto; flex-shrink: 0;
-  font-family: var(--mono); font-size: 8px; letter-spacing: .14em;
-  text-transform: uppercase; color: var(--dim);
-  border: 1px solid var(--stroke); padding: 3px 8px;
+  font-family: var(--mono); font-size: 11px; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--muted);
+  border: 1px solid rgba(255,255,255,.2); padding: 4px 10px;
 }
 
 .ip-col__tag--done {
   color: var(--acid) !important;
-  border-color: rgba(255,107,53,.3) !important;
-  background: rgba(255,107,53,.07) !important;
+  border-color: rgba(255,255,255,.4) !important;
+  background: rgba(255,255,255,.09) !important;
 }
 
 .ip-col__body {
@@ -431,7 +432,7 @@ body, #root {
 .ip-col__foot {
   flex-shrink: 0; display: flex; align-items: center; gap: 12px;
   padding: 12px 24px; border-top: 1px solid var(--stroke);
-  background: rgba(255,255,255,.01);
+  background: rgba(255,255,255,.015);
 }
 
 .ip-col__section--top { flex-shrink: 0; border-bottom: 1px solid var(--stroke); }
@@ -439,35 +440,35 @@ body, #root {
 
 .ip-col__rule {
   display: flex; align-items: center; gap: 12px;
-  padding: 0 20px; flex-shrink: 0; height: 34px;
-  background: rgba(255,255,255,.015); border-bottom: 1px solid var(--stroke);
+  padding: 0 20px; flex-shrink: 0; height: 36px;
+  background: rgba(255,255,255,.02); border-bottom: 1px solid var(--stroke);
 }
 
 .ip-col__rule-line { flex: 1; height: 1px; background: var(--stroke); }
 
 .ip-col__rule-label {
   display: flex; align-items: center; gap: 8px;
-  font-family: var(--mono); font-size: 9px; letter-spacing: .16em;
-  text-transform: uppercase; color: var(--dim); white-space: nowrap;
+  font-family: var(--mono); font-size: 12px; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--muted); white-space: nowrap;
 }
 
 /* ── DIVIDER ────────────────────────────────────────── */
 .ip-div {
   display: flex; flex-direction: column; align-items: center;
-  background: rgba(255,255,255,.02);
+  background: rgba(255,255,255,.025);
   border-left: 1px solid var(--stroke); border-right: 1px solid var(--stroke);
 }
 
 .ip-div__line {
   flex: 1; width: 1px;
   background: linear-gradient(to bottom, transparent, var(--acid) 40%, var(--acid) 60%, transparent);
-  opacity: .15;
+  opacity: .2;
 }
 
 .ip-div__node {
   width: 28px; height: 28px; flex-shrink: 0;
-  border: 1px solid rgba(255,107,53,.25);
-  background: rgba(255,107,53,.07);
+  border: 1px solid rgba(255,255,255,.3);
+  background: rgba(255,255,255,.09);
   display: flex; align-items: center; justify-content: center;
   color: var(--acid); transform: rotate(45deg);
 }
@@ -476,19 +477,26 @@ body, #root {
 
 /* ── TEXTAREA ───────────────────────────────────────── */
 .ip-ta {
-  flex: 1; width: 100%; resize: none; outline: none; border: none;
-  background: transparent; color: var(--fg);
-  font-family: var(--body); font-size: 13px; font-weight: 300; line-height: 1.9;
+  flex: 1; width: calc(100% - 48px); margin: 0 24px 24px;
+  resize: none; outline: none;
+  border: 1.5px solid rgba(255,255,255,.22);
+  background: rgba(255,255,255,.055); color: var(--fg);
+  font-family: var(--body); font-size: 16px; font-weight: 400; line-height: 1.75;
   padding: 22px 24px; min-height: 280px;
   caret-color: var(--acid);
-  overflow: hidden;
-  scrollbar-width: none;
+  overflow: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,.3) transparent;
+  transition: all .2s var(--ease);
+  border-radius: 2px;
 }
-.ip-ta::-webkit-scrollbar { display: none; }
+.ip-ta::-webkit-scrollbar { width: 6px; }
+.ip-ta::-webkit-scrollbar-thumb { background: rgba(255,255,255,.25); border-radius: 4px; }
 
-.ip-ta::placeholder { color: var(--dim); font-style: italic; line-height: 2; }
-.ip-ta:focus { outline: none; }
-.ip-ta--sm { min-height: 130px; font-size: 12.5px; }
+.ip-ta::placeholder { color: rgba(255,255,255,.4); font-style: normal; line-height: 1.75; }
+.ip-ta:hover { border-color: rgba(255,255,255,.32); }
+.ip-ta:focus { outline: none; border-color: var(--acid); background: rgba(255,255,255,.07); box-shadow: 0 0 0 3px rgba(255,255,255,.06); }
+.ip-ta--sm { min-height: 150px; font-size: 16px; }
 
 /* acid corner brackets on focus */
 .ip-ta__c {
@@ -504,7 +512,8 @@ body, #root {
 
 /* ── CHAR BAR ───────────────────────────────────────── */
 .ip-cbar {
-  flex: 1; height: 1.5px; background: var(--stroke); overflow: hidden;
+  flex: 1; height: 2px; background: var(--stroke); overflow: hidden;
+  border-radius: 2px;
 }
 
 .ip-cbar__fill {
@@ -514,28 +523,29 @@ body, #root {
 }
 
 .ip-cbar__label {
-  font-family: var(--mono); font-size: 9px; color: var(--dim); white-space: nowrap;
+  font-family: var(--mono); font-size: 11px; color: var(--muted); white-space: nowrap;
 }
-.ip-cbar__label em { font-style: normal; opacity: .4; }
+.ip-cbar__label em { font-style: normal; opacity: .6; }
 
 /* ── DROPZONE ───────────────────────────────────────── */
 .ip-drop {
   flex: 1; display: flex; flex-direction: column; align-items: center;
-  justify-content: center; gap: 10px; padding: 28px 20px;
+  justify-content: center; gap: 12px; padding: 28px 20px;
   cursor: pointer; text-align: center; position: relative; z-index: 1;
-  border: 1px dashed rgba(255,255,255,.08); margin: 14px;
-  transition: all .25s var(--ease); background: var(--ghost);
+  border: 1.5px dashed rgba(255,255,255,.32); margin: 24px;
+  border-radius: 3px;
+  transition: all .25s var(--ease); background: rgba(255,255,255,.05);
 }
 
 .ip-drop::before {
   content: ''; position: absolute; inset: 0; pointer-events: none;
   background: repeating-linear-gradient(
     -45deg, transparent 0, transparent 5px,
-    rgba(255,255,255,.012) 5px, rgba(255,255,255,.012) 6px
+    rgba(255,255,255,.02) 5px, rgba(255,255,255,.02) 6px
   );
 }
 
-.ip-drop:hover { border-color: rgba(255,107,53,.3); background: rgba(255,107,53,.03); }
+.ip-drop:hover { border-color: var(--acid); background: rgba(255,255,255,.09); }
 
 .ip-drop__icon {
   width: 48px; height: 48px;
@@ -548,23 +558,23 @@ body, #root {
 .ip-drop:hover .ip-drop__icon { border-color: var(--acid); color: var(--acid); }
 
 .ip-drop__label {
-  font-family: var(--disp); font-size: 12px; font-weight: 500;
-  color: var(--muted); transition: color .2s;
+  font-family: var(--disp); font-size: 27px; font-weight: 500;
+  color: var(--fg); transition: color .2s; letter-spacing: .04em;
 }
 
-.ip-drop:hover .ip-drop__label { color: var(--fg); }
-.ip-drop__hint { font-family: var(--mono); font-size: 9px; color: var(--dim); letter-spacing: .1em; }
+.ip-drop:hover .ip-drop__label { color: var(--acid); }
+.ip-drop__hint { font-family: var(--mono); font-size: 13px; color: var(--muted); letter-spacing: .05em; }
 
 .ip-drop__loaded { display: flex; align-items: center; gap: 14px; padding: 24px; width: 100%; }
 
 .ip-drop__loaded-icon {
-  width: 42px; height: 42px; flex-shrink: 0; background: rgba(255,107,53,.1);
-  border: 1px solid rgba(255,107,53,.25);
+  width: 42px; height: 42px; flex-shrink: 0; background: rgba(255,255,255,.12);
+  border: 1px solid rgba(255,255,255,.3);
   display: flex; align-items: center; justify-content: center; color: var(--acid);
 }
 
-.ip-drop__loaded-name { font-size: 13px; font-weight: 500; color: var(--fg); margin-bottom: 3px; }
-.ip-drop__loaded-size { font-family: var(--mono); font-size: 10px; color: var(--muted); letter-spacing: .06em; }
+.ip-drop__loaded-name { font-size: 14px; font-weight: 500; color: var(--fg); margin-bottom: 3px; }
+.ip-drop__loaded-size { font-family: var(--mono); font-size: 11px; color: var(--muted); letter-spacing: .05em; }
 
 /* ── CTA BAND ───────────────────────────────────────── */
 .ip-cta {
@@ -574,11 +584,13 @@ body, #root {
   border: 1px solid var(--stroke); border-top: none;
   background: var(--surface);
   overflow: hidden; gap: 0;
+  flex-wrap: wrap;
 }
 
 .ip-cta__left {
   display: flex; align-items: center; gap: 24px;
   padding: 20px 28px; flex: 1;
+  flex-wrap: wrap;
 }
 
 .ip-cta__status {
@@ -587,7 +599,7 @@ body, #root {
 
 .ip-cta__status-dot {
   width: 6px; height: 6px; border-radius: 50%; background: var(--acid);
-  box-shadow: 0 0 8px rgba(255,107,53,.6);
+  box-shadow: 0 0 8px rgba(255,255,255,.6);
   animation: dot-pulse 2s ease-in-out infinite;
 }
 
@@ -597,27 +609,29 @@ body, #root {
 }
 
 .ip-cta__status-text {
-  font-family: var(--mono); font-size: 10px; letter-spacing: .1em;
-  text-transform: uppercase; color: var(--dim);
+  font-family: var(--mono); font-size: 13px; letter-spacing: .06em;
+  text-transform: uppercase; color: var(--fg);
 }
 
 .ip-cta__trust {
-  font-family: var(--mono); font-size: 10px; color: var(--dim);
-  opacity: .5; letter-spacing: .06em;
+  font-family: var(--mono); font-size: 13px; color: var(--muted);
+  letter-spacing: .03em;
 }
 
 /* ── SUBMIT BUTTON ──────────────────────────────────── */
 .ip-btn {
-  display: inline-flex; align-items: center;
-  padding: 20px 40px; height: 100%;
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: 20px 48px; height: 100%;
   background: var(--acid); color: var(--void);
   border: none; cursor: pointer;
-  font-family: var(--disp); font-size: 14px; font-weight: 700;
-  letter-spacing: -.01em; white-space: nowrap;
+  font-family: var(--disp); font-size: 26px; font-weight: 500;
+  letter-spacing: .02em; white-space: nowrap;
   position: relative; overflow: hidden;
   transition: all .3s var(--ease);
-  border-left: 1px solid rgba(255,107,53,.3);
+  border-left: 1px solid rgba(255,255,255,.3);
 }
+
+.ip-btn:disabled { cursor: not-allowed; opacity: .75; }
 
 .ip-btn::before {
   content: ''; position: absolute; top: 0; left: -100%; width: 60%;
@@ -631,7 +645,7 @@ body, #root {
 
 .ip-btn:hover {
   background: var(--acidh);
-  box-shadow: 0 0 40px rgba(255,107,53,.25);
+  box-shadow: 0 0 40px rgba(255,255,255,.25);
 }
 
 .ip-btn:active { transform: scaleX(.98); }
@@ -650,7 +664,7 @@ body, #root {
   font-family: var(--accent);
   font-size: 260px; line-height: 1;
   color: transparent;
-  -webkit-text-stroke: 1px rgba(255,107,53,.04);
+  -webkit-text-stroke: 1px rgba(255,255,255,.05);
   pointer-events: none; z-index: 0;
   user-select: none; letter-spacing: -.02em;
 }
@@ -658,8 +672,8 @@ body, #root {
 /* ── SPINNER ────────────────────────────────────────── */
 @keyframes spin { to { transform: rotate(360deg); } }
 .ip-btn__spinner {
-  display: inline-block; width: 13px; height: 13px;
-  border: 1.5px solid rgba(6,6,8,.3); border-top-color: var(--void);
+  display: inline-block; width: 14px; height: 14px;
+  border: 2px solid rgba(6,6,8,.3); border-top-color: var(--void);
   border-radius: 50%; animation: spin .7s linear infinite;
 }
 
@@ -686,7 +700,7 @@ body, #root {
   .ip-div { flex-direction: row; height: 44px; }
   .ip-div__line { flex: 1; height: 1px; width: auto; }
   .ip-cta { margin: 0 22px 28px; flex-direction: column; }
-  .ip-btn { width: 100%; justify-content: center; border-left: none; border-top: 1px solid rgba(255,107,53,.3); }
+  .ip-btn { width: 100%; justify-content: center; border-left: none; border-top: 1px solid rgba(255,255,255,.3); }
   .ip-bar { padding: 0 22px; }
   .ip-bar__crumb, .ip-bar__name { display: none; }
   .ip-deco { display: none; }
@@ -732,11 +746,11 @@ export default function InterviewPage() {
   /* inject CSS */
   useEffect(() => {
     const id = "ip-v2-css";
-    if (!document.getElementById(id)) {
-      const s = document.createElement("style");
-      s.id = id; s.textContent = CSS;
-      document.head.appendChild(s);
-    }
+    const existing = document.getElementById(id);
+    if (existing) existing.remove();
+    const s = document.createElement("style");
+    s.id = id; s.textContent = CSS;
+    document.head.appendChild(s);
   }, []);
 
   const nav = (p) => navigate.push ? navigate.push(p) : navigate(p);

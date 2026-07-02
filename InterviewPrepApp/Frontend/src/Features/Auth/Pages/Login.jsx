@@ -61,13 +61,14 @@ const Login = () => {
       {/* BG */}
       <div className="lx-bg">
         <div className="lx-bg__grid" />
-        {[0,1,2].map(i => <div key={i} className={`lx-bg__orb lx-bg__orb--${i}`} />)}
         <div className="lx-bg__noise" />
-        {/* Vertical lines */}
-        {[0,1,2,3,4].map(i => <div key={i} className={`lx-vline lx-vline--${i}`} />)}
-        {/* Floating particles */}
-        {[...Array(16)].map((_, i) => <div key={i} className={`lx-particle lx-particle--${i}`} />)}
       </div>
+
+      {/* Back button */}
+      <Link to="/home" className="lx-back-btn">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        BACK TO HOME
+      </Link>
 
       {/* Split layout */}
       <div className="lx-layout">
@@ -244,12 +245,12 @@ const Login = () => {
           --fg: #f0eeff;
           --muted: #5a5878;
           --dim: #1e1c2c;
-          --p: #ff3cac;
-          --q: #784ba0;
-          --r: #2b86c5;
-          --s: #00f2fe;
-          --border: rgba(255,255,255,0.06);
-          --grad: linear-gradient(135deg, #ff3cac, #784ba0, #2b86c5);
+          --p: #ffffff;
+          --q: #cccccc;
+          --r: #aaaaaa;
+          --s: #888888;
+          --border: rgba(255,255,255,0.12);
+          --grad: #ffffff;
           --card: rgba(8,7,18,0.97);
         }
 
@@ -258,16 +259,18 @@ const Login = () => {
         .lx-root {
           min-height: 100vh;
           background: var(--bg);
-          font-family: 'Epilogue', sans-serif;
+          font-family: 'Inter', sans-serif;
           color: var(--fg);
           overflow: hidden;
           position: relative;
         }
+        .lx-back-btn { position:absolute;top:40px;left:40px;z-index:100;display:flex;align-items:center;gap:8px;font-family:'Bebas Neue', sans-serif;font-size:24px;color:var(--muted);text-decoration:none;transition:color .2s;letter-spacing:.05em; }
+        .lx-back-btn:hover { color:var(--fg); }
 
         /* ── CURSOR */
         .lx-cursor-ring {
           position: fixed; width: 40px; height: 40px; border-radius: 50%;
-          border: 1.5px solid rgba(255,60,172,0.5);
+          border: 1.5px solid rgba(255,255,255,0.5);
           pointer-events: none; z-index: 9999;
           transition: transform 0.15s cubic-bezier(0.4,0,0.2,1), width 0.2s, height 0.2s, border-color 0.2s;
           mix-blend-mode: difference;
@@ -283,8 +286,8 @@ const Login = () => {
         .lx-bg__grid {
           position: absolute; inset: 0;
           background-image:
-            linear-gradient(rgba(255,60,172,0.03) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(255,60,172,0.03) 1px, transparent 1px);
+            linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
           background-size: 60px 60px;
         }
         .lx-bg__noise { position:absolute;inset:0;opacity:0.04;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:180px; }
@@ -293,12 +296,12 @@ const Login = () => {
         @keyframes orb-pulse { 0%,100%{opacity:.3}50%{opacity:.6} }
 
         .lx-bg__orb { position:absolute;border-radius:50%;filter:blur(80px); }
-        .lx-bg__orb--0 { width:700px;height:700px;top:-200px;left:-100px;background:rgba(255,60,172,0.12);animation:orb-drift 18s ease-in-out infinite,orb-pulse 6s ease-in-out infinite; }
+        .lx-bg__orb--0 { width:700px;height:700px;top:-200px;left:-100px;background:rgba(255,255,255,0.12);animation:orb-drift 18s ease-in-out infinite,orb-pulse 6s ease-in-out infinite; }
         .lx-bg__orb--1 { width:600px;height:600px;bottom:-200px;right:-100px;background:rgba(43,134,197,0.12);animation:orb-drift 22s ease-in-out infinite reverse,orb-pulse 8s ease-in-out infinite reverse; }
         .lx-bg__orb--2 { width:400px;height:400px;top:40%;left:40%;background:rgba(120,75,160,0.08);animation:orb-pulse 10s ease-in-out infinite; }
 
         .lx-vline { position:absolute;top:0;bottom:0;width:1px; }
-        .lx-vline--0 { left:20%;background:linear-gradient(180deg,transparent,rgba(255,60,172,0.06) 30%,rgba(255,60,172,0.06) 70%,transparent); }
+        .lx-vline--0 { left:20%;background:linear-gradient(180deg,transparent,rgba(255,255,255,0.06) 30%,rgba(255,255,255,0.06) 70%,transparent); }
         .lx-vline--1 { left:40%;background:linear-gradient(180deg,transparent,rgba(120,75,160,0.04) 40%,rgba(120,75,160,0.04) 60%,transparent); }
         .lx-vline--2 { left:60%;background:linear-gradient(180deg,transparent,rgba(120,75,160,0.04) 40%,rgba(120,75,160,0.04) 60%,transparent); }
         .lx-vline--3 { left:80%;background:linear-gradient(180deg,transparent,rgba(43,134,197,0.06) 30%,rgba(43,134,197,0.06) 70%,transparent); }
@@ -324,18 +327,15 @@ const Login = () => {
           min-height: 100vh; position: relative; z-index: 1;
         }
 
-        @keyframes panel-in-left { from{opacity:0;transform:translateX(-40px)}to{opacity:1;transform:none} }
-        @keyframes panel-in-right { from{opacity:0;transform:translateX(40px)}to{opacity:1;transform:none} }
 
         /* ── LEFT PANEL */
         .lx-panel--left {
-          background: linear-gradient(160deg, rgba(255,60,172,0.07) 0%, rgba(6,6,14,0.95) 60%);
+          background: linear-gradient(160deg, rgba(255,255,255,0.07) 0%, rgba(6,6,14,0.95) 60%);
           border-right: 1px solid var(--border);
           display: flex; align-items: center; justify-content: center;
           padding: 80px 60px; position: relative; overflow: hidden;
-          opacity: 0;
+          opacity: 1;
         }
-        .lx-panel--left.lx-panel--in { animation: panel-in-left 0.8s cubic-bezier(0.22,1,0.36,1) 0.1s both; }
 
         .lx-panel__content { display: flex; flex-direction: column; gap: 60px; max-width: 380px; width: 100%; }
 
@@ -351,17 +351,17 @@ const Login = () => {
           position: absolute; border-radius: 50%;
           border-style: solid;
         }
-        .lx-ring--0 { inset:0;border-width:1px;border-color:rgba(255,60,172,0.3) transparent transparent transparent;animation:ring-spin-0 4s linear infinite; }
+        .lx-ring--0 { inset:0;border-width:1px;border-color:rgba(255,255,255,0.3) transparent transparent transparent;animation:ring-spin-0 4s linear infinite; }
         .lx-ring--1 { inset:12px;border-width:1px;border-color:transparent rgba(120,75,160,0.4) transparent transparent;animation:ring-spin-1 6s linear infinite; }
         .lx-ring--2 { inset:24px;border-width:1px;border-color:rgba(43,134,197,0.3) transparent rgba(43,134,197,0.3) transparent;animation:ring-spin-2 3s linear infinite; }
-        .lx-ring--3 { inset:36px;border-width:1.5px;border-color:transparent rgba(255,60,172,0.5) transparent transparent;animation:ring-spin-3 8s linear infinite; }
+        .lx-ring--3 { inset:36px;border-width:1.5px;border-color:transparent rgba(255,255,255,0.5) transparent transparent;animation:ring-spin-3 8s linear infinite; }
 
         .lx-brand-art__core {
           position: absolute; inset: 44px;
           background: var(--grad);
           border-radius: 50%;
           display: flex; align-items: center; justify-content: center;
-          box-shadow: 0 0 30px rgba(255,60,172,0.4);
+          box-shadow: 0 0 30px rgba(255,255,255,0.4);
         }
 
         .lx-panel__overline { font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:0.22em;text-transform:uppercase;color:var(--p);margin-bottom:16px; }
@@ -389,9 +389,8 @@ const Login = () => {
         /* ── RIGHT PANEL */
         .lx-panel--right {
           display: flex; align-items: center; justify-content: center;
-          padding: 60px 48px; opacity: 0;
+          padding: 60px 48px; opacity: 1;
         }
-        .lx-panel--right.lx-panel--in { animation: panel-in-right 0.8s cubic-bezier(0.22,1,0.36,1) 0.2s both; }
 
         .lx-form-wrap { width: 100%; max-width: 420px; }
         .lx-form-wrap__inner { display: flex; flex-direction: column; gap: 0; }
@@ -401,7 +400,7 @@ const Login = () => {
         .lx-logo__mark {
           width: 36px; height: 36px; border-radius: 50%;
           background: var(--grad); animation: logo-spin 8s linear infinite;
-          box-shadow: 0 0 20px rgba(255,60,172,0.4);
+          box-shadow: 0 0 20px rgba(255,255,255,0.4);
           position: relative;
         }
         .lx-logo__mark::after {
@@ -442,18 +441,18 @@ const Login = () => {
         }
         .lx-field__input::placeholder { color:rgba(255,255,255,0.15);font-weight:300; }
         .lx-field__input:-webkit-autofill { -webkit-box-shadow:0 0 0 100px #08071a inset;-webkit-text-fill-color:var(--fg); }
-        .lx-field--focused .lx-field__input { background:rgba(255,60,172,0.04); }
+        .lx-field--focused .lx-field__input { background:rgba(255,255,255,0.04); }
 
         .lx-field__border {
           position:absolute;inset:0;border-radius:4px;pointer-events:none;
           border:1px solid rgba(255,255,255,0.07);transition:border-color 0.2s;
         }
-        .lx-field--focused .lx-field__border { border-color:rgba(255,60,172,0.4); }
+        .lx-field--focused .lx-field__border { border-color:rgba(255,255,255,0.4); }
         .lx-field__glow {
           position:absolute;inset:0;border-radius:4px;pointer-events:none;
-          box-shadow:0 0 0 0 rgba(255,60,172,0);transition:box-shadow 0.3s;
+          box-shadow:0 0 0 0 rgba(255,255,255,0);transition:box-shadow 0.3s;
         }
-        .lx-field--focused .lx-field__glow { box-shadow:0 0 0 4px rgba(255,60,172,0.08),0 0 30px rgba(255,60,172,0.08); }
+        .lx-field--focused .lx-field__glow { box-shadow:0 0 0 4px rgba(255,255,255,0.08),0 0 30px rgba(255,255,255,0.08); }
 
         .lx-field__icon { position:absolute;right:18px;top:50%;transform:translateY(-50%);color:var(--muted);opacity:0.5;pointer-events:none; }
         .lx-field__toggle { position:absolute;right:18px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--muted);opacity:0.5;cursor:pointer;padding:0;display:flex;transition:opacity 0.2s; }
@@ -467,13 +466,13 @@ const Login = () => {
         .lx-submit {
           position:relative;width:100%;padding:18px 0;
           background:var(--grad);border:none;border-radius:4px;
-          color:white;font-family:'Bebas Neue',sans-serif;font-size:20px;
+          color:#05050d;font-family:'Bebas Neue',sans-serif;font-size:20px;
           letter-spacing:0.12em;cursor:pointer;overflow:hidden;
-          box-shadow:0 8px 40px rgba(255,60,172,0.3);
+          box-shadow:0 8px 40px rgba(255,255,255,0.3);
           transition:transform 0.2s,box-shadow 0.3s;
           margin-bottom:32px;
         }
-        .lx-submit:hover { transform:translateY(-2px);box-shadow:0 20px 60px rgba(255,60,172,0.5); }
+        .lx-submit:hover { transform:translateY(-2px);box-shadow:0 20px 60px rgba(255,255,255,0.5); }
         .lx-submit__text { position:relative;z-index:2; }
         .lx-submit__noise { position:absolute;inset:0;opacity:0.06;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:120px; }
         @keyframes submit-shine { from{transform:skewX(-20deg) translateX(-200%)}to{transform:skewX(-20deg) translateX(300%)} }
@@ -492,7 +491,7 @@ const Login = () => {
 
         .lx-social { display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:32px; }
         .lx-social-btn { display:flex;align-items:center;justify-content:center;gap:8px;padding:13px;background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:4px;color:var(--muted);font-size:13px;font-weight:500;cursor:pointer;font-family:'Epilogue',sans-serif;letter-spacing:0.04em;transition:all 0.2s; }
-        .lx-social-btn:hover { border-color:rgba(255,60,172,0.3);color:var(--fg);background:rgba(255,60,172,0.04); }
+        .lx-social-btn:hover { border-color:rgba(255,255,255,0.3);color:var(--fg);background:rgba(255,255,255,0.04); }
 
         .lx-switch { text-align:center;font-size:13px;color:var(--muted); }
         .lx-switch__link { color:var(--p);text-decoration:none;font-weight:500;transition:color 0.2s; }

@@ -1,4 +1,4 @@
-import {BrowserRouter, Route, Routes} from 'react-router-dom'
+import {BrowserRouter, Route, Routes, useLocation} from 'react-router-dom'
 import Login from "./Features/Auth/Pages/Login.jsx";
 import Register from "./Features/Auth/Pages/Register.jsx";
 import Public from "./Features/Auth/components/Public.jsx";
@@ -7,11 +7,13 @@ import InterviewPage from './Features/Interview/pages/InterviewPage.jsx';
 import Private from './Features/Interview/components/Private.jsx';
 import ReportPage from './Features/Interview/pages/ReportPage.jsx';
 import ReportByIdPage from './Features/Interview/pages/ReportbyId.jsx';
+import PageTransition from './Features/Auth/components/PageTransition.jsx';
 
-const AppRoutes = () => {
+function AnimatedRoutes() {
+    const location = useLocation()
     return (
-        <BrowserRouter>
-            <Routes>
+        <PageTransition>
+            <Routes location={location}>
                 <Route
                     path="/login"
                     element={
@@ -61,6 +63,14 @@ const AppRoutes = () => {
                     }
                 />
             </Routes>
+        </PageTransition>
+    )
+}
+
+const AppRoutes = () => {
+    return (
+        <BrowserRouter>
+            <AnimatedRoutes />
         </BrowserRouter>
     )
 }
