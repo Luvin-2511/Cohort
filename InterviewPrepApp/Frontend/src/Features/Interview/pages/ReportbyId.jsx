@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import useInterview from "../hooks/useInterview";
+import useAuth from "../../Auth/hooks/useAuth";
 
 /* ═══════════════════════════════════════════════════════════════
    REPORT PAGE — matches InterviewPage design system exactly
@@ -694,6 +695,12 @@ export default function ReportByIdPage() {
   const navigate = useNavigate();
   const { reportId } = useParams();
   const { handleReportById, loading, report, handleResumePdf } = useInterview();
+  const { user, handleLogout } = useAuth();
+
+  const onSignOut = async () => {
+    await handleLogout();
+    navigate("/login");
+  };
 
   /* cursor glow */
   useEffect(() => {
@@ -840,8 +847,8 @@ export default function ReportByIdPage() {
             <div className="rp-menu__header">
               <div className="rp-menu__avatar">A</div>
               <div>
-                <p className="rp-menu__name">Alex Johnson</p>
-                <p className="rp-menu__email">alex@gmail.com</p>
+                <p className="rp-menu__name">{user?.username}</p>
+                <p className="rp-menu__email">{user?.email}</p>
               </div>
             </div>
             <div className="rp-menu__divider" />
@@ -864,7 +871,7 @@ export default function ReportByIdPage() {
               </button>
               <button
                 className="rp-menu__item rp-menu__item--danger"
-                onClick={() => setMenuOpen(false)}
+                onClick={onSignOut}
               >
                 <ExitI />
                 Sign out

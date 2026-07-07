@@ -1,5 +1,5 @@
 const interviewReportModel = require("../models/interviewReport.mode");
-const {generateInterviewReport,generateResumePDF} = require("../services/ai.service");
+const { generateInterviewReport, generateResumePDF } = require("../services/ai.service");
 const pdfParse = require("pdf-parse");
 
 /**
@@ -100,21 +100,21 @@ async function interviewReportByIdController(req, res) {
  * @param {import('express').Response} res
  */
 async function interviewReportsController(req, res) {
-  const {id} = req.user
+  const { id } = req.user
   const allReports = await interviewReportModel.find({
-    user:id
+    user: id
   }).select("-resume -selfDescription -jobDescription")
 
-  if(!allReports){
+  if (!allReports) {
     return res.status(404).json({
-      message:"User haven't created any reports yet !",
-      success:false
+      message: "User haven't created any reports yet !",
+      success: false
     })
   }
 
   return res.status(200).json({
-    message:"Reports fetched successfully !",
-    success:false,
+    message: "Reports fetched successfully !",
+    success: false,
     allReports
   })
 }
@@ -126,24 +126,24 @@ async function interviewReportsController(req, res) {
  * @param {import('express').Response} res
  */
 async function convertResumeToPdfController(req, res) {
-  const {reportId} = req.params
-  if(!reportId){
+  const { reportId } = req.params
+  if (!reportId) {
     return res.status(404).json({
-      success:false,
-      message:"reportId is Required"
+      success: false,
+      message: "reportId is Required"
     })
   }
 
   const interviewReport = await interviewReportModel.findById(reportId)
-  if(!interviewReport){
+  if (!interviewReport) {
     return res.status(404).json({
-      success:false,
-      message:"reportId is Required"
+      success: false,
+      message: "reportId is Required"
     })
   }
 
-  const {jobDescription,selfDescription,resume} = interviewReport
-  const response = await generateResumePDF({jobDescription,selfDescription,resume})
+  const { jobDescription, selfDescription, resume } = interviewReport
+  const response = await generateResumePDF({ jobDescription, selfDescription, resume })
 
   res.set({
     "Content-Type": "application/pdf",

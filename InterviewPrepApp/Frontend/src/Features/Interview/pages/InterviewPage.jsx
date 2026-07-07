@@ -1,6 +1,7 @@
 import React, { useRef, useEffect, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import useAuth from "../../Auth/hooks/useAuth";
+import useInterview from "../hooks/useInterview";
 
 /* ═══════════════════════════════════════════════════════════════════
    AWWWARDS-LEVEL DARK UI
@@ -715,13 +716,22 @@ export default function InterviewPage() {
   const [resume,   setResume]   = useState(null);
   const [selfDesc, setSelfDesc] = useState("");
   const [jobDesc,  setJobDesc]  = useState("");
-  const [loading,  setLoading]  = useState(false);
+  const { handleInterviewReport, loading } = useInterview();
 
   const menuRef   = useRef(null);
   const cursorRef = useRef(null);
-  const navigate  = useNavigate?.() ?? {};
-  const {user} = useAuth()
+  const navigate  = useNavigate();
+  const {user, handleLogout} = useAuth()
   console.log(user)
+
+  const onSignOut = async () => {
+    try {
+      await handleLogout();
+      nav('/login');
+    } catch (e) {
+      console.log(e);
+    }
+  }
 
   /* cursor glow */
   useEffect(() => {
@@ -753,13 +763,21 @@ export default function InterviewPage() {
     document.head.appendChild(s);
   }, []);
 
-  const nav = (p) => navigate.push ? navigate.push(p) : navigate(p);
+  const nav = (p) => navigate(p);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
-    // hook call here
-    setLoading(false);
+    if (!jobDesc || !resume || !selfDesc) return;
+    
+    const response = await handleInterviewReport({
+      jobDescription: jobDesc,
+      resume: resume,
+      selfDescription: selfDesc,
+    });
+    
+    if (response?.interviewReport?._id) {
+      nav(`/report/${response.interviewReport._id}`);
+    }
   };
 
   const menuItems = [
@@ -828,7 +846,7 @@ export default function InterviewPage() {
               <button className="ip-menu__item" onClick={() => setMenuOpen(false)}>
                 <HelpI />Help & Support
               </button>
-              <button className="ip-menu__item ip-menu__item--danger" onClick={() => setMenuOpen(false)}>
+              <button className="ip-menu__item ip-menu__item--danger" onClick={onSignOut}>
                 <ExitI />Sign out
               </button>
             </div>
@@ -1020,7 +1038,6 @@ export default function InterviewPage() {
   );
 }
 
-/* ── Icons ── */
 const GridI   = () => <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><rect x="1" y="1" width="4.5" height="4.5" rx=".5" stroke="currentColor" strokeWidth="1"/><rect x="7.5" y="1" width="4.5" height="4.5" rx=".5" stroke="currentColor" strokeWidth="1"/><rect x="1" y="7.5" width="4.5" height="4.5" rx=".5" stroke="currentColor" strokeWidth="1"/><rect x="7.5" y="7.5" width="4.5" height="4.5" rx=".5" stroke="currentColor" strokeWidth="1"/></svg>;
 const DocI    = () => <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M2 2h9v9H2z" stroke="currentColor" strokeWidth="1" strokeLinejoin="round"/><path d="M5 5h3M5 7h2" stroke="currentColor" strokeWidth="1" strokeLinecap="round"/></svg>;
 const PersonI = () => <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="4" r="2.5" stroke="currentColor" strokeWidth="1"/><path d="M1.5 11.5c0-2.485 2.239-4.5 5-4.5s5 2.015 5 4.5" stroke="currentColor" strokeWidth="1" strokeLinecap="round"/></svg>;

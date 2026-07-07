@@ -336,7 +336,18 @@ export default function ReportsPage() {
   const cursorRef = useRef(null);
   const navigate  = useNavigate();
   const { allreports, handleReports } = useInterview();
-  const {user} = useAuth()
+  const {user, handleLogout} = useAuth()
+
+  const nav = (p) => navigate(p);
+
+  const onSignOut = async () => {
+    try {
+      await handleLogout();
+      nav('/login');
+    } catch (e) {
+      console.log(e);
+    }
+  }
   
 
   /* cursor glow */
@@ -369,8 +380,6 @@ export default function ReportsPage() {
 
   /* fetch */
   useEffect(() => { handleReports(); }, []);
-
-  const nav = (p) => navigate(p);
 
   const avgScore = allreports?.length
     ? Math.round(allreports.reduce((a, r) => a + r.score, 0) / allreports.length)
@@ -435,7 +444,7 @@ export default function ReportsPage() {
             <div className="rps-menu__divider" />
             <div className="rps-menu__section">
               <button className="rps-menu__item" onClick={() => setMenuOpen(false)}><HelpI />Help & Support</button>
-              <button className="rps-menu__item rps-menu__item--danger" onClick={() => setMenuOpen(false)}><ExitI />Sign out</button>
+              <button className="rps-menu__item rps-menu__item--danger" onClick={onSignOut}><ExitI />Sign out</button>
             </div>
           </div>
         </div>
