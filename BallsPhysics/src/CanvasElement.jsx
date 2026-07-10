@@ -37,8 +37,8 @@ const SphereModel = ({ color, position }) => {
         position={position}
         colliders="ball"
         restitution={1}
-        linearDamping={4}
-        angularDamping={0.5}
+        linearDamping={1}
+        angularDamping={2}
         ref={ballRef}
       >
         <mesh ref={meshRef}>
