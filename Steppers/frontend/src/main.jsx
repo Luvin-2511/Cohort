@@ -5,9 +5,10 @@ import "./index.css";
 import App from "./App.jsx";
 import { store } from "./stores/store.js";
 import { Provider } from "react-redux";
+import PageSwitcher from "./features/shared/components/PageSwitcher.jsx";
 
 createRoot(document.getElementById("root")).render(
   <Provider store={store}>
-    <App />
+      <App />
   </Provider>,
 );
