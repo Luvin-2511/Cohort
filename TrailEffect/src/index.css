@@ -22,8 +22,8 @@ main {
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
-  /* background-image: url('/img.jpg'); */
   /* background: radial-gradient(200px circle at 500px 500px,transparent,black) ; */
+  background-image: url('/img.jpg');
   z-index: 2;
   transition: all 0.5s ease;
 }
@@ -34,8 +34,8 @@ main {
   width: 100vw;
   background-position: center;
   background-size: cover;
-  background-repeat: no-repeat;
   background-image: url('/behind.png');
+  background-repeat: no-repeat;
   /* background: rgb(79, 6, 6); */
   mix-blend-mode:difference;
   z-index: 1;
