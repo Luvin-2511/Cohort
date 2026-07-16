@@ -22,13 +22,24 @@ const App = () => {
       }}
     >
       <div
-        style={{
-          backgroundImage: isVisible
-            ? `radial-gradient(200px circle at ${coor.x}px ${coor.y}px,transparent,black)`
-            : "url('/img.jpg')",
-        }}
-        className="upper"
-      ></div>
+  className="upper"
+  style={{
+    WebkitMaskImage: `radial-gradient(
+      400px circle at ${coor.x}px ${coor.y}px,
+      transparent 0,
+      transparent 180px,
+      black 220px
+    )`,
+    maskImage: `radial-gradient(
+      400px circle at ${coor.x}px ${coor.y}px,
+      transparent 0,
+      transparent 180px,
+      black 220px
+    )`,
+    WebkitMaskRepeat: "no-repeat",
+    maskRepeat: "no-repeat",
+  }}
+></div>
       <div className="lower"></div>
     </main>
   );
