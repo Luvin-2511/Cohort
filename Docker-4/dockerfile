@@ -1,26 +1,28 @@
-# Stage Number - 1(Backend)
-FROM node:20-alpine
+# Stage Number - 1(Frontend)
+
+FROM node:20-alpine AS frontend_builder
 
 WORKDIR /app
 
-COPY package*.json /app
+COPY ./frontend/package*.json /app
 
 RUN npm install
 
-COPY . /app
+COPY ./frontend /app
 
-CMD [ "node","server.js" ]
+RUN npm run build
 
-# Stage Number - 2(Frontend)
-
-FROM node:20-alpine
+# Stage Number - 2(Backend)
+FROM node:20-alpine 
 
 WORKDIR /app
 
-COPY package*.json /app
+COPY ./backend/package*.json /app
 
 RUN npm install
 
-COPY . /app
+COPY ./backend /app
 
-RUN npm build
+COPY --from=frontend_builder /app/dist /app/public
+
+CMD ["node","server.js"]
