@@ -3,6 +3,8 @@ import cors from 'cors'
 const app = express()
 
 app.use(cors())
+app.use(express.static("public"))
+
 
 app.get('/',(req,res)=>{
     res.send("Health Check")
@@ -42,6 +44,10 @@ app.get('/api/data',(req,res)=>{
   }
 ];
     res.json(movies)
+})
+
+app.get('*name',(req,res)=>{
+  res.sendFile('/public/index.html',{root:__dirname})
 })
 
 app.listen(3000, () => {
