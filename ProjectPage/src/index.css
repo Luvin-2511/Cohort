@@ -1,0 +1,30 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root,
+.canvas-wrapper,
+Canvas {
+  height: 100%;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.884);
+}
+
+.plane-wrapper {
+  width: 7rem;
+  background: white;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.plane-wrapper img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  scale: 1.4;
+}
