@@ -328,15 +328,15 @@ body, #root { background: var(--void); color: var(--fg); font-family: var(--body
 
 const scoreColor = (s) => s >= 85 ? "#34d399" : s >= 65 ? "#fbbf24" : "#ff4d4d";
 const scoreLabel = (s) => s >= 85 ? "Strong" : s >= 65 ? "Good" : "Needs Work";
-const fmtDate    = (iso) => new Date(iso).toLocaleDateString("en-US", { day: "numeric", month: "short", year: "numeric" });
+const fmtDate = (iso) => new Date(iso).toLocaleDateString("en-US", { day: "numeric", month: "short", year: "numeric" });
 
 export default function ReportsPage() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const menuRef   = useRef(null);
+  const menuRef = useRef(null);
   const cursorRef = useRef(null);
-  const navigate  = useNavigate();
+  const navigate = useNavigate();
   const { allreports, handleReports } = useInterview();
-  const {user, handleLogout} = useAuth()
+  const { user, handleLogout } = useAuth()
 
   const nav = (p) => navigate(p);
 
@@ -348,14 +348,14 @@ export default function ReportsPage() {
       console.log(e);
     }
   }
-  
+
 
   /* cursor glow */
   useEffect(() => {
     const move = (e) => {
       if (!cursorRef.current) return;
       cursorRef.current.style.left = e.clientX + "px";
-      cursorRef.current.style.top  = e.clientY + "px";
+      cursorRef.current.style.top = e.clientY + "px";
     };
     window.addEventListener("mousemove", move, { passive: true });
     return () => window.removeEventListener("mousemove", move);
@@ -386,24 +386,24 @@ export default function ReportsPage() {
     : 0;
 
   const marqueeItems = [
-    { text: "Your Reports",      hot: true },
+    { text: "Your Reports", hot: true },
     { text: "Fit Score Analysis" },
-    { text: "Gap Tracking",      hot: true },
-    { text: "Prep History"       },
-    { text: "FAANG Ready",       hot: true },
-    { text: "AI-Powered"         },
-    { text: "Staff-Level Prep",  hot: true },
-    { text: "Interview Intel"    },
+    { text: "Gap Tracking", hot: true },
+    { text: "Prep History" },
+    { text: "FAANG Ready", hot: true },
+    { text: "AI-Powered" },
+    { text: "Staff-Level Prep", hot: true },
+    { text: "Interview Intel" },
   ];
 
   const menuItems = [
-    { icon: <DocI />,    label: "New Analysis", onClick: () => { nav("/interview"); setMenuOpen(false); } },
-    { icon: <GridI />,   label: "Reports",      onClick: () => { nav("/reports");   setMenuOpen(false); } },
-    { icon: <PersonI />, label: "Profile",      onClick: () => setMenuOpen(false) },
-    { icon: <GearI />,   label: "Settings",     onClick: () => setMenuOpen(false) },
+    { icon: <DocI />, label: "New Analysis", onClick: () => { nav("/interview"); setMenuOpen(false); } },
+    { icon: <GridI />, label: "Reports", onClick: () => { nav("/reports"); setMenuOpen(false); } },
+    { icon: <PersonI />, label: "Profile", onClick: () => setMenuOpen(false) },
+    { icon: <GearI />, label: "Settings", onClick: () => setMenuOpen(false) },
   ];
 
-  
+
 
   return (
     <div className="rps">
@@ -480,7 +480,7 @@ export default function ReportsPage() {
           <button className="rps-new-btn" onClick={() => nav("/interview")}>
             <span>
               <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
-                <path d="M6.5 2v9M2 6.5h9" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+                <path d="M6.5 2v9M2 6.5h9" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
               </svg>
               New Analysis
             </span>
@@ -489,8 +489,8 @@ export default function ReportsPage() {
 
         <div className="rps-hero__right">
           {[
-            { n: allreports?.length ?? 0, sup: "",   label: "Total Reports"  },
-            { n: avgScore,                sup: "",   label: "Avg. Fit Score" },
+            { n: allreports?.length ?? 0, sup: "", label: "Total Reports" },
+            { n: avgScore, sup: "", label: "Avg. Fit Score" },
             { n: allreports?.filter(r => r.score >= 85).length ?? 0, sup: "", label: "Strong Matches" },
           ].map((s, i) => (
             <div key={i} className="rps-hero__counter">
@@ -505,7 +505,7 @@ export default function ReportsPage() {
       <div className="rps-stats">
         {[
           { val: allreports?.length ?? 0, label: "Total Reports" },
-          { val: avgScore,                label: "Avg. Fit Score" },
+          { val: avgScore, label: "Avg. Fit Score" },
           { val: allreports?.filter(r => r.score >= 85).length ?? 0, label: "Strong Matches" },
           { val: allreports?.reduce((a, r) => a + (r.skillGap?.length ?? 0), 0) ?? 0, label: "Gaps Identified" },
         ].map((s, i) => (
@@ -521,8 +521,8 @@ export default function ReportsPage() {
         <div className="rps-empty">
           <div className="rps-empty__icon">
             <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-              <rect x="2" y="2" width="18" height="18" rx="2" stroke="currentColor" strokeWidth="1.3"/>
-              <path d="M7 11h8M7 7h5M7 15h4" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round"/>
+              <rect x="2" y="2" width="18" height="18" rx="2" stroke="currentColor" strokeWidth="1.3" />
+              <path d="M7 11h8M7 7h5M7 15h4" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
             </svg>
           </div>
           <p className="rps-empty__title">No reports yet</p>
@@ -530,7 +530,7 @@ export default function ReportsPage() {
           <button className="rps-new-btn" style={{ marginTop: 16 }} onClick={() => nav("/interview")}>
             <span>
               <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
-                <path d="M6.5 2v9M2 6.5h9" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+                <path d="M6.5 2v9M2 6.5h9" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
               </svg>
               Start First Analysis
             </span>
@@ -560,22 +560,22 @@ export default function ReportsPage() {
                 </div>
                 <div className="rps-card__chips">
                   <span className="rps-card__chip">
-                    <svg width="9" height="9" viewBox="0 0 10 10" fill="none"><path d="M1 5h8M5 1l4 4-4 4" stroke="currentColor" strokeWidth="1.1" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                    <svg width="9" height="9" viewBox="0 0 10 10" fill="none"><path d="M1 5h8M5 1l4 4-4 4" stroke="currentColor" strokeWidth="1.1" strokeLinecap="round" strokeLinejoin="round" /></svg>
                     {r.technicalQuestions?.length ?? 0} Technical
                   </span>
                   <span className="rps-card__chip">
-                    <svg width="9" height="9" viewBox="0 0 10 10" fill="none"><path d="M1.5 2.5h7M1.5 5h5M1.5 7.5h6" stroke="currentColor" strokeWidth="1.1" strokeLinecap="round"/></svg>
+                    <svg width="9" height="9" viewBox="0 0 10 10" fill="none"><path d="M1.5 2.5h7M1.5 5h5M1.5 7.5h6" stroke="currentColor" strokeWidth="1.1" strokeLinecap="round" /></svg>
                     {r.behavioralQuestions?.length ?? 0} Behavioral
                   </span>
                   <span className="rps-card__chip rps-card__chip--gap">
-                    <svg width="9" height="9" viewBox="0 0 10 10" fill="none"><circle cx="5" cy="5" r="4" stroke="currentColor" strokeWidth="1.1"/><path d="M5 3v2.5" stroke="currentColor" strokeWidth="1.1" strokeLinecap="round"/><circle cx="5" cy="7" r=".5" fill="currentColor"/></svg>
+                    <svg width="9" height="9" viewBox="0 0 10 10" fill="none"><circle cx="5" cy="5" r="4" stroke="currentColor" strokeWidth="1.1" /><path d="M5 3v2.5" stroke="currentColor" strokeWidth="1.1" strokeLinecap="round" /><circle cx="5" cy="7" r=".5" fill="currentColor" /></svg>
                     {r.skillGap?.length ?? 0} Gaps
                   </span>
                 </div>
                 <button className="rps-card__cta" onClick={() => nav(`/report/${r._id}`)}>
                   View Report
                   <svg width="11" height="11" viewBox="0 0 12 12" fill="none">
-                    <path d="M2 6h8M6.5 2.5l4 3.5-4 3.5" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M2 6h8M6.5 2.5l4 3.5-4 3.5" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
                 </button>
               </div>
@@ -587,7 +587,7 @@ export default function ReportsPage() {
             <div className="rps-card__new-inner">
               <div className="rps-card__new-icon">
                 <svg width="20" height="20" viewBox="0 0 22 22" fill="none">
-                  <path d="M11 4v14M4 11h14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+                  <path d="M11 4v14M4 11h14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
                 </svg>
               </div>
               <p className="rps-card__new-label">Start New Analysis</p>
@@ -601,9 +601,9 @@ export default function ReportsPage() {
 }
 
 /* ── Icons ── */
-const GridI   = () => <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><rect x="1" y="1" width="4.5" height="4.5" rx=".5" stroke="currentColor" strokeWidth="1"/><rect x="7.5" y="1" width="4.5" height="4.5" rx=".5" stroke="currentColor" strokeWidth="1"/><rect x="1" y="7.5" width="4.5" height="4.5" rx=".5" stroke="currentColor" strokeWidth="1"/><rect x="7.5" y="7.5" width="4.5" height="4.5" rx=".5" stroke="currentColor" strokeWidth="1"/></svg>;
-const DocI    = () => <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M2 2h9v9H2z" stroke="currentColor" strokeWidth="1" strokeLinejoin="round"/><path d="M5 5h3M5 7h2" stroke="currentColor" strokeWidth="1" strokeLinecap="round"/></svg>;
-const PersonI = () => <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="4" r="2.5" stroke="currentColor" strokeWidth="1"/><path d="M1.5 11.5c0-2.485 2.239-4.5 5-4.5s5 2.015 5 4.5" stroke="currentColor" strokeWidth="1" strokeLinecap="round"/></svg>;
-const GearI   = () => <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="6.5" r="2" stroke="currentColor" strokeWidth="1"/><path d="M6.5 1v1.5M6.5 10.5V12M12 6.5h-1.5M2.5 6.5H1M10.3 2.7l-1.06 1.06M3.76 9.24L2.7 10.3M10.3 10.3l-1.06-1.06M3.76 3.76L2.7 2.7" stroke="currentColor" strokeWidth="1" strokeLinecap="round"/></svg>;
-const HelpI   = () => <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="6.5" r="5.5" stroke="currentColor" strokeWidth="1"/><path d="M6.5 4v3M6.5 8.5v.5" stroke="currentColor" strokeWidth="1" strokeLinecap="round"/></svg>;
-const ExitI   = () => <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M8.5 4H10A1.5 1.5 0 0111.5 5.5v3A1.5 1.5 0 0110 10H8.5" stroke="currentColor" strokeWidth="1" strokeLinecap="round"/><path d="M5 9L1.5 6.5 5 4M1.5 6.5H8.5" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round"/></svg>;
+const GridI = () => <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><rect x="1" y="1" width="4.5" height="4.5" rx=".5" stroke="currentColor" strokeWidth="1" /><rect x="7.5" y="1" width="4.5" height="4.5" rx=".5" stroke="currentColor" strokeWidth="1" /><rect x="1" y="7.5" width="4.5" height="4.5" rx=".5" stroke="currentColor" strokeWidth="1" /><rect x="7.5" y="7.5" width="4.5" height="4.5" rx=".5" stroke="currentColor" strokeWidth="1" /></svg>;
+const DocI = () => <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M2 2h9v9H2z" stroke="currentColor" strokeWidth="1" strokeLinejoin="round" /><path d="M5 5h3M5 7h2" stroke="currentColor" strokeWidth="1" strokeLinecap="round" /></svg>;
+const PersonI = () => <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="4" r="2.5" stroke="currentColor" strokeWidth="1" /><path d="M1.5 11.5c0-2.485 2.239-4.5 5-4.5s5 2.015 5 4.5" stroke="currentColor" strokeWidth="1" strokeLinecap="round" /></svg>;
+const GearI = () => <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="6.5" r="2" stroke="currentColor" strokeWidth="1" /><path d="M6.5 1v1.5M6.5 10.5V12M12 6.5h-1.5M2.5 6.5H1M10.3 2.7l-1.06 1.06M3.76 9.24L2.7 10.3M10.3 10.3l-1.06-1.06M3.76 3.76L2.7 2.7" stroke="currentColor" strokeWidth="1" strokeLinecap="round" /></svg>;
+const HelpI = () => <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="6.5" r="5.5" stroke="currentColor" strokeWidth="1" /><path d="M6.5 4v3M6.5 8.5v.5" stroke="currentColor" strokeWidth="1" strokeLinecap="round" /></svg>;
+const ExitI = () => <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M8.5 4H10A1.5 1.5 0 0111.5 5.5v3A1.5 1.5 0 0110 10H8.5" stroke="currentColor" strokeWidth="1" strokeLinecap="round" /><path d="M5 9L1.5 6.5 5 4M1.5 6.5H8.5" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" /></svg>;
