@@ -713,15 +713,15 @@ body, #root {
 ═══════════════════════════════════════════════════════════════════ */
 export default function InterviewPage() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [resume,   setResume]   = useState(null);
+  const [resume, setResume] = useState(null);
   const [selfDesc, setSelfDesc] = useState("");
-  const [jobDesc,  setJobDesc]  = useState("");
+  const [jobDesc, setJobDesc] = useState("");
   const { handleInterviewReport, loading } = useInterview();
 
-  const menuRef   = useRef(null);
+  const menuRef = useRef(null);
   const cursorRef = useRef(null);
-  const navigate  = useNavigate();
-  const {user, handleLogout} = useAuth()
+  const navigate = useNavigate();
+  const { user, handleLogout } = useAuth()
   console.log(user)
 
   const onSignOut = async () => {
@@ -738,7 +738,7 @@ export default function InterviewPage() {
     const move = (e) => {
       if (!cursorRef.current) return;
       cursorRef.current.style.left = e.clientX + "px";
-      cursorRef.current.style.top  = e.clientY + "px";
+      cursorRef.current.style.top = e.clientY + "px";
     };
     window.addEventListener("mousemove", move, { passive: true });
     return () => window.removeEventListener("mousemove", move);
@@ -768,24 +768,24 @@ export default function InterviewPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!jobDesc || !resume || !selfDesc) return;
-    
+
     const response = await handleInterviewReport({
       jobDescription: jobDesc,
       resume: resume,
       selfDescription: selfDesc,
     });
-    
+
     if (response?.interviewReport?._id) {
       nav(`/report/${response.interviewReport._id}`);
     }
   };
 
   const menuItems = [
-    { icon: <GridI />,   label: "Reports",       onClick: () => { nav("/reports");   setMenuOpen(false); } },
-    { icon: <DocI />,    label: "New Analysis",   onClick: () => { nav("/interview"); setMenuOpen(false); } },
-    { icon: <PersonI />, label: "Profile",        onClick: () => setMenuOpen(false) },
-    { icon: <GearI />,   label: "Settings",       onClick: () => setMenuOpen(false) },
-    { icon: <CardI />,   label: "Billing & Plan", onClick: () => setMenuOpen(false) },
+    { icon: <GridI />, label: "Reports", onClick: () => { nav("/reports"); setMenuOpen(false); } },
+    { icon: <DocI />, label: "New Analysis", onClick: () => { nav("/interview"); setMenuOpen(false); } },
+    { icon: <PersonI />, label: "Profile", onClick: () => setMenuOpen(false) },
+    { icon: <GearI />, label: "Settings", onClick: () => setMenuOpen(false) },
+    { icon: <CardI />, label: "Billing & Plan", onClick: () => setMenuOpen(false) },
   ];
 
   const marqueeItems = [
@@ -886,8 +886,8 @@ export default function InterviewPage() {
         <div className="ip-hero__right">
           {[
             { n: "12", sup: "K+", label: "Engineers prepared" },
-            { n: "94", sup: "%",  label: "Success rate" },
-            { n: "15", sup: "s",  label: "Avg. analysis time" },
+            { n: "94", sup: "%", label: "Success rate" },
+            { n: "15", sup: "s", label: "Avg. analysis time" },
           ].map((s, i) => (
             <div key={i} className="ip-hero__counter">
               <div className="ip-hero__counter-n">
@@ -1038,10 +1038,10 @@ export default function InterviewPage() {
   );
 }
 
-const GridI   = () => <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><rect x="1" y="1" width="4.5" height="4.5" rx=".5" stroke="currentColor" strokeWidth="1"/><rect x="7.5" y="1" width="4.5" height="4.5" rx=".5" stroke="currentColor" strokeWidth="1"/><rect x="1" y="7.5" width="4.5" height="4.5" rx=".5" stroke="currentColor" strokeWidth="1"/><rect x="7.5" y="7.5" width="4.5" height="4.5" rx=".5" stroke="currentColor" strokeWidth="1"/></svg>;
-const DocI    = () => <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M2 2h9v9H2z" stroke="currentColor" strokeWidth="1" strokeLinejoin="round"/><path d="M5 5h3M5 7h2" stroke="currentColor" strokeWidth="1" strokeLinecap="round"/></svg>;
-const PersonI = () => <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="4" r="2.5" stroke="currentColor" strokeWidth="1"/><path d="M1.5 11.5c0-2.485 2.239-4.5 5-4.5s5 2.015 5 4.5" stroke="currentColor" strokeWidth="1" strokeLinecap="round"/></svg>;
-const GearI   = () => <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="6.5" r="2" stroke="currentColor" strokeWidth="1"/><path d="M6.5 1v1.5M6.5 10.5V12M12 6.5h-1.5M2.5 6.5H1M10.3 2.7l-1.06 1.06M3.76 9.24L2.7 10.3M10.3 10.3l-1.06-1.06M3.76 3.76L2.7 2.7" stroke="currentColor" strokeWidth="1" strokeLinecap="round"/></svg>;
-const CardI   = () => <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><rect x="1" y="3" width="11" height="7" rx="1" stroke="currentColor" strokeWidth="1"/><path d="M1 6h11" stroke="currentColor" strokeWidth="1"/></svg>;
-const HelpI   = () => <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="6.5" r="5.5" stroke="currentColor" strokeWidth="1"/><path d="M6.5 4v3M6.5 8.5v.5" stroke="currentColor" strokeWidth="1" strokeLinecap="round"/></svg>;
-const ExitI   = () => <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M8.5 4H10A1.5 1.5 0 0111.5 5.5v3A1.5 1.5 0 0110 10H8.5" stroke="currentColor" strokeWidth="1" strokeLinecap="round"/><path d="M5 9L1.5 6.5 5 4M1.5 6.5H8.5" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round"/></svg>;
+const GridI = () => <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><rect x="1" y="1" width="4.5" height="4.5" rx=".5" stroke="currentColor" strokeWidth="1" /><rect x="7.5" y="1" width="4.5" height="4.5" rx=".5" stroke="currentColor" strokeWidth="1" /><rect x="1" y="7.5" width="4.5" height="4.5" rx=".5" stroke="currentColor" strokeWidth="1" /><rect x="7.5" y="7.5" width="4.5" height="4.5" rx=".5" stroke="currentColor" strokeWidth="1" /></svg>;
+const DocI = () => <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M2 2h9v9H2z" stroke="currentColor" strokeWidth="1" strokeLinejoin="round" /><path d="M5 5h3M5 7h2" stroke="currentColor" strokeWidth="1" strokeLinecap="round" /></svg>;
+const PersonI = () => <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="4" r="2.5" stroke="currentColor" strokeWidth="1" /><path d="M1.5 11.5c0-2.485 2.239-4.5 5-4.5s5 2.015 5 4.5" stroke="currentColor" strokeWidth="1" strokeLinecap="round" /></svg>;
+const GearI = () => <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="6.5" r="2" stroke="currentColor" strokeWidth="1" /><path d="M6.5 1v1.5M6.5 10.5V12M12 6.5h-1.5M2.5 6.5H1M10.3 2.7l-1.06 1.06M3.76 9.24L2.7 10.3M10.3 10.3l-1.06-1.06M3.76 3.76L2.7 2.7" stroke="currentColor" strokeWidth="1" strokeLinecap="round" /></svg>;
+const CardI = () => <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><rect x="1" y="3" width="11" height="7" rx="1" stroke="currentColor" strokeWidth="1" /><path d="M1 6h11" stroke="currentColor" strokeWidth="1" /></svg>;
+const HelpI = () => <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="6.5" r="5.5" stroke="currentColor" strokeWidth="1" /><path d="M6.5 4v3M6.5 8.5v.5" stroke="currentColor" strokeWidth="1" strokeLinecap="round" /></svg>;
+const ExitI = () => <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M8.5 4H10A1.5 1.5 0 0111.5 5.5v3A1.5 1.5 0 0110 10H8.5" stroke="currentColor" strokeWidth="1" strokeLinecap="round" /><path d="M5 9L1.5 6.5 5 4M1.5 6.5H8.5" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" /></svg>;
