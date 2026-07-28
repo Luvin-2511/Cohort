@@ -2,6 +2,7 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { setError, setLoading, setUser } from "../slices/auth.slice";
 import { getMe, login, logout, register } from "../services/auth.api";
+import { showToast } from "../../shared/slices/toast.slice";
 
 const useAuth = () => {
   const dispatch = useDispatch();
@@ -11,10 +12,21 @@ const useAuth = () => {
       dispatch(setLoading(true));
       const response = await register({ email, password, name, contact, role });
       dispatch(setUser(response.user));
+      dispatch(
+        showToast({
+          type: "success",
+          message: response.message,
+        }),
+      );
       dispatch(setError(null));
-      return response
+      return response;
     } catch (err) {
-      dispatch(setError(err?.response?.data.message || "registration Failed"));
+      dispatch(
+        showToast({
+          type: "error",
+          message: err?.response?.data.message || "Register Failed",
+        }),
+      );
     } finally {
       dispatch(setLoading(false));
     }
@@ -25,10 +37,21 @@ const useAuth = () => {
       dispatch(setLoading(true));
       const response = await login({ email, password });
       dispatch(setUser(response.user));
+      dispatch(
+        showToast({
+          type: "success",
+          message: response.message,
+        }),
+      );
       dispatch(setError(null));
-      return response
+      return response;
     } catch (err) {
-      dispatch(setError(err?.response?.data.message || "Login Failed"));
+      dispatch(
+        showToast({
+          type: "error",
+          message: err?.response?.data.message || "Login Failed",
+        }),
+      );
     } finally {
       dispatch(setLoading(false));
     }
@@ -39,10 +62,21 @@ const useAuth = () => {
       dispatch(setLoading(true));
       const response = await logout();
       dispatch(setUser(null));
+      dispatch(
+        showToast({
+          type: "success",
+          message: response.message,
+        }),
+      );
       dispatch(setError(null));
       return response;
     } catch (err) {
-      dispatch(setError(err?.response?.data.message || "Logout Failed"));
+      dispatch(
+        showToast({
+          type: "error",
+          message: err?.response?.data.message || "Logout Failed",
+        }),
+      );
     } finally {
       dispatch(setLoading(false));
     }
@@ -55,7 +89,7 @@ const useAuth = () => {
       dispatch(setUser(response.user));
       dispatch(setError(null));
     } catch (err) {
-      dispatch(setError(err?.response?.data.message || "Getting user info Failed"));
+      console.log(err);
     } finally {
       dispatch(setLoading(false));
     }
@@ -65,7 +99,7 @@ const useAuth = () => {
     handleRegister,
     handleLogin,
     handleLogout,
-    handleMe
+    handleMe,
   };
 };
 
