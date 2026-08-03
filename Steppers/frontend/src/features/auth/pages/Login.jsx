@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import "../styles/login.css";
+import "../../shared/styles/navbar.css";
 import { Link, useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import { useSelector } from "react-redux";
@@ -252,15 +253,19 @@ export default function Login() {
             </div>
           </div>
 
-          <a
-            href="/"
-            className="lp-logo"
+          <Link
+            to="/"
+            className="sh-logo-block"
             ref={logoRef}
-            style={{ transform: "translateY(-10px)" }}
+            style={{ opacity: 0, transform: "translateY(-10px)", textDecoration: "none" }}
           >
-            <div className="logo-mark">S</div>
-            <span className="logo-text">Steppers</span>
-          </a>
+            <div className="sh-logo">
+              <span className="sh-logo-white">STEP</span>
+              <span className="sh-logo-accent">PERS</span>
+              <span className="sh-logo-dot">.</span>
+            </div>
+            <div className="sh-logo-sub">STREETWEAR COLLECTIVE</div>
+          </Link>
 
           <div className="lp-hero">
             <p
@@ -307,6 +312,26 @@ export default function Login() {
 
         {/* ── Right Form ── */}
         <main className="lp-form-side">
+          <Link
+            to="/"
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "0.5rem",
+              color: "var(--muted, #787878)",
+              fontSize: "0.75rem",
+              textDecoration: "none",
+              letterSpacing: "2px",
+              textTransform: "uppercase",
+              fontWeight: 500,
+              marginBottom: "2rem",
+              transition: "color 0.25s",
+            }}
+            onMouseEnter={e => e.currentTarget.style.color = "var(--white, #fff)"}
+            onMouseLeave={e => e.currentTarget.style.color = "var(--muted, #787878)"}
+          >
+            ← Back to Home
+          </Link>
           <div
             className="form-head"
             ref={formHeadRef}
