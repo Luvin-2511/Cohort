@@ -1,0 +1,19 @@
+# https://kubernetes.io/docs/concepts/services-networking/ingress/#the-ingress-resource
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: coder-ingress
+  labels:
+    app.kubernetes.io/name: coder-ingress
+spec:
+  rules:
+    http:
+      paths:
+      - path: "/api/sandbox"
+        pathType: Prefix
+        backend:
+          service:
+            name: sandbox-service
+            port:
+              number: 80
