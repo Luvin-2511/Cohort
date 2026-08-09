@@ -1,0 +1,88 @@
+@font-face {
+  font-family: ghost;
+  src: url("./assets/Ghost Factory.ttf");
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --main: black;
+  --side: white;
+}
+
+html,
+body,
+#app {
+  height: 100%;
+  width: 100%;
+  background: black;
+}
+
+.loading-screen {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  inset: 0;
+  background: var(--main);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+}
+
+.counter {
+  height: 10rem;
+  overflow: hidden;
+  display: flex;
+  align-items: start;
+  justify-content: center;
+  gap: 1rem;
+}
+
+h1 {
+  color: var(--side);
+  font-size: 10rem;
+  font-weight: 100;
+  font-family: ghost;
+}
+
+main {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bg-image {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  position: absolute;
+  inset: 0;
+
+  img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+}
+
+.heading {
+  position: relative;
+  z-index: 10;
+  color: white;
+  text-transform: uppercase;
+  text-align: center;
+  font-family: ghost;
+  overflow: hidden;
+
+  h1 {
+    font-size: 5rem;
+  }
+}
