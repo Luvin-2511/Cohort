@@ -1,0 +1,45 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+
+html,
+body,
+#app {
+  height: 100%;
+  width: 100%;
+  background: black;
+}
+
+.box {
+  height: 10rem;
+  width: 10rem;
+  border-radius: 50%;
+  background: red;
+  border: 10px solid white;
+  offset-path: path("M0 90.6112H447C504.333 22.6112 663.2 -72.5888 840 90.6112C1016.8 253.811 1179 158.611 1238 90.6112H1843");
+  offset-distance: 0%;
+  animation: baller 1s linear infinite alternate;
+}
+
+
+@keyframes baller {
+  to {
+    offset-distance: 100%;
+  }
+}
+
+svg {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: svgAnimation 1s linear infinite;
+  animation-direction:alternate-reverse;
+}
+
+@keyframes svgAnimation {
+  to{
+    stroke-dashoffset: 0;
+  }
+}
